@@ -1,0 +1,67 @@
+﻿@page
+@model Exwhyzee.AANI.Web.Areas.Main.Pages.SecPage.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title">ADD A NEW SEC SESSION</h3>
+
+
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                <form method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="SEC.Number" class="control-label"></label>
+                        <input asp-for="SEC.Number" class="form-control" />
+                        <span asp-validation-for="SEC.Number" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="SEC.Year" class="control-label"></label>
+                        <input asp-for="SEC.Year" class="form-control" />
+                        <span asp-validation-for="SEC.Year" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="SEC.Title" class="control-label"></label>
+                        <input asp-for="SEC.Title" class="form-control" />
+                        <span asp-validation-for="SEC.Title" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="SEC.SortOrder" class="control-label"></label>
+                        <input asp-for="SEC.SortOrder" class="form-control" />
+                        <span asp-validation-for="SEC.SortOrder" class="text-danger"></span>
+                    </div>
+
+
+                    <div class="form-group">
+                        <input type="submit" value="Submit" class="btn btn-primary" />
+                        <a asp-page="./Index" class="btn bg-gradient-warning btn-sm" style="float:right;">Back</a>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+        <!-- /.row -->
+    </div>
+    <!-- /.card-body -->
+    <div class="card-footer">
+        
+
+    </div>
+</div>
+
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }

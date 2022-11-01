@@ -1,0 +1,250 @@
+﻿@page
+@model Exwhyzee.AANI.Web.Areas.Main.Pages.ParticipantPage.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+<div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title">EDIT @Model.Participant.Title @Model.Participant.Surname @Model.Participant.FirstName @Model.Participant.OtherName </h3>
+
+
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                <form method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="Participant.Id" />
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <label asp-for="Participant.Title" class="control-label"></label>
+                                <select asp-for="Participant.Title" class="form-control" required="required">
+
+                                    <option value="Mr">Mr</option>
+                                    <option value="Mrs">Mrs</option>
+                                    <option value="Col.">Col.</option>
+                                    <option value="Chief">Chief</option>
+                                    <option value="Alhaji">Alhaji</option>
+                                    <option value="Capt Navy.">Capt Navy.</option>
+                                    <option value="Brig Gen.">Brig Gen.</option>
+                                    <option value="Air Comdr.">Air Comdr.</option>
+                                    <option value="AVM">AVM</option>
+                                    <option value="Gp Capt.">Gp Capt.</option>
+                                    <option value="Dr">Dr</option>
+                                    <option value="Engr.">Engr.</option>
+                                    <option value="Pharm.">Pharm.</option>
+                                    <option value="CP">CP</option>
+                                    <option value="AIG">AIG</option>
+                                    <option value="DIG">DIG</option>
+                                </select>                        <span asp-validation-for="Participant.Title" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-6">
+                                <label asp-for="Participant.Surname" class="control-label"></label>
+                                <input asp-for="Participant.Surname" class="form-control" />
+                                <span asp-validation-for="Participant.Surname" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <label asp-for="Participant.FirstName" class="control-label"></label>
+                                <input asp-for="Participant.FirstName" class="form-control" />
+                                <span asp-validation-for="Participant.FirstName" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-6">
+                                <label asp-for="Participant.OtherName" class="control-label"></label>
+                                <input asp-for="Participant.OtherName" class="form-control" />
+                                <span asp-validation-for="Participant.OtherName" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <label asp-for="Participant.PhoneNumber" class="control-label">Phone Number</label>
+                                <input asp-for="Participant.PhoneNumber" class="form-control" />
+                                <span asp-validation-for="Participant.PhoneNumber" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-6">
+                                <label asp-for="Participant.AltPhoneNumber" class="control-label">Alt Phone Number</label>
+                                <input asp-for="Participant.AltPhoneNumber" class="form-control" />
+                                <span asp-validation-for="Participant.AltPhoneNumber" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <label asp-for="Participant.DOB" class="control-label">Date of Birth</label>
+                                <input asp-for="Participant.DOB" class="form-control" type="date" />
+                                <span asp-validation-for="Participant.DOB" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-6">
+                                <label asp-for="Participant.GenderStatus" class="control-label">Gender</label>
+                                @Html.DropDownListFor(model => model.Participant.GenderStatus, new SelectList(Enum.GetValues(typeof(Exwhyzee.AANI.Domain.Enums.GenderStatus))), new { @class = "form-control" })
+                                <span asp-validation-for="Participant.GenderStatus" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Participant.Sponsor" class="control-label"></label>
+                        <input asp-for="Participant.Sponsor" class="form-control" />
+                        <span asp-validation-for="Participant.Sponsor" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Participant.Bio" class="control-label">Participant Biography</label>
+                        <textarea id="summernote" class="form-control" asp-for="Participant.Bio">
+                            </textarea>
+                        <span asp-validation-for="Participant.Bio" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <label asp-for="Participant.MaritalStatus" class="control-label">Marital Status</label>
+                                @Html.DropDownListFor(model => model.Participant.MaritalStatus, new SelectList(Enum.GetValues(typeof(Exwhyzee.AANI.Domain.Enums.MaritalStatus))), new { @class = "form-control" })
+                                <span asp-validation-for="Participant.MaritalStatus" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-6">
+                                <label asp-for="Participant.ReligionStatus" class="control-label">Religion</label>
+                                @Html.DropDownListFor(model => model.Participant.ReligionStatus, new SelectList(Enum.GetValues(typeof(Exwhyzee.AANI.Domain.Enums.ReligionStatus))), new { @class = "form-control" })
+                                <span asp-validation-for="Participant.ReligionStatus" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <label asp-for="Participant.ContactAddress" class="control-label"></label>
+                                <input asp-for="Participant.ContactAddress" class="form-control" />
+                                <span asp-validation-for="Participant.ContactAddress" class="text-danger"></span>
+                            </div>
+                            <div class="col-lg-6">
+                                <label asp-for="Participant.HomeAddress" class="control-label"></label>
+                                <input asp-for="Participant.HomeAddress" class="form-control" />
+                                <span asp-validation-for="Participant.HomeAddress" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <label class="control-label">State of Origin</label>
+                                <select asp-for="Participant.State" asp-items="ViewBag.StateId" required="required" id="State" class="form-control">
+                                    <option>Select State</option>
+
+                                </select>
+                            </div>
+                            <div class="col-lg-6">
+                                <label class="control-label">
+                                    L G A <span style="font-weight:900;color:red;">
+                                        @if (!String.IsNullOrEmpty(Model.Participant.LGA))
+                                        {
+                                            <span>(@Model.Participant.LGA)</span>
+                                        }
+                                        else
+                                        {
+                                            <span>(NILL)</span>
+                                        }
+                                    </span>
+                                </label>
+                                <select asp-for="Participant.LGA" id="LGA" class="form-control"></select>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <label asp-for="Participant.EmergencyContactName" class="control-label">Emergency Contact Name</label>
+                                <input asp-for="Participant.EmergencyContactName" class="form-control" />
+                                <span asp-validation-for="Participant.EmergencyContactName" class="text-danger"></span>
+                            </div>
+                            <div class="col-lg-4">
+                                <label asp-for="Participant.EmergencyContactPhone" class="control-label">Emergency Contact Phone</label>
+                                <input asp-for="Participant.EmergencyContactPhone" class="form-control" />
+                                <span asp-validation-for="Participant.EmergencyContactPhone" class="text-danger"></span>
+                            </div>
+                            <div class="col-lg-4">
+                                <label asp-for="Participant.EmergencyContactEmail" class="control-label">Emergency Contact Email</label>
+                                <input asp-for="Participant.EmergencyContactEmail" class="form-control" />
+                                <span asp-validation-for="Participant.EmergencyContactEmail" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Participant.SECId" class="control-label">SEC YEAR</label>
+                        <select asp-for="Participant.SECId" asp-items="ViewBag.SECId" required="required" class="form-control select2 select2-primary js-example-basic-single" data-dropdown-css-class="select2-primary">
+                            <option>Select SEC</option>
+
+                        </select>                        <span asp-validation-for="Participant.SECId" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Participant.UserStatus" class="control-label">User Status</label>
+                        @Html.DropDownListFor(model => model.Participant.UserStatus, new SelectList(Enum.GetValues(typeof(Exwhyzee.AANI.Domain.Enums.UserStatus))), new { @class = "form-control" })
+                        <span asp-validation-for="Participant.UserStatus" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="submit" value="Save" class="btn btn-primary" />
+                        <a asp-page="./Index" class="btn bg-gradient-warning btn-sm" style="float:right;">Back</a>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+        <!-- /.row -->
+    </div>
+    <!-- /.card-body -->
+    <div class="card-footer">
+    </div>
+</div>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script type="text/jscript">
+        $(function () {
+            $('#State').change(function () {
+
+                $.ajax({
+                    type: 'GET',
+                    url: 'Edit?handler=LGA',
+                    dataType: "json",
+                    data: {
+                        id: $('#State').val()
+                    },
+                    contentType: "application/json; charset=utf-8",
+                    error: function () {
+                        console.log("error");
+                    },
+                    success: function (data) {
+                        console.log("yes");
+
+                        console.log(data);
+                        var items = '<option>Choose LGA</option>';
+                        $.each(jQuery.map(data, function (i, local) {
+                            items += "<option value='" + i.value + "'>" + i.text + "</option>";
+                            console.log("vin")
+                        }));
+
+                        $('#LGA').html(items);
+
+                    }
+                });
+                console.log("pass")
+            });
+        });
+    </script>
+
+    }

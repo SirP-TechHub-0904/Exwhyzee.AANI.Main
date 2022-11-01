@@ -1,0 +1,61 @@
+﻿@page
+@model Exwhyzee.AANI.Web.Areas.Main.Pages.EventPage.Expenditure.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title">UPDATE EXPENDITURE</h3>
+
+
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="EventExpenditure.Id" />
+                    <input type="hidden" asp-for="EventExpenditure.EventId" />
+                    <input type="hidden" asp-for="EventExpenditure.Date" />
+                    <input type="hidden" asp-for="EventExpenditure.ExpenditureDate" />
+            <div class="form-group">
+                <label asp-for="EventExpenditure.Title" class="control-label"></label>
+                <input asp-for="EventExpenditure.Title" class="form-control" />
+                <span asp-validation-for="EventExpenditure.Title" class="text-danger"></span>
+            </div>
+           <div class="form-group">
+                <label asp-for="EventExpenditure.Amount" class="control-label"></label>
+                        <input asp-for="EventExpenditure.Amount" class="form-control" />
+                        <span asp-validation-for="EventExpenditure.Amount" class="text-danger"></span>
+            </div>
+          
+            <div class="form-group">
+                <label asp-for="EventExpenditure.Note" class="control-label"></label>
+                <input asp-for="EventExpenditure.Note" class="form-control" />
+                <span asp-validation-for="EventExpenditure.Note" class="text-danger"></span>
+            </div>
+
+                    <div class="form-group">
+                        <input type="submit" value="Submit" class="btn btn-primary" />
+                        <a asp-page="./Index" class="btn bg-gradient-warning btn-sm" style="float:right;">Back</a>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+        <!-- /.row -->
+    </div>
+    <!-- /.card-body -->
+    <div class="card-footer">
+    </div>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,234 @@
+﻿@page
+@model Exwhyzee.AANI.Web.Areas.Main.Pages.EventPage.EventManager.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+<!-- Default box -->
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title" style="text-transform:uppercase;">
+            @Model.Event.Title
+        </h3>
+        <h6 class="card-title" style="text-transform:uppercase;">
+            <span style=""><i>TOPIC:</i></span> @Model.Event.Toipc
+        </h6>
+    </div>
+    <div class="card-body">
+
+        <div class="row">
+            <div class="col-lg-3 col-6">
+                <!-- small box -->
+                <div class="small-box bg-info">
+                    <div class="inner">
+                        <h3>
+                            &#8358; @if (Model.Event.EventBudgets != null)
+                            {
+                                @Model.Event.EventBudgets.Sum(x=>x.Amount)
+                            }
+                            else
+                            {
+                                <text>0.00</text>
+                            }
+                        </h3>
+
+                        <p style="font-size:1.4rem;font-weight:900;">Estimated budget</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-bag"></i>
+                    </div>
+                    <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-3 col-6">
+                <!-- small box -->
+                <div class="small-box bg-success">
+                    <div class="inner">
+                        <h3>
+                            &#8358;
+                            @if (Model.Event.FundCategory != null)
+                            {
+                                @Model.Event.FundCategory.Funds.Sum(x=>x.Amount)
+                            }
+                            else
+                            {
+                                <text>0.00</text>
+                            }
+                        </h3>
+
+                        <p style="font-size:1.4rem;font-weight:900;">Available Funds</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-money"></i>
+                    </div>
+                    <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-3 col-6">
+                <!-- small box -->
+                <div class="small-box bg-warning">
+                    <div class="inner">
+                        <h3>
+                            &#8358;@if (Model.Event.EventExpenditures != null)
+                            {
+                                @Model.Event.EventExpenditures.Sum(x=>x.Amount)
+                            }
+                            else
+                            {
+                                <text>0.00</text>
+                            }
+                        </h3>
+
+                        <p style="font-size:1.4rem;font-weight:900;">Estimated Expenditure</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-person-add"></i>
+                    </div>
+                    <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-3 col-6">
+                <!-- small box -->
+                <div class="small-box bg-danger">
+                    <div class="inner">
+                        <h3>@Model.Event.EventAttendances.Count()</h3>
+
+                        <p style="font-size:1.4rem;font-weight:900;">Attendance</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-users"></i>
+                    </div>
+                    <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+            <!-- ./col -->
+        </div>
+
+        <div class="row">
+            <div class="col-12 col-md-12 col-lg-12 order-2 order-md-1">
+                <div class="card-body">
+                    <div class="callout callout-info">
+                        <div class="row">
+                            <div class="col-md-6 col-sm-6">
+                                
+                                <div class="panel">
+                                    <div class="panel-header btn-primary btn">
+                                        <h5>Start Time and Date</h5>
+                                    </div>
+                                    <div class="panel-body">
+                                       <h6 style="font-size:1.5rem;font-weight:900;">@Model.Event.StartDate.ToString("dd ddd MMMM, yyyy hh:mm tt")</h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-6">
+
+                                <div class="panel">
+                                    <div class="panel-header btn-primary btn">
+                                        <h5>End Time and Date</h5>
+                                    </div>
+                                    <div class="panel-body">
+                                        <h6 style="font-size:1.5rem;font-weight:900;">@Model.Event.EndDate.ToString("dd ddd MMMM, yyyy hh:mm tt")</h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <div class="callout callout-danger">
+                        <h5>COMMITTEE</h5>
+
+
+                        <div>
+                            <ul class="todo-list ui-sortable" data-widget="todo-list">
+                                @foreach(var cmt in Model.Event.EventCommittes){
+                                <li class="done">
+                                    <span class="handle ui-sortable-handle">
+                                        <i class="fas fa-ellipsis-v"></i>
+                                        <i class="fas fa-ellipsis-v"></i>
+                                    </span>
+                                    <div class="icheck-primary d-inline ml-2">
+                                        <input type="checkbox" value="" name="todo2" id="todoCheck2" checked="">
+                                        <label for="todoCheck2"></label>
+                                    </div>
+                                    <span class="text">@cmt.Participant.Fullname (SEC @cmt.Participant.SEC.Number - @cmt.Participant.SEC.Year)</span>
+                                    <small class="badge badge-info"><i class="far fa-clock"></i> @cmt.Position</small>
+                                   
+                                </li>
+                               }
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="callout callout-danger">
+                        <h5>DESCRIPTION</h5>
+
+                      
+                        <div>
+                            @Html.Raw(Model.Event.Description)
+                        </div>
+                    </div>
+                    
+                    <div class="callout callout-warning">
+                        <h5>NOTE</h5>
+
+                        <p>@Model.Event.Note</p>
+                    </div>
+                    <div class="callout callout-success">
+                        <h5>REPORT</h5>
+
+                        <div>@Html.Raw(Model.Event.Report)</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <h4>REVIEWS AND COMMENTS</h4>
+
+                @foreach(var x in Model.Event.EventComments){
+                    <div class="post" style="border-bottom:2px solid #080808;">
+                    <div class="user-block">
+@*                        <img class="img-circle img-bordered-sm" src="../../dist/img/user1-128x128.jpg" alt="user image">
+*@                        <span class="username">
+                            <a href="#">@x.Participant.Fullname</a>
+                        </span>
+                        <span class="description">@x.Date.ToString("dd MMM, yyyy hh:mm tt") </span>
+                    </div>
+                    <!-- /.user-block -->
+                    <p>
+                       @x.Comment
+                    </p>
+
+                    <p>
+                    </p>
+                </div>
+
+                }
+
+                <div class="card direct-chat direct-chat-primary">
+                    
+
+                    <div class="card-footer">
+                        <form method="post">
+                            <input type="hidden" asp-for="EventId" value="@Model.Event.Id" />
+
+                            <div class="input-group">
+                                <input type="text" asp-for="CommentText" placeholder="Type Message ..." class="form-control">
+                                <span class="input-group-append">
+                                    <button type="button" class="btn btn-primary">Send</button>
+                                </span>
+                            </div>
+                        </form>
+                    </div>
+                    <!-- /.card-footer-->
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+    <!-- /.card-body -->
+</div>
+<!-- /.card -->

@@ -1,0 +1,279 @@
+﻿@page
+@model Exwhyzee.AANI.Web.Areas.Main.Pages.ParticipantPage.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+<style>
+        hr {
+        margin-top: 0;
+        margin-bottom: 0;
+      
+    }
+
+</style>
+<div class="row">
+    <div class="col-md-12">
+
+        <!-- Profile Image -->
+        <div class="card card-primary card-outline">
+            <div class="card-body box-profile">
+                <div class="text-center">
+                    <img class="profile-user-img img-fluid img-circle"
+                         src="~/img/icon.jpg"
+                         alt="User profile picture">
+                </div>
+
+                <h3 class="profile-username text-center" style="font-size:29px;font-weight:900;">@Model.Participant.Fullname</h3>
+
+                <p class="text-muted text-center" style="font-weight:900;">@Model.Participant.Sponsor</p>
+                <div class="row">
+                    <div class="col-md-4"></div>
+                    <div class="col-md-4">
+                        <ul class="list-group list-group-unbordered mb-3" style="margin-bottom: 1rem!important;border: 1px solid #7f7f7f;">
+                            <li class="list-group-item" style="padding:1px 10px;">
+                                <b>Papers</b> <a class="float-right">1,322</a>
+                            </li>
+                            <li class="list-group-item" style="padding:1px 10px;">
+                                <b>Events</b> <a class="float-right">543</a>
+                            </li>
+                            <li class="list-group-item" style="padding:1px 10px;">
+                                <b>Funds</b> <a class="float-right">13,287</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="btn-group">
+                    <a asp-page="./Edit" asp-route-id="@Model.Participant.Id" class="btn btn-warning">Edit</a>
+                    <a asp-page="./UpdateEmail" asp-route-id="@Model.Participant.Id" class="btn btn-primary">Update Email</a>
+                    <a asp-page="./Permission" asp-route-id="@Model.Participant.Id" class="btn btn-success">Update Permission</a>
+                    <a asp-page="./ResetPassword" asp-route-id="@Model.Participant.Id" class="btn btn-danger">Reset Password</a>
+                    <a asp-page="./History" asp-route-id="@Model.Participant.Id" class="btn btn-success">Funds History</a>
+                    <a asp-page="./Papers" asp-route-id="@Model.Participant.Id" class="btn btn-primary">Papers Presented/Written</a>
+
+                </div>
+            </div>
+            <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+        <!-- About Me Box -->
+        <div class="card card-primary">
+            <div class="card-header">
+                <h3 class="card-title">About Me @Model.Participant.Fullname</h3>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+                <strong><i class="fas fa-envelope mr-1"></i> Email</strong>
+
+                <p class="text-muted">
+                    @if (!String.IsNullOrEmpty(Model.Participant.Email))
+                    {
+                        <span>@Model.Participant.Email</span>
+                    }
+                    else
+                    {
+                        <span>NILL</span>
+                    }
+                </p>
+
+                <hr>
+                @*empty*@
+                <strong><i class="fas fa-phone mr-1"></i> Phone Number</strong>
+
+                <p class="text-muted">
+                    @if (!String.IsNullOrEmpty(Model.Participant.PhoneNumber))
+                    {
+                        <span>@Model.Participant.PhoneNumber</span>
+                    }
+                    else
+                    {
+                        <span>NILL</span>
+                    }
+                </p>
+
+                <hr>
+                @*empty*@
+                <strong><i class="fas fa-phone mr-1"></i>Alt Phone Number</strong>
+
+                <p class="text-muted">
+                    @if (!String.IsNullOrEmpty(Model.Participant.AltPhoneNumber))
+                    {
+                        <span>@Model.Participant.AltPhoneNumber</span>
+                    }
+                    else
+                    {
+                        <span>NILL</span>
+                    }
+                </p>
+
+                <hr>
+                @*empty*@
+                <strong><i class="fas fa-user mr-1"></i>Gender Status</strong>
+
+                <p class="text-muted">
+                    <span>@Model.Participant.GenderStatus</span>
+
+                </p>
+
+                <hr>
+                @*empty*@
+                <strong><i class="fas fa-user mr-1"></i>Marital Status</strong>
+
+                <p class="text-muted">
+                    <span>@Model.Participant.MaritalStatus</span>
+
+                </p>
+
+                <hr>
+                @*empty*@
+                <strong><i class="fas fa-user mr-1"></i>Religion Status</strong>
+
+                <p class="text-muted">
+                    <span>@Model.Participant.ReligionStatus</span>
+
+                </p>
+
+                <hr>
+                @*empty*@
+                <strong><i class="fas fa-user mr-1"></i>DOB</strong>
+
+                <p class="text-muted">
+                    @if (Model.Participant.DOB != null){
+
+                        <span>@Model.Participant.DOB.Value</span>
+                    }
+                    else
+                    {
+                        <span>NILL</span>
+                    }
+                </p>
+
+                <hr>
+                @*empty*@
+                <strong><i class="fas fa-map-marker-alt mr-1"></i>Contact Address</strong>
+
+                <p class="text-muted">
+                    @if (!String.IsNullOrEmpty(Model.Participant.ContactAddress))
+                    {
+                        <span>@Model.Participant.ContactAddress</span>
+                    }
+                    else
+                    {
+                        <span>NILL</span>
+                    }
+                </p>
+
+                <hr>
+                @*empty*@
+                <strong><i class="fas fa-map-marker-alt mr-1"></i>Home Address</strong>
+
+                <p class="text-muted">
+                    @if (!String.IsNullOrEmpty(Model.Participant.HomeAddress))
+                    {
+                        <span>@Model.Participant.HomeAddress</span>
+                    }
+                    else
+                    {
+                        <span>NILL</span>
+                    }
+                </p>
+
+                <hr>
+                @*empty*@
+                <strong><i class="fas fa-map-marker-alt mr-1"></i>LGA and State</strong>
+
+                <p class="text-muted">
+                    @if (!String.IsNullOrEmpty(Model.Participant.LGA))
+                    {
+                        <span>@Model.Participant.LGA</span>
+                    }
+                    else
+                    {
+                        <span>NILL</span>
+                    }
+                    /
+                    @if (!String.IsNullOrEmpty(Model.Participant.State))
+                    {
+                        <span>@Model.Participant.State</span>
+                    }
+                    else
+                    {
+                        <span>NILL</span>
+                    }
+                </p>
+
+                <hr>
+                
+
+
+                <strong><i class="fas fa-book mr-1"></i> Biography</strong>
+
+                <di class="text-muted text-justify">
+                    @Html.Raw(Model.Participant.Bio)
+                </di>
+
+                <hr>
+
+            </div>
+            <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+        <div class="card card-primary">
+            <div class="card-header">
+                <h3 class="card-title">Emergency Contact</h3>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+                <strong><i class="fas fa-user mr-1"></i> Emergency Contact Name</strong>
+
+                <p class="text-muted">
+                    @if (!String.IsNullOrEmpty(Model.Participant.EmergencyContactName))
+                    {
+                        <span>@Model.Participant.EmergencyContactName</span>
+                    }
+                    else
+                    {
+                        <span>NILL</span>
+                    }
+                </p>
+
+                <hr>
+                @*empty*@
+                <strong><i class="fas fa-envelope mr-1"></i> Emergency Contact Email</strong>
+
+                <p class="text-muted">
+                    @if (!String.IsNullOrEmpty(Model.Participant.EmergencyContactEmail))
+                    {
+                        <span>@Model.Participant.EmergencyContactEmail</span>
+                    }
+                    else
+                    {
+                        <span>NILL</span>
+                    }
+                </p>
+
+                <hr>
+                @*empty*@
+                <strong><i class="fas fa-phone mr-1"></i> Emergency Contact Phone</strong>
+
+                <p class="text-muted">
+                    @if (!String.IsNullOrEmpty(Model.Participant.EmergencyContactPhone))
+                    {
+                        <span>@Model.Participant.EmergencyContactPhone</span>
+                    }
+                    else
+                    {
+                        <span>NILL</span>
+                    }
+                </p>
+
+                <hr>
+               
+
+            </div>
+            <!-- /.card-body -->
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,60 @@
+﻿@page
+@model Exwhyzee.AANI.Web.Areas.Main.Pages.EventPage.Attendance.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title">EDIT ATTENDANCE</h3>
+
+
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="EventAttendance.Id" />
+            <div class="form-group">
+                <label asp-for="EventAttendance.ParticipantId" class="control-label"></label>
+                <select asp-for="EventAttendance.ParticipantId" class="form-control" asp-items="ViewBag.ParticipantId"></select>
+                <span asp-validation-for="EventAttendance.ParticipantId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EventAttendance.DatetimeArrival" class="control-label"></label>
+                <input asp-for="EventAttendance.DatetimeArrival" class="form-control" />
+                <span asp-validation-for="EventAttendance.DatetimeArrival" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EventAttendance.DatetimeDeparture" class="control-label"></label>
+                <input asp-for="EventAttendance.DatetimeDeparture" class="form-control" />
+                <span asp-validation-for="EventAttendance.DatetimeDeparture" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EventAttendance.EventId" class="control-label"></label>
+                <select asp-for="EventAttendance.EventId" class="form-control" asp-items="ViewBag.EventId"></select>
+                <span asp-validation-for="EventAttendance.EventId" class="text-danger"></span>
+            </div>
+                    <div class="form-group">
+                        <input type="submit" value="Submit" class="btn btn-primary" />
+                        <a asp-page="./Index" class="btn bg-gradient-warning btn-sm" style="float:right;">Back</a>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+        <!-- /.row -->
+    </div>
+    <!-- /.card-body -->
+    <div class="card-footer">
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,45 @@
+﻿@page
+@model Exwhyzee.AANI.Web.Areas.Main.Pages.ParticipantPage.UpdateEmailModel
+@{
+}
+<div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title" style="text-transform: uppercase;">UPDATE EMAIL FOR @Model.Participant.Fullname</h3>
+
+
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                <form method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label class="control-label" style="font-weight:900;">@Model.Participant.Email</label>
+
+                    </div>
+
+
+                    <div class="form-group">
+                        <label asp-for="NewEmail" class="control-label">New Email</label>
+                        <input asp-for="NewEmail" class="form-control" />
+                        <span asp-validation-for="NewEmail" class="text-danger"></span>
+                    </div>
+
+
+                    <div class="form-group">
+                        <input type="submit" value="Update Email" class="btn btn-primary" />
+                        <a asp-page="./Details" asp-route-id="@Model.Participant.Id" class="btn bg-gradient-warning btn-sm" style="float:right;">Back</a>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+        <!-- /.row -->
+    </div>
+    <!-- /.card-body -->
+    <div class="card-footer">
+    </div>
+</div>

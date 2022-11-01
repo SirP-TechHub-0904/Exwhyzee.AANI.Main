@@ -1,0 +1,58 @@
+﻿@page
+@model Exwhyzee.AANI.Web.Areas.Main.Pages.PrincipalOfficePage.Officers.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title">ADD A NEW OFFICER</h3>
+
+
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="PrincipalOfficer.ParticipantId" class="control-label">Name</label>
+                        <select asp-for="PrincipalOfficer.ParticipantId" class="form-control select2 select2-primary js-example-basic-single" data-dropdown-css-class="select2-primary" asp-items="ViewBag.ParticipantId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="PrincipalOfficer.DateFrom" class="control-label">From</label>
+                <input asp-for="PrincipalOfficer.DateFrom" class="form-control" />
+                <span asp-validation-for="PrincipalOfficer.DateFrom" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PrincipalOfficer.DateTo" class="control-label">To</label>
+                <input asp-for="PrincipalOfficer.DateTo" class="form-control" />
+                <span asp-validation-for="PrincipalOfficer.DateTo" class="text-danger"></span>
+            </div>
+          
+            <div class="form-group">
+                <label asp-for="PrincipalOfficer.PrincipalOfficerCategoryId" class="control-label">Office</label>
+                <select asp-for="PrincipalOfficer.PrincipalOfficerCategoryId" class ="form-control" asp-items="ViewBag.PrincipalOfficerCategoryId"></select>
+            </div>
+                    <div class="form-group">
+                        <input type="submit" value="Submit" class="btn btn-primary" />
+                        <a asp-page="./Index" class="btn bg-gradient-warning btn-sm" style="float:right;">Back</a>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+        <!-- /.row -->
+    </div>
+    <!-- /.card-body -->
+    <div class="card-footer">
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

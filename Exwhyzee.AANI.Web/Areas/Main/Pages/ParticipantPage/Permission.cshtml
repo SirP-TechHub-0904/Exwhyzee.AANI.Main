@@ -1,0 +1,55 @@
+﻿@page
+@model Exwhyzee.AANI.Web.Areas.Main.Pages.ParticipantPage.PermissionModel
+@{
+}
+
+<div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title" style="text-transform: uppercase;">UPDATE Permissions FOR @Model.Participant.Fullname</h3>
+
+
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+
+                <div class="box">
+                  
+                    <div class="box-body">
+                        <div class="">
+                            @foreach (var i in Model.UserRoles)
+                            {
+                                <button class="btn btn-primary">
+                                    @i
+                                </button>
+                            }
+                        </div>
+                        <hr />
+                        <div class="">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h6>Click to Remove Permision</h6>
+                                    @foreach (var i in Model.UserRoles)
+                                    {
+                                        @await Component.InvokeAsync("RoleData", new { name = i, Userid = Model.Participant.Id, syle = "danger", fullname = Model.Participant.Fullname })
+                                    }
+                                </div>
+                                <div class="col-md-6">
+                                    <h6>Click to Add Permision</h6>
+                                    @foreach (var i in Model.RemainingUserRoles)
+                                    {
+                                        @await Component.InvokeAsync("RoleData", new { name = i, Userid = Model.Participant.Id, syle = "warning", fullname = Model.Participant.Fullname })
+
+                                    }
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

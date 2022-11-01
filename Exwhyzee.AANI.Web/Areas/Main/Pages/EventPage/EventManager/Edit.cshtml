@@ -1,0 +1,89 @@
+﻿@page
+@model Exwhyzee.AANI.Web.Areas.Main.Pages.EventPage.EventManager.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title">EDIT EVENT</h3>
+
+
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                <form method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="Event.Id" />
+                    <div class="form-group">
+                        <label asp-for="Event.Title" class="control-label"></label>
+                        <input asp-for="Event.Title" class="form-control" />
+                        <span asp-validation-for="Event.Title" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Event.Toipc" class="control-label"></label>
+                        <textarea asp-for="Event.Toipc" class="form-control"></textarea>
+                        <span asp-validation-for="Event.Toipc" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Event.Description" class="control-label"></label>
+                        <textarea asp-for="Event.Description" id="summernote" class="form-control"></textarea>
+                        <span asp-validation-for="Event.Description" class="text-danger"></span>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label asp-for="Event.StartDate" class="control-label"></label>
+                        <input asp-for="Event.StartDate" class="form-control" />
+                        <span asp-validation-for="Event.StartDate" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Event.EndDate" class="control-label"></label>
+                        <input asp-for="Event.EndDate" class="form-control" />
+                        <span asp-validation-for="Event.EndDate" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Event.Budget" class="control-label"></label>
+                        <input asp-for="Event.Budget" class="form-control" />
+                        <span asp-validation-for="Event.Budget" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Event.Note" class="control-label"></label>
+                        <textarea asp-for="Event.Note" class="form-control"></textarea>
+                        <span asp-validation-for="Event.Note" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Event.Report" class="control-label"></label>
+                        <textarea asp-for="Event.Report" id="summernote" class="form-control"></textarea>
+                        <span asp-validation-for="Event.Report" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Event.EventStatus" class="control-label"></label>
+                        @Html.DropDownListFor(model => model.Event.EventStatus, new SelectList(Enum.GetValues(typeof(Exwhyzee.AANI.Domain.Enums.EventStatus))), new { @class = "form-control" })
+                        <span asp-validation-for="Event.EventStatus" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Submit" class="btn btn-primary" />
+                        <a asp-page="./Index" class="btn bg-gradient-warning btn-sm" style="float:right;">Back</a>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+        <!-- /.row -->
+    </div>
+    <!-- /.card-body -->
+    <div class="card-footer">
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }
