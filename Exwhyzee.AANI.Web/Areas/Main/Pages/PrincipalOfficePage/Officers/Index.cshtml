@@ -1,0 +1,88 @@
+﻿@page
+@model Exwhyzee.AANI.Web.Areas.Main.Pages.PrincipalOfficePage.Officers.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">PRINCIPAL OFFICERS OF THE NATIONAL INSTITUTE</h3>
+
+        <a asp-page="./Create" class="btn bg-gradient-warning btn-sm" style="float:right;">Create New</a>
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body">
+        <div class="table-responsive">
+            <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>S/N</th>
+            <th>
+                @Html.DisplayNameFor(model => model.PrincipalOfficer[0].Participant)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PrincipalOfficer[0].DateFrom)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PrincipalOfficer[0].DateTo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PrincipalOfficer[0].Date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PrincipalOfficer[0].PrincipalOfficerCategory)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+                @{
+                    int sn = 0;
+                }
+    <tbody>
+@foreach (var item in Model.PrincipalOfficer) {
+        <tr>
+                            <td>
+                                @{
+                                    sn++;
+                                }
+                                @sn
+                            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Participant.Id)
+            </td>
+                            <td>
+                                @item.DateFrom.ToString("MMMM yyyy")
+                            </td>
+                            <td>
+                                @item.DateTo.ToString("MMMM yyyy")
+                            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PrincipalOfficerCategory.Title)
+            </td>
+                            <td>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-success">Action</button>
+
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-success dropdown-toggle dropdown-icon" data-toggle="dropdown" aria-expanded="false">
+                                        </button>
+                                        <div class="dropdown-menu" style="">
+
+                                            <a class="dropdown-item" asp-page="./Edit" asp-route-id="@item.Id">Edit</a>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

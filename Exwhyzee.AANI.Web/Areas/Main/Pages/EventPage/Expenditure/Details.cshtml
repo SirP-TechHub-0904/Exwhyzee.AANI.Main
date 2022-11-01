@@ -1,0 +1,49 @@
+﻿@page
+@model Exwhyzee.AANI.Web.Areas.Main.Pages.EventPage.Expenditure.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>EventExpenditure</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.EventExpenditure.Title)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.EventExpenditure.Title)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.EventExpenditure.Date)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.EventExpenditure.Date)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.EventExpenditure.ExpenditureDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.EventExpenditure.ExpenditureDate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.EventExpenditure.Note)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.EventExpenditure.Note)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.EventExpenditure.Event)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.EventExpenditure.Event.Id)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.EventExpenditure.Id">Edit</a> |
+    <a asp-page="./Index">Back to List</a>
+</div>

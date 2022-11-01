@@ -1,0 +1,52 @@
+﻿@page
+@model Exwhyzee.AANI.Web.Areas.Main.Pages.EventPage.Expenditure.DeleteModel
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>Delete</h1>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>EventExpenditure</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.EventExpenditure.Title)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.EventExpenditure.Title)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.EventExpenditure.Date)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.EventExpenditure.Date)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.EventExpenditure.ExpenditureDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.EventExpenditure.ExpenditureDate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.EventExpenditure.Note)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.EventExpenditure.Note)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.EventExpenditure.Event)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.EventExpenditure.Event.Id)
+        </dd>
+    </dl>
+    
+    <form method="post">
+        <input type="hidden" asp-for="EventExpenditure.Id" />
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-page="./Index">Back to List</a>
+    </form>
+</div>

@@ -1,0 +1,76 @@
+﻿@page
+@model Exwhyzee.AANI.Web.Areas.Main.Pages.Board.Year.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">BOARD OF GOVORNOR MEMBERS FOR @Model.BoardOfGovornorCategory.Title</h3>
+
+        <a asp-page="/Board/Member/Create" class="btn bg-gradient-warning btn-sm" style="float:right;">Add Member</a>
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body">
+        <div class="table-responsive">
+            <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>S/N</th>
+                        <th>
+                           Name
+                        </th>
+                        <th>
+                            Position
+                        </th>
+                      
+                        <th></th>
+                    </tr>
+                </thead>
+                @{
+                    int sn = 0;
+                }
+                <tbody>
+                    @foreach (var item in Model.BoardOfGovornorMember)
+                    {
+                        <tr>
+                            <td>
+                                @{
+                                    sn++;
+                                }
+                                @sn
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Participant.Fullname)
+                                (SEC @Html.DisplayFor(modelItem => item.Participant.SEC.Number) - 
+                                @Html.DisplayFor(modelItem => item.Participant.SEC.Year))
+                            </td>
+                            <td>
+                                @item.Position
+                            </td>
+                          
+                           
+                            <td>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-success">Action</button>
+
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-success dropdown-toggle dropdown-icon" data-toggle="dropdown" aria-expanded="false">
+                                        </button>
+                                        <div class="dropdown-menu" style="">
+
+                                            <a class="dropdown-item" asp-page="/Board/Member/Edit" asp-route-id="@item.Id">Edit</a>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

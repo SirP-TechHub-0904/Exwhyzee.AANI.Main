@@ -1,0 +1,43 @@
+﻿@page
+@model Exwhyzee.AANI.Web.Areas.Main.Pages.SecPage.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>SEC</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.SEC.Number)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.SEC.Number)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.SEC.Year)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.SEC.Year)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.SEC.Title)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.SEC.Title)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.SEC.Date)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.SEC.Date)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.SEC.Id">Edit</a> |
+    <a asp-page="./Index">Back to List</a>
+</div>

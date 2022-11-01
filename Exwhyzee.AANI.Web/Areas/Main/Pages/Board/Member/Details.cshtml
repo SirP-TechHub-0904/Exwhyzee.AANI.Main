@@ -1,0 +1,43 @@
+﻿@page
+@model Exwhyzee.AANI.Web.Areas.Main.Pages.Board.Member.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>BoardOfGovornorMember</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.BoardOfGovornorMember.Participant)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.BoardOfGovornorMember.Participant.Id)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.BoardOfGovornorMember.Date)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.BoardOfGovornorMember.Date)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.BoardOfGovornorMember.Position)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.BoardOfGovornorMember.Position)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.BoardOfGovornorMember.BoardOfGovornorCategory)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.BoardOfGovornorMember.BoardOfGovornorCategory.Id)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.BoardOfGovornorMember.Id">Edit</a> |
+    <a asp-page="./Index">Back to List</a>
+</div>

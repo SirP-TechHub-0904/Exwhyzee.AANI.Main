@@ -1,0 +1,124 @@
+﻿@page
+@model Exwhyzee.AANI.Web.Areas.Main.Pages.ParticipantPage.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title">ADD A NEW PARTICIPANT TO ALUMNI</h3>
+
+
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                <form method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label class="control-label">SEARCH THE NAME TO COMFIRM IF IT EXIST. THANKS</label>
+                        <select asp-items="ViewBag.PId" class="form-control select2 select2-primary js-example-basic-single" data-dropdown-css-class="select2-primary">
+                           
+
+                        </select>                 
+
+                    </div>
+                    <hr />
+                    <div class="form-group">
+                        <label asp-for="Input.SECId" class="control-label">SEC YEAR</label>
+                        <select asp-for="Input.SECId" asp-items="ViewBag.SECId" required="required" class="form-control select2 select2-primary js-example-basic-single" data-dropdown-css-class="select2-primary">
+                            <option>Select SEC</option>
+
+                        </select>                        <span asp-validation-for="Input.SECId" class="text-danger"></span>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label asp-for="Input.Title" class="control-label"></label>
+                        <select asp-for="Input.Title" class="form-control" required="required">
+
+                            <option value="Mr">Mr</option>
+                            <option value="Mrs">Mrs</option>
+                            <option value="Chief">Chief</option>
+                            <option value="Alhaji">Alhaji</option>
+                            <option value="Col.">Col.</option>
+                            <option value="Capt Navy.">Capt Navy.</option>
+                            <option value="Brig Gen.">Brig Gen.</option>
+                            <option value="Air Comdr.">Air Comdr.</option>
+                            <option value="AVM">AVM</option>
+                            <option value="Gp Capt.">Gp Capt.</option>
+                            <option value="Dr">Dr</option>
+                            <option value="Engr.">Engr.</option>
+                            <option value="Pharm.">Pharm.</option>
+                            <option value="CP">CP</option>
+                            <option value="AIG">AIG</option>
+                            <option value="DIG">DIG</option>
+                        </select>                               <span asp-validation-for="Input.Title" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Input.Surname" class="control-label"></label>
+                        <input asp-for="Input.Surname" class="form-control" />
+                        <span asp-validation-for="Input.Surname" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Input.FirstName" class="control-label"></label>
+                        <input asp-for="Input.FirstName" class="form-control" />
+                        <span asp-validation-for="Input.FirstName" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Input.OtherName" class="control-label"></label>
+                        <input asp-for="Input.OtherName" class="form-control" />
+                        <span asp-validation-for="Input.OtherName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Input.Email" class="control-label"></label>
+                        <input asp-for="Input.Email" class="form-control" />
+                        <span asp-validation-for="Input.Email" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Input.PhoneNumber" class="control-label"></label>
+                        <input asp-for="Input.PhoneNumber" class="form-control" />
+                        <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Input.Sponsor" class="control-label"></label>
+                        <input asp-for="Input.Sponsor" class="form-control" />
+                        <span asp-validation-for="Input.Sponsor" class="text-danger"></span>
+                    </div>
+
+
+                    <div class="form-group">
+                        <input type="submit" value="Submit" class="btn btn-primary" />
+                        <a asp-page="./Index" class="btn bg-gradient-warning btn-sm" style="float:right;">Back</a>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+        <!-- /.row -->
+    </div>
+    <!-- /.card-body -->
+    <div class="card-footer">
+    </div>
+</div>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        $(function () {
+    //Initialize Select2 Elements
+    //$('.select2').select2()
+
+        }
+    </script>
+   
+    }
