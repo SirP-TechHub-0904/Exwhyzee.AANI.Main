@@ -1,52 +1,225 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="zxx">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Exwhyzee.AANI.Web</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/Exwhyzee.AANI.Web.styles.css" asp-append-version="true" />
+    <title>AANI - Alumni Association of The National Institute - @ViewData["Title"]</title>
+    <meta property="og:site_name" content="@ViewData["Title"]">
+    <meta property="og:title" content="@ViewData["Title"]" />
+    <meta property="og:description" content="@ViewData["Description"]" />
+    <meta property="og:image" itemprop="image" content="@ViewData["Image"]">
+    <meta property="og:type" content="website" />
+    <meta property="og:updated_time" content="@DateTime.UtcNow.AddHours(1)" />
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="~/img/icon.jpg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!-- Bootstrap CSS-->
+    <link rel="stylesheet" type="text/css" href="~/web/css/bootstrap.min.css">
+
+    <!-- Font-Awesome -->
+    <link rel="stylesheet" type="text/css" href="~/web/css/font-awesome.css">
+
+    <!-- Icomoon -->
+    <link rel="stylesheet" type="text/css" href="~/web/css/icomoon.css">
+
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="~/web/css/animate.css">
+
+    <!-- Revolution Slider  -->
+    <link rel="stylesheet" href="~/web/css/rev-settings.css">
+    <link rel="stylesheet" type="text/css" href="~/web/css/swiper.min.css">
+
+    <link rel="stylesheet" href="~/web/css/slider.css">
+
+    <!-- Color Switcher -->
+    <link rel="stylesheet" type="text/css" href="~/web/css/switcher.css">
+
+    <!-- Owl Carousel  -->
+    <link rel="stylesheet" href="~/web/css/owl.carousel.css">
+
+    <!-- Main Styles -->
+    <link rel="stylesheet" type="text/css" href="~/web/css/default.css">
+    <link rel="stylesheet" type="text/css" href="~/web/css/styles.css" id="colors">
+
+    <!-- Fonts Google -->
+    <link href="https://fonts.googleapis.com/css?family=Fira+Sans:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+    <style>
+        .p {
+            font-size: 17px !important;
+        }
+    </style>
+
 </head>
 <body>
+
+    <!-- Preloader Start-->
+    <div id="preloader">
+        <div class="row loader">
+            <div class="loader-icon"></div>
+        </div>
+    </div>
+
+
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-page="/Index">Exwhyzee.AANI.Web</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
-                        </li>
-                    </ul>
-                    <partial name="_LoginPartial" />
-                </div>
+        <nav id="navigation4" class="container navigation">
+            <div class="nav-header">
+                <a class="nav-brand" asp-page="/Index">
+                    <img src="~/img/logo.png" class="main-logo" alt="logo" id="main_logo" style="height: 80px;">
+                </a>
+                <div class="nav-toggle"></div>
+            </div>
+            <div class="nav-menus-wrapper">
+                <ul class="nav-menu align-to-right">
+
+                    <li>
+                        <a asp-page="/Sec">SECs</a>
+                    </li>
+
+
+                    <li>
+                        <a asp-page="/Gallery">Gallery</a>
+                    </li>
+                    <li>
+                        <a href="#">About</a>
+                        <ul class="nav-dropdown">
+                            <li><a asp-page="/Introduction">Introduction</a></li>
+                            <li><a asp-page="/Administration">Administration</a></li>
+                            <li><a asp-page="/Contributions">Contributions</a></li>
+
+                        </ul>
+                    </li>
+                    <li>
+                        <a asp-page="/Contact">Contact</a>
+                    </li>
+                    <li>
+                        <a asp-page="/Login">Login</a>
+                    </li>
+                </ul>
             </div>
         </nav>
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
+    <!-- Navbar END -->
+    @RenderBody()
 
-    <footer class="border-top footer text-muted">
+    <!-- Footer START -->
+    <footer>
         <div class="container">
-            &copy; 2022 - Exwhyzee.AANI.Web - <a asp-area="" asp-page="/Privacy">Privacy</a>
+            <div class="row">
+                <!-- Column 1 Start -->
+                <div class="col-md-4 col-sm-6 col-12">
+                    <h3>Do You Know</h3>
+                    <div class="mt-25">
+                        <p class="mt-25">
+                            The success of telling the story of an association of the stature of the AANI lies in access to complete' credible, and verifiable information
+                        </p>
+                        <div class="footer-social-icons mt-25">
+                            <ul>
+                                <li><a href="#"><i class="fa fa-facebook-square"></i></a></li>
+                                <li><a href="#"><i class="fa fa-instagram"></i></a></li>
+                                <li><a href="#"><i class="fa fa-pinterest"></i></a></li>
+                                <li><a href="#"><i class="fa fa-skype"></i></a></li>
+                                <li><a href="#"><i class="fa fa-youtube"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- Column 1 End -->
+                <!-- Column 2 Start -->
+                <div class="col-md-3 col-sm-6 col-12">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-list">
+                        <li><a asp-page="/Introduction">Introduction</a></li>
+                        <li><a asp-page="/About">About</a></li>
+                        <li><a asp-page="/Administration">Administration</a></li>
+                        <li><a asp-page="/Contributions">Administration</a></li>
+                        <li><a asp-page="/Contact">Contact</a></li>
+                        <li><a asp-page="/FAQs">FAQs</a></li>
+                    </ul>
+                </div>
+                <!-- Column 2 End -->
+                <!-- Column 3 Start -->
+                <div class="col-md-3 col-sm-6 col-12">
+                    <h3>Papers</h3>
+                    <ul class="footer-list">
+                        <li><a asp-page="/Publication">Publication</a></li>
+                        <li><a asp-page="/Lectures">Lectures</a></li>
+                        <li><a asp-page="/Essay">Essays</a></li>
+                        <li>
+                            <a asp-page="/News">News</a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- Column 3 End -->
+                <!-- Column 4 Start -->
+                <div class="col-md-2 col-sm-6 col-12">
+                    <h3>The National Institute</h3>
+                    <ul class="footer-list">
+                        <li><a asp-page="/AboutNIPSS">About NIPSS</a></li>
+                        <li><a asp-page="/NIPSSExecutive">NIPSS Executive</a></li>
+                        <li><a asp-page="/SEC">SEC</a></li>
+                    </ul>
+                </div>
+                <!-- Column 4 End -->
+            </div>
+
+            <!-- Footer Bar Start -->
+            <div class="footer-bar">
+                <p><span class="primary-color">ANII</span> © 2022. All Rights Reserved. Developed By <a>Exwhyzee Technologies</a></p>
+            </div>
+            <!-- Footer Bar End -->
         </div>
     </footer>
+    <!-- Footer END -->
+    <!-- Scroll to top button Start -->
+    <a href="#" class="scroll-to-top"><i class="fa fa-angle-up" aria-hidden="true"></i></a>
+    <!-- Scroll to top button End -->
+    <!-- Jquery -->
+    <script src="~/web/js/jquery.min.js"></script>
 
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+    <!--Popper JS-->
+    <script src="~/web/js/popper.min.js"></script>
 
-    @await RenderSectionAsync("Scripts", required: false)
+    <!-- Bootstrap JS-->
+    <script src="~/web/js/bootstrap.min.js"></script>
+
+    <!-- Owl Carousel-->
+    <script src="~/web/js/owl.carousel.js"></script>
+
+    <!-- Navbar JS -->
+    <script src="~/web/js/navigation.js"></script>
+    <script src="~/web/js/navigation.fixed.js"></script>
+
+    <!-- Wow JS -->
+    <script src="~/web/js/wow.min.js"></script>
+
+    <!-- Countup -->
+    <script src="~/web/js/jquery.counterup.min.js"></script>
+    <script src="~/web/js/waypoints.min.js"></script>
+
+    <!-- Tabs -->
+    <script src="~/web/js/tabs.min.js"></script>
+
+    <!-- Isotop -->
+    <script src="~/web/js/isotope.pkgd.min.js"></script>
+    <script src="~/web/js/swiper.min.js"></script>
+
+    <!-- Modernizr -->
+    <script src="~/web/js/modernizr.js"></script>
+
+    <!-- Switcher JS -->
+    <script src="~/web/js/switcher.js"></script>
+
+    <!-- Google Map -->
+    <script src="~/web/js/map.js"></script>
+
+    <!-- Main JS -->
+    <script src="~/web/js/main.js"></script>
+    @RenderSection("Scripts", required: false)
+
 </body>
 </html>
+
+
+
+
+
+

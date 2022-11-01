@@ -1,0 +1,78 @@
+﻿@page
+@model Exwhyzee.AANI.Web.Areas.Main.Pages.EventPage.EventManager.ExpenditurePageModel
+@{
+}
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">EVENT EXPENDITURE </h3>
+
+        <a asp-page="/EventPage/EventManager/Details" asp-route-id="@Model.Event.Id" class="btn bg-gradient-danger btn-sm" style="float:right;margin-left:5px;">Back to Event</a>
+
+        <a asp-page="/EventPage/Expenditure/Create" asp-route-id="@Model.Event.Id" class="btn bg-gradient-warning btn-sm" style="float:right;">Add New</a>
+
+    </div>
+    <div class="card-header">
+
+        <h4>@Model.Event.Toipc</h4>
+
+    </div>    <!-- /.card-header -->
+    <div class="card-body">
+        <div class="table-responsive">
+            <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>S/N</th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.EventExpenditure[0].Title)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.EventExpenditure[0].Date)
+                        </th>
+                        <th>Amount</th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.EventExpenditure[0].ExpenditureDate)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.EventExpenditure[0].Note)
+                        </th>
+                      
+                    </tr>
+                </thead>
+                @{
+                    int sn = 0;
+                }
+                <tbody>
+                    @foreach (var item in Model.EventExpenditure)
+                    {
+                        <tr>
+                            <td>
+                                @{
+                                    sn++;
+                                }
+                                @sn
+                            </td>
+                            <td>
+                                <a asp-page="/EventPage/Expenditure/Edit" asp-route-id="@item.Id">
+                                @Html.DisplayFor(modelItem => item.Title)
+                                </a>
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Amount)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Date)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ExpenditureDate)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Note)
+                            </td>
+                          
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

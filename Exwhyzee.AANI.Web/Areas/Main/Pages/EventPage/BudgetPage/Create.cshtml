@@ -1,0 +1,67 @@
+﻿@page
+@model Exwhyzee.AANI.Web.Areas.Main.Pages.EventPage.BudgetPage.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+<div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title">ADD A NEW BUDGET
+            <br />
+            @Model.Event.Toipc
+
+        </h3>
+      
+
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                <form method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="EventBudget.EventId" value="@Model.Event.Id" />
+
+                    <div class="form-group">
+                        <label asp-for="EventBudget.Title" class="control-label"></label>
+                        <input asp-for="EventBudget.Title" class="form-control" />
+                        <span asp-validation-for="EventBudget.Title" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="EventBudget.Amount" class="control-label"></label>
+                        <input asp-for="EventBudget.Amount" class="form-control" />
+                        <span asp-validation-for="EventBudget.Amount" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="EventBudget.AssignTo" class="control-label"></label>
+                        <input asp-for="EventBudget.AssignTo" class="form-control" />
+                        <span asp-validation-for="EventBudget.AssignTo" class="text-danger"></span>
+                    </div>
+                    <div class="form-group form-check">
+                        <label class="form-check-label">
+                            <input class="form-check-input" asp-for="EventBudget.Disabled" /> @Html.DisplayNameFor(model => model.EventBudget.Disabled)
+                        </label>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="submit" value="Submit" class="btn btn-primary" />
+                        <a asp-page="./Index" class="btn bg-gradient-warning btn-sm" style="float:right;">Back</a>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+        <!-- /.row -->
+    </div>
+    <!-- /.card-body -->
+    <div class="card-footer">
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }

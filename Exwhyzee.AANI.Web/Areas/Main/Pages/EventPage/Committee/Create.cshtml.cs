@@ -23,10 +23,22 @@ namespace Exwhyzee.AANI.Web.Areas.Main.Pages.EventPage.Committee
             _context = context;
             _userManager = userManager;
         }
+        public Event Event { get; set; }
 
-        public IActionResult OnGet()
+        public async Task<IActionResult> OnGet(long? id)
         {
-        ViewData["EventId"] = new SelectList(_context.Events, "Id", "Id");
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            Event = await _context.Events
+                .FirstOrDefaultAsync(m => m.Id == id);
+
+            if (Event == null)
+            {
+                return NotFound();
+            }
             var partaccount = _userManager.Users.Include(x => x.SEC).AsQueryable();
             var secoutput = partaccount.Select(x => new ParticipantDropdownDto
             {
@@ -49,7 +61,7 @@ namespace Exwhyzee.AANI.Web.Areas.Main.Pages.EventPage.Committee
             await _context.SaveChangesAsync();
             TempData["aasuccess"] = "Updated successfully";
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("/EventPage/EventManager/Details", new {id = EventCommitte.EventId});
         }
     }
 }

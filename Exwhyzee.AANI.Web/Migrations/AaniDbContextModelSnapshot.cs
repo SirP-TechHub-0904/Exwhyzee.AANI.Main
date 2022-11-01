@@ -149,9 +149,6 @@ namespace Exwhyzee.AANI.Web.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
 
-                    b.Property<decimal>("Budget")
-                        .HasColumnType("decimal(18,2)");
-
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
@@ -208,6 +205,9 @@ namespace Exwhyzee.AANI.Web.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<string>("Tag")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("EventId");
@@ -215,6 +215,42 @@ namespace Exwhyzee.AANI.Web.Migrations
                     b.HasIndex("ParticipantId");
 
                     b.ToTable("EventAttendances");
+                });
+
+            modelBuilder.Entity("Exwhyzee.AANI.Domain.Models.EventBudget", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("AssignTo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("Disabled")
+                        .HasColumnType("bit");
+
+                    b.Property<long>("EventId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EventId");
+
+                    b.ToTable("EventBudget");
                 });
 
             modelBuilder.Entity("Exwhyzee.AANI.Domain.Models.EventComment", b =>
@@ -1023,6 +1059,17 @@ namespace Exwhyzee.AANI.Web.Migrations
                     b.Navigation("Participant");
                 });
 
+            modelBuilder.Entity("Exwhyzee.AANI.Domain.Models.EventBudget", b =>
+                {
+                    b.HasOne("Exwhyzee.AANI.Domain.Models.Event", "Event")
+                        .WithMany("EventBudgets")
+                        .HasForeignKey("EventId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Event");
+                });
+
             modelBuilder.Entity("Exwhyzee.AANI.Domain.Models.EventComment", b =>
                 {
                     b.HasOne("Exwhyzee.AANI.Domain.Models.Event", "Event")
@@ -1278,6 +1325,8 @@ namespace Exwhyzee.AANI.Web.Migrations
             modelBuilder.Entity("Exwhyzee.AANI.Domain.Models.Event", b =>
                 {
                     b.Navigation("EventAttendances");
+
+                    b.Navigation("EventBudgets");
 
                     b.Navigation("EventComments");
 

@@ -11,6 +11,7 @@ namespace Exwhyzee.AANI.Domain.Models
         public EventBudget()
         {
             Date = DateTime.UtcNow.AddHours(1);
+            UpdatedDate = DateTime.UtcNow.AddHours(1);
 
         }
         public long Id { get; set; }
@@ -20,6 +21,7 @@ namespace Exwhyzee.AANI.Domain.Models
         public bool Disabled { get; set; }
 
         public DateTime Date { get; set; }
+        public DateTime UpdatedDate { get; set; }
 
         public long EventId { get; set; }
         public Event Event { get; set; }
