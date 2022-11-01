@@ -22,6 +22,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.EventExpenditure[0].Title)
             </th>
+            <th>Amount</th>
             <th>
                 @Html.DisplayNameFor(model => model.EventExpenditure[0].Date)
             </th>
@@ -52,6 +53,9 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Title)
             </td>
+                            <td>
+                                &#8358; @Html.DisplayFor(modelItem => item.Amount)
+                            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Date)
             </td>
@@ -62,7 +66,7 @@
                 @Html.DisplayFor(modelItem => item.Note)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Event.Id)
+                @Html.DisplayFor(modelItem => item.Event.Title)
             </td>
                             <td>
                                 <div class="btn-group">

@@ -19,7 +19,7 @@ namespace Exwhyzee.AANI.Domain.Models
         public DateTime DatetimeArrival { get; set; }
         public DateTime DatetimeDeparture { get; set; }
         public DateTime Date { get; set; }
-
+        public string? Tag { get; set; }
         public long EventId { get; set; }
         public Event Event { get; set; }
     }

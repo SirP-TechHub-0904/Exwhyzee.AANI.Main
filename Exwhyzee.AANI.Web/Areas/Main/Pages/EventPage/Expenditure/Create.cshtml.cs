@@ -49,7 +49,7 @@ namespace Exwhyzee.AANI.Web.Areas.Main.Pages.EventPage.Expenditure
             await _context.SaveChangesAsync();
             TempData["aasuccess"] = "Updated successfully";
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("/EventPage/EventManager/ExpenditurePage", new {id = EventExpenditure.EventId});
         }
     }
 }

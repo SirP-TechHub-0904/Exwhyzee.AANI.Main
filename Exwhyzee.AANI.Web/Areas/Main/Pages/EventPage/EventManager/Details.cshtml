@@ -37,7 +37,7 @@
                     <div class="icon">
                         <i class="ion ion-bag"></i>
                     </div>
-                    <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    <a asp-page="./Budget" asp-route-id="@Model.Event.Id" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
             </div>
             <!-- ./col -->
@@ -62,7 +62,7 @@
                     <div class="icon">
                         <i class="ion ion-money"></i>
                     </div>
-                    <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    <a asp-page="./Funds" asp-route-id="@Model.Event.Id" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
             </div>
             <!-- ./col -->
@@ -86,7 +86,7 @@
                     <div class="icon">
                         <i class="ion ion-person-add"></i>
                     </div>
-                    <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    <a asp-page="./ExpenditurePage" asp-route-id="@Model.Event.Id" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
             </div>
             <!-- ./col -->
@@ -101,7 +101,7 @@
                     <div class="icon">
                         <i class="ion ion-users"></i>
                     </div>
-                    <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    <a asp-page="./AttendancePage" asp-route-id="@Model.Event.Id" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
             </div>
             <!-- ./col -->
@@ -139,6 +139,7 @@
                     </div>
                     <div class="callout callout-danger">
                         <h5>COMMITTEE</h5>
+                        <a asp-page="/EventPage/Committee/Create" asp-route-id="@Model.Event.Id" class="btn bg-gradient-warning btn-sm" style="float:right;">Add New Committee</a>
 
 
                         <div>

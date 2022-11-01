@@ -42,7 +42,7 @@ namespace Exwhyzee.AANI.Web.Areas.Main.Pages.EventPage.Committee
             {
                 return NotFound();
             }
-           ViewData["EventId"] = new SelectList(_context.Events, "Id", "Id");
+
             var partaccount = _userManager.Users.Include(x => x.SEC).AsQueryable();
             var secoutput = partaccount.Select(x => new ParticipantDropdownDto
             {
@@ -73,7 +73,7 @@ namespace Exwhyzee.AANI.Web.Areas.Main.Pages.EventPage.Committee
 
             }
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("/EventPage/EventManager/Details", new { id = EventCommitte.EventId });
         }
 
         private bool EventCommitteExists(long id)

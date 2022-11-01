@@ -73,7 +73,7 @@ namespace Exwhyzee.AANI.Web.Areas.Main.Pages.EventPage.Attendance
 
             }
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("/EventPage/EventManager/AttendancePage", new { id = EventAttendance.EventId });
         }
 
         private bool EventAttendanceExists(long id)

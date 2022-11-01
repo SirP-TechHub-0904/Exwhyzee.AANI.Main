@@ -60,7 +60,7 @@ namespace Exwhyzee.AANI.Web.Areas.Main.Pages.EventPage.Expenditure
 
             }
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("/EventPage/EventManager/ExpenditurePage", new { id = EventExpenditure.EventId });
         }
 
         private bool EventExpenditureExists(long id)

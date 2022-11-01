@@ -1,0 +1,72 @@
+﻿@page
+@model Exwhyzee.AANI.Web.Areas.Main.Pages.EventPage.EventManager.AttendancePageModel
+@{
+}
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">
+           EVENT ATTENDANCE
+            </h3>
+        <a asp-page="/EventPage/EventManager/Details" asp-route-id="@Model.Event.Id" class="btn bg-gradient-danger btn-sm" style="float:right;margin-left:5px;">Back to Event</a>
+
+            <a asp-page="/EventPage/Attendance/Create" asp-route-id="@Model.Event.Id" class="btn bg-gradient-warning btn-sm" style="float:right;">Add New</a>
+
+    </div>
+    <div class="card-header">
+
+        <h4>@Model.Event.Toipc</h4>
+
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body">
+        <div class="table-responsive">
+            <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>S/N</th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.EventAttendance[0].Participant)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.EventAttendance[0].DatetimeArrival)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.EventAttendance[0].DatetimeDeparture)
+                        </th>
+                       <th>Tag</th>
+                    </tr>
+                </thead>  @{
+                    int sn = 0;
+                }
+                <tbody>
+                    @foreach (var item in Model.EventAttendance)
+                    {
+                        <tr>
+                            <td>
+                                @{
+                                    sn++;
+                                }
+                                @sn
+                            </td>
+                            <td>
+                                                                 <a asp-page="/EventPage/Attendance/Edit" asp-route-id="@item.Id">
+
+                                    @Html.DisplayFor(modelItem => item.Participant.Fullname) (SEC @item.Participant.SEC.Number - @item.Participant.SEC.Year)
+                                </a>
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.DatetimeArrival)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.DatetimeDeparture)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Tag)
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -41,7 +41,9 @@ namespace Exwhyzee.AANI.Web.Areas.Main.Pages.EventPage.EventManager
                 .ThenInclude(x=>x.Participant)
                 
                 .ThenInclude(x=>x.SEC)
-                .Include(x=>x.EventAttendances).Include(x=>x.EventBudgets)
+                .Include(x=>x.EventAttendances)
+                .Include(x=>x.EventBudgets)
+                .Include(x=>x.EventExpenditures)
                 .FirstOrDefaultAsync(m => m.Id == id);
 
 
