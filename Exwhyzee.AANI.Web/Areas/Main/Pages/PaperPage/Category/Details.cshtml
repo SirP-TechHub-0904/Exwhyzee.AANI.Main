@@ -1,0 +1,103 @@
+﻿@page
+@model Exwhyzee.AANI.Web.Areas.Main.Pages.PaperPage.Category.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">PAPERS LIST</h3>
+        <a asp-page="/PaperPage/PaperList/Create" class="btn bg-gradient-warning btn-sm" style="float:right;">Add New</a>
+
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body">
+        <div class="table-responsive">
+            <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>S/N</th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Paper[0].Title)
+                        </th>
+                        <th>
+                            Alumni
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Paper[0].Date)
+                        </th>
+
+                        <th>
+                            @Html.DisplayNameFor(model => model.Paper[0].Description)
+                        </th>
+
+                        <th>
+                            @Html.DisplayNameFor(model => model.Paper[0].Year)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Paper[0].Event)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Paper[0].PaperCategory)
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                @{
+                    int sn = 0;
+                }
+                <tbody>
+                    @foreach (var item in Model.Paper)
+                    {
+                        <tr>
+                            <td>
+                                @{
+                                    sn++;
+                                }
+                                @sn
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Title)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Participant.Fullname)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Date)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Description)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Year)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Event.Id)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.PaperCategory.Id)
+                            </td>
+                            <td>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-success">Action</button>
+
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-success dropdown-toggle dropdown-icon" data-toggle="dropdown" aria-expanded="false">
+                                        </button>
+                                        <div class="dropdown-menu" style="">
+
+                                            <a class="dropdown-item" asp-page="/PaperPage/PaperList/Edit" asp-route-id="@item.Id">Edit</a>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

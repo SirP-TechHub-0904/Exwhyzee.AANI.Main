@@ -1,0 +1,87 @@
+﻿@page
+@model Exwhyzee.AANI.Web.Pages.Web.ChaptersModel
+@{
+}
+<div class="page-title-section" style="background-image: url('../img/bred.jpg');">
+    <div class="container">
+        <h1>AANI CHAPTERS</h1>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="#">AANI CHAPTERS</a></li>
+        </ul>
+    </div>
+</div>
+<!-- Page Title END -->
+<!-- Info & Feature Section START -->
+<div class="section-block">
+    <div class="container">
+     
+
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-12">
+               
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title uppercase">AANI CHAPTERS Chairmen/Chairpersons</h3>
+
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table id="example1" class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>S/N</th>
+                                        <th>
+                                           
+                                            STATE CHAPTER
+                                        </th>
+                                        <th>
+                                            CHAIRMAN/CHAIRPERSON
+                                        </th>
+                                        <th>
+                                            PHONE NO
+                                        </th>
+                                        <th>
+                                            EMAIL
+                                        </th>
+                                    </tr>
+                                </thead>
+                                @{
+                                    int sn = 0;
+                                }
+                                <tbody>
+                                    @foreach (var item in Model.Chapter)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @{
+                                                    sn++;
+                                                }
+                                                @sn
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.State)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Chairperson)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.PhoneNumber)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Email)
+                                            </td>
+                                          
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

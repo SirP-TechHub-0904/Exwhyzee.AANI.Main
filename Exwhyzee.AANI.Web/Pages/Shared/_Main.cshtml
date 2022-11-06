@@ -262,8 +262,30 @@
                                 </p>
                             </a>
                         </li>
-
-
+                           <li class="nav-item">
+                            <a asp-page="/AaniChapters/Index" asp-area="Main" class="nav-link">
+                                <i class="nav-icon fas fa-users"></i>
+                                <p>
+                                   AANI Chapters
+                                </p>
+                            </a>
+                        </li>
+                          <li class="nav-item">
+                            <a asp-page="/PatronPage/Index" asp-area="Main" class="nav-link">
+                                <i class="nav-icon fas fa-users"></i>
+                                <p>
+                                   AANI Patron
+                                </p>
+                            </a>
+                        </li>
+                         <li class="nav-item">
+                            <a asp-page="/HeritageCouncilPage/Index" asp-area="Main" class="nav-link">
+                                <i class="nav-icon fas fa-users"></i>
+                                <p>
+                                   AANI Heritage Council
+                                </p>
+                            </a>
+                        </li>
                         <li class="nav-item">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-columns"></i>
@@ -403,7 +425,54 @@
                                 </li>
                             </ul>
                         </li>
+                         <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-file"></i>
+                                <p>
+                                    Papers
+                                    <i class="fas fa-angle-left right"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a asp-page="/PaperPage/category/Index" asp-area="Main" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Category</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a asp-page="/PaperPage/PaperList/Index" asp-area="Main" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Papers</p>
+                                    </a>
+                                </li>
 
+                            </ul>
+                        </li>
+                         <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-money"></i>
+                                <p>
+                                    Funds
+                                    <i class="fas fa-angle-left right"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a asp-page="/Funding/category/Index" asp-area="Main" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Fund Category</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a asp-page="/Funding/FundPage/Index" asp-area="Main" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Funds</p>
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </li>
                     </ul>
                 </nav>
                 <!-- /.sidebar-menu -->

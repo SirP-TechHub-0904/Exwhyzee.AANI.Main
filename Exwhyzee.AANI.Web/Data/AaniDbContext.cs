@@ -35,6 +35,9 @@ namespace Exwhyzee.AANI.Web.Data
         public DbSet<EventComment> EventComments { get; set; } = default!;
         public DbSet<EventExpenditure> EventExpenditures { get; set; } = default!;
         public DbSet<EventBudget> EventBudget { get; set; } = default!;
+        public DbSet<Chapter> Chapters { get; set; } = default!;
+        public DbSet<Patron> Patrons { get; set; } = default!;
+        public DbSet<HeritageCouncil> HeritageCouncils { get; set; } = default!;
 
 
     }

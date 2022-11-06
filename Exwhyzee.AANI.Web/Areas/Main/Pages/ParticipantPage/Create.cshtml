@@ -20,9 +20,7 @@
                     <div class="form-group">
                         <label class="control-label">SEARCH THE NAME TO COMFIRM IF IT EXIST. THANKS</label>
                         <select asp-items="ViewBag.PId" class="form-control select2 select2-primary js-example-basic-single" data-dropdown-css-class="select2-primary">
-                           
-
-                        </select>                 
+                        </select>
 
                     </div>
                     <hr />
@@ -43,7 +41,11 @@
                             <option value="Mrs">Mrs</option>
                             <option value="Chief">Chief</option>
                             <option value="Alhaji">Alhaji</option>
+                            <option value="Mallam">Mallam</option>
+                            <option value="Ambassador">Ambassador</option>
                             <option value="Col.">Col.</option>
+                            <option value="Comrade">Comrade</option>
+                            <option value="Captain">Captain</option>
                             <option value="Capt Navy.">Capt Navy.</option>
                             <option value="Brig Gen.">Brig Gen.</option>
                             <option value="Air Comdr.">Air Comdr.</option>
@@ -84,6 +86,11 @@
                         <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
                     </div>
                     <div class="form-group">
+                        <label asp-for="Input.GenderStatus" class="control-label">Gender</label>
+                        @Html.DropDownListFor(model => model.Input.GenderStatus, new SelectList(Enum.GetValues(typeof(Exwhyzee.AANI.Domain.Enums.GenderStatus))), new { @class = "form-control", required="required" })
+                        <span asp-validation-for="Input.GenderStatus" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
                         <label asp-for="Input.Sponsor" class="control-label"></label>
                         <input asp-for="Input.Sponsor" class="form-control" />
                         <span asp-validation-for="Input.Sponsor" class="text-danger"></span>
@@ -115,10 +122,10 @@
 
     <script>
         $(function () {
-    //Initialize Select2 Elements
-    //$('.select2').select2()
+            //Initialize Select2 Elements
+            //$('.select2').select2()
 
         }
     </script>
-   
+
     }

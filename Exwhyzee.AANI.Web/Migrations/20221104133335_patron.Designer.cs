@@ -4,6 +4,7 @@ using Exwhyzee.AANI.Web.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Exwhyzee.AANI.Web.Migrations
 {
     [DbContext(typeof(AaniDbContext))]
-    partial class AaniDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221104133335_patron")]
+    partial class patron
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -442,28 +444,6 @@ namespace Exwhyzee.AANI.Web.Migrations
                         .HasFilter("[EventId] IS NOT NULL");
 
                     b.ToTable("FundCategories");
-                });
-
-            modelBuilder.Entity("Exwhyzee.AANI.Domain.Models.HeritageCouncil", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
-
-                    b.Property<string>("Alumni")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Council")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Title")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("HeritageCouncils");
                 });
 
             modelBuilder.Entity("Exwhyzee.AANI.Domain.Models.LocalGoverment", b =>
