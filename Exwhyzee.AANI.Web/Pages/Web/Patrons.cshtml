@@ -1,0 +1,73 @@
+﻿@page
+@model Exwhyzee.AANI.Web.Pages.Web.PatronsModel
+@{
+}
+
+<div class="page-title-section" style="background-image: url('../img/bred.jpg');">
+    <div class="container">
+        <h1>AANI PATRONS</h1>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="#">AANI PATRONS</a></li>
+        </ul>
+    </div>
+</div>
+<!-- Page Title END -->
+<!-- Info & Feature Section START -->
+<div class="section-block">
+    <div class="container">
+
+
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-12">
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title uppercase">MEMBERS OF AANI BOARD OF PATRONS</h3>
+
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table id="example1" class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>S/N</th>
+                                        <th>
+                                            NAME
+                                        </th>
+                                       
+                                       
+                                    </tr>
+                                </thead>
+                                @{
+                                    int sn = 0;
+                                }
+                                <tbody>
+                                    @foreach (var item in Model.Patron)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @{
+                                                    sn++;
+                                                }
+                                                @sn
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Participant.Fullname) (SEC @item.Participant.SEC.Number - @item.Participant.SEC.Year)
+                                            </td>
+                                           
+                                           
+
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

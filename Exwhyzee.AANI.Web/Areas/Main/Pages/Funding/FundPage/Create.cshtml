@@ -1,0 +1,71 @@
+﻿@page
+@model Exwhyzee.AANI.Web.Areas.Main.Pages.Funding.FundPage.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title">ADD FUND</h3>
+
+
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Fund.ParticipantId" class="control-label">Alumni</label>
+                        <select asp-for="Fund.ParticipantId" class="form-control select2 select2-primary js-example-basic-single" data-dropdown-css-class="select2-primary" asp-items="ViewBag.ParticipantId"></select>
+            </div>
+         
+            <div class="form-group">
+                <label asp-for="Fund.DatePaid" class="control-label"></label>
+                <input asp-for="Fund.DatePaid" class="form-control" />
+                <span asp-validation-for="Fund.DatePaid" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Fund.FundStatus" class="control-label"></label>
+                        @Html.DropDownListFor(model => model.Fund.FundStatus, new SelectList(Enum.GetValues(typeof(Exwhyzee.AANI.Domain.Enums.FundStatus))), new { @class = "form-control" })
+                        <span asp-validation-for="Fund.FundStatus" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Fund.Amount" class="control-label"></label>
+                <input asp-for="Fund.Amount" class="form-control" />
+                <span asp-validation-for="Fund.Amount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Fund.EventId" class="control-label"></label>
+                        <select asp-for="Fund.EventId" class="form-control select2 select2-primary js-example-basic-single" data-dropdown-css-class="select2-primary" asp-items="ViewBag.EventId">
+                            <option>None</option>
+
+                        </select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Fund.FundCategoryId" class="control-label"></label>
+                <select asp-for="Fund.FundCategoryId" class ="form-control" asp-items="ViewBag.FundCategoryId"></select>
+            </div>
+                    <div class="form-group">
+                        <input type="submit" value="Submit" class="btn btn-primary" />
+                        <a asp-page="./Index" class="btn bg-gradient-warning btn-sm" style="float:right;">Back</a>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+        <!-- /.row -->
+    </div>
+    <!-- /.card-body -->
+    <div class="card-footer">
+    </div>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

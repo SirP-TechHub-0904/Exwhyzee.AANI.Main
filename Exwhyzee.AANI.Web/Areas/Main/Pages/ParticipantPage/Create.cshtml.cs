@@ -84,6 +84,7 @@ namespace Exwhyzee.AANI.Web.Areas.Main.Pages.ParticipantPage
             public string? Sponsor { get; set; }
             public string? PhoneNumber { get; set; }
             public long SECId { get; set; }
+            public GenderStatus GenderStatus { get; set; }
 
 
         }
@@ -103,7 +104,8 @@ namespace Exwhyzee.AANI.Web.Areas.Main.Pages.ParticipantPage
                 OtherName = Input.OtherName,
                 Title = Input.Title,
                 Sponsor = Input.Sponsor,
-                SECId = Input.SECId
+                SECId = Input.SECId,
+                GenderStatus = Input.GenderStatus
             };
             Guid pass = Guid.NewGuid();
             var result = await _userManager.CreateAsync(user, pass.ToString().Replace("-", ".") + "XY");

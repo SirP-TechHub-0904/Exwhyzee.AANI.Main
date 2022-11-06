@@ -46,6 +46,17 @@
         .p {
             font-size: 17px !important;
         }
+        .project-single-info ul li {
+   
+
+    padding: 0;
+}
+
+            .project-single-info ul li span {
+               
+                width: 100%;
+                max-width: 100%;
+            }
     </style>
 
 </head>
@@ -71,6 +82,18 @@
                 <ul class="nav-menu align-to-right">
 
                     <li>
+                        <a href="#">About</a>
+                        <ul class="nav-dropdown">
+                            <li><a asp-page="/Web/About">About Us</a></li>
+                            <li><a asp-page="/Web/Welcomespeech">Welcome Speech</a></li>
+                            <li><a asp-page="/Web/Constitution">Constitution</a></li>
+                            <li><a asp-page="/Web/Chapters">AANI Chapters</a></li>
+                            <li><a asp-page="/Web/Patrons">AANI Patrons</a></li>
+                            <li><a asp-page="/Web/HeritageCouncil">AANI Heritage Council</a></li>
+
+                        </ul>
+                    </li>
+                    <li>
                         <a asp-page="/Sec">SECs</a>
                     </li>
 
@@ -78,15 +101,7 @@
                     <li>
                         <a asp-page="/Gallery">Gallery</a>
                     </li>
-                    <li>
-                        <a href="#">About</a>
-                        <ul class="nav-dropdown">
-                            <li><a asp-page="/Introduction">Introduction</a></li>
-                            <li><a asp-page="/Administration">Administration</a></li>
-                            <li><a asp-page="/Contributions">Contributions</a></li>
-
-                        </ul>
-                    </li>
+                   
                     <li>
                         <a asp-page="/Contact">Contact</a>
                     </li>

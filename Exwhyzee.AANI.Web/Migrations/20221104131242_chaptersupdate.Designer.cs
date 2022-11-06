@@ -4,6 +4,7 @@ using Exwhyzee.AANI.Web.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Exwhyzee.AANI.Web.Migrations
 {
     [DbContext(typeof(AaniDbContext))]
-    partial class AaniDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221104131242_chaptersupdate")]
+    partial class chaptersupdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -444,28 +446,6 @@ namespace Exwhyzee.AANI.Web.Migrations
                     b.ToTable("FundCategories");
                 });
 
-            modelBuilder.Entity("Exwhyzee.AANI.Domain.Models.HeritageCouncil", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
-
-                    b.Property<string>("Alumni")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Council")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Title")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("HeritageCouncils");
-                });
-
             modelBuilder.Entity("Exwhyzee.AANI.Domain.Models.LocalGoverment", b =>
                 {
                     b.Property<long>("Id")
@@ -654,28 +634,6 @@ namespace Exwhyzee.AANI.Web.Migrations
                     b.HasIndex("SubCategoryFamiliesOnSECId");
 
                     b.ToTable("ParticipantFamiliesOnSECs");
-                });
-
-            modelBuilder.Entity("Exwhyzee.AANI.Domain.Models.Patron", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("ParticipantId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ParticipantId");
-
-                    b.ToTable("Patrons");
                 });
 
             modelBuilder.Entity("Exwhyzee.AANI.Domain.Models.PrincipalOfficer", b =>
@@ -1284,17 +1242,6 @@ namespace Exwhyzee.AANI.Web.Migrations
                     b.Navigation("Participant");
 
                     b.Navigation("SubCategoryFamiliesOnSEC");
-                });
-
-            modelBuilder.Entity("Exwhyzee.AANI.Domain.Models.Patron", b =>
-                {
-                    b.HasOne("Exwhyzee.AANI.Domain.Models.Participant", "Participant")
-                        .WithMany()
-                        .HasForeignKey("ParticipantId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Participant");
                 });
 
             modelBuilder.Entity("Exwhyzee.AANI.Domain.Models.PrincipalOfficer", b =>
