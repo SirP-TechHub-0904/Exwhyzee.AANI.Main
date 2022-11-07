@@ -21,4 +21,8 @@
     <ProjectReference Include="..\Exwhyzee.AANI.Domain\Exwhyzee.AANI.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Areas\Main\Pages\ExecutivePage\Year\" />
+  </ItemGroup>
+
 </Project>

@@ -38,6 +38,9 @@ namespace Exwhyzee.AANI.Web.Data
         public DbSet<Chapter> Chapters { get; set; } = default!;
         public DbSet<Patron> Patrons { get; set; } = default!;
         public DbSet<HeritageCouncil> HeritageCouncils { get; set; } = default!;
+        public DbSet<PastExecutiveMember> PastExecutiveMembers { get; set; } = default!;
+        public DbSet<Executive> Executives { get; set; } = default!;
+        public DbSet<PastExecutiveYear> PastExecutiveYear { get; set; } = default!;
 
 
     }
