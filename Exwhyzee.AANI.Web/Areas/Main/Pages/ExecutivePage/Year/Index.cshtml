@@ -1,0 +1,73 @@
+﻿@page
+@model Exwhyzee.AANI.Web.Areas.Main.Pages.ExecutivePage.Year.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">PAST EXECUTIVE MEMBER YEAR</h3>
+
+        <a asp-page="./Create" class="btn bg-gradient-warning btn-sm" style="float:right;">Create New</a>
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body">
+        <div class="table-responsive">
+            <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>S/N</th>
+            <th>
+                @Html.DisplayNameFor(model => model.PastExecutiveYear[0].Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PastExecutiveYear[0].Date)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+                @{
+                    int sn = 0;
+                }
+    <tbody>
+@foreach (var item in Model.PastExecutiveYear) {
+        <tr>
+                            <td>
+                                @{
+                                    sn++;
+                                }
+                                @sn
+                            </td>
+            <td>
+                                <a asp-page="./Details" asp-route-id="@item.Id">
+
+                @Html.DisplayFor(modelItem => item.Title)
+                </a>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+                            <td>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-success">Action</button>
+
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-success dropdown-toggle dropdown-icon" data-toggle="dropdown" aria-expanded="false">
+                                        </button>
+                                        <div class="dropdown-menu" style="">
+
+                                            <a class="dropdown-item" asp-page="./Edit" asp-route-id="@item.Id">Edit</a>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

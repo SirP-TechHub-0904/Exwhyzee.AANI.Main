@@ -1,0 +1,54 @@
+﻿@page
+@model Exwhyzee.AANI.Web.Pages.AlumniPage.AaniExecutiveModel
+@{
+}
+
+<div class="page-title-section" style="background-image: url('../img/bred.jpg');">
+    <div class="container">
+        <h1>AANI Executive</h1>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="#">AANI Executive</a></li>
+        </ul>
+    </div>
+</div>
+
+<div class="section-block-grey">
+    <div class="container">
+        <div class="section-heading center-holder">
+            <span>Meet Our Team</span>
+            <h3>NATIONAL EXCOS</h3>
+            <div class="section-heading-line"></div>
+
+        </div>
+        <div class="row mt-50">
+            @foreach (var x in Model.Executive)
+            {
+
+                <div class="col-md-4 col-sm-4 col-12">
+                    <div class="team-member">
+                        <div class="team-member-img" style="margin:0 auto;text-align:center;">
+                            <img src="~/img/icon.jpg" alt="img" style="margin:0 auto;text-align:center;height:100px;width:100px;">
+                        </div>
+                        <div class="team-member-text">
+                            <h4><a href="#" class="text-3">@x.Participant.Fullname</a></h4>
+                            <span>@x.Position</span>
+                           
+
+                            <ul>
+                                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                                <li><a href="#"><i class="fa fa-instagram"></i></a></li>
+                                <li><a href="#"><i class="fa fa-skype"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            }
+        </div>
+    </div>
+</div>
+
+
+

@@ -28,7 +28,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.Event[0].EndDate)
             </th>
-          
+          <th>Location</th>
             <th>
                 @Html.DisplayNameFor(model => model.Event[0].EventStatus)
             </th>
@@ -52,7 +52,7 @@
                                 </a>
             </td>
           <td>                <a asp-page="./Details" asp-route-id="@item.Id">
-Topic
+@Html.DisplayFor(modelItem => item.Toipc)
 </a></td>
             <td>
                 @item.StartDate.ToString("ddd dd MMM, yyyy")
@@ -60,7 +60,10 @@ Topic
             <td>
                                 @item.EndDate.ToString("ddd dd MMM, yyyy")
             </td>
-         
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Location)
+                            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.EventStatus)
             </td>

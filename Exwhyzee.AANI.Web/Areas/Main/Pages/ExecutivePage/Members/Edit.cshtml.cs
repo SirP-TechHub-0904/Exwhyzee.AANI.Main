@@ -77,7 +77,7 @@ namespace Exwhyzee.AANI.Web.Areas.Main.Pages.ExecutivePage.Members
             }
 
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("/ExecutivePage/Year/Details", new {id = PastExecutiveMember.PastExecutiveYearId});
         }
 
         private bool PastExecutiveMemberExists(long id)

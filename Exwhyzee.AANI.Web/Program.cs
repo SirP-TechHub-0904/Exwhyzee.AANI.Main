@@ -1,5 +1,7 @@
+using Amazon.S3;
 using Exwhyzee.AANI.Domain.Models;
 using Exwhyzee.AANI.Web.Data;
+using Exwhyzee.AANI.Web.FileManager;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,6 +15,8 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddIdentity<Participant, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<AaniDbContext>();
+builder.Services.AddAWSService<IAmazonS3>();
+builder.Services.AddTransient<IFileManagement, FileManagement>();
 builder.Services.AddRazorPages();
 
 var app = builder.Build();

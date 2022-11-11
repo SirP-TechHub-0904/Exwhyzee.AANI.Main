@@ -10,7 +10,7 @@ namespace Exwhyzee.AANI.Web.Data
             : base(options)
         {
         }
-
+        //EntityFrameworkCore\Add-Migration
         public DbSet<BoardOfGovornorCategory> BoardOfGovornorCategories { get; set; } = default!;
         public DbSet<BoardOfGovornorMember> BoardOfGovornorMembers { get; set; } = default!;
         public DbSet<CategoryFamiliesOnSEC> CategoryFamiliesOnSECs { get; set; } = default!;
@@ -41,6 +41,10 @@ namespace Exwhyzee.AANI.Web.Data
         public DbSet<PastExecutiveMember> PastExecutiveMembers { get; set; } = default!;
         public DbSet<Executive> Executives { get; set; } = default!;
         public DbSet<PastExecutiveYear> PastExecutiveYear { get; set; } = default!;
+        public DbSet<Nec> Necs { get; set; } = default!;
+        public DbSet<Gallery> Galleries { get; set; } = default!;
+        public DbSet<Blog> Blogs { get; set; } = default!;
+        public DbSet<Comment> Comments { get; set; } = default!;
 
 
     }

@@ -271,6 +271,14 @@
                             </a>
                         </li>
                           <li class="nav-item">
+                            <a asp-page="/AaniNec/Index" asp-area="Main" class="nav-link">
+                                <i class="nav-icon fas fa-users"></i>
+                                <p>
+                                   AANI NEC Member
+                                </p>
+                            </a>
+                        </li>
+                          <li class="nav-item">
                             <a asp-page="/PatronPage/Index" asp-area="Main" class="nav-link">
                                 <i class="nav-icon fas fa-users"></i>
                                 <p>
@@ -472,6 +480,54 @@
                                 </li>
 
                             </ul>
+                        </li>
+
+
+                         <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-users"></i>
+                                <p>
+                                    Executive
+                                    <i class="fas fa-angle-left right"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a asp-page="/ExecutivePage/ActiveExecutive/Index" asp-area="Main" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Active Executive</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a asp-page="/ExecutivePage/Year/Index" asp-area="Main" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Year</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a asp-page="/ExecutivePage/Members/Index" asp-area="Main" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Members</p>
+                                    </a>
+                                </li>
+                                 
+
+                            </ul>
+                        </li>
+                          <li class="nav-item">
+                            <a asp-page="/GalleryPage/Index" asp-area="Main" class="nav-link">
+                                <i class="nav-icon fas fa-image"></i>
+                                <p>
+                                    Gallery Page
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-page="/BlogNews/Index" asp-area="Main" class="nav-link">
+                                <i class="nav-icon fas fa-file"></i>
+                                <p>
+                                    Blog                                </p>
+                            </a>
                         </li>
                     </ul>
                 </nav>

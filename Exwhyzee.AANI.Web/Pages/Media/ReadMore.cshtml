@@ -1,0 +1,125 @@
+﻿@page
+@model Exwhyzee.AANI.Web.Pages.Media.ReadMoreModel
+
+@{
+    ViewData["Title"] = "ReadMore";
+}
+<!-- Page Title START -->
+<div class="page-title-section" style="background-image: url('../img/bred.jpg');">
+    <div class="container">
+        <h1>@Model.Blog.Title</h1>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="#">@Model.Blog.Title</a></li>
+        </ul>
+    </div>
+</div>
+
+
+<div class="section-block">
+    <div class="container">
+        <div class="row">
+            <!-- Left Side START -->
+            <div class="col-md-9 col-sm-8 col-12">
+                <!-- Post Start -->
+
+                <div class="clearfix"></div>
+
+                <div class="blog-list-left" style="box-shadow: 2px 2px 2px 2px #706b6b;padding: 20px;">
+                    @if (!String.IsNullOrEmpty(Model.Blog.Image))
+                    {
+                        <div style="margin:0 auto;text-align:center">
+                            <img src="@Model.Blog.Image" alt="img" style="margin:0 auto;text-align:center">
+                        </div>
+                    }
+                    else
+                    {
+                        <div style="margin:0 auto;text-align:center;height:65px;">
+                            .
+                        </div>
+                    }
+                    <div class="data-box">
+                        <h4>@Model.Blog.Date.ToString("dd")</h4>
+                        <strong>@Model.Blog.Date.ToString("MMM")</strong>
+                    </div>
+                    <div class="blog-title-box">
+                        <h2>@Model.Blog.Title</h2>
+                        <span><i class="fa fa-calendar"></i>@Model.Blog.Date.ToString("dd MMM, yyyy hh:mm tt") </span>
+                        <span><i class="fa fa-globe"></i>	AANI Secetary</span>
+                        <span><i class="fa fa-comments"></i>	@Model.Blog.Comments.Count() Comments</span>
+                    </div>
+
+                    <div class="blog-post-content">
+                        <div class="">
+                            @Html.Raw(Model.Blog.Content)
+                        </div>
+
+                        <hr />
+                      
+                    </div>
+
+
+                </div>
+                <div class="blog-comments mt-50">
+                    <h3 class="mt-0">All Comments:</h3>
+                    @foreach (var x in Model.Blog.Comments)
+                    {
+                        <div class="blog-comment-user">
+                            <div class="row mt-20">
+
+                                <div class="col-md-11 col-12">
+                                    <div class="comment-block">
+                                        <h6>
+                                            @if (String.IsNullOrEmpty(x.ParticipantId))
+                                            {
+                                                @x.Fullname
+                                            }
+                                            else
+                                            {
+                                                @x.Participant.Fullname
+                                            }
+                                        </h6><strong> @await Component.InvokeAsync("DateAgo", new{date = x.Date})</strong>
+                                        <p>
+                                            @x.Content
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                    <h3 class="mt-30">Your Comment:</h3>
+                    <form class="comment-form" method="post" autocomplete="off">
+                        <input type="hidden" asp-for="Comment.BlogId" value="@Model.Blog.Id" />
+
+                        <div class="row">
+
+                            <div class="col-6">
+                                <input asp-for="Comment.Fullname" placeholder="Your Name">
+                            </div>
+                            <div class="col-6">
+                                <input asp-for="Comment.Email" placeholder="E-mail adress" type="email">
+                            </div>
+                            <div class="col-12">
+                                <textarea asp-for="Comment.Content" placeholder="Your Message"></textarea>
+                            </div>
+                        </div>
+
+
+                        <div class="mt-10 left-holder">
+                            <button type="submit" class="primary-button button-md">Send Message</button>
+
+                        </div>
+                    </form>
+                </div>
+                <!-- Post End -->
+
+            </div>
+            <!-- Left Side END -->
+            <!-- Right Side START -->
+            <div class="col-md-3 col-sm-4 col-12">
+            </div>
+            <!-- Right Side END -->
+        </div>
+    </div>
+</div>

@@ -1,0 +1,82 @@
+﻿@page
+@model Exwhyzee.AANI.Web.Areas.Main.Pages.ExecutivePage.Year.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">PAST EXECUTIVES MEMBERS FOR @Model.PastExecutiveYear.Title</h3>
+
+        <a asp-page="/ExecutivePage/Members/Create" class="btn bg-gradient-warning btn-sm" style="float:right;">Create New</a>
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body">
+        <div class="table-responsive">
+            <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>S/N</th>
+                        <th>
+                            Alumni
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.PastExecutiveMember[0].Date)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.PastExecutiveMember[0].Position)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.PastExecutiveMember[0].PastExecutiveYear)
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                @{
+                    int sn = 0;
+                }
+                <tbody>
+                    @foreach (var item in Model.PastExecutiveMember)
+                    {
+                        <tr>
+                            <td>
+                                @{
+                                    sn++;
+                                }
+                                @sn
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Participant.Fullname) (SEC @item.Participant.SEC.Number - @item.Participant.SEC.Year)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Date)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Position)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.PastExecutiveYear.Title)
+                            </td>
+                            <td>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-success">Action</button>
+
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-success dropdown-toggle dropdown-icon" data-toggle="dropdown" aria-expanded="false">
+                                        </button>
+                                        <div class="dropdown-menu" style="">
+
+                                            <a class="dropdown-item" asp-page="/ExecutivePage/Year/Edit" asp-route-id="@item.Id">Edit</a>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,72 @@
+﻿@page
+@model Exwhyzee.AANI.Web.Pages.AlumniPage.PastAaniExecutiveModel
+@{
+}
+<div class="page-title-section" style="background-image: url('../img/bred.jpg');">
+    <div class="container">
+        <h1>PAST AANI EXECUTIVE</h1>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="#">PAST AANI EXECUTIVE</a></li>
+        </ul>
+    </div>
+</div>
+
+<div class="section-block">
+    <div class="container">
+        <div class="section-heading">
+            <h4>PAST AANI EXECUTIVE</h4>
+            <div class="section-heading-line-left"></div>
+        </div>
+        <div class="row mt-40">
+            <div class="col-md-12 col-sm-12 col-12">
+                <div class="pr-30-md">
+                    <!-- Accordions Grey START -->
+                    <div class="panel-group mt-10" id="accordion2" role="tablist" aria-multiselectable="true">
+                        @foreach (var x in Model.PastExecutiveYear)
+                        {
+                            <div class="panel panel-grey accordion">
+                                <div class="panel-heading accordion-heading" role="tab" id="acc1">
+                                    <h4 class="panel-title accordion-title">
+                                        <a role="button" data-toggle="collapse" data-parent="#accordion2" href="#ac_col1_@x.Title.Replace(" ", "")" aria-expanded="true" aria-controls="ac_col1_@x.Title.Replace(" ", "")">
+                                            @x.Title
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="ac_col1_@x.Title.Replace(" ", "")" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="acc1">
+                                    <div class="panel-body accordion-body">
+                                        @foreach (var n in x.PastExecutiveMembers)
+                                        {
+                                            <div class="col-md-4 col-sm-4 col-12">
+                                                <div class="team-member">
+                                                  
+                                                    <div class="team-member-text">
+                                                        <h4><a href="#">@n.Participant.Fullname</a></h4>
+                                                        <span>@n.Position</span>
+
+
+                                                        <ul>
+                                                            <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                                                            <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                                                            <li><a href="#"><i class="fa fa-instagram"></i></a></li>
+                                                            <li><a href="#"><i class="fa fa-skype"></i></a></li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                        }
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        }
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
