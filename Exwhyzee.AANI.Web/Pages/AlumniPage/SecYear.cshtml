@@ -1,0 +1,49 @@
+﻿@page
+@model Exwhyzee.AANI.Web.Pages.AlumniPage.SecYearModel
+
+@{
+    ViewData["Title"] = "SecYear";
+}
+
+<div class="page-title-section" style="background-image: url('../img/bred.jpg');">
+    <div class="container">
+        <h1>SENIOR EXECUTIVE COURSE ALUMNI</h1>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="#">SENIOR EXECUTIVE COURSE ALUMNI</a></li>
+        </ul>
+    </div>
+</div>
+<div class="section-block">
+    <div class="container">
+        <div class="section-heading center-holder">
+            <h3>SEC YEAR FROM 1979 TILL DATE</h3>
+            <div class="section-heading-line"></div>
+            @*<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor <br>incididunt ut labore et dolore magna aliqua.</p>*@
+        </div>
+        <div class="row mt-60">
+            @foreach (var x in Model.SEC)
+            {
+
+               
+                    <div class="col-md-4 col-sm-12 col-12" style="margin-bottom:10px;">
+                        <div class="serv-section-2" style="box-shadow: 2px 2px 2px 2px #333333;">
+                            <div class="serv-section-2-icon">
+                                <i class="icon-checked"></i>
+                            </div>
+                            <div class="serv-section-desc">
+                                <a asp-page="/AlumniPage/List" asp-route-id="@x.Id"> <h4>SEC @x.Number</h4>
+                                <h5>@x.Year SET</h5></a>
+                            </div>
+                            <div class="section-heading-line-left"></div>
+                            <a asp-page="/AlumniPage/List" asp-route-id="@x.Id"> <h4>Theme</h4>
+                            <p class="text">
+                                @x.Title
+                            </p>
+                            </a>
+                        </div>
+                    </div>
+            }
+        </div>
+    </div>
+</div>

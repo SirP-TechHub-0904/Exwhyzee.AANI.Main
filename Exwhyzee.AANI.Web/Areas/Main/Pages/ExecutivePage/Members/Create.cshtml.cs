@@ -49,7 +49,7 @@ namespace Exwhyzee.AANI.Web.Areas.Main.Pages.ExecutivePage.Members
             await _context.SaveChangesAsync();
             TempData["aasuccess"] = "created successfully";
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("/ExecutivePage/Year/Details", new { id = PastExecutiveMember.PastExecutiveYearId });
         }
     }
 }

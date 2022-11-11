@@ -39,24 +39,57 @@
     <!-- Main Styles -->
     <link rel="stylesheet" type="text/css" href="~/web/css/default.css">
     <link rel="stylesheet" type="text/css" href="~/web/css/styles.css" id="colors">
-
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css">
     <!-- Fonts Google -->
     <link href="https://fonts.googleapis.com/css?family=Fira+Sans:100,200,300,400,500,600,700,800,900" rel="stylesheet">
     <style>
-        .p {
-            font-size: 17px !important;
+                .p {
+                    font-size: 17px !important;
+                }
+                .project-single-info ul li {
+
+
+            padding: 0;
         }
-        .project-single-info ul li {
-   
 
-    padding: 0;
-}
+                    .project-single-info ul li span {
 
-            .project-single-info ul li span {
-               
-                width: 100%;
-                max-width: 100%;
-            }
+                        width: 100%;
+                        max-width: 100%;
+                    }
+
+               .text {
+            margin-top: 0px !important;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            height: 50px;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+         .text-3 {
+            margin-top: 0px !important;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            height: 50px;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+         .text-4 {
+            margin-top: 0px !important;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            height: 120px;
+            -webkit-line-clamp: 4;
+            -webkit-box-orient: vertical;
+        }
+        .btnn {
+        color: #eff2f5;
+        background-color: #d21e2b;
+        border-radius: 0;
+    }
     </style>
 
 </head>
@@ -94,19 +127,36 @@
                         </ul>
                     </li>
                     <li>
-                        <a asp-page="/Sec">SECs</a>
-                    </li>
+                        <a href="#">SEC</a>
+                        <ul class="nav-dropdown">
+                            <li><a asp-page="/AlumniPage/AaniExecutive">AANI Executive</a></li>
+                            <li><a asp-page="/AlumniPage/SecYear">SEC YEAR</a></li>
+                            <li><a asp-page="/AlumniPage/SecAlumni">ALUMNI</a></li>
+                            <li><a asp-page="/AlumniPage/Families">Families on SEC</a></li>
+                            <li><a asp-page="/AlumniPage/NecMembers">NEC Members</a></li>
+                            <li><a asp-page="/AlumniPage/PastAaniExecutive">Past AANI Executive</a></li>
 
+                        </ul>
+                    </li>
+                     <li>
+                    <a asp-page="/PapersCategory">Papers</a>
+                    </li>
+                    
 
                     <li>
-                        <a asp-page="/Gallery">Gallery</a>
+                        <a asp-page="/AaniEvents">Events</a>
                     </li>
-                   
+                     <li>
+                        <a asp-page="/Media/News">News Update</a>
+                    </li>
+                     <li>
+                        <a asp-page="/Media/Gallery">Gallery</a>
+                    </li>
                     <li>
                         <a asp-page="/Contact">Contact</a>
                     </li>
                     <li>
-                        <a asp-page="/Login">Login</a>
+                        <a asp-page="/Login">Member Login</a>
                     </li>
                 </ul>
             </div>
@@ -228,7 +278,15 @@
 
     <!-- Main JS -->
     <script src="~/web/js/main.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js" ></script>
     @RenderSection("Scripts", required: false)
+    @if (TempData["aasuccess"] != null)
+    {
+        <script>
+
+            toastr.success('@TempData["aasuccess"]')
+        </script>
+    }
 
 </body>
 </html>

@@ -1,0 +1,114 @@
+﻿@page
+@model Exwhyzee.AANI.Web.Pages.AaniEventsModel
+
+@{
+    ViewData["Title"] = "AaniEvents";
+}
+
+<!-- Page Title START -->
+<div class="page-title-section" style="background-image: url('../img/bred.jpg');">
+    <div class="container">
+        <h1>AANI EVENTS</h1>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="#">AANI EVENTS</a></li>
+        </ul>
+    </div>
+</div>
+
+
+<div class="section-block">
+    <div class="container">
+        <div class="row">
+            <!-- Left Side START -->
+            <div class="col-md-9 col-sm-8 col-12">
+                <!-- Post Start -->
+                <div class="row mt-60">
+
+                    <div class="col-md-4 col-sm-12 col-6">
+                    </div>
+                    <div class="col-md-4 col-sm-12 col-6">
+
+                        <form asp-page="./AaniEvents" method="get">
+                            <div class="input-group">
+                                <input type="text" class="form-control" name="searchString" placeholder="@Model.CurrentFilter" style="border: 2px solid #d21e2b;">
+                                <div class="input-group-btn">
+                                    <button class="btn btn-default btnn" type="submit">
+                                        <i class="fa fa-search"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+
+                        <p style="text-align:center;">
+                            <i>Page Number (@Model.PageIndex)</i>
+                        </p>
+                    </div>
+                </div>
+                <hr />
+<div class="clearfix"></div>
+                @foreach(var x in Model.Events){
+                    <div class="blog-list-left" style="box-shadow: 2px 2px 2px 2px #706b6b;padding: 20px;">
+                        @if (!String.IsNullOrEmpty(x.InvitImage))
+                        {
+                            <div style="margin:0 auto;text-align:center">
+                                <img src="@x.InvitImage" alt="img" style="margin:0 auto;text-align:center">
+                            </div>
+                        }else{
+                            <div style="margin:0 auto;text-align:center;height:65px;">
+                                .
+                            </div>
+                        }
+                        <div class="data-box">
+                            <h4>@x.StartDate.ToString("dd")</h4>
+                            <strong>@x.StartDate.ToString("MMM")</strong>
+                    </div>
+                    <div class="blog-title-box">
+                            <a asp-page="/EventInfo" asp-route-id="@x.Id"><h2>@x.Toipc</h2></a>
+                        <h5>@x.Title</h5>
+                            <span><i class="fa fa-calendar"></i>@x.StartDate.ToString("dd MMM, yyyy hh:mm tt") - @x.EndDate.ToString("dd MMM, yyyy hh:mm tt")</span>
+                            <span><i class="fa fa-globe"></i>	@x.Location</span>
+                            <span><i class="fa fa-toggle-on"></i>	@Html.DisplayFor(modelItem => x.EventStatus)</span>
+                            <span><i class="fa fa-comments"></i>	@x.EventComments.Count() Reviews/Comments</span>
+                        </div>
+
+                    @*<div class="blog-post-content">
+                            <div class="text-4">
+                            @Html.Raw(x.Description)
+                        </div>
+                    </div>*@
+
+                    <div class="mt-15 mb-40">
+                        <a asp-page="/EventInfo" asp-route-id="@x.Id" class="primary-button button-md">Read More</a>
+                    </div>
+                </div>
+                <!-- Post End -->
+            }
+                @{
+                    var prevDisabled = !Model.Events.HasPreviousPage ? "disabled" : "";
+                    var nextDisabled = !Model.Events.HasNextPage ? "disabled" : "";
+                }
+                <hr />
+
+        <a asp-page="./SecAlumni"
+           asp-route-pageIndex="@(Model.Events.PageIndex - 1)"
+           asp-route-currentFilter="@Model.CurrentFilter"
+           class="primary-button button-sm mb-15-xs @prevDisabled">
+            Previous
+        </a>
+        <a asp-page="./SecAlumni"
+           asp-route-pageIndex="@(Model.Events.PageIndex + 1)"
+           asp-route-currentFilter="@Model.CurrentFilter"
+           class="primary-button button-sm mb-15-xs @nextDisabled">
+            Next
+        </a>
+        <i>Page Number (@Model.PageIndex)</i>
+            </div>
+            <!-- Left Side END -->
+            <!-- Right Side START -->
+            <div class="col-md-3 col-sm-4 col-12">
+            </div>
+            <!-- Right Side END -->
+        </div>
+    </div>
+</div>

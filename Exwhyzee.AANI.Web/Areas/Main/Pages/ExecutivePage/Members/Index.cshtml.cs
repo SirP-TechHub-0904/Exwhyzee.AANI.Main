@@ -25,7 +25,9 @@ namespace Exwhyzee.AANI.Web.Areas.Main.Pages.ExecutivePage.Members
         {
             PastExecutiveMember = await _context.PastExecutiveMembers
                 .Include(p => p.Participant)
-                .Include(p => p.PastExecutiveYear).ToListAsync();
+                .ThenInclude(x=>x.SEC)
+                .Include(p => p.PastExecutiveYear)
+                .ToListAsync();
         }
     }
 }

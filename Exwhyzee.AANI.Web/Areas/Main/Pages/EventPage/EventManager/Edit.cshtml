@@ -45,7 +45,13 @@
                         <input asp-for="Event.EndDate" class="form-control" />
                         <span asp-validation-for="Event.EndDate" class="text-danger"></span>
                     </div>
-                  
+                    <div class="form-group">
+                        <label asp-for="Event.Location" class="control-label"></label>
+                        <input asp-for="Event.Location" class="form-control" />
+                        <span asp-validation-for="Event.Location" class="text-danger"></span>
+                    </div>
+
+
 
                     <div class="form-group">
                         <label asp-for="Event.Note" class="control-label"></label>

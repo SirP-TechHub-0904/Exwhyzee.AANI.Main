@@ -1,0 +1,85 @@
+﻿@page
+@model Exwhyzee.AANI.Web.Pages.AlumniPage.ListModel
+@{
+}
+<style>
+    .feature-box-4 {
+        position: relative;
+        background: #fff;
+        display: flex;
+        border-top: 3px solid #d21e2b;
+        overflow: hidden;
+        box-shadow: 0 10px 20px 0 rgb(0 0 0 / 10%);
+        padding: 10px;
+        margin: 15px 0;
+    }
+
+    .feature-box-4-icon {
+        flex: 0 0 30px;
+    }
+    .feature-box-4-icon i {
+    color: #d21e2b;
+    font-size: 20px;
+}
+
+    .feature-box-4 h4 {
+        
+        margin-bottom: 0px;
+    }
+
+    .section-heading-line-left {
+        
+        margin-top: 1px;
+        margin-bottom: 4px;
+    }
+
+    .feature-box-4-link {
+        color: #222;
+        font-size: 10px;
+        font-weight: 500;
+        display: inline-block;
+        margin-top: 0px;
+    }
+</style>
+<div class="page-title-section" style="background-image: url('../img/bred.jpg');">
+    <div class="container">
+        <h1>@Model.SEC.Year ALUMNI</h1>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="#">@Model.SEC.Year ALUMNI</a></li>
+        </ul>
+    </div>
+</div>
+<div class="section-block">
+    <div class="container">
+        <div class="section-heading center-holder">
+            <h3>SEC @Model.SEC.Number - @Model.SEC.Year (@Model.Participants.Count() ALUMNI)</h3>
+            <div class="section-heading-line"></div>
+            @*<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor <br>incididunt ut labore et dolore magna aliqua.</p>*@
+        </div>
+        <div class="row mt-60">
+            @foreach (var x in Model.Participants)
+            {
+
+               
+                    <div class="col-md-6 col-sm-12 col-6">
+                        <div class="feature-box-4">
+                            <div class="feature-box-4-icon">
+                            <i class="fa fa-check-square"></i>
+                            </div>
+                            <div class="feature-box-4-content">
+                                <h4>@x.Fullname</h4>
+                                <p style="font-weight:900;">Sponsor: @x.Sponsor</p>
+                                <div class="section-heading-line-left"></div>
+                            <h4 style="font-size: 0.9rem; font-weight: 900;">
+                                Biography
+                            </h4>
+                                <a href="#" class="feature-box-4-link">Read More <i class="fa fa-chevron-right"></i></a>
+                            </div>
+                            <i class="feature-box-4-icon-bg icon-worldwide2"></i>
+                        </div>
+                    </div>
+            }
+        </div>
+    </div>
+</div>

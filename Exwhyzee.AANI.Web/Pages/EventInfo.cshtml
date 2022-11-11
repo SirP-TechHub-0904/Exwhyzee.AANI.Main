@@ -1,0 +1,130 @@
+﻿@page
+@model Exwhyzee.AANI.Web.Pages.EventInfoModel
+
+@{
+    ViewData["Title"] = "EventInfo";
+}
+
+<!-- Page Title START -->
+<div class="page-title-section" style="background-image: url('../img/bred.jpg');">
+    <div class="container">
+        <h1>@Model.Event.Title</h1>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="#">@Model.Event.Title</a></li>
+        </ul>
+    </div>
+</div>
+
+
+<div class="section-block">
+    <div class="container">
+        <div class="row">
+            <!-- Left Side START -->
+            <div class="col-md-9 col-sm-8 col-12">
+                <!-- Post Start -->
+
+                <div class="clearfix"></div>
+
+                <div class="blog-list-left" style="box-shadow: 2px 2px 2px 2px #706b6b;padding: 20px;">
+                    @if (!String.IsNullOrEmpty(Model.Event.InvitImage))
+                    {
+                        <div style="margin:0 auto;text-align:center">
+                            <img src="@Model.Event.InvitImage" alt="img" style="margin:0 auto;text-align:center">
+                        </div>
+                    }
+                    else
+                    {
+                        <div style="margin:0 auto;text-align:center;height:65px;">
+                            .
+                        </div>
+                    }
+                    <div class="data-box">
+                        <h4>@Model.Event.StartDate.ToString("dd")</h4>
+                        <strong>@Model.Event.StartDate.ToString("MMM")</strong>
+                    </div>
+                    <div class="blog-title-box">
+                        <h2>@Model.Event.Toipc</h2>
+                        <h5>@Model.Event.Title</h5>
+                        <span><i class="fa fa-calendar"></i>@Model.Event.StartDate.ToString("dd MMM, yyyy hh:mm tt") - @Model.Event.EndDate.ToString("dd MMM, yyyy hh:mm tt")</span>
+                        <span><i class="fa fa-globe"></i>	@Model.Event.Location</span>
+                        <span><i class="fa fa-toggle-on"></i>	@Html.DisplayFor(modelItem => Model.Event.EventStatus)</span>
+                        <span><i class="fa fa-comments"></i>	@Model.Event.EventComments.Count() Reviews/Comments</span>
+                    </div>
+
+                    <div class="blog-post-content">
+                        <div class="">
+                            @Html.Raw(Model.Event.Description)
+                        </div>
+
+                        <hr />
+                        <h4>Note:</h4>
+                        <p>@Model.Event.Note</p>
+                        <hr />
+                        <h4>Report:</h4>
+                        <p>@Model.Event.Report</p>
+                    </div>
+
+
+                </div>
+                <div class="blog-comments mt-50">
+                    <h3 class="mt-0">All Reviews/Comments:</h3>
+                    @foreach (var x in Model.Event.EventComments)
+                    {
+                        <div class="blog-comment-user">
+                            <div class="row mt-20">
+
+                                <div class="col-md-11 col-12">
+                                    <div class="comment-block">
+                                        <h6>
+                                            @if (String.IsNullOrEmpty(x.ParticipantId))
+                                            {
+                                                @x.Fullname
+                                            }else{
+                                            @x.Participant.Fullname
+                                            }
+                                        </h6><strong>@x.Date.ToString("dd.MM.yyyy")</strong>
+                                        <p>
+                                            @x.Comment
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                    <h3 class="mt-30">Your Comment:</h3>
+                    <form class="comment-form" method="post" autocomplete="off">
+                        <input type="hidden" asp-for="EventComment.EventId" value="@Model.Event.Id"/>
+
+                        <div class="row">
+
+                            <div class="col-6">
+                                <input asp-for="EventComment.Fullname" placeholder="Your Name">
+                            </div>
+                            <div class="col-6">
+                                <input asp-for="EventComment.Email" placeholder="E-mail adress" type="email">
+                            </div>
+                            <div class="col-12">
+                                <textarea asp-for="EventComment.Comment" placeholder="Your Message"></textarea>
+                            </div>
+                        </div>
+
+
+                        <div class="mt-10 left-holder">
+                            <button type="submit" class="primary-button button-md">Send Message</button>
+
+                        </div>
+                    </form>
+                </div>
+                <!-- Post End -->
+
+            </div>
+            <!-- Left Side END -->
+            <!-- Right Side START -->
+            <div class="col-md-3 col-sm-4 col-12">
+            </div>
+            <!-- Right Side END -->
+        </div>
+    </div>
+</div>

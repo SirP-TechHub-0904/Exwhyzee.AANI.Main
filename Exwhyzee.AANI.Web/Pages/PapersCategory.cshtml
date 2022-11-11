@@ -1,0 +1,48 @@
+﻿@page
+@model Exwhyzee.AANI.Web.Pages.PapersCategoryModel
+
+@{
+    ViewData["Title"] = "PapersCategory";
+}
+
+<div class="page-title-section" style="background-image: url('../img/bred.jpg');">
+    <div class="container">
+        <h1>SENIOR EXECUTIVE COURSE PAPERS</h1>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="#">SENIOR EXECUTIVE COURSE PAPERS</a></li>
+        </ul>
+    </div>
+</div>
+<div class="section-block">
+    <div class="container">
+        <div class="section-heading center-holder">
+            <h3>SENIOR EXECUTIVE COURSE PAPERS</h3>
+            <div class="section-heading-line"></div>
+        </div>
+        <div class="row mt-60">
+            @foreach (var x in Model.PaperCategory)
+            {
+
+
+                <div class="col-md-4 col-sm-12 col-12" style="margin-bottom:10px;">
+                    <div class="serv-section-2" style="box-shadow: 2px 2px 2px 2px #333333;">
+                        <div class="serv-section-2-icon">
+                            <i class="icon-file"></i>
+                        </div>
+                        <a asp-page="/PaperList" asp-route-id="@x.Id">
+                            <h4>@x.Title</h4>
+                        </a>
+                        <div class="section-heading-line-left"></div>
+                        <a asp-page="/PaperList" asp-route-id="@x.Id">
+
+                            <p class="text text-justify">
+                                @x.Description
+                            </p>
+                        </a>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
