@@ -8,8 +8,10 @@
 <div class="card">
     <div class="card-header">
         <h3 class="card-title">FUNDING LIST FOR @Model.FundCategory.Title</h3>
-        <a asp-page="/Funding/FundPage/Create" class="btn bg-gradient-warning btn-sm" style="float:right;">Add New</a>
-
+        @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+        {
+            <a asp-page="/Funding/FundPage/Create" class="btn bg-gradient-warning btn-sm" style="float:right;">Add New</a>
+        }
     </div>
     <!-- /.card-header -->
     <div class="card-body">
@@ -37,7 +39,7 @@
                             @Html.DisplayNameFor(model => model.Fund[0].Event)
                         </th>
                        
-                        <th></th>
+                       @if (User.Identity.IsAuthenticated && User.IsInRole("Admin")){<th></th>}
                     </tr>
                 </thead>
                 @{
@@ -71,22 +73,24 @@
                             <td>
                                 @Html.DisplayFor(modelItem => item.Event.Title)
                             </td>
-                          
-                            <td>
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-success">Action</button>
-
+                            @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                            {
+                                <td>
                                     <div class="btn-group">
-                                        <button type="button" class="btn btn-success dropdown-toggle dropdown-icon" data-toggle="dropdown" aria-expanded="false">
-                                        </button>
-                                        <div class="dropdown-menu" style="">
+                                        <button type="button" class="btn btn-success">Action</button>
 
-                                            <a class="dropdown-item" asp-page="/Funding/FundPage/Edit" asp-route-id="@item.Id">Edit</a>
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-success dropdown-toggle dropdown-icon" data-toggle="dropdown" aria-expanded="false">
+                                            </button>
+                                            <div class="dropdown-menu" style="">
 
+                                                <a class="dropdown-item" asp-page="/Funding/FundPage/Edit" asp-route-id="@item.Id">Edit</a>
+
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </td>
+                                </td>
+                            }
                         </tr>
                     }
                 </tbody>

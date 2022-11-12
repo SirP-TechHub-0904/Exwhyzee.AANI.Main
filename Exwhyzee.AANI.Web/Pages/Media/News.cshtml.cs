@@ -29,6 +29,8 @@ namespace Exwhyzee.AANI.Web.Pages.Media
         public SEC SEC { get; set; }
         public string CurrentFilter { get; set; }
         public int PageIndex { get; set; }
+        public int TotalPage { get; set; }
+
         public async Task<IActionResult> OnGetAsync(string currentFilter, string searchString, int? pageIndex)
         {
 
@@ -61,7 +63,7 @@ namespace Exwhyzee.AANI.Web.Pages.Media
 
             AllCount = bloglist.Count();
 
-            var pageSize = 10;
+            var pageSize = 10; TotalPage = AllCount / pageSize;
             Blog = await PaginatedList<Blog>.CreateAsync(
                 bloglist.AsNoTracking(), pageIndex ?? 1, pageSize);
 

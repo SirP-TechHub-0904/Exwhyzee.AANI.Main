@@ -11,6 +11,8 @@ using Exwhyzee.AANI.Web.Data;
 
 namespace Exwhyzee.AANI.Web.Areas.Main.Pages.SecFamilies.SubCategory
 {
+    [Microsoft.AspNetCore.Authorization.Authorize]
+
     public class EditModel : PageModel
     {
         private readonly Exwhyzee.AANI.Web.Data.AaniDbContext _context;

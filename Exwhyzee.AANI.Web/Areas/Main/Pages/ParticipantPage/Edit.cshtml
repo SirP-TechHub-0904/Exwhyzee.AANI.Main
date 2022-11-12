@@ -52,6 +52,10 @@
                                     <option value="Princess">Princess</option>
                                     <option value="Commodore">Commodore</option>
                                     <option value="Brig.">Brig.</option>
+                                     <option value="Major">Major</option>
+                            <option value="Hon.">Hon.</option>
+                            <option value="Hon. Justice">Hon. Justice</option>
+                            <option value="HRH">HRH</option>
                                 </select>                        <span asp-validation-for="Participant.Title" class="text-danger"></span>
                             </div>
                             <div class="col-md-6">
@@ -203,7 +207,11 @@
                         @Html.DropDownListFor(model => model.Participant.UserStatus, new SelectList(Enum.GetValues(typeof(Exwhyzee.AANI.Domain.Enums.UserStatus))), new { @class = "form-control" })
                         <span asp-validation-for="Participant.UserStatus" class="text-danger"></span>
                     </div>
-
+                     <div class="form-group">
+                        <label asp-for="Participant.MniStatus" class="control-label">MNI Status</label>
+                        @Html.DropDownListFor(model => model.Participant.MniStatus, new SelectList(Enum.GetValues(typeof(Exwhyzee.AANI.Domain.Enums.MniStatus))), new { @class = "form-control" })
+                        <span asp-validation-for="Participant.MniStatus" class="text-danger"></span>
+                    </div>
                     <div class="form-group">
                         <input type="submit" value="Save" class="btn btn-primary" />
                         <a asp-page="./Index" class="btn bg-gradient-warning btn-sm" style="float:right;">Back</a>

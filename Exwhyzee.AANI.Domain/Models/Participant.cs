@@ -25,6 +25,7 @@ namespace Exwhyzee.AANI.Domain.Models
         public MaritalStatus MaritalStatus { get; set; }
         public ReligionStatus ReligionStatus { get; set; }
         public UserStatus UserStatus { get; set; }
+        public MniStatus MniStatus { get; set; }
         public DateTime? DOB { get; set; }
         public DateTime Date { get; set; }
         public long SECId { get; set; }

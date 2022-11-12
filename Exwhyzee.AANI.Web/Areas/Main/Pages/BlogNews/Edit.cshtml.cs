@@ -8,6 +8,7 @@ using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
 namespace Exwhyzee.AANI.Web.Areas.Main.Pages.BlogNews
 {
 
+    [Microsoft.AspNetCore.Authorization.Authorize]
 
     public class EditModel : PageModel
     {

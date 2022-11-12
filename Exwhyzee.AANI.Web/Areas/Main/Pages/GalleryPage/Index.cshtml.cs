@@ -10,6 +10,8 @@ using Exwhyzee.AANI.Domain.Models;
 
 namespace Exwhyzee.AANI.Web.Areas.Main.Pages.GalleryPage
 {
+    [Microsoft.AspNetCore.Authorization.Authorize]
+
     public class IndexModel : PageModel
     {
         private readonly Exwhyzee.AANI.Web.Data.AaniDbContext _context;

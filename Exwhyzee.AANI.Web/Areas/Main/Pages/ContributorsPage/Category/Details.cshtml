@@ -9,8 +9,10 @@
 <div class="card">
     <div class="card-header">
         <h3 class="card-title" style="text-transform:uppercase;">ALUMNI WHO BECAME @Model.ContributorCategory.Title</h3>
-        <a asp-page="/ContributorsPage/ContributorList/Create" class="btn bg-gradient-warning btn-sm" style="float:right;">Create New</a>
-
+        @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+        {
+            <a asp-page="/ContributorsPage/ContributorList/Create" class="btn bg-gradient-warning btn-sm" style="float:right;">Create New</a>
+        }
     </div>
     <!-- /.card-header -->
     <div class="card-body">

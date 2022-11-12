@@ -12,6 +12,8 @@ using Microsoft.AspNetCore.Identity;
 
 namespace Exwhyzee.AANI.Web.Areas.Main.Pages.ParticipantPage
 {
+    [Microsoft.AspNetCore.Authorization.Authorize]
+
     public class DetailsModel : PageModel
     {
         private readonly UserManager<Participant> _userManager;

@@ -10,6 +10,8 @@ using Exwhyzee.AANI.Web.Data;
 
 namespace Exwhyzee.AANI.Web.Areas.Main.Pages.PaperPage.Category
 {
+    [Microsoft.AspNetCore.Authorization.Authorize]
+
     public class CreateModel : PageModel
     {
         private readonly Exwhyzee.AANI.Web.Data.AaniDbContext _context;

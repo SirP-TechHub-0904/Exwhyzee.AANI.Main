@@ -11,7 +11,8 @@ using Exwhyzee.AANI.Domain.Models;
 
 namespace Exwhyzee.AANI.Web.Areas.Main.Pages.BlogNews
 {
-    
+
+    [Microsoft.AspNetCore.Authorization.Authorize]
 
     public class IndexModel : PageModel
     {

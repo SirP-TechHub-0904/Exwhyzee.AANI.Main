@@ -13,6 +13,8 @@ using Microsoft.AspNetCore.Identity;
 
 namespace Exwhyzee.AANI.Web.Areas.Main.Pages.Board.Member
 {
+    [Microsoft.AspNetCore.Authorization.Authorize]
+
     public class EditModel : PageModel
     {
         private readonly Exwhyzee.AANI.Web.Data.AaniDbContext _context;

@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Exwhyzee.AANI.Web.Areas.Main.Pages.BlogNews
 {
 
+    [Microsoft.AspNetCore.Authorization.Authorize]
 
     public class DeleteModel : PageModel
     {

@@ -7,6 +7,8 @@ using System.Xml.Linq;
 
 namespace Exwhyzee.AANI.Web.Areas.Main.Pages.ParticipantPage
 {
+    [Microsoft.AspNetCore.Authorization.Authorize(Roles = "Admin")]
+
     public class ResetPasswordModel : PageModel
     {
         private readonly UserManager<Participant> _userManager;
@@ -65,10 +67,10 @@ namespace Exwhyzee.AANI.Web.Areas.Main.Pages.ParticipantPage
 
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
+            //if (!ModelState.IsValid)
+            //{
+            //    return Page();
+            //}
 
             var user = await _userManager.FindByIdAsync(UIDD);
             if (user == null)

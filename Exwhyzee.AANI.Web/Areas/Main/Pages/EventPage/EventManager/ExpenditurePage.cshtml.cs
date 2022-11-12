@@ -5,6 +5,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Exwhyzee.AANI.Web.Areas.Main.Pages.EventPage.EventManager
 {
+    [Microsoft.AspNetCore.Authorization.Authorize]
+
     public class ExpenditurePageModel : PageModel
     {
         private readonly Exwhyzee.AANI.Web.Data.AaniDbContext _context;
