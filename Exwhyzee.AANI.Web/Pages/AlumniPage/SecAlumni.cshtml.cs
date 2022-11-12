@@ -24,6 +24,7 @@ namespace Exwhyzee.AANI.Web.Pages.AlumniPage
         public SEC SEC { get; set; }
         public string CurrentFilter { get; set; }
         public int PageIndex { get; set; }
+        public int TotalPage { get; set; }
         public async Task OnGetAsync(string currentFilter, string searchString, int? pageIndex)
         {
             if (searchString != null)
@@ -58,6 +59,7 @@ namespace Exwhyzee.AANI.Web.Pages.AlumniPage
             AllCount = participantlist.Count();
 
             var pageSize = 40;
+            TotalPage = AllCount / pageSize;
             Participants = await PaginatedList<Participant>.CreateAsync(
                 participantlist.AsNoTracking(), pageIndex ?? 1, pageSize);
 

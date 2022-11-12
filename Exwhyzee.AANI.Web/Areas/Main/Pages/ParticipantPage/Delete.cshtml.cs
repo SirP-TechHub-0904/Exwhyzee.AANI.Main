@@ -7,29 +7,34 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Exwhyzee.AANI.Domain.Models;
 using Exwhyzee.AANI.Web.Data;
+using Microsoft.AspNetCore.Identity;
 
 namespace Exwhyzee.AANI.Web.Areas.Main.Pages.ParticipantPage
 {
+    [Microsoft.AspNetCore.Authorization.Authorize(Roles = "mSuperAdmin")]
+
     public class DeleteModel : PageModel
     {
         private readonly Exwhyzee.AANI.Web.Data.AaniDbContext _context;
+        private readonly UserManager<Participant> _userManager;
 
-        public DeleteModel(Exwhyzee.AANI.Web.Data.AaniDbContext context)
+        public DeleteModel(Exwhyzee.AANI.Web.Data.AaniDbContext context, UserManager<Participant> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         [BindProperty]
-        public SEC SEC { get; set; }
+        public Participant SEC { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(long? id)
+        public async Task<IActionResult> OnGetAsync(string? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            SEC = await _context.SECs.FirstOrDefaultAsync(m => m.Id == id);
+            SEC = await _userManager.FindByIdAsync(id);
 
             if (SEC == null)
             {
@@ -38,19 +43,17 @@ namespace Exwhyzee.AANI.Web.Areas.Main.Pages.ParticipantPage
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(long? id)
+        public async Task<IActionResult> OnPostAsync(string? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            SEC = await _context.SECs.FindAsync(id);
-
+            SEC = await _userManager.FindByIdAsync(id);
             if (SEC != null)
             {
-                _context.SECs.Remove(SEC);
-                await _context.SaveChangesAsync();
+               await _userManager.DeleteAsync(SEC);
             }
 
             return RedirectToPage("./Index");

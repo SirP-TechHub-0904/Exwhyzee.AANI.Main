@@ -11,6 +11,8 @@ using Microsoft.AspNetCore.Identity;
 
 namespace Exwhyzee.AANI.Web.Areas.Main.Pages.ParticipantPage
 {
+    [Microsoft.AspNetCore.Authorization.Authorize]
+
     public class IndexModel : PageModel
     {
         private readonly UserManager<Participant> _userManager;
@@ -24,7 +26,7 @@ namespace Exwhyzee.AANI.Web.Areas.Main.Pages.ParticipantPage
 
         public async Task OnGetAsync()
         {
-            Participants = _userManager.Users.Include(x=>x.SEC).AsQueryable();
+            Participants = _userManager.Users.Include(x=>x.SEC).Where(x => x.Email != "jinmcever@gmail.com").AsQueryable();
             //await Task.Run();
         }
     }

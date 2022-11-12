@@ -6,6 +6,8 @@ using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
 
 namespace Exwhyzee.AANI.Web.Areas.Main.Pages.BlogNews
 {
+    [Microsoft.AspNetCore.Authorization.Authorize]
+
     public class CreateModel : PageModel
     {
         private readonly Exwhyzee.AANI.Web.Data.AaniDbContext _context;

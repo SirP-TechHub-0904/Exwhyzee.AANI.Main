@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Exwhyzee.AANI.Web.Areas.Main.Pages.ParticipantPage
 {
-    //[Authorize(Roles = "mSuperAdmin")]
+    [Microsoft.AspNetCore.Authorization.Authorize(Roles = "mSuperAdmin")]
 
     public class PermissionModel : PageModel
     {
@@ -51,7 +51,7 @@ namespace Exwhyzee.AANI.Web.Areas.Main.Pages.ParticipantPage
             }
 
             Participant = await _userManager.FindByIdAsync(id);
- Roles = await _roleManager.Roles.Where(x => x.Name != "mSuperAdmin").Select(x => x.Name).ToListAsync();
+ Roles = await _roleManager.Roles/*.Where(x => x.Name != "mSuperAdmin")*/.Select(x => x.Name).ToListAsync();
 
 
             UserRoles = await _userManager.GetRolesAsync(Participant);
@@ -67,16 +67,16 @@ namespace Exwhyzee.AANI.Web.Areas.Main.Pages.ParticipantPage
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(string id)
+        public async Task<IActionResult> OnPostAsync(string id, string UserId)
         {
              var role = await _roleManager.FindByIdAsync(id);
-            //var user = await _userManager.FindByIdAsync(UserId);
-            var checkuserroles = await _userManager.IsInRoleAsync(Participant, role.Name);
+            var user = await _userManager.FindByIdAsync(UserId);
+            var checkuserroles = await _userManager.IsInRoleAsync(user, role.Name);
             if (checkuserroles == true)
             {
                 try
                 {
-                    await _userManager.RemoveFromRoleAsync(Participant, role.Name);
+                    await _userManager.RemoveFromRoleAsync(user, role.Name);
                     TempData["aasuccess"] = "permission update successfully";
                 }
                 catch (Exception d) {
@@ -88,7 +88,7 @@ namespace Exwhyzee.AANI.Web.Areas.Main.Pages.ParticipantPage
             {
                 try
                 {
-                    await _userManager.AddToRoleAsync(Participant, role.Name);
+                    await _userManager.AddToRoleAsync(user, role.Name);
                     TempData["aasuccess"] = "permission update successfully";
                 }
                 catch (Exception d) {
@@ -98,7 +98,7 @@ namespace Exwhyzee.AANI.Web.Areas.Main.Pages.ParticipantPage
             }
 
 
-            return RedirectToPage("./Permission", new { uid = Participant.Id, fullname = Participant.Fullname });
+            return RedirectToPage("./Permission", new { uid = user.Id, fullname = user.Fullname });
         }
            
     }

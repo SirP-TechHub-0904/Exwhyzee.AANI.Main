@@ -156,7 +156,7 @@
                         <a asp-page="/Contact">Contact</a>
                     </li>
                     <li>
-                        <a asp-page="/Login">Member Login</a>
+                        <a asp-page="/Account/Login" asp-area="Identity">Member Login</a>
                     </li>
                 </ul>
             </div>
@@ -192,12 +192,12 @@
                 <div class="col-md-3 col-sm-6 col-12">
                     <h3>Quick Links</h3>
                     <ul class="footer-list">
-                        <li><a asp-page="/Introduction">Introduction</a></li>
-                        <li><a asp-page="/About">About</a></li>
-                        <li><a asp-page="/Administration">Administration</a></li>
-                        <li><a asp-page="/Contributions">Administration</a></li>
-                        <li><a asp-page="/Contact">Contact</a></li>
-                        <li><a asp-page="/FAQs">FAQs</a></li>
+                        <li><a asp-page="/Web/About">About Us</a></li>
+                        <li><a asp-page="/Web/Welcomespeech">Welcome Speech</a></li>
+                        <li><a asp-page="/Web/Constitution">Constitution</a></li>
+                        <li><a asp-page="/Web/Chapters">AANI Chapters</a></li>
+                        <li><a asp-page="/Web/Patrons">AANI Patrons</a></li>
+                        <li><a asp-page="/Web/HeritageCouncil">AANI Heritage Council</a></li>
                     </ul>
                 </div>
                 <!-- Column 2 End -->
@@ -205,11 +205,19 @@
                 <div class="col-md-3 col-sm-6 col-12">
                     <h3>Papers</h3>
                     <ul class="footer-list">
-                        <li><a asp-page="/Publication">Publication</a></li>
-                        <li><a asp-page="/Lectures">Lectures</a></li>
-                        <li><a asp-page="/Essay">Essays</a></li>
                         <li>
-                            <a asp-page="/News">News</a>
+                            <a asp-page="/PapersCategory">Papers</a>
+                        </li>
+
+
+                        <li>
+                            <a asp-page="/AaniEvents">Events</a>
+                        </li>
+                        <li>
+                            <a asp-page="/Media/News">News Update</a>
+                        </li>
+                        <li>
+                            <a asp-page="/Media/Gallery">Gallery</a>
                         </li>
                     </ul>
                 </div>
@@ -218,9 +226,14 @@
                 <div class="col-md-2 col-sm-6 col-12">
                     <h3>The National Institute</h3>
                     <ul class="footer-list">
-                        <li><a asp-page="/AboutNIPSS">About NIPSS</a></li>
-                        <li><a asp-page="/NIPSSExecutive">NIPSS Executive</a></li>
-                        <li><a asp-page="/SEC">SEC</a></li>
+                        <li><a asp-page="/AlumniPage/AaniExecutive">AANI Executive</a></li>
+                        <li><a asp-page="/AlumniPage/SecYear">SEC YEAR</a></li>
+                        <li><a asp-page="/AlumniPage/SecAlumni">ALUMNI</a></li>
+                        <li><a asp-page="/AlumniPage/Families">Families on SEC</a></li>
+                        <li><a asp-page="/AlumniPage/NecMembers">NEC Members</a></li>
+                        <li><a asp-page="/AlumniPage/PastAaniExecutive">Past AANI Executive</a></li>
+                        <li><a href="https://nipsskuru.gov.ng/senior-executive-course-2/" target="_blank">About NIPSS</a></li>
+
                     </ul>
                 </div>
                 <!-- Column 4 End -->

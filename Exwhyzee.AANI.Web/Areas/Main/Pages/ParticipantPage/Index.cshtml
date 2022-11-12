@@ -7,9 +7,10 @@
 <div class="card">
     <div class="card-header">
         <h3 class="card-title">SEC ALUMNI</h3>
+        @if (User.Identity.IsAuthenticated && User.IsInRole("Admin")){
 
         <a asp-page="./Create" class="btn bg-gradient-warning btn-sm" style="float:right;">Add New Alumni</a>
-    </div>
+        } </div>
     <!-- /.card-header -->
     <div class="card-body">
         <div class="table-responsive">
@@ -29,8 +30,9 @@
                         <th>
                             EMAIL
                         </th>
+                        <th>MNI Status</th>
                         <th>SEC YEAR</th>
-                        <th></th>
+                       @if (User.Identity.IsAuthenticated && User.IsInRole("Admin")){<th></th>}
                     </tr>
                 </thead>
                 @{int sn = 0;}
@@ -60,26 +62,31 @@
                                 @Html.DisplayFor(modelItem => item.Email)
                             </td>
                             <td>
+                                @Html.DisplayFor(modelItem => item.MniStatus)
+                            </td>
+                            <td>
                                 SEC @Html.DisplayFor(modelItem => item.SEC.Number) (@Html.DisplayFor(modelItem => item.SEC.Year))
                             </td>
-                           
-                            <td>
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-success">Action</button>
-
+                            @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                            {
+                                <td>
                                     <div class="btn-group">
-                                        <button type="button" class="btn btn-success dropdown-toggle dropdown-icon" data-toggle="dropdown" aria-expanded="false">
-                                        </button>
-                                        <div class="dropdown-menu" style="">
+                                        <button type="button" class="btn btn-success">Action</button>
 
-                                            <a class="dropdown-item" asp-page="./Edit" asp-route-id="@item.Id">Edit</a>
-                                             @*<a class="dropdown-item" asp-page="./Details" asp-route-id="@item.Id">Details</a>*@
-                                        @*<a class="dropdown-item" asp-page="./Delete" asp-route-id="@item.Id">Delete</a>*@
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-success dropdown-toggle dropdown-icon" data-toggle="dropdown" aria-expanded="false">
+                                            </button>
+                                            <div class="dropdown-menu" style="">
+
+                                                <a class="dropdown-item" asp-page="./Edit" asp-route-id="@item.Id">Edit</a>
+                                                @*<a class="dropdown-item" asp-page="./Details" asp-route-id="@item.Id">Details</a>*@
+                                                @*<a class="dropdown-item" asp-page="./Delete" asp-route-id="@item.Id">Delete</a>*@
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
 
-                            </td>
+                                </td>
+                            }
                         </tr>
                     }
                 </tbody>

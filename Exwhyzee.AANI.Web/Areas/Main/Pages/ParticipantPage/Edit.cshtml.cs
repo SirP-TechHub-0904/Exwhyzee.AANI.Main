@@ -14,6 +14,8 @@ using Exwhyzee.AANI.Domain.Dtos;
 
 namespace Exwhyzee.AANI.Web.Areas.Main.Pages.ParticipantPage
 {
+    [Microsoft.AspNetCore.Authorization.Authorize(Roles = "Admin")]
+
     public class EditModel : PageModel
     {
         private readonly SignInManager<Participant> _signInManager;

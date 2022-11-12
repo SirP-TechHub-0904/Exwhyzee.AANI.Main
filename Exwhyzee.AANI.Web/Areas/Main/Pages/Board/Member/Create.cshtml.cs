@@ -13,6 +13,8 @@ using System.Data.Entity;
 
 namespace Exwhyzee.AANI.Web.Areas.Main.Pages.Board.Member
 {
+    [Microsoft.AspNetCore.Authorization.Authorize]
+
     public class CreateModel : PageModel
     {
         private readonly Exwhyzee.AANI.Web.Data.AaniDbContext _context;

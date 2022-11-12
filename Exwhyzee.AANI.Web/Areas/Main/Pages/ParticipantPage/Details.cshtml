@@ -43,7 +43,8 @@
                         </ul>
                     </div>
                 </div>
-
+                @*  @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                            {*@
                 <div class="btn-group">
                     <a asp-page="./Edit" asp-route-id="@Model.Participant.Id" class="btn btn-warning">Edit</a>
                     <a asp-page="./UpdateEmail" asp-route-id="@Model.Participant.Id" class="btn btn-primary">Update Email</a>
@@ -51,7 +52,7 @@
                     <a asp-page="./ResetPassword" asp-route-id="@Model.Participant.Id" class="btn btn-danger">Reset Password</a>
                     <a asp-page="./History" asp-route-id="@Model.Participant.Id" class="btn btn-success">Funds History</a>
                     <a asp-page="./Papers" asp-route-id="@Model.Participant.Id" class="btn btn-primary">Papers Presented/Written</a>
-
+                    
                 </div>
             </div>
             <!-- /.card-body -->

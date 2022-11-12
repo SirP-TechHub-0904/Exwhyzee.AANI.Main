@@ -7,8 +7,10 @@
 <div class="card">
     <div class="card-header">
         <h3 class="card-title">PAPERS LIST</h3>
-        <a asp-page="/PaperPage/PaperList/Create" class="btn bg-gradient-warning btn-sm" style="float:right;">Add New</a>
-
+        @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+        {
+            <a asp-page="/PaperPage/PaperList/Create" class="btn bg-gradient-warning btn-sm" style="float:right;">Add New</a>
+        }
     </div>
     <!-- /.card-header -->
     <div class="card-body">
@@ -40,7 +42,7 @@
                         <th>
                             @Html.DisplayNameFor(model => model.Paper[0].PaperCategory)
                         </th>
-                        <th></th>
+                       @if (User.Identity.IsAuthenticated && User.IsInRole("Admin")){<th></th>}
                     </tr>
                 </thead>
                 @{
@@ -78,9 +80,10 @@
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.PaperCategory.Id)
-                            </td>
-                            <td>
-                                <div class="btn-group">
+                            </td> @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                            {
+                                <td>
+                                    <div class="btn-group">
                                     <button type="button" class="btn btn-success">Action</button>
 
                                     <div class="btn-group">
@@ -93,7 +96,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </td>
+                            </td>}
                         </tr>
                     }
                 </tbody>

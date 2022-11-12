@@ -13,6 +13,8 @@ using System.Text.Encodings.Web;
 
 namespace Exwhyzee.AANI.Web.Areas.Main.Pages.ParticipantPage
 {
+    [Microsoft.AspNetCore.Authorization.Authorize(Roles = "Admin")]
+
     public class UpdateEmailModel : PageModel
     {
         private readonly UserManager<Participant> _userManager;

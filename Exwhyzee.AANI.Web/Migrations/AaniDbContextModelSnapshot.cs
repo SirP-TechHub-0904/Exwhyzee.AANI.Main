@@ -1272,6 +1272,9 @@ namespace Exwhyzee.AANI.Web.Migrations
                     b.Property<int>("MaritalStatus")
                         .HasColumnType("int");
 
+                    b.Property<int>("MniStatus")
+                        .HasColumnType("int");
+
                     b.Property<string>("OtherName")
                         .HasColumnType("nvarchar(max)");
 

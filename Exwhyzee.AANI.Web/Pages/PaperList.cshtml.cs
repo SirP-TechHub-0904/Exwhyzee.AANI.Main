@@ -25,6 +25,8 @@ namespace Exwhyzee.AANI.Web.Pages
         public SEC SEC { get; set; }
         public string CurrentFilter { get; set; }
         public int PageIndex { get; set; }
+        public int TotalPage { get; set; }
+
         public async Task<IActionResult> OnGetAsync(string currentFilter, string searchString, int? pageIndex, long? id)
         {
             if (id == null)
@@ -70,7 +72,7 @@ namespace Exwhyzee.AANI.Web.Pages
 
             AllCount = paperList.Count();
 
-            var pageSize = 30;
+            var pageSize = 30; TotalPage = AllCount / pageSize;
             Papers = await PaginatedList<Paper>.CreateAsync(
                 paperList.AsNoTracking(), pageIndex ?? 1, pageSize);
 

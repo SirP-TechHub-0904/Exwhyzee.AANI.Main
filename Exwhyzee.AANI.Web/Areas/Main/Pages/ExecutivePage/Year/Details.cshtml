@@ -8,9 +8,9 @@
 <div class="card">
     <div class="card-header">
         <h3 class="card-title">PAST EXECUTIVES MEMBERS FOR @Model.PastExecutiveYear.Title</h3>
-
+        @if (User.Identity.IsAuthenticated && User.IsInRole("Admin")){
         <a asp-page="/ExecutivePage/Members/Create" class="btn bg-gradient-warning btn-sm" style="float:right;">Create New</a>
-    </div>
+        } </div>
     <!-- /.card-header -->
     <div class="card-body">
         <div class="table-responsive">
@@ -30,7 +30,7 @@
                         <th>
                             @Html.DisplayNameFor(model => model.PastExecutiveMember[0].PastExecutiveYear)
                         </th>
-                        <th></th>
+                       @if (User.Identity.IsAuthenticated && User.IsInRole("Admin")){<th></th>}
                     </tr>
                 </thead>
                 @{
@@ -58,8 +58,10 @@
                             <td>
                                 @Html.DisplayFor(modelItem => item.PastExecutiveYear.Title)
                             </td>
-                            <td>
-                                <div class="btn-group">
+                            @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                            {
+                                <td>
+                                    <div class="btn-group">
                                     <button type="button" class="btn btn-success">Action</button>
 
                                     <div class="btn-group">
@@ -72,7 +74,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </td>
+                            </td>}
                         </tr>
                     }
                 </tbody>

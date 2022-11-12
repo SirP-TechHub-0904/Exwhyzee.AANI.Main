@@ -38,7 +38,7 @@
                         <th>
                             @Html.DisplayNameFor(model => model.Blogs[0].Date)
                         </th>
-                        <th></th>
+                       @if (User.Identity.IsAuthenticated && User.IsInRole("Admin")){<th></th>}
                     </tr>
                 </thead>
                 @{
@@ -73,21 +73,24 @@
                             <td>
                                 @Html.DisplayFor(modelItem => item.Date)
                             </td>
-                            <td>
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-success">Action</button>
-
+                            @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                            {
+                                <td>
                                     <div class="btn-group">
-                                        <button type="button" class="btn btn-success dropdown-toggle dropdown-icon" data-toggle="dropdown" aria-expanded="false">
-                                        </button>
-                                        <div class="dropdown-menu" style="">
+                                        <button type="button" class="btn btn-success">Action</button>
 
-                                            <a class="dropdown-item" asp-page="./Edit" asp-route-id="@item.Id">Edit</a>
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-success dropdown-toggle dropdown-icon" data-toggle="dropdown" aria-expanded="false">
+                                            </button>
+                                            <div class="dropdown-menu" style="">
 
+                                                <a class="dropdown-item" asp-page="./Edit" asp-route-id="@item.Id">Edit</a>
+
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </td>
+                                </td>
+                            }
                         </tr>
                     }
                 </tbody>

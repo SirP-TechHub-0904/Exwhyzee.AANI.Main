@@ -10,6 +10,8 @@ using Exwhyzee.AANI.Web.Data;
 
 namespace Exwhyzee.AANI.Web.Areas.Main.Pages.Board.Year
 {
+    [Microsoft.AspNetCore.Authorization.Authorize]
+
     public class IndexModel : PageModel
     {
         private readonly Exwhyzee.AANI.Web.Data.AaniDbContext _context;

@@ -10,6 +10,8 @@ using Exwhyzee.AANI.Web.Data;
 
 namespace Exwhyzee.AANI.Web.Areas.Main.Pages.ContributorsPage.ContributorList
 {
+    [Microsoft.AspNetCore.Authorization.Authorize]
+
     public class DeleteModel : PageModel
     {
         private readonly Exwhyzee.AANI.Web.Data.AaniDbContext _context;

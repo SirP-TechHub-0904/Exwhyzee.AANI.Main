@@ -30,6 +30,8 @@ namespace Exwhyzee.AANI.Web.Pages
         public SEC SEC { get; set; }
         public string CurrentFilter { get; set; }
         public int PageIndex { get; set; }
+        public int TotalPage { get; set; }
+
         public async Task<IActionResult> OnGetAsync(string currentFilter, string searchString, int? pageIndex)
         {
            
@@ -62,6 +64,7 @@ namespace Exwhyzee.AANI.Web.Pages
             AllCount = eventlist.Count();
 
             var pageSize = 10;
+            TotalPage = AllCount / pageSize;
             Events = await PaginatedList<Event>.CreateAsync(
                 eventlist.AsNoTracking(), pageIndex ?? 1, pageSize);
 
