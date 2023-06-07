@@ -6,12 +6,57 @@
 }
 <div class="card">
     <div class="card-header">
-        <h3 class="card-title">SEC ALUMNI</h3>
-        @if (User.Identity.IsAuthenticated && User.IsInRole("Admin")){
+        <h3 class="card-title">@TempData["data"]</h3>
+        @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+        {
 
-        <a asp-page="./Create" class="btn bg-gradient-warning btn-sm" style="float:right;">Add New Alumni</a>
-        } </div>
+            <a asp-page="./Create" class="btn bg-gradient-warning btn-sm" style="float:right;">Add New Alumni</a>
+        }
+    </div>
     <!-- /.card-header -->
+    <div class="card-body">
+        <div class="row">
+
+            <div class="col-lg-12">
+
+                <!-- small box -->
+                <a asp-page="./Members" class="btn btn-primary">
+                    TOTAL MEMBERS (@Model.AllAlumni)
+                </a>
+
+                <a asp-page="./Members" asp-route-aliveStatus="@Exwhyzee.AANI.Domain.Enums.AliveStatus.Alive" class="btn btn-warning">
+                    TOTAL ALIVE (@Model.Alive)
+                </a>
+
+                <a asp-page="./Members" asp-route-aliveStatus="@Exwhyzee.AANI.Domain.Enums.AliveStatus.Dead" class="btn btn-danger">
+                    TOTAL DEAD (@Model.Dead)
+                </a>
+
+                <a asp-page="./Members" asp-route-genderStatus="@Exwhyzee.AANI.Domain.Enums.GenderStatus.Male" class="btn btn-success">
+                    TOTAL MALE (@Model.Male)
+                </a>
+
+                <a asp-page="./Members" asp-route-genderStatus="@Exwhyzee.AANI.Domain.Enums.GenderStatus.Female" class="btn btn-info">
+                    TOTAL FEMALE (@Model.Female)
+                </a>
+
+                <a asp-page="./Members" asp-route-activeStatus="@Exwhyzee.AANI.Domain.Enums.ActiveStatus.Active" class="btn btn-warning">
+                    TOTAL ACTIVE (@Model.Active)
+                </a>
+
+                <a asp-page="./Members" asp-route-verificationStatus="@Exwhyzee.AANI.Domain.Enums.VerificationStatus.Awaiting" class="btn btn-danger">
+                    TOTAL AWAITING VERIFICATION (@Model.Awaiting)
+                </a>
+
+                <a asp-page="./Members" asp-route-verificationStatus="@Exwhyzee.AANI.Domain.Enums.VerificationStatus.Verified" class="btn btn-primary">
+                    TOTAL VERIFIED (@Model.Verified)
+                </a>
+            </div>
+        </div>
+        <!-- ./col -->
+
+
+    </div>
     <div class="card-body">
         <div class="table-responsive">
             <table id="example1" class="table table-bordered table-striped">
@@ -32,7 +77,10 @@
                         </th>
                         <th>MNI Status</th>
                         <th>SEC YEAR</th>
-                       @if (User.Identity.IsAuthenticated && User.IsInRole("Admin")){<th></th>}
+                        @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                        {
+                            <th></th>
+}
                     </tr>
                 </thead>
                 @{int sn = 0;}
@@ -46,10 +94,10 @@
                             </td>
                             <td>
                                 <a asp-page="./Details" asp-route-id="@item.Id">
-                                @Html.DisplayFor(modelItem => item.Title)
-                                @Html.DisplayFor(modelItem => item.Surname)
-                                @Html.DisplayFor(modelItem => item.FirstName)
-                                @Html.DisplayFor(modelItem => item.OtherName)
+                                    @Html.DisplayFor(modelItem => item.Title)
+                                    @Html.DisplayFor(modelItem => item.Surname)
+                                    @Html.DisplayFor(modelItem => item.FirstName)
+                                    @Html.DisplayFor(modelItem => item.OtherName)
                                 </a>
                             </td>
                             <td>

@@ -72,18 +72,25 @@ namespace Exwhyzee.AANI.Web.Areas.Alumni.Pages.Dashboard
                     updateparticipant.CurrentPosition = Participant.CurrentPosition;
                     updateparticipant.VerificationStatus = VerificationStatus.Awaiting;
 
-                    var chapter = await _context.Chapters.ToListAsync();
-                    var chapterid = chapter.Where(x => x.State.ToLower().Contains(updateparticipant.State.ToLower())).ToList();
-
-                    if (chapterid.FirstOrDefault() != null)
+                    try
                     {
-                        updateparticipant.ChapterId = chapterid.FirstOrDefault().Id;
-                    }
+                        var chapter = _context.Chapters.AsQueryable();
+                        var chapterid = chapter.Where(x => x.State.ToLower().Contains(updateparticipant.State.ToLower())).ToList();
 
+                        if (chapterid.FirstOrDefault() != null)
+                        {
+                            updateparticipant.ChapterId = chapterid.FirstOrDefault().Id;
+                        }
+
+                    }
+                    catch (Exception u)
+                    {
+
+                    }
                     await _userManager.UpdateAsync(updateparticipant);
                     await _userManager.UpdateNormalizedEmailAsync(updateparticipant);
 
-
+                    
 
 
 
