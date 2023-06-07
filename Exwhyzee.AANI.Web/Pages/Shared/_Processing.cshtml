@@ -80,10 +80,16 @@
         .uppercase-text {
             text-transform: uppercase !important;
         }
+
+        @@media (min-width: 576px) {
+            .login-box, .register-box {
+                width: 760px;
+            }
+        }
     </style>
 </head>
 <body class="hold-transition login-page">
-    <div class="login-box" style="width:760px;">
+    <div class="login-box" style="">
         <div class="login-logo">
             <a href="/">
                 <img class="animation__shake" src="~/img/icon.jpg" alt="AANI" height="60" width="60">
