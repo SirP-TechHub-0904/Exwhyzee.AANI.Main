@@ -239,7 +239,10 @@
         </aside>
         <form asp-area="Identity" id="logoutForm" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/Account/Login", new { area = "Identity" })" method="post">
         </form>
+        @if (User.Identity.IsAuthenticated && !User.IsInRole("Admin") || !User.IsInRole("mSuperAdmin"))
+        {
         @await Component.InvokeAsync("Qoute")
+        }
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
 
