@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>THE ALUMNI ASSOCIATION OF THE NATIONAL INSTITUTE (AANI) | Dashboard</title>
     <link rel="icon" type="image/png" href="~/img/icon.jpg">
+     
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome -->
@@ -54,7 +55,10 @@
     <link rel="stylesheet" href="~/assets/plugins/summernote/summernote-bs4.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css" />
 
+ 
     <style>
         .card-title {
             float: left;
@@ -70,13 +74,89 @@
             line-height: 1.5;
             border-radius: .2rem;
         }
-        .card-title{
-            text-transform:uppercase !important;
+
+        .card-title {
+            text-transform: uppercase !important;
         }
-       
+        .small-box h3 {
+            font-size: 4vw;
+
+        }
+        @@media(min-width: 992px) {
+            .small-box h3 {
+                font-size: 2vw;
+            }
+        }
+        .small-box p {
+            text-align: center;
+            font-weight: 900;
+            font-size: 1.22em;
+            margin: 0;
+        }
+        .h3 {
+
+            line-height: 1;
+
+        }
+        @@media(min-width: 992px) {
+            .col-lg-3 .small-box h3, .col-md-3 .small-box h3, .col-xl-3 .small-box h3 {
+                font-size: 2vw;
+            }
+        }
+        .col-lg-3 .small-box h3, .col-md-3 .small-box h3, .col-xl-3 .small-box h3 {
+            font-size: 4vw;
+        }
+        @@media (min-width: 992px) {
+            .col-lg-3 .small-box h3, .col-md-3 .small-box h3, .col-xl-3 .small-box h3 {
+                font-size: 1.3vw;
+            }
+        }
+        /* marquee div container */
+        @@media(min-width: 992px) {
+            marquee {
+                font-size: 1vw;
+                color: #fff;
+                font-family: 'Courier New', Courier, monospace;
+                height: 2.0vw;
+                overflow: hidden;
+                background-color: #000;
+                position: relative;
+            }
+        }
+
+.marquee {
+    font-size: 3vw;
+    color: #fff;
+    font-family: 'Courier New', Courier, monospace;
+    height: 4.5vw;
+    overflow: hidden;
+    background-color: #000;
+    position: relative;
+}
+/* nested div inside the container */
+.marquee div {
+    display: block;
+    width: 200%;
+    position: absolute;
+    overflow: hidden;
+    animation: marquee 12s linear infinite;
+}
+/* span with text */
+.marquee span {
+    float: left;
+    width: 50%;
+}
+/* keyframe */
+@@keyframes marquee {
+    0% { left: 0; }
+    100% { left: -100%; }
+}
+        .uppercase-text {
+            text-transform: uppercase !important;
+        }
     </style>
 </head>
-<body class="hold-transition sidebar-mini layout-fixed">
+<body class="hold-transition sidebar-mini layout-fixed" onload="displayModal()">
     <div class="wrapper">
 
         <!-- Preloader -->
@@ -91,104 +171,22 @@
                 <li class="nav-item">
                     <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
                 </li>
-                <li class="nav-item d-none d-sm-inline-block">
-                    <a href="/" class="nav-link">Home</a>
-                </li>
-                <li class="nav-item d-none d-sm-inline-block">
-                    <a href="#" class="nav-link">Contact</a>
-                </li>
-            </ul>
 
+            </ul>
+            <ul class="navbar-nav ml-auto">
+
+
+
+                <li class="nav-item">
+                    <h3 style="font-weight: 900; margin-top: 8px; font-size: 1.09rem; ">AANI DASHBOARD</h3>
+                </li>
+
+            </ul>
             <!-- Right navbar links -->
             <ul class="navbar-nav ml-auto">
 
 
-                <!-- Messages Dropdown Menu -->
-@*                <li class="nav-item dropdown">
-                    <a class="nav-link" data-toggle="dropdown" href="#">
-                        <i class="far fa-comments"></i>
-                        <span class="badge badge-danger navbar-badge">3</span>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                        <a href="#" class="dropdown-item">
-                            <!-- Message Start -->
-                            <div class="media">
-                                <img src="~/assets/dist/img/user1-128x128.jpg" alt="User Avatar" class="img-size-50 mr-3 img-circle">
-                                <div class="media-body">
-                                    <h3 class="dropdown-item-title">
-                                        Brad Diesel
-                                        <span class="float-right text-sm text-danger"><i class="fas fa-star"></i></span>
-                                    </h3>
-                                    <p class="text-sm">Call me whenever you can...</p>
-                                    <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
-                                </div>
-                            </div>
-                            <!-- Message End -->
-                        </a>
-                        <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item">
-                            <!-- Message Start -->
-                            <div class="media">
-                                <img src="~/assets/dist/img/user8-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">
-                                <div class="media-body">
-                                    <h3 class="dropdown-item-title">
-                                        John Pierce
-                                        <span class="float-right text-sm text-muted"><i class="fas fa-star"></i></span>
-                                    </h3>
-                                    <p class="text-sm">I got your message bro</p>
-                                    <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
-                                </div>
-                            </div>
-                            <!-- Message End -->
-                        </a>
-                        <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item">
-                            <!-- Message Start -->
-                            <div class="media">
-                                <img src="~/assets/dist/img/user3-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">
-                                <div class="media-body">
-                                    <h3 class="dropdown-item-title">
-                                        Nora Silvester
-                                        <span class="float-right text-sm text-warning"><i class="fas fa-star"></i></span>
-                                    </h3>
-                                    <p class="text-sm">The subject goes here</p>
-                                    <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
-                                </div>
-                            </div>
-                            <!-- Message End -->
-                        </a>
-                        <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
-                    </div>
-                </li>
-*@                <!-- Notifications Dropdown Menu -->
-@*                <li class="nav-item dropdown">
-                    <a class="nav-link" data-toggle="dropdown" href="#">
-                        <i class="far fa-bell"></i>
-                        <span class="badge badge-warning navbar-badge">15</span>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                        <span class="dropdown-item dropdown-header">15 Notifications</span>
-                        <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item">
-                            <i class="fas fa-envelope mr-2"></i> 4 new messages
-                            <span class="float-right text-muted text-sm">3 mins</span>
-                        </a>
-                        <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item">
-                            <i class="fas fa-users mr-2"></i> 8 friend requests
-                            <span class="float-right text-muted text-sm">12 hours</span>
-                        </a>
-                        <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item">
-                            <i class="fas fa-file mr-2"></i> 3 new reports
-                            <span class="float-right text-muted text-sm">2 days</span>
-                        </a>
-                        <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
-                    </div>
-                </li>
-*@                <li class="nav-item">
+                <li class="nav-item">
                     <a class="nav-link" data-widget="fullscreen" href="#" role="button">
                         <i class="fas fa-expand-arrows-alt"></i>
                     </a>
@@ -211,322 +209,26 @@
 
             <!-- Sidebar -->
             <div class="sidebar">
-                <!-- Sidebar user panel (optional) -->
-                @*<div class="user-panel mt-3 pb-3 mb-3 d-flex">
-                    <div class="image">
-                        <img src="~/assets/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
-                    </div>
-                    <div class="info">
-                        <a href="#" class="d-block">Alexander Pierce</a>
-                    </div>
-                </div>
-*@
 
 
                 <!-- Sidebar Menu -->
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                        <!-- Add icons to the links using the .nav-icon class
-                             with font-awesome or any other icon font library -->
-                        <li class="nav-header" style="background-color: #c8cacc;border-radius: 4px;font-weight: bolder;color: black;">DASHBOARD</li>
-                        <li class="nav-item">
-                            <a asp-page="/Dashboard/Index" asp-area="Main" class="nav-link">
-                                <i class="nav-icon fas fa-tachometer-alt"></i>
-                                <p>
-                                    Statistic
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a asp-page="/Dashboard/Funds" asp-area="Main" class="nav-link">
-                                <i class="nav-icon fa fa-money"></i>
-                                <p>
-                                    Fund Statistics
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-header" style="background-color: #c8cacc;border-radius: 4px;font-weight: bolder;color: black;">NAVIGATION</li>
-                        <li class="nav-item">
-                            <a asp-page="/SecPage/Index" asp-area="Main" class="nav-link">
-                                <i class="nav-icon fas fa-th"></i>
-                                <p>
-                                    SECs
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a asp-page="/ParticipantPage/Index" asp-area="Main" class="nav-link">
-                                <i class="nav-icon fas fa-users"></i>
-                                <p>
-                                    Alumni
-                                </p>
-                            </a>
-                        </li>
-                           <li class="nav-item">
-                            <a asp-page="/AaniChapters/Index" asp-area="Main" class="nav-link">
-                                <i class="nav-icon fas fa-users"></i>
-                                <p>
-                                   AANI Chapters
-                                </p>
-                            </a>
-                        </li>
-                          <li class="nav-item">
-                            <a asp-page="/AaniNec/Index" asp-area="Main" class="nav-link">
-                                <i class="nav-icon fas fa-users"></i>
-                                <p>
-                                   AANI NEC Member
-                                </p>
-                            </a>
-                        </li>
-                          <li class="nav-item">
-                            <a asp-page="/PatronPage/Index" asp-area="Main" class="nav-link">
-                                <i class="nav-icon fas fa-users"></i>
-                                <p>
-                                   AANI Patron
-                                </p>
-                            </a>
-                        </li>
-                         <li class="nav-item">
-                            <a asp-page="/HeritageCouncilPage/Index" asp-area="Main" class="nav-link">
-                                <i class="nav-icon fas fa-users"></i>
-                                <p>
-                                   AANI Heritage Council
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-columns"></i>
-                                <p>
-                                    Contributors
-                                    <i class="fas fa-angle-left right"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a asp-page="/ContributorsPage/Category/Index" asp-area="Main" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Category</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a asp-page="/ContributorsPage/ContributorList/Index" asp-area="Main" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>All Contributors</p>
-                                    </a>
-                                </li>
+                        @if (User.Identity.IsAuthenticated && User.IsInRole("MNI"))
+                        {
+                            <partial name="_MniMenu" />
+                        }
+                        else if (User.Identity.IsAuthenticated && User.IsInRole("Admin") || User.IsInRole("mSuperAdmin"))
+                        {
+                            <partial name="_AdminMenu" />
+                        }
 
-                            </ul>
-                        </li>
-
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-users"></i>
+                        <li class="nav-item" style="margin-bottom:70px;">
+                            <a href="javascript:document.getElementById('logoutForm').submit()" class="nav-link">
+                                <i class="nav-icon fa fa-sign-out"></i>
                                 <p>
-                                    Families on SEC
-                                    <i class="fas fa-angle-left right"></i>
+                                    LOGOUT
                                 </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a asp-page="/SecFamilies/Category/Index" asp-area="Main" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Family Type</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a asp-page="/SecFamilies/SubCategory/Index" asp-area="Main" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Families</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a asp-page="/SecFamilies/ParticipantMember/Index" asp-area="Main" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Family Members</p>
-                                    </a>
-                                </li>
-
-                            </ul>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-tachometer-alt"></i>
-                                <p>
-                                    Principal Officer
-                                    <i class="fas fa-angle-left right"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a asp-page="/PrincipalOfficePage/Office/Index" asp-area="Main" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Office</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a asp-page="/PrincipalOfficePage/Officer/Index" asp-area="Main" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Officers</p>
-                                    </a>
-                                </li>
-
-                            </ul>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-users"></i>
-                                <p>
-                                    NIPSS Board of Gov.
-                                    <i class="fas fa-angle-left right"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a asp-page="/Board/Year/Index" asp-area="Main" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Year</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a asp-page="/Board/member/Index" asp-area="Main" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Members</p>
-                                    </a>
-                                </li>
-
-                            </ul>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-tree"></i>
-                                <p>
-                                    Event Manager
-                                    <i class="fas fa-angle-left right"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a asp-page="/EventPage/EventManager/Index" asp-area="Main" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Events</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a asp-page="/EventPage/Committee/Index" asp-area="Main" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Committee</p>
-                                    </a>
-                                </li>
-
-                                <li class="nav-item">
-                                    <a asp-page="/EventPage/Attendance/Index" asp-area="Main" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Attendance</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a asp-page="/EventPage/Comments/Index" asp-area="Main" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Funds</p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                         <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-file"></i>
-                                <p>
-                                    Papers
-                                    <i class="fas fa-angle-left right"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a asp-page="/PaperPage/category/Index" asp-area="Main" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Category</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a asp-page="/PaperPage/PaperList/Index" asp-area="Main" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Papers</p>
-                                    </a>
-                                </li>
-
-                            </ul>
-                        </li>
-                         <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-money"></i>
-                                <p>
-                                    Funds
-                                    <i class="fas fa-angle-left right"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a asp-page="/Funding/category/Index" asp-area="Main" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Fund Category</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a asp-page="/Funding/FundPage/Index" asp-area="Main" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Funds</p>
-                                    </a>
-                                </li>
-
-                            </ul>
-                        </li>
-
-
-                         <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-users"></i>
-                                <p>
-                                    Executive
-                                    <i class="fas fa-angle-left right"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a asp-page="/ExecutivePage/ActiveExecutive/Index" asp-area="Main" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Active Executive</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a asp-page="/ExecutivePage/Year/Index" asp-area="Main" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Year</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a asp-page="/ExecutivePage/Members/Index" asp-area="Main" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Members</p>
-                                    </a>
-                                </li>
-                                 
-
-                            </ul>
-                        </li>
-                          <li class="nav-item">
-                            <a asp-page="/GalleryPage/Index" asp-area="Main" class="nav-link">
-                                <i class="nav-icon fas fa-image"></i>
-                                <p>
-                                    Gallery Page
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a asp-page="/BlogNews/Index" asp-area="Main" class="nav-link">
-                                <i class="nav-icon fas fa-file"></i>
-                                <p>
-                                    Blog                                </p>
                             </a>
                         </li>
                     </ul>
@@ -535,27 +237,12 @@
             </div>
             <!-- /.sidebar -->
         </aside>
-
+        <form asp-area="Identity" id="logoutForm" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/Account/Login", new { area = "Identity" })" method="post">
+        </form>
+        @await Component.InvokeAsync("Qoute")
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
-            <!-- Content Header (Page header) -->
-            <div class="content-header">
-                <div class="container-fluid">
-                    <div class="row mb-2">
-                        <div class="col-sm-6">
-                            <h1 class="m-0">Dashboard</h1>
-                        </div><!-- /.col -->
-                        <div class="col-sm-6">
-                            <ol class="breadcrumb float-sm-right">
-                                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                                <li class="breadcrumb-item active">Dashboard v1</li>
-                            </ol>
-                        </div><!-- /.col -->
-                    </div><!-- /.row -->
-                </div><!-- /.container-fluid -->
-            </div>
-            <!-- /.content-header -->
-            <!-- Main content -->
+
             <section class="content">
                 <div class="container-fluid">
                     @RenderBody()
@@ -567,6 +254,7 @@
 
         <!-- /.content-wrapper -->
         <footer class="main-footer">
+
             <strong>Copyright &copy; 2022 <a href="#">AANI</a>.</strong>
             All rights reserved.
             <div class="float-right d-none d-sm-inline-block">
@@ -615,7 +303,7 @@
     <!-- AdminLTE App -->
     <script src="~/assets/dist/js/adminlte.js"></script>
     <!-- AdminLTE for demo purposes -->@*
-    <script src="~/assets/dist/js/demo.js"></script>*@
+        <script src="~/assets/dist/js/demo.js"></script>*@
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
     <!-- DataTables  & Plugins -->
     <script src="~/assets/plugins/datatables/jquery.dataTables.min.js"></script>
@@ -707,6 +395,12 @@
     <script>
         $(document).ready(function () {
             $('.js-example-basic-single').select2();
+        });
+    </script>
+     
+    <script type="text/javascript">
+        $(window).on('load', function () {
+            $('#mainModal').modal('show');
         });
     </script>
 </body>

@@ -8,44 +8,56 @@
 <div class="card">
     <div class="card-header">
         <h3 class="card-title">CONTRIBUTORS CATEGORY</h3>
-@if (User.Identity.IsAuthenticated && User.IsInRole("Admin")){
-        <a asp-page="./Create" class="btn bg-gradient-warning btn-sm" style="float:right;">Create New</a>
-} </div>
+        @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+        {
+            <a asp-page="./Create" class="btn bg-gradient-warning btn-sm" style="float:right;">Create New</a>
+        }
+    </div>
     <!-- /.card-header -->
     <div class="card-body">
         <div class="table-responsive">
             <table id="example1" class="table table-bordered table-striped">
-    <thead>
-        <tr>
-            <th>S/N</th>
-            <th>
-                @Html.DisplayNameFor(model => model.ContributorCategory[0].Title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ContributorCategory[0].Date)
-            </th>
-           @if (User.Identity.IsAuthenticated && User.IsInRole("Admin")){<th></th>}
-        </tr>
-    </thead>
+                <thead>
+                    <tr>
+                        <th>S/N</th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.ContributorCategory[0].Title)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.ContributorCategory[0].ContributionType)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.ContributorCategory[0].Date)
+                        </th>
+                        @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                        {
+                            <th></th>
+                        }
+                    </tr>
+                </thead>
                 @{
                     int sn = 0;
                 }
                 <tbody>
-@foreach (var item in Model.ContributorCategory) {
+                    @foreach (var item in Model.ContributorCategory)
+                    {
                         <tr>
                             <td>
-                @{sn++;}
-                @sn
-            </td>
-            <td>
+                                @{sn++;}
+                                @sn
+                            </td>
+                            <td>
                                 <a asp-page="./Details" asp-route-id="@item.Id">
-                                   
-                @Html.DisplayFor(modelItem => item.Title)
+
+                                    @Html.DisplayFor(modelItem => item.Title)
                                 </a>
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Date)
-            </td>
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ContributionType)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Date)
+                            </td>
                             @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
                             {
                                 <td>

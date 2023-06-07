@@ -7,7 +7,7 @@ using System.Xml.Linq;
 
 namespace Exwhyzee.AANI.Web.Areas.Main.Pages.ParticipantPage
 {
-    [Microsoft.AspNetCore.Authorization.Authorize(Roles = "Admin")]
+  //  [Microsoft.AspNetCore.Authorization.Authorize(Roles = "Admin")]
 
     public class ResetPasswordModel : PageModel
     {

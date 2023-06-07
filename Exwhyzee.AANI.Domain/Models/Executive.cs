@@ -8,14 +8,13 @@ namespace Exwhyzee.AANI.Domain.Models
 {
     public class Executive
     {
-        public Executive()
-        {
-            Date = DateTime.UtcNow.AddHours(1);
-        }
+         
         public long Id { get; set; }
         public string? ParticipantId { get; set; }
         public Participant Participant { get; set; } = default!;
-        public DateTime Date { get; set; }
-        public string? Position { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
+        public long? ExecutivePositionId { get; set; }
+        public ExecutivePosition ExecutivePosition { get; set; }
     }
 }

@@ -17,7 +17,7 @@ namespace Exwhyzee.AANI.Web.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.10")
+                .HasAnnotation("ProductVersion", "6.0.16")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -108,6 +108,59 @@ namespace Exwhyzee.AANI.Web.Migrations
                     b.HasIndex("ParticipantId");
 
                     b.ToTable("BoardOfGovornorMembers");
+                });
+
+            modelBuilder.Entity("Exwhyzee.AANI.Domain.Models.Campain", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("ExecutivePositionId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Manifesto")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ParticipantId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ExecutivePositionId");
+
+                    b.HasIndex("ParticipantId");
+
+                    b.ToTable("Campains");
+                });
+
+            modelBuilder.Entity("Exwhyzee.AANI.Domain.Models.CampainPost", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<long>("CampainId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Key")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Url")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CampainId");
+
+                    b.ToTable("CampainPosts");
                 });
 
             modelBuilder.Entity("Exwhyzee.AANI.Domain.Models.CategoryFamiliesOnSEC", b =>
@@ -234,6 +287,9 @@ namespace Exwhyzee.AANI.Web.Migrations
                         .HasColumnType("bigint");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<int>("ContributionType")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
@@ -477,20 +533,42 @@ namespace Exwhyzee.AANI.Web.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
 
-                    b.Property<DateTime>("Date")
+                    b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<long?>("ExecutivePositionId")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("ParticipantId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("Position")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ExecutivePositionId");
 
                     b.HasIndex("ParticipantId");
 
                     b.ToTable("Executives");
+                });
+
+            modelBuilder.Entity("Exwhyzee.AANI.Domain.Models.ExecutivePosition", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<string>("Position")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ExecutivePositions");
                 });
 
             modelBuilder.Entity("Exwhyzee.AANI.Domain.Models.Fund", b =>
@@ -632,6 +710,61 @@ namespace Exwhyzee.AANI.Web.Migrations
                     b.HasIndex("StatesId");
 
                     b.ToTable("LocalGoverments");
+                });
+
+            modelBuilder.Entity("Exwhyzee.AANI.Domain.Models.MemberNotRecorded", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<string>("DOB")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Gender")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("OtherName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Position")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SecYear")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Sponsor")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("State")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StudyGroup")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Surname")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("MemberNotRecorded");
                 });
 
             modelBuilder.Entity("Exwhyzee.AANI.Domain.Models.Message", b =>
@@ -954,6 +1087,26 @@ namespace Exwhyzee.AANI.Web.Migrations
                     b.ToTable("PrincipalOfficerCategories");
                 });
 
+            modelBuilder.Entity("Exwhyzee.AANI.Domain.Models.QouteOfDay", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Message")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("QouteOfDays");
+                });
+
             modelBuilder.Entity("Exwhyzee.AANI.Domain.Models.SEC", b =>
                 {
                     b.Property<long>("Id")
@@ -1233,19 +1386,37 @@ namespace Exwhyzee.AANI.Web.Migrations
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
 
+                    b.Property<int>("ActiveStatus")
+                        .HasColumnType("int");
+
+                    b.Property<int>("AliveStatus")
+                        .HasColumnType("int");
+
                     b.Property<string>("AltPhoneNumber")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Bio")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<long?>("ChapterId")
+                        .HasColumnType("bigint");
+
                     b.Property<string>("ContactAddress")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("DOB")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("CurrentOffice")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CurrentPosition")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DOB")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateUpdated")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("EmergencyContactEmail")
@@ -1278,6 +1449,12 @@ namespace Exwhyzee.AANI.Web.Migrations
                     b.Property<string>("OtherName")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("PictureKey")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PictureUrl")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("ReligionStatus")
                         .HasColumnType("int");
 
@@ -1299,6 +1476,11 @@ namespace Exwhyzee.AANI.Web.Migrations
                     b.Property<int>("UserStatus")
                         .HasColumnType("int");
 
+                    b.Property<int>("VerificationStatus")
+                        .HasColumnType("int");
+
+                    b.HasIndex("ChapterId");
+
                     b.HasIndex("SECId");
 
                     b.HasDiscriminator().HasValue("Participant");
@@ -1319,6 +1501,32 @@ namespace Exwhyzee.AANI.Web.Migrations
                     b.Navigation("BoardOfGovornorCategory");
 
                     b.Navigation("Participant");
+                });
+
+            modelBuilder.Entity("Exwhyzee.AANI.Domain.Models.Campain", b =>
+                {
+                    b.HasOne("Exwhyzee.AANI.Domain.Models.ExecutivePosition", "ExecutivePosition")
+                        .WithMany("Campains")
+                        .HasForeignKey("ExecutivePositionId");
+
+                    b.HasOne("Exwhyzee.AANI.Domain.Models.Participant", "Participant")
+                        .WithMany()
+                        .HasForeignKey("ParticipantId");
+
+                    b.Navigation("ExecutivePosition");
+
+                    b.Navigation("Participant");
+                });
+
+            modelBuilder.Entity("Exwhyzee.AANI.Domain.Models.CampainPost", b =>
+                {
+                    b.HasOne("Exwhyzee.AANI.Domain.Models.Campain", "Campain")
+                        .WithMany("CampainPosts")
+                        .HasForeignKey("CampainId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Campain");
                 });
 
             modelBuilder.Entity("Exwhyzee.AANI.Domain.Models.Comment", b =>
@@ -1434,9 +1642,15 @@ namespace Exwhyzee.AANI.Web.Migrations
 
             modelBuilder.Entity("Exwhyzee.AANI.Domain.Models.Executive", b =>
                 {
+                    b.HasOne("Exwhyzee.AANI.Domain.Models.ExecutivePosition", "ExecutivePosition")
+                        .WithMany()
+                        .HasForeignKey("ExecutivePositionId");
+
                     b.HasOne("Exwhyzee.AANI.Domain.Models.Participant", "Participant")
                         .WithMany()
                         .HasForeignKey("ParticipantId");
+
+                    b.Navigation("ExecutivePosition");
 
                     b.Navigation("Participant");
                 });
@@ -1648,11 +1862,17 @@ namespace Exwhyzee.AANI.Web.Migrations
 
             modelBuilder.Entity("Exwhyzee.AANI.Domain.Models.Participant", b =>
                 {
+                    b.HasOne("Exwhyzee.AANI.Domain.Models.Chapter", "Chapter")
+                        .WithMany()
+                        .HasForeignKey("ChapterId");
+
                     b.HasOne("Exwhyzee.AANI.Domain.Models.SEC", "SEC")
                         .WithMany("Participants")
                         .HasForeignKey("SECId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Chapter");
 
                     b.Navigation("SEC");
                 });
@@ -1665,6 +1885,11 @@ namespace Exwhyzee.AANI.Web.Migrations
             modelBuilder.Entity("Exwhyzee.AANI.Domain.Models.BoardOfGovornorCategory", b =>
                 {
                     b.Navigation("BoardOfGovornorMembers");
+                });
+
+            modelBuilder.Entity("Exwhyzee.AANI.Domain.Models.Campain", b =>
+                {
+                    b.Navigation("CampainPosts");
                 });
 
             modelBuilder.Entity("Exwhyzee.AANI.Domain.Models.CategoryFamiliesOnSEC", b =>
@@ -1691,6 +1916,11 @@ namespace Exwhyzee.AANI.Web.Migrations
 
                     b.Navigation("FundCategory")
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Exwhyzee.AANI.Domain.Models.ExecutivePosition", b =>
+                {
+                    b.Navigation("Campains");
                 });
 
             modelBuilder.Entity("Exwhyzee.AANI.Domain.Models.FundCategory", b =>

@@ -45,6 +45,11 @@ namespace Exwhyzee.AANI.Web.Data
         public DbSet<Gallery> Galleries { get; set; } = default!;
         public DbSet<Blog> Blogs { get; set; } = default!;
         public DbSet<Comment> Comments { get; set; } = default!;
+        public DbSet<MemberNotRecorded> MemberNotRecorded { get; set; } = default!;
+        public DbSet<Campain> Campains { get; set; } = default!;
+        public DbSet<CampainPost> CampainPosts { get; set; } = default!;
+        public DbSet<ExecutivePosition> ExecutivePositions { get; set; } = default!;
+        public DbSet<QouteOfDay> QouteOfDays { get; set; } = default!;
 
 
     }

@@ -1,0 +1,323 @@
+﻿<!-- Add icons to the links using the .nav-icon class
+                            with font-awesome or any other icon font library -->
+<li class="nav-header" style="background-color: #c8cacc;border-radius: 4px;font-weight: bolder;color: black;">DASHBOARD</li>
+<li class="nav-item">
+    <a asp-page="/Dashboard/Index" asp-area="Main" class="nav-link">
+        <i class="nav-icon fas fa-tachometer-alt"></i>
+        <p>
+            Statistic
+        </p>
+    </a>
+</li>
+<li class="nav-item">
+    <a asp-page="/Dashboard/Funds" asp-area="Main" class="nav-link">
+        <i class="nav-icon fa fa-money"></i>
+        <p>
+            Fund Statistics
+        </p>
+    </a>
+</li>
+<li class="nav-header" style="background-color: #c8cacc;border-radius: 4px;font-weight: bolder;color: black;">NAVIGATION</li>
+<li class="nav-item">
+    <a asp-page="/SecPage/Index" asp-area="Main" class="nav-link">
+        <i class="nav-icon fas fa-th"></i>
+        <p>
+            SECs
+        </p>
+    </a>
+</li>
+<li class="nav-item">
+    <a asp-page="/ParticipantPage/Index" asp-area="Main" class="nav-link">
+        <i class="nav-icon fas fa-users"></i>
+        <p>
+            Alumni
+        </p>
+    </a>
+</li>
+<li class="nav-item">
+    <a asp-page="/AaniChapters/Index" asp-area="Main" class="nav-link">
+        <i class="nav-icon fas fa-users"></i>
+        <p>
+            AANI Chapters
+        </p>
+    </a>
+</li>
+<li class="nav-item">
+    <a asp-page="/AaniNec/Index" asp-area="Main" class="nav-link">
+        <i class="nav-icon fas fa-users"></i>
+        <p>
+            AANI NEC Member
+        </p>
+    </a>
+</li>
+<li class="nav-item">
+    <a asp-page="/PatronPage/Index" asp-area="Main" class="nav-link">
+        <i class="nav-icon fas fa-users"></i>
+        <p>
+            AANI Patron
+        </p>
+    </a>
+</li>
+<li class="nav-item">
+    <a asp-page="/HeritageCouncilPage/Index" asp-area="Main" class="nav-link">
+        <i class="nav-icon fas fa-users"></i>
+        <p>
+            AANI Heritage Council
+        </p>
+    </a>
+</li>
+<li class="nav-item">
+    <a href="#" class="nav-link">
+        <i class="nav-icon fas fa-columns"></i>
+        <p>
+            Contributors
+            <i class="fas fa-angle-left right"></i>
+        </p>
+    </a>
+    <ul class="nav nav-treeview">
+        <li class="nav-item">
+            <a asp-page="/ContributorsPage/Category/Index" asp-area="Main" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Category</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a asp-page="/ContributorsPage/ContributorList/Index" asp-area="Main" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>All Contributors</p>
+            </a>
+        </li>
+
+    </ul>
+</li>
+
+<li class="nav-item">
+    <a href="#" class="nav-link">
+        <i class="nav-icon fas fa-users"></i>
+        <p>
+            Families on SEC
+            <i class="fas fa-angle-left right"></i>
+        </p>
+    </a>
+    <ul class="nav nav-treeview">
+        <li class="nav-item">
+            <a asp-page="/SecFamilies/Category/Index" asp-area="Main" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Family Type</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a asp-page="/SecFamilies/SubCategory/Index" asp-area="Main" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Families</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a asp-page="/SecFamilies/ParticipantMember/Index" asp-area="Main" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Family Members</p>
+            </a>
+        </li>
+
+    </ul>
+</li>
+<li class="nav-item">
+    <a href="#" class="nav-link">
+        <i class="nav-icon fas fa-tachometer-alt"></i>
+        <p>
+            Principal Officer
+            <i class="fas fa-angle-left right"></i>
+        </p>
+    </a>
+    <ul class="nav nav-treeview">
+        <li class="nav-item">
+            <a asp-page="/PrincipalOfficePage/Office/Index" asp-area="Main" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Office</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a asp-page="/PrincipalOfficePage/Officer/Index" asp-area="Main" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Officers</p>
+            </a>
+        </li>
+
+    </ul>
+</li>
+<li class="nav-item">
+    <a href="#" class="nav-link">
+        <i class="nav-icon fas fa-users"></i>
+        <p>
+            NIPSS Board of Gov.
+            <i class="fas fa-angle-left right"></i>
+        </p>
+    </a>
+    <ul class="nav nav-treeview">
+        <li class="nav-item">
+            <a asp-page="/Board/Year/Index" asp-area="Main" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Year</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a asp-page="/Board/member/Index" asp-area="Main" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Members</p>
+            </a>
+        </li>
+
+    </ul>
+</li>
+<li class="nav-item">
+    <a href="#" class="nav-link">
+        <i class="nav-icon fas fa-tree"></i>
+        <p>
+            Event Manager
+            <i class="fas fa-angle-left right"></i>
+        </p>
+    </a>
+    <ul class="nav nav-treeview">
+        <li class="nav-item">
+            <a asp-page="/EventPage/EventManager/Index" asp-area="Main" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Events</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a asp-page="/EventPage/Committee/Index" asp-area="Main" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Committee</p>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a asp-page="/EventPage/Attendance/Index" asp-area="Main" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Attendance</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a asp-page="/EventPage/Comments/Index" asp-area="Main" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Funds</p>
+            </a>
+        </li>
+    </ul>
+</li>
+<li class="nav-item">
+    <a href="#" class="nav-link">
+        <i class="nav-icon fas fa-file"></i>
+        <p>
+            Papers
+            <i class="fas fa-angle-left right"></i>
+        </p>
+    </a>
+    <ul class="nav nav-treeview">
+        <li class="nav-item">
+            <a asp-page="/PaperPage/category/Index" asp-area="Main" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Category</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a asp-page="/PaperPage/PaperList/Index" asp-area="Main" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Papers</p>
+            </a>
+        </li>
+
+    </ul>
+</li>
+<li class="nav-item">
+    <a href="#" class="nav-link">
+        <i class="nav-icon fas fa-money"></i>
+        <p>
+            Funds
+            <i class="fas fa-angle-left right"></i>
+        </p>
+    </a>
+    <ul class="nav nav-treeview">
+        <li class="nav-item">
+            <a asp-page="/Funding/category/Index" asp-area="Main" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Fund Category</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a asp-page="/Funding/FundPage/Index" asp-area="Main" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Funds</p>
+            </a>
+        </li>
+
+    </ul>
+</li>
+
+
+<li class="nav-item">
+    <a href="#" class="nav-link">
+        <i class="nav-icon fas fa-users"></i>
+        <p>
+            Executive
+            <i class="fas fa-angle-left right"></i>
+        </p>
+    </a>
+    <ul class="nav nav-treeview">
+        <li class="nav-item">
+            <a asp-page="/ExecutivePage/ActiveExecutive/Index" asp-area="Main" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Active Executive</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a asp-page="/ExecutivePage/Year/Index" asp-area="Main" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Year</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a asp-page="/ExecutivePage/Members/Index" asp-area="Main" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Members</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a asp-page="/ExecutivePage/ExPositions/Index" asp-area="Main" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Positions</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a asp-page="/ExecutivePage/MemberCampain/Index" asp-area="Main" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Member Campain</p>
+            </a>
+        </li>
+
+
+    </ul>
+</li><li class="nav-item">
+    <a asp-page="/QoutePage/Index" asp-area="Main" class="nav-link">
+        <i class="nav-icon fas fa-image"></i>
+        <p>
+            QoutePage
+        </p>
+    </a>
+</li>
+<li class="nav-item">
+    <a asp-page="/GalleryPage/Index" asp-area="Main" class="nav-link">
+        <i class="nav-icon fas fa-image"></i>
+        <p>
+            Gallery Page
+        </p>
+    </a>
+</li>
+<li class="nav-item">
+    <a asp-page="/BlogNews/Index" asp-area="Main" class="nav-link">
+        <i class="nav-icon fas fa-file"></i>
+        <p>
+            Blog
+        </p>
+    </a>
+</li>

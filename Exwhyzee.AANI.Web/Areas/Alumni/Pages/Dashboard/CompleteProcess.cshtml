@@ -1,0 +1,207 @@
+﻿@page
+@model Exwhyzee.AANI.Web.Areas.Alumni.Pages.Dashboard.CompleteProcessModel
+@{
+    Layout = "/Pages/Shared/_Processing.cshtml";
+
+}
+<p class="login-box-msg" style=" font-size: 2em; font-weight: 900; color: black;">UPDATE YOUR INFORMATION</p>
+
+<div class="row">
+    <div class="col-md-12">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Participant.Id" />
+
+            <table id="" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th> FULLNAME</th>
+                        <th>
+                            @Model.Participant.Fullname
+                        </th>
+
+                    </tr>
+                    <tr>
+                        <th> SEC/YEAR</th>
+                        <th>
+                            @Model.SEC.Number/@Model.SEC.Year
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+            </table>
+
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label asp-for="Email" class="control-label"></label>
+                        <input asp-for="Email" class="form-control" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label asp-for="Phone" class="control-label"></label>
+                        <input asp-for="Phone" class="form-control" />
+                        <span asp-validation-for="Phone" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label asp-for="Participant.DOB" class="control-label">DOB (MONTH/DAY)</label>
+                        <br />
+
+                        <SELECT id="month" name="mm" asp-for="Month" onchange="change_month(this)" style="border: 1px solid #0000002e; padding: .375rem .75rem; font-size: 1rem; line-height: 1.5; border-radius: .25rem;width:50%;">
+                        </SELECT>
+                        <SELECT id="day" name="dd" asp-for="Day" style="border: 1px solid #0000002e; padding: .375rem .75rem; font-size: 1rem; line-height: 1.5; border-radius: .25rem; width: 45%;">
+                        </SELECT>
+                        <span asp-validation-for="Participant.DOB" class="text-danger"></span>
+                    </div>
+
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Participant.GenderStatus" class="control-label"></label>
+                        @Html.DropDownListFor(model => model.Participant.GenderStatus, new SelectList(Enum.GetValues(typeof(Exwhyzee.AANI.Domain.Enums.GenderStatus))), new { @class = "form-control", required = "required" })
+
+                        <span asp-validation-for="Participant.GenderStatus" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Participant.State" class="control-label"></label>
+                        <select asp-for="Participant.State" asp-items="ViewBag.StateId" required="required" id="State" class="form-control uppercase-text">
+                            <option>Select State</option>
+
+                        </select>
+                        <span asp-validation-for="Participant.State" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Participant.CurrentOffice" class="control-label">Current Office</label>
+                        <input asp-for="Participant.CurrentOffice" class="form-control uppercase-text" />
+                        <span asp-validation-for="Participant.CurrentOffice" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Participant.CurrentPosition" class="control-label">Current Position</label>
+                        <input asp-for="Participant.CurrentPosition" class="form-control uppercase-text" />
+                        <span asp-validation-for="Participant.CurrentPosition" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <input type="submit" value="Submit For Verification" class="btn btn-primary" />
+                <a asp-page="/" class="btn bg-gradient-warning btn-sm" style="float:right;">Back to Website</a>
+
+            </div>
+
+        </form>
+    </div>
+</div>
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+     
+
+    <script>
+        var Days = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];// index => month [0-11]
+        $(document).ready(function () {
+            var option = '<option value="day">day</option>';
+            var selectedDay = "day";
+            for (var i = 1; i <= Days[0]; i++) { //add option days
+                option += '<option value="' + i + '">' + i + '</option>';
+            }
+            $('#day').append(option);
+            $('#day').val(selectedDay);
+
+            var option = '<option value="month">month</option>';
+            var selectedMon = "month";
+            for (var i = 1; i <= 12; i++) {
+                option += '<option value="' + i + '">' + i + '</option>';
+            }
+            $('#month').append(option);
+            $('#month').val(selectedMon);
+
+            var option = '<option value="month">month</option>';
+            var selectedMon = "month";
+            for (var i = 1; i <= 12; i++) {
+                option += '<option value="' + i + '">' + i + '</option>';
+            }
+            $('#month2').append(option);
+            $('#month2').val(selectedMon);
+
+            var d = new Date();
+            var option = '<option value="year">year</option>';
+            selectedYear = "year";
+            for (var i = 1930; i <= d.getFullYear(); i++) {// years start i
+                option += '<option value="' + i + '">' + i + '</option>';
+            }
+            $('#year').append(option);
+            $('#year').val(selectedYear);
+        });
+        function isLeapYear(year) {
+            year = parseInt(year);
+            if (year % 4 != 0) {
+                return false;
+            } else if (year % 400 == 0) {
+                return true;
+            } else if (year % 100 == 0) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+
+        function change_year(select) {
+            if (isLeapYear($(select).val())) {
+                Days[1] = 29;
+
+            }
+            else {
+                Days[1] = 28;
+            }
+            if ($("#month").val() == 2) {
+                var day = $('#day');
+                var val = $(day).val();
+                $(day).empty();
+                var option = '<option value="day">day</option>';
+                for (var i = 1; i <= Days[1]; i++) { //add option days
+                    option += '<option value="' + i + '">' + i + '</option>';
+                }
+                $(day).append(option);
+                if (val > Days[month]) {
+                    val = 1;
+                }
+                $(day).val(val);
+            }
+        }
+
+        function change_month(select) {
+            var day = $('#day');
+            var val = $(day).val();
+            $(day).empty();
+            var option = '<option value="day">day</option>';
+            var month = parseInt($(select).val()) - 1;
+            for (var i = 1; i <= Days[month]; i++) { //add option days
+                option += '<option value="' + i + '">' + i + '</option>';
+            }
+            $(day).append(option);
+            if (val > Days[month]) {
+                val = 1;
+            }
+            $(day).val(val);
+        }
+        </script>
+
+}
