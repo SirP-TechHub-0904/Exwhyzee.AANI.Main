@@ -23,7 +23,7 @@
                         <select asp-for="Executive.ParticipantId" class="form-control select2 select2-primary js-example-basic-single" data-dropdown-css-class="select2-primary" asp-items="ViewBag.ParticipantId"></select>
                 <span asp-validation-for="Executive.ParticipantId" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            @*<div class="form-group">
                 <label asp-for="Executive.Date" class="control-label"></label>
                 <input asp-for="Executive.Date" class="form-control" />
                 <span asp-validation-for="Executive.Date" class="text-danger"></span>
@@ -32,7 +32,7 @@
                 <label asp-for="Executive.Position" class="control-label"></label>
                 <input asp-for="Executive.Position" class="form-control" />
                 <span asp-validation-for="Executive.Position" class="text-danger"></span>
-            </div>
+            </div>*@
             <div class="form-group">
                 <input type="submit" value="Submit" class="btn btn-primary" />
                 <a asp-page="./Index" class="btn bg-gradient-warning btn-sm" style="float:right;">Back</a>

@@ -1,0 +1,379 @@
+﻿@page
+@model Exwhyzee.AANI.Web.Areas.Alumni.Pages.Dashboard.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+ 
+<div class="">
+    <section class="content" style="margin-top:10px;">
+        <div class="container-fluid card">
+
+            <div class="content-header" style="padding:1px 0;">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-sm-12" style="padding-left:0;">
+                            <h5 class="m-0" style="font-weight:900;">TODAYS BIRTHDAY</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+
+
+                    <div class="marquee">
+                        <div>
+                            <span>++HAPPY BIRTHDAY AIG XXX XXXX (SEC 43)</span>
+                            <span>++HAPPY BIRTHDAY LADY XXX XXXX (SEC 20)</span>
+                            <span>++HAPPY BIRTHDAY MR XXX XXXX (SEC 34)</span>
+                            <span>++HAPPY BIRTHDAY DR XXX XXXX (SEC 28)</span>
+                            <!-- you need the second one - otherwise there is a lot of blank space and it will look odd -->
+                         </div>
+                    </div>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+    <section class="content" style="margin-top:10px;">
+        <div class="container-fluid card">
+
+            <div class="content-header" style="padding:1px 0;">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-sm-12" style="padding-left:0;">
+                            <h5 class="m-0" style="font-weight:900;">MEMBERS STATISTIC</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+
+                <div class="col-lg-4 col-6">
+
+                    <!-- small box -->
+                    <a asp-page="./Members" class="small-box-footer">
+                        <div class="small-box bg-primary" style="margin-bottom: 7.5px;margin-top: 7.5px;">
+                            <div class="inner">
+                                <h3 style="white-space: normal;text-align: center;margin:auto;">
+                                    TOTAL MEMBERS
+                                </h3>
+
+                                <p style="text-align: center;font-weight: 900;font-size: 2.0em;margin: 0;">@Model.AllAlumni</p>
+
+                            </div>
+
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-4 col-6">
+
+                    <!-- small box -->
+                    <a asp-page="./Members" asp-route-aliveStatus="@Exwhyzee.AANI.Domain.Enums.AliveStatus.Alive" class="small-box-footer">
+                        <div class="small-box bg-success" style="margin-bottom: 7.5px;margin-top: 7.5px;">
+                            <div class="inner">
+                                <h3 style="white-space: normal;text-align: center;margin:auto;">
+                                    TOTAL ALIVE
+                                </h3>
+
+                                <p style="text-align: center;font-weight: 900;font-size: 2.0em;margin: 0;">@Model.Alive</p>
+
+                            </div>
+
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-4 col-6">
+
+                    <a asp-page="./Members" asp-route-aliveStatus="@Exwhyzee.AANI.Domain.Enums.AliveStatus.Dead" class="small-box-footer">
+                        <div class="small-box bg-danger" style="margin-bottom: 7.5px;margin-top: 7.5px;">
+                            <div class="inner">
+                                <h3 style="white-space: normal;text-align: center;margin:auto;">
+                                    TOTAL DEAD
+                                </h3>
+
+                                <p style="text-align: center;font-weight: 900;font-size: 2.0em;margin: 0;">@Model.Dead</p>
+
+                            </div>
+
+
+                        </div>
+                    </a>
+                </div>
+                <!-- ./col -->
+
+
+                <div class="col-lg-4 col-6">
+
+                    <!-- small box -->
+                    <a asp-page="./Members" asp-route-genderStatus="@Exwhyzee.AANI.Domain.Enums.GenderStatus.Male" class="small-box-footer">
+                        <div class="small-box bg-gray" style="margin-bottom: 7.5px;margin-top: 7.5px;">
+                            <div class="inner">
+                                <h3 style="white-space: normal;text-align: center;margin:auto;">
+                                    TOTAL MALE
+                                </h3>
+
+                                <p style="text-align: center;font-weight: 900;font-size: 2.0em;margin: 0;">@Model.Male</p>
+
+                            </div>
+
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-4 col-6">
+
+                    <!-- small box -->
+                    <a asp-page="./Members" asp-route-genderStatus="@Exwhyzee.AANI.Domain.Enums.GenderStatus.Female" class="small-box-footer">
+                        <div class="small-box bg-pink" style="margin-bottom: 7.5px;margin-top: 7.5px;">
+                            <div class="inner">
+                                <h3 style="white-space: normal;text-align: center;margin:auto;">
+                                    TOTAL FEMALE
+                                </h3>
+
+                                <p style="text-align: center;font-weight: 900;font-size: 2.0em;margin: 0;">@Model.Female</p>
+
+                            </div>
+
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-4 col-6">
+
+                    <a asp-page="./Members" asp-route-activeStatus="@Exwhyzee.AANI.Domain.Enums.ActiveStatus.Active" class="small-box-footer">
+                        <div class="small-box bg-warning" style="margin-bottom: 7.5px;margin-top: 7.5px;">
+                            <div class="inner">
+                                <h3 style="white-space: normal;text-align: center;margin:auto;">
+                                    TOTAL ACTIVE
+                                </h3>
+
+                                <p style="text-align: center;font-weight: 900;font-size: 2.0em;margin: 0;">@Model.Active</p>
+
+                            </div>
+
+                        </div>
+                    </a>
+                </div>
+                <!-- ./col -->
+
+
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+    <section class="content" style="margin-top:10px;">
+        <div class="container-fluid card">
+
+
+            <div class="content-header" style="padding:1px 0;">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-sm-12" style="padding-left:0;">
+                            <h5 class="m-0" style="font-weight:900;">MEMBERS FINANCE</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+
+                <div class="col-lg-3 col-6">
+
+                    <!-- small box -->
+                    <a asp-page="" asp-route-id="" class="small-box-footer">
+                        <div class="small-box bg-primary" style="margin-bottom: 7.5px;margin-top: 7.5px;">
+                            <div class="inner">
+                                <h3 style="white-space: normal;text-align: center;margin:auto;">
+                                    MY YEARLY DUES (paid)
+                                </h3>
+
+                                <p style="text-align: center;font-weight: 900;font-size: 2.0em;margin: 0;">00000</p>
+
+                            </div>
+
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-3 col-6">
+
+                    <!-- small box -->
+                    <a asp-page="" asp-route-id="" class="small-box-footer">
+                        <div class="small-box bg-success" style="margin-bottom: 7.5px;margin-top: 7.5px;">
+                            <div class="inner">
+                                <h3 style="white-space: normal;text-align: center;margin:auto;">
+                                    MY YEARLY DUES (pending)
+                                </h3>
+
+                                <p style="text-align: center;font-weight: 900;font-size: 2.0em;margin: 0;">0000</p>
+
+                            </div>
+
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-3 col-6">
+
+                    <a asp-page="" asp-route-id="" class="small-box-footer">
+                        <div class="small-box bg-danger" style="margin-bottom: 7.5px;margin-top: 7.5px;">
+                            <div class="inner">
+                                <h3 style="white-space: normal;text-align: center;margin:auto;">
+                                    MY CONTRIBUTIONS (paid)
+                                </h3>
+
+                                <p style="text-align: center;font-weight: 900;font-size: 2.0em;margin: 0;">00000</p>
+
+                            </div>
+
+
+                        </div>
+                    </a>
+                </div>
+                <!-- ./col -->
+
+
+                <div class="col-lg-3 col-6">
+
+                    <!-- small box -->
+                    <a asp-page="" asp-route-id="" class="small-box-footer">
+                        <div class="small-box bg-gray" style="margin-bottom: 7.5px;margin-top: 7.5px;">
+                            <div class="inner">
+                                <h3 style="white-space: normal;text-align: center;margin:auto;">
+                                    MY CONTRIBUTIONS (pending)
+                                </h3>
+
+                                <p style="text-align: center;font-weight: 900;font-size: 2.0em;margin: 0;">00000</p>
+
+                            </div>
+
+                        </div>
+                    </a>
+                </div>
+
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+    @{
+        string[] colors = {
+        "bg-primary", "bg-secondary", "bg-success", "bg-danger", "bg-warning", "bg-info",
+        "bg-dark", "bg-light", "bg-info", "bg-danger", "bg-primary", "bg-warning",
+        "bg-success", "bg-info", "bg-dark", "bg-primary", "bg-secondary", "bg-success",
+        "bg-danger", "bg-warning", "bg-info", "bg-dark", "bg-light", "bg-primary",
+        "bg-secondary", "bg-success", "bg-danger", "bg-warning", "bg-info", "bg-dark",
+        "bg-light", "bg-primary", "bg-secondary", "bg-success", "bg-danger", "bg-warning",
+        "bg-info", "bg-dark", "bg-light"
+    };
+        Random random = new Random();
+    }
+    <section class="content" style="margin-top:10px;">
+        <div class="container-fluid card">
+
+            <div class="content-header" style="padding:1px 0;">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-sm-12" style="padding-left:0;">
+                            <h5 class="m-0" style="font-weight:900;">CHAPTERS</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+
+                <div class="col-lg-12">
+                    <div class="row">
+
+                        @foreach (var item in Model.Chapters.Take(11))
+                        {
+                            <div class="col-md-3 col-sm-6 col-xs-6">
+                                <a asp-page="./Members" asp-route-chapterid="@item.Id" class="small-box-footer">
+                                    <div class="small-box @colors[random.Next(colors.Length)]" style="margin-bottom: 7.5px;margin-top: 7.5px;">
+                                        <div class="inner">
+                                            <h3 style="white-space: normal; text-align: center; font-size: 1.2rem; margin: auto;">
+                                                @item.State
+                                            </h3>
+
+                                        </div>
+
+                                    </div>
+                                </a>
+                            </div>
+                        }
+                        <div class="col-md-3 col-sm-6 col-xs-6">
+                            <a asp-page="./Chapters" class="small-box-footer">
+                                <div class="small-box bg-default" style="margin-bottom: 7.5px;margin-top: 7.5px;">
+                                    <div class="inner">
+                                        <h3 style="white-space: normal; text-align: center; font-size: 1.2rem; margin: auto;">
+                                            MORE >>>
+                                        </h3>
+
+                                    </div>
+
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div><!-- /.container-fluid -->
+    </section>
+
+    <section class="content" style="margin-top:10px;">
+        <div class="container-fluid card">
+
+            <div class="content-header" style="padding:1px 0;">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-sm-12" style="padding-left:0;">
+                            <h5 class="m-0" style="font-weight:900;">SEC</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+
+                <div class="col-lg-12">
+                    <div class="row">
+
+                        @foreach (var item in Model.SECs.OrderByDescending(x => x.Year).Take(11))
+                        {
+                            <div class="col-md-3 col-sm-6 col-xs-6">
+                                <a asp-page="./Members" asp-route-secid="@item.Id" class="small-box-footer">
+                                    <div class="small-box @colors[random.Next(colors.Length)]" style="margin-bottom: 7.5px;margin-top: 7.5px;">
+                                        <div class="inner">
+                                            <h3 style="white-space: normal; text-align: center; font-size: 1.2rem; margin: auto;">
+                                                @item.Number (@item.Year)
+                                            </h3>
+
+                                        </div>
+
+                                    </div>
+                                </a>
+                            </div>
+                        }
+                        <div class="col-md-3 col-sm-6 col-xs-6">
+                            <a asp-page="./SecPage" class="small-box-footer">
+                                <div class="small-box bg-default" style="margin-bottom: 7.5px;margin-top: 7.5px;">
+                                    <div class="inner">
+                                        <h3 style="white-space: normal; text-align: center; font-size: 1.2rem; margin: auto;">
+                                            MORE >>>
+                                        </h3>
+
+                                    </div>
+
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div><!-- /.container-fluid -->
+    </section>
+
+
+</div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+   
+}

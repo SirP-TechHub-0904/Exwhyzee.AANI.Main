@@ -15,7 +15,7 @@ namespace Exwhyzee.AANI.Domain.Enums
         Admin = 2,
         [Description("Ordinary")]
         Ordinary = 3,
-        [Description("Not MNI")]
-        NotMNI = 4
+        [Description("MNI")]
+        MNI = 4
     }
 }

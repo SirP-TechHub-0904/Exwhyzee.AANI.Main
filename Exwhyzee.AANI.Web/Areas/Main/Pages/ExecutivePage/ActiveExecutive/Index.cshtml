@@ -19,39 +19,43 @@
                 <thead>
                     <tr>
                         <th>S/N</th>
-            <th>
-               Alumni
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Executive[0].Date)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Executive[0].Position)
-            </th>
-           @if (User.Identity.IsAuthenticated && User.IsInRole("Admin")){<th></th>}
-        </tr>
-    </thead>
+                        <th>
+                            Alumni
+                        </th>
+                        @*<th>
+                                @Html.DisplayNameFor(model => model.Executive[0].Date)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Executive[0].Position)
+                            </th>*@
+                        @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                        {
+                            <th></th>
+}
+                    </tr>
+                </thead>
                 @{
                     int sn = 0;
                 }
-    <tbody>
-@foreach (var item in Model.Executive) {
-        <tr>
+                <tbody>
+                    @foreach (var item in Model.Executive)
+                    {
+                        <tr>
                             <td>
                                 @{
                                     sn++;
                                 }
                                 @sn
                             </td>
-            <td>
+                            <td>
                                 @Html.DisplayFor(modelItem => item.Participant.Fullname) (SEC @item.Participant.SEC.Number - @item.Participant.SEC.Year)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Date)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Position)
-            </td>
+                            </td>
+                            @*<td>
+                                    @Html.DisplayFor(modelItem => item.Date)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Position)
+                                </td>*@
                             @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
                             {
                                 <td>

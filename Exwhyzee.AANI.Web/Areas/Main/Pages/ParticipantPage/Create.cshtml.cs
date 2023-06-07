@@ -82,7 +82,8 @@ namespace Exwhyzee.AANI.Web.Areas.Main.Pages.ParticipantPage
             [Display(Name = "Other Name")]
             public string? OtherName { get; set; }
             public string? Title { get; set; }
-          
+            public string? DOB { get; set; }
+
             public string? Sponsor { get; set; }
             public string? PhoneNumber { get; set; }
             public long SECId { get; set; }
@@ -107,13 +108,18 @@ namespace Exwhyzee.AANI.Web.Areas.Main.Pages.ParticipantPage
                 Title = Input.Title,
                 Sponsor = Input.Sponsor,
                 SECId = Input.SECId,
-                GenderStatus = Input.GenderStatus
+                GenderStatus = Input.GenderStatus,
+                AliveStatus = AliveStatus.Alive,
+            VerificationStatus = VerificationStatus.NONE,
+            ActiveStatus = ActiveStatus.NONE,
+            UserStatus = UserStatus.MNI
             };
             Guid pass = Guid.NewGuid();
             var result = await _userManager.CreateAsync(user, pass.ToString().Replace("-", ".") + "XY");
 
             if (result.Succeeded)
             {
+                await _userManager.AddToRoleAsync(user, "MNI");
                 TempData["aasuccess"] = "Account created successfully";
                 return RedirectToPage("./Index");
             }

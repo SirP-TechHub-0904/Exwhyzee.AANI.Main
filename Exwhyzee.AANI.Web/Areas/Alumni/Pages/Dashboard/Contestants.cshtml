@@ -1,0 +1,185 @@
+﻿@page
+@model Exwhyzee.AANI.Web.Areas.Alumni.Pages.Dashboard.ContestantsModel
+
+@{
+    ViewData["Title"] = "Contestants";
+}
+
+
+<style>
+    .card-widget {
+        border: 0;
+        position: relative;
+    }
+
+    .card {
+        box-shadow: 0 0 1px rgba(0,0,0,.125), 0 1px 3px rgba(0,0,0,.2);
+        margin-bottom: 1rem;
+    }
+
+    .shadow-lg {
+        box-shadow: 0 1rem 3rem rgba(0,0,0,.175) !important;
+    }
+
+    .card {
+        position: relative;
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-direction: column;
+        flex-direction: column;
+        min-width: 0;
+        word-wrap: break-word;
+        background-color: #fff;
+        background-clip: border-box;
+        border: 0 solid rgba(0,0,0,.125);
+        border-radius: .25rem;
+    }
+    .widget-user .widget-user-header {
+        border-top-left-radius: .25rem;
+        border-top-right-radius: .25rem;
+        height: 135px;
+        padding: 1rem;
+        text-align: center;
+    }
+
+    .text-white {
+        color: #fff !important;
+    }
+
+    .text-white {
+        color: #fff !important;
+    }
+    .widget-user .widget-user-username {
+        font-size: 25px;
+        font-weight: 300;
+        margin-bottom: 0;
+        margin-top: 0;
+        text-shadow: 0 1px 1px rgba(0,0,0,.2);
+    }
+
+    .text-right {
+        text-align: right !important;
+    }
+    .widget-user .widget-user-desc {
+        margin-top: 0;
+    }
+
+    .text-right {
+        text-align: right !important;
+    }
+
+    .h5, h5 {
+        font-size: 1.25rem;
+    }
+
+    .h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
+        margin-bottom: .5rem;
+        font-family: inherit;
+        font-weight: 500;
+        line-height: 1.2;
+        color: inherit;
+    }
+    .widget-user .widget-user-image {
+        left: 50%;
+        margin-left: -45px;
+        position: absolute;
+        top: 80px;
+    }
+        .widget-user .widget-user-image > img {
+            border: 3px solid #fff;
+            height: auto;
+            width: 90px;
+        }
+
+    .img-circle {
+        border-radius: 50%;
+    }
+</style>
+<div class="">
+
+
+    <!-- /.content -->
+
+    @{
+        string[] colors = {
+        "bg-primary", "bg-secondary", "bg-success", "bg-danger", "bg-warning", "bg-info",
+        "bg-dark", "bg-light", "bg-info", "bg-danger", "bg-primary", "bg-warning",
+        "bg-success", "bg-info", "bg-dark", "bg-primary", "bg-secondary", "bg-success",
+        "bg-danger", "bg-warning", "bg-info", "bg-dark", "bg-light", "bg-primary",
+        "bg-secondary", "bg-success", "bg-danger", "bg-warning", "bg-info", "bg-dark",
+        "bg-light", "bg-primary", "bg-secondary", "bg-success", "bg-danger", "bg-warning",
+        "bg-info", "bg-dark", "bg-light"
+    };
+        Random random = new Random();
+    }
+    <section class="content" style="margin-top:10px;">
+        <div class="container-fluid card">
+
+            <div class="content-header" style="padding:1px 0;">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-sm-12" style="padding-left:0;">
+                            <h5 class="m-0" style="font-weight:900;">CONTESTANTS FOR @Model.ExecutivePosition.Position</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+
+                <div class="col-lg-12">
+                    <div class="row">
+
+                        @foreach (var item in Model.Campain)
+                        {
+                             
+                            <div class="col-md-4">
+                                <div class="card card-widget widget-user @colors[random.Next(colors.Length)]">
+                                    <!-- Add the bg color to the header using any of the bg-* classes -->
+                                    <div class="widget-user-header text-white"
+                                         style="background: url('../dist/img/photo1.png') center center;">
+                                        <h3 class="widget-user-username text-right">@item.Participant.Fullname</h3>
+                                        <h5 class="widget-user-desc text-right">@item.Participant.SEC.Number (@item.Participant.SEC.Year)</h5>
+                                    </div>
+                                    <div class="widget-user-image">
+                                        <img class="img-circle" src="../dist/img/user3-128x128.jpg" alt="User Avatar">
+                                    </div>
+                                    <div class="card-footer">
+                                        <div class="row">
+                                            <div class="col-sm-6 border-right">
+                                                <div class="description-block">
+                                                    <a class="btn btn-primary">
+                                                        Manifesto
+                                                    </a>
+                                                </div>
+                                                <!-- /.description-block -->
+                                            </div>
+                                            <!-- /.col -->
+                                            <div class="col-sm-6 border-right">
+                                                <div class="description-block">
+                                                    <a class="btn btn-primary">
+                                                        Biography
+                                                    </a>
+                                                </div>
+                                                <!-- /.description-block -->
+                                            </div>
+
+                                        </div>
+                                        <!-- /.row -->
+                                    </div>
+                                </div>
+                            </div>
+
+                        }
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div><!-- /.container-fluid -->
+    </section>
+
+
+
+
+</div>

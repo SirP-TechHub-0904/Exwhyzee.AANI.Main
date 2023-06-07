@@ -123,13 +123,17 @@ namespace Exwhyzee.AANI.Host.Areas.Identity.Pages.Account
                         await _signInManager.SignInAsync(user, isPersistent: false);
 
                         var xAdmin = await _userManager.IsInRoleAsync(user, "Admin");
+                        var mni = await _userManager.IsInRoleAsync(user, "MNI");
                         var xSuper = await _userManager.IsInRoleAsync(user, "mSuperAdmin");
                        
                         if (returnUrl != null)
                         {
                             return Redirect(returnUrl);
                         }
-                    
+                       else if (mni.Equals(true))
+                        {
+                            return RedirectToPage("/Dashboard/Index", new { area = "Alumni" });
+                        }
                         else
                         {
                             return RedirectToPage("/Dashboard/Index", new { area = "Main" });

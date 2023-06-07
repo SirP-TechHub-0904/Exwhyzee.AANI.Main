@@ -19,7 +19,9 @@ namespace Exwhyzee.AANI.Web.Pages.AlumniPage
         public async Task OnGetAsync()
         {
             Executive = await _context.Executives
-                .Include(e => e.Participant).ThenInclude(x => x.SEC).ToListAsync();
+                .Include(e => e.ExecutivePosition)
+                .Include(e => e.Participant)
+                .ThenInclude(x => x.SEC).ToListAsync();
         }
     }
 }

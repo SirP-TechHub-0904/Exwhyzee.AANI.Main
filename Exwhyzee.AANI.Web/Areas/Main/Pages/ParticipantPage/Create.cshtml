@@ -35,7 +35,7 @@
 
                     <div class="form-group">
                         <label asp-for="Input.Title" class="control-label"></label>
-                        <select asp-for="Input.Title" class="form-control" required="required">
+                        <select asp-for="Input.Title" class="form-control uppercase-text" required="required">
 
                             <option value="Mr">Mr</option>
                             <option value="Mrs">Mrs</option>
@@ -76,18 +76,18 @@
                     </div>
                     <div class="form-group">
                         <label asp-for="Input.Surname" class="control-label"></label>
-                        <input asp-for="Input.Surname" class="form-control" />
+                        <input asp-for="Input.Surname" class="form-control uppercase-text" />
                         <span asp-validation-for="Input.Surname" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label asp-for="Input.FirstName" class="control-label"></label>
-                        <input asp-for="Input.FirstName" class="form-control" />
+                        <input asp-for="Input.FirstName" class="form-control uppercase-text" />
                         <span asp-validation-for="Input.FirstName" class="text-danger"></span>
                     </div>
 
                     <div class="form-group">
                         <label asp-for="Input.OtherName" class="control-label"></label>
-                        <input asp-for="Input.OtherName" class="form-control" />
+                        <input asp-for="Input.OtherName" class="form-control uppercase-text" />
                         <span asp-validation-for="Input.OtherName" class="text-danger"></span>
                     </div>
                     <div class="form-group">
@@ -102,15 +102,19 @@
                     </div>
                     <div class="form-group">
                         <label asp-for="Input.GenderStatus" class="control-label">Gender</label>
-                        @Html.DropDownListFor(model => model.Input.GenderStatus, new SelectList(Enum.GetValues(typeof(Exwhyzee.AANI.Domain.Enums.GenderStatus))), new { @class = "form-control", required="required" })
+                        @Html.DropDownListFor(model => model.Input.GenderStatus, new SelectList(Enum.GetValues(typeof(Exwhyzee.AANI.Domain.Enums.GenderStatus))), new { @class = "form-control", required = "required" })
                         <span asp-validation-for="Input.GenderStatus" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label asp-for="Input.Sponsor" class="control-label"></label>
-                        <input asp-for="Input.Sponsor" class="form-control" />
+                        <input asp-for="Input.Sponsor" class="form-control uppercase-text" />
                         <span asp-validation-for="Input.Sponsor" class="text-danger"></span>
                     </div>
-
+                    <div class="form-group">
+                        <label asp-for="Input.DOB" class="control-label"></label>
+                        <input asp-for="Input.DOB" class="form-control" />
+                        <span asp-validation-for="Input.DOB" class="text-danger"></span>
+                    </div>
 
                     <div class="form-group">
                         <input type="submit" value="Submit" class="btn btn-primary" />

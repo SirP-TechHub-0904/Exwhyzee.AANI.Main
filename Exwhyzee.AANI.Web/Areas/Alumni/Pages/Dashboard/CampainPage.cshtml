@@ -1,0 +1,71 @@
+﻿@page
+@model Exwhyzee.AANI.Web.Areas.Alumni.Pages.Dashboard.CampainPageModel
+
+@{
+    ViewData["Title"] = "CampainPage";
+}
+<div class="">
+
+
+    <!-- /.content -->
+
+    @{
+        string[] colors = {
+        "bg-primary", "bg-secondary", "bg-success", "bg-danger", "bg-warning", "bg-info",
+        "bg-dark", "bg-light", "bg-info", "bg-danger", "bg-primary", "bg-warning",
+        "bg-success", "bg-info", "bg-dark", "bg-primary", "bg-secondary", "bg-success",
+        "bg-danger", "bg-warning", "bg-info", "bg-dark", "bg-light", "bg-primary",
+        "bg-secondary", "bg-success", "bg-danger", "bg-warning", "bg-info", "bg-dark",
+        "bg-light", "bg-primary", "bg-secondary", "bg-success", "bg-danger", "bg-warning",
+        "bg-info", "bg-dark", "bg-light"
+    };
+        Random random = new Random();
+    }
+    <section class="content" style="margin-top:10px;">
+        <div class="container-fluid card">
+
+            <div class="content-header" style="padding:1px 0;">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-sm-12" style="padding-left:0;">
+                            <h5 class="m-0" style="font-weight:900;">ELECTORAL POSITIONS</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+
+                <div class="col-lg-12">
+                    <div class="row">
+
+                        @foreach (var item in Model.ExecutivePosition)
+                        {
+
+                           
+                            <div class="col-md-3 col-sm-6 col-xs-6">
+                                <a asp-page="./Contestants" asp-route-id="@item.Id" class="small-box-footer">
+                                    <div class="small-box @colors[random.Next(colors.Length)]" style="margin-bottom: 7.5px;margin-top: 7.5px;">
+                                        <div class="inner">
+                                            <h3 style="white-space: normal; text-align: center; font-size: 1.2rem; margin: auto;">
+                                                @item.Position (@item.Campains.Count())
+                                            </h3>
+
+                                        </div>
+
+                                    </div>
+                                </a>
+                            </div>
+                        }
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div><!-- /.container-fluid -->
+    </section>
+
+
+
+
+</div>
