@@ -91,8 +91,8 @@ namespace Exwhyzee.AANI.Web.Areas.Alumni.Pages.Dashboard
             LgaList = partaccount.Select(x => new SelectListItem
             {
                 Value = x.Id,
-                Text = x.Title + " " + x.Surname + " " + x.FirstName + " " + x.OtherName
-            }).ToList();
+                Text = x.Surname + " " + x.FirstName + " " + x.OtherName
+            }).OrderBy(s=>s.Text).ToList();
             
             return new JsonResult(LgaList);
         }

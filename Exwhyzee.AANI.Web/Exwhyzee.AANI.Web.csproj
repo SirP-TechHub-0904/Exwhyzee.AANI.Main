@@ -34,4 +34,12 @@
     <Folder Include="wwwroot\web\img\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="Areas\Main\Pages\ISliders\Create.cshtml" />
+    <None Include="Areas\Main\Pages\ISliders\Delete.cshtml" />
+    <None Include="Areas\Main\Pages\ISliders\Details.cshtml" />
+    <None Include="Areas\Main\Pages\ISliders\Edit.cshtml" />
+    <None Include="Areas\Main\Pages\ISliders\Index.cshtml" />
+  </ItemGroup>
+
 </Project>

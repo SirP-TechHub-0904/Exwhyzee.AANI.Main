@@ -323,14 +323,14 @@
     <script src="~/assets/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
     <script>
         $(function () {
-            $("#example1").DataTable({
-                "responsive": true, "lengthChange": false, "autoWidth": false,
-                "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-            $('#example2').DataTable({
+            //$("#example1").DataTable({
+            //    "responsive": true, "lengthChange": false, "autoWidth": false,
+            //    "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+            //}).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+            $('#example1').DataTable({
                 "paging": true,
-                "lengthChange": false,
-                "searching": false,
+                "lengthChange": true,
+                "searching": true,
                 "ordering": true,
                 "info": true,
                 "autoWidth": false,
@@ -401,10 +401,24 @@
         });
     </script>
      
-    <script type="text/javascript">
+    @*<script type="text/javascript">
         $(window).on('load', function () {
             $('#mainModal').modal('show');
         });
+    </script>*@
+    <script>
+        $(window).on('load', function () {
+            // Check if the modal has been shown today
+            var hasModalShownToday = localStorage.getItem('modalShownToday');
+
+            // If the modal has not been shown today, show it and set the flag
+            if (!hasModalShownToday) {
+                $('#mainModal').modal('show');
+                localStorage.setItem('modalShownToday', 'true');
+            }
+        });
     </script>
+
+
 </body>
 </html>

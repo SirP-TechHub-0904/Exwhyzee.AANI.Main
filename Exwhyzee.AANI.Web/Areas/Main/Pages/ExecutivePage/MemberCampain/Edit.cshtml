@@ -31,8 +31,13 @@
             </div>
             <div class="form-group">
                 <label asp-for="Campain.Manifesto" class="control-label"></label>
-                <input asp-for="Campain.Manifesto" class="form-control" />
+                <input asp-for="Campain.Manifesto" class="form-control summernote" />
                 <span asp-validation-for="Campain.Manifesto" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Campain.CampaignQoute" class="control-label"></label>
+                <input asp-for="Campain.CampaignQoute" class="form-control" />
+                <span asp-validation-for="Campain.CampaignQoute" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />

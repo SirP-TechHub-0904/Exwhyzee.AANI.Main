@@ -1,0 +1,32 @@
+﻿@page
+@model Exwhyzee.AANI.Web.Pages.CampaignModel
+@{
+}
+<div class="section-block">
+    <div class="container-fluid">
+        <div class="section-heading center-holder">
+            <h3>2023 AANI ELECTION CAMPAIGN</h3>
+        </div>
+        <div class="row mt-60">
+
+            @foreach (var item in Model.ExecutivePositions)
+            {
+
+                <div class="col-md-12">
+                    <div class="" style="width: 100%; padding: 0 8%; ">
+                        <div class="" style="padding:14px;background-color: #eaeaea59; ">
+                            <h3>CANDIDATES FOR AANI @item.Position</h3>
+                            <div class="owl-carousel owl-theme clients" id="clientsss">
+
+                                @await Component.InvokeAsync("CampainList", new { id = item.Id })
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+
+        </div>
+    </div>
+</div>
