@@ -90,6 +90,52 @@
         background-color: #d21e2b;
         border-radius: 0;
     }
+        .swiper-container {
+            width: 100%;
+            height: 70%;
+        }
+        .section-block {
+            padding: 20px 0px 20px 0px;
+            background-color: #fff;
+        }
+        .text-content p {
+            font-size: 14px;
+            font-weight: 400;
+            color: #0e0e0e;
+            line-height: 190%;
+            text-align: justify;
+            margin-bottom: 15px;
+        }
+        .text-content-big p {
+            font-size: 15px;
+            font-weight: 400;
+            color: #0c0c0c;
+            text-align: justify;
+            line-height: 200%;
+            margin-bottom: 15px;
+        }
+        blockquote {
+            margin: 0 0 1rem;
+            text-align: justify;
+        }
+        .section-heading-line-left {
+            content: '';
+            display: block;
+            width: 100px;
+            height: 0;
+            background: #d21e2b;
+            border-radius: 25%;
+            margin-top: 0;
+            margin-bottom: 0;
+        }
+        .section-block-grey {
+            padding: 20px 0px 20px 0px;
+            background-color: #f9f9f9;
+        }
+        .section-heading h5 {
+             
+            text-transform: capitalize; 
+        }
     </style>
 
 </head>
@@ -139,19 +185,14 @@
                         </ul>
                     </li>
                      <li>
-                    <a asp-page="/PapersCategory">Papers</a>
+                    <a asp-page="/CampaignPage">2023 AANI ELECTION</a>
                     </li>
                     
-
-                    <li>
-                        <a asp-page="/AaniEvents">Events</a>
-                    </li>
+                     
                      <li>
-                        <a asp-page="/Media/News">News Update</a>
+                        <a asp-page="/Media/News">News & Events Update</a>
                     </li>
-                     <li>
-                        <a asp-page="/Media/Gallery">Gallery</a>
-                    </li>
+                     
                     <li>
                         <a asp-page="/Contact">Contact</a>
                     </li>
@@ -241,7 +282,7 @@
 
             <!-- Footer Bar Start -->
             <div class="footer-bar">
-                <p><span class="primary-color">ANII</span> © 2022. All Rights Reserved. Developed By <a>Exwhyzee Technologies</a></p>
+                <p><span class="primary-color">ANII</span> © 2022. All Rights Reserved. Developed By <a href="https://www.juray.ng/">JURAY SMART SOLUTIONS</a></p>
             </div>
             <!-- Footer Bar End -->
         </div>
@@ -300,7 +341,45 @@
             toastr.success('@TempData["aasuccess"]')
         </script>
     }
+    <script>
+        $('#clientsss').owlCarousel({
+            loop: true,
+            nav: false,
+            dots: false,
+            smartSpeed: 850,
+            autoplay: true,
+            autoplayTimeout: 3000,
+            responsiveClass: true,
+            autoplayHoverPause: false,
+            responsive: {
+                0: {
+                    items: 2,
+                    margin: 50,
+                },
+                600: {
+                    items: 3,
+                    margin: 30,
+                },
+                1000: {
+                    items: 4,
+                    margin: 40,
+                }
+            }
+        })
+    </script>
 
+    <script>
+        $(window).on('load', function () {
+            // Check if the modal has been shown today
+            var hasModalShownToday = localStorage.getItem('modalShownToday');
+
+            // If the modal has not been shown today, show it and set the flag
+            if (!hasModalShownToday) {
+                $('#mainModal').modal('show');
+                localStorage.setItem('modalShownToday', 'true');
+            }
+        });
+    </script>
 </body>
 </html>
 

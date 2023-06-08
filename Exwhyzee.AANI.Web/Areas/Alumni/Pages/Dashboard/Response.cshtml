@@ -6,9 +6,12 @@
 }
 
 
-<p class="login-box-msg" style=" font-size: 2em; font-weight: 900; color: black;">THANK YOU FOR YOUR SUBMISION</p>
+<p class="login-box-msg" style=" font-size: 2em; font-weight: 900; color: black;">SUBMITTED SUCCESSFULLY</p>
 
 <div>
-    <h3>@TempData["response"]</h3>
-    <a href="/" class="btn btn-primary">GO THROUGH THE WEBSITE.</a>
+    <h3>@Html.Raw(TempData["response"])</h3>
+    @if (TempData["login"] != null)
+    {
+        <a asp-page="/Account/Login" asp-area="Identity" class="btn btn-primary">LOGIN NOW</a>
+    }
 </div>

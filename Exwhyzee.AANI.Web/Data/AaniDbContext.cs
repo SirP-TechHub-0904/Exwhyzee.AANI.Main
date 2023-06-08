@@ -50,6 +50,7 @@ namespace Exwhyzee.AANI.Web.Data
         public DbSet<CampainPost> CampainPosts { get; set; } = default!;
         public DbSet<ExecutivePosition> ExecutivePositions { get; set; } = default!;
         public DbSet<QouteOfDay> QouteOfDays { get; set; } = default!;
+        public DbSet<Slider> Sliders { get; set; } = default!;
 
 
     }

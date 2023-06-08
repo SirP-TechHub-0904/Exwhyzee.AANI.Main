@@ -32,7 +32,7 @@ namespace Exwhyzee.AANI.Domain.Models
         public ActiveStatus ActiveStatus { get; set; }
         public VerificationStatus VerificationStatus { get; set; }
         
-        public string? DOB { get; set; }
+        public DateTime DOB { get; set; }
         public DateTime Date { get; set; }
         public DateTime DateUpdated { get; set; }
         public long SECId { get; set; }
@@ -52,7 +52,7 @@ namespace Exwhyzee.AANI.Domain.Models
         {
             get
             {
-                return Title + " " + Surname + " " + FirstName + " " + OtherName;
+                return Surname + " " + FirstName + " " + OtherName;
             }
         }
         public string? PictureUrl { get; set; }

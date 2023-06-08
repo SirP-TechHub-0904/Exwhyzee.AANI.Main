@@ -1,0 +1,31 @@
+﻿@model ICollection<Exwhyzee.AANI.Domain.Models.Campain>
+
+
+@if (Model.Count > 0)
+{
+
+@foreach (var item in Model)
+{
+    <div class="item">
+        <div class="team-member">
+            <div class="team-member-img">
+                <img src="http://via.placeholder.com/350x290" alt="img">
+            </div>
+            <div class="team-member-text">
+                <h4><a href="#">@item.Participant.Fullname</a></h4>
+                <span>@item.Participant.SEC.Number (@item.Participant.SEC.Year)</span>
+                <p>
+                    @item.CampaignQoute
+                </p>
+                 
+            </div>
+        </div>
+    </div>
+
+
+}
+}
+else
+{
+    <h4>NO CANDIDATE YET</h4>
+}

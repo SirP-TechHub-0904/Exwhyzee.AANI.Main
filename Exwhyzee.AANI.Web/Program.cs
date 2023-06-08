@@ -2,6 +2,7 @@ using Amazon.S3;
 using Exwhyzee.AANI.Domain.Models;
 using Exwhyzee.AANI.Web.Data;
 using Exwhyzee.AANI.Web.FileManager;
+using Exwhyzee.AANI.Web.Helper.AWS;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -18,7 +19,8 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddIdentity<Participant, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<AaniDbContext>();
 builder.Services.AddAWSService<IAmazonS3>();
-builder.Services.AddTransient<IFileManagement, FileManagement>();
+builder.Services.AddTransient<IFileManagement, FileManagement>(); 
+builder.Services.AddTransient<IStorageService, StorageService>();
 builder.Services.Configure<IdentityOptions>(options =>
 {
     // Password settings.

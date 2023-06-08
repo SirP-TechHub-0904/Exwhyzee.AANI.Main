@@ -17,6 +17,7 @@ namespace Exwhyzee.AANI.Domain.Models
         public ExecutivePosition ExecutivePosition { get; set; }
 
         public string? Manifesto { get; set; }
+        public string? CampaignQoute { get; set; }
 
         public ICollection<CampainPost> CampainPosts { get; set; }
     }

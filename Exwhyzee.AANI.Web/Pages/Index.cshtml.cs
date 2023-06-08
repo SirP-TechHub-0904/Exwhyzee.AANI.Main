@@ -16,11 +16,17 @@ namespace Exwhyzee.AANI.Web.Pages
             _context = context;
         }
 
+        public IList<Slider> Sliders { get; set; }
         public IList<Blog> Blogs { get; set; }
+        public IList<ExecutivePosition> ExecutivePositions { get; set; }
 
         public async Task OnGetAsync()
         {
+            Sliders = _context.Sliders.OrderByDescending(d => d.SortOrder).ToList();
             Blogs = _context.Blogs.OrderByDescending(d => d.Date).Take(5).ToList();
+            ExecutivePositions = _context.ExecutivePositions.Include(x=>x.Campains).ToList();
+             
         }
     }
+ 
 }
