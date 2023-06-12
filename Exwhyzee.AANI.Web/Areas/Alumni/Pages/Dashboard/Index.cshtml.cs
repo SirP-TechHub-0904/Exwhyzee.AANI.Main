@@ -30,23 +30,22 @@ namespace Exwhyzee.AANI.Web.Areas.Alumni.Pages.Dashboard
         public int Alive { get; set; }
         public int Dead { get; set; }
         public int Active { get; set; }
-        
+
         public List<Chapter> Chapters { get; set; }
         public List<SEC> SECs { get; set; }
         public async Task<IActionResult> OnGetAsync()
         {
-            var alumni = _userManager.Users.Include(x => x.SEC).Where(x => x.Email != "jinmcever@gmail.com").AsQueryable();
+            var alumni = _userManager.Users.Include(x => x.SEC).Where(x => x.MniStatus == Domain.Enums.MniStatus.MNI).AsQueryable();
             Chapters = await _context.Chapters.ToListAsync();
             SECs = await _context.SECs.ToListAsync();
-             
-            //
+
             AllAlumni = await alumni.CountAsync();
             Male = await alumni.Where(x => x.GenderStatus == Domain.Enums.GenderStatus.Male).CountAsync();
             Female = await alumni.Where(x => x.GenderStatus == Domain.Enums.GenderStatus.Female).CountAsync();
             Alive = await alumni.Where(x => x.AliveStatus == Domain.Enums.AliveStatus.Alive).CountAsync();
             Dead = await alumni.Where(x => x.AliveStatus == Domain.Enums.AliveStatus.Dead).CountAsync();
             Active = await alumni.Where(x => x.ActiveStatus == Domain.Enums.ActiveStatus.Active).CountAsync();
-             
+
             return Page();
         }
     }

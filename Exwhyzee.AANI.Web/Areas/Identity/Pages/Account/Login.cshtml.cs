@@ -134,12 +134,17 @@ namespace Exwhyzee.AANI.Host.Areas.Identity.Pages.Account
                         {
                             return RedirectToPage("/Dashboard/Index", new { area = "Alumni" });
                         }
-                        else
+                        else if (xAdmin.Equals(true))
+                        {
+                            return RedirectToPage("/Dashboard/Index", new { area = "Admin" });
+
+                        }
+                        else if (xSuper.Equals(true))
                         {
                             return RedirectToPage("/Dashboard/Index", new { area = "Main" });
 
                         }
-
+                        return RedirectToPage("/Index", new { area = "" });
                     }
                     else
                     {

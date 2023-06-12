@@ -60,33 +60,27 @@
 
 <div class="section-block">
     <div class="container">
-        <div class="section-heading center-holder">
-            <h3>AANI CHAPTERS</h3>
-            <div class="section-heading-line"></div>
-         </div>
-       
+        
 
-        <div class="row mt-60">
+        <div class="row">
+            @{ int sn = 0;}
             @foreach (var x in Model.Chapter)
             {
-
-
+                {
+                    sn++;
+                }
+               
                 <div class="col-md-6 col-sm-12 col-6">
-                    <div class="feature-box-4">
+                    <div class="boxed-div feature-box-4" style="border-top: 3px solid #d21e2b08;">
                         <div class="feature-box-4-icon">
-                            <i class="fa fa-check-square"></i>
+                            <i class="fa">@sn</i>
                         </div>
                         <div class="feature-box-4-content">
-                            <h4>@x.State</h4>
-                            
-                            <div class="section-heading-line-left"></div>
-                            <h4 style="font-weight:900;">Chairman/Chairperson: @x.Chairperson</h4>
-                            <p style="font-weight:900;">Email Address: @x.Email</p>
-                            <p style="font-weight:900;">Phone Number: @x.PhoneNumber</p>
-                        </div>
-                        <i class="feature-box-4-icon-bg icon-worldwide2"></i>
+                            <a asp-page="/Dashboard/Members" asp-area="Alumni" asp-route-chapterid="@x.Id">  <h4 style="text-transform:uppercase;">@x.State CHAPTER</h4>
+</a></div>    
                     </div>
                 </div>
+                    
             }
         </div>
        

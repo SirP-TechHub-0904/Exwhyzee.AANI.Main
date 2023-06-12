@@ -18,7 +18,7 @@ namespace Exwhyzee.AANI.Web.Pages.Web
 
         public async Task OnGetAsync()
         {
-            Chapter = await _context.Chapters.ToListAsync();
+            Chapter = await _context.Chapters.OrderBy(x=>x.State).ToListAsync();
         }
     }
 }

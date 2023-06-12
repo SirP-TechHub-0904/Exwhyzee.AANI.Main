@@ -47,11 +47,11 @@ namespace Exwhyzee.AANI.Web.Areas.Main.Pages.PaperPage.PaperList
             }
            ViewData["EventId"] = new SelectList(_context.Events, "Id", "Title");
            ViewData["PaperCategoryId"] = new SelectList(_context.paperCategories, "Id", "Title");
-            var partaccount = _userManager.Users.Include(x => x.SEC).AsQueryable();
+            var partaccount = _userManager.Users.Include(x => x.SEC).Where(x => x.MniStatus == Domain.Enums.MniStatus.MNI).AsQueryable();
             var secoutput = partaccount.Select(x => new ParticipantDropdownDto
             {
                 Id = x.Id,
-                Fullname = x.Title + " " + x.Surname + " " + x.FirstName + " " + x.OtherName + "(SEC " + x.SEC.Number + "- " + x.SEC.Year + ")"
+                Fullname =  x.Surname + " " + x.FirstName + " " + x.OtherName + "(SEC " + x.SEC.Number + "- " + x.SEC.Year + ")"
             });
             ViewData["ParticipantId"] = new SelectList(secoutput, "Id", "Fullname"); return Page();
         }
@@ -74,11 +74,11 @@ namespace Exwhyzee.AANI.Web.Areas.Main.Pages.PaperPage.PaperList
             {
                 TempData["aaerror"] = "Unable to update Paper";
 
-                var partaccount = _userManager.Users.AsQueryable();
+                var partaccount = _userManager.Users.Where(x => x.MniStatus == Domain.Enums.MniStatus.MNI).AsQueryable();
                 var output = partaccount.Select(x => new ParticipantDropdownDto
                 {
                     Id = x.Id,
-                    Fullname = x.Title + " " + x.Surname + " " + x.FirstName + " " + x.OtherName
+                    Fullname =  x.Surname + " " + x.FirstName + " " + x.OtherName
                 });
                 ViewData["ParticipantId"] = new SelectList(output, "Id", "Fullname");
                 return Page();

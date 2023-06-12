@@ -53,8 +53,7 @@ namespace Exwhyzee.AANI.Web.Areas.Main.Pages.Dashboard
             Male = await alumni.Where(x => x.GenderStatus == Domain.Enums.GenderStatus.Male).CountAsync();
             Female = await alumni.Where(x => x.GenderStatus == Domain.Enums.GenderStatus.Female).CountAsync();
             MNI = await alumni.Where(x => x.MniStatus == Domain.Enums.MniStatus.MNI).CountAsync();
-            NON = await alumni.Where(x => x.MniStatus == Domain.Enums.MniStatus.NONE).CountAsync();
-            Attended = await alumni.Where(x => x.MniStatus == Domain.Enums.MniStatus.Attended).CountAsync();
+            NON = await alumni.Where(x => x.MniStatus == Domain.Enums.MniStatus.NONE).CountAsync(); 
             Chapter = await chapter.CountAsync();
             Nec = await nec.CountAsync();
             Contributor = await contributor.CountAsync();

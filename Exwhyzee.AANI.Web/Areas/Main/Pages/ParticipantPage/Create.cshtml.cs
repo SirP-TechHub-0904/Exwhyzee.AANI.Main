@@ -42,11 +42,11 @@ namespace Exwhyzee.AANI.Web.Areas.Main.Pages.ParticipantPage
         public IActionResult OnGet()
         {
 
-            var partaccount = _userManager.Users.Include(x=>x.SEC).AsQueryable();
+            var partaccount = _userManager.Users.Include(x => x.SEC).Where(x => x.MniStatus == Domain.Enums.MniStatus.MNI).AsQueryable();
             var secoutput = partaccount.Select(x => new ParticipantDropdownDto
             {
                 Id = x.Id,
-                Fullname = x.Title + " " + x.Surname + " " + x.FirstName + " " + x.OtherName + "(SEC "+x.SEC.Number+"- "+x.SEC.Year+")"
+                Fullname =  x.Surname + " " + x.FirstName + " " + x.OtherName + "(SEC " + x.SEC.Number + "- " + x.SEC.Year + ")"
             });
             ViewData["PId"] = new SelectList(secoutput, "Id", "Fullname");
 
@@ -54,7 +54,7 @@ namespace Exwhyzee.AANI.Web.Areas.Main.Pages.ParticipantPage
             var output = secs.Select(x => new SecDropdownListDto
             {
                 Id = x.Id,
-                SecYear = "SEC "+ x.Number + " (" + x.Year + ")"
+                SecYear = "SEC " + x.Number + " (" + x.Year + ")"
             });
             ViewData["SECId"] = new SelectList(output, "Id", "SecYear");
 
@@ -64,7 +64,7 @@ namespace Exwhyzee.AANI.Web.Areas.Main.Pages.ParticipantPage
         [BindProperty]
         public InputModel Input { get; set; }
 
-       
+
         public class InputModel
         {
             /// <summary>
@@ -109,10 +109,11 @@ namespace Exwhyzee.AANI.Web.Areas.Main.Pages.ParticipantPage
                 Sponsor = Input.Sponsor,
                 SECId = Input.SECId,
                 GenderStatus = Input.GenderStatus,
+                MniStatus = MniStatus.MNI,
                 AliveStatus = AliveStatus.Alive,
-            VerificationStatus = VerificationStatus.NONE,
-            ActiveStatus = ActiveStatus.NONE,
-            UserStatus = UserStatus.MNI
+                VerificationStatus = VerificationStatus.NONE,
+                ActiveStatus = ActiveStatus.NONE,
+                UserStatus = UserStatus.MNI
             };
             Guid pass = Guid.NewGuid();
             var result = await _userManager.CreateAsync(user, pass.ToString().Replace("-", ".") + "XY");
@@ -144,6 +145,6 @@ namespace Exwhyzee.AANI.Web.Areas.Main.Pages.ParticipantPage
 
         }
 
-      
+
     }
 }

@@ -127,6 +127,12 @@ namespace Exwhyzee.AANI.Web.Migrations
                     b.Property<long?>("ExecutivePositionId")
                         .HasColumnType("bigint");
 
+                    b.Property<string>("ImageKey")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Manifesto")
                         .HasColumnType("nvarchar(max)");
 

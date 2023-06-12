@@ -28,11 +28,11 @@ namespace Exwhyzee.AANI.Web.Areas.Main.Pages.PatronPage
 
         public IActionResult OnGet()
         {
-            var partaccount = _userManager.Users.Include(x => x.SEC).AsQueryable();
+            var partaccount = _userManager.Users.Include(x => x.SEC).Where(x => x.MniStatus == Domain.Enums.MniStatus.MNI).AsQueryable();
             var secoutput = partaccount.Select(x => new ParticipantDropdownDto
             {
                 Id = x.Id,
-                Fullname = x.Title + " " + x.Surname + " " + x.FirstName + " " + x.OtherName + "(SEC " + x.SEC.Number + "- " + x.SEC.Year + ")"
+                Fullname =  x.Surname + " " + x.FirstName + " " + x.OtherName + "(SEC " + x.SEC.Number + "- " + x.SEC.Year + ")"
             });
             ViewData["ParticipantId"] = new SelectList(secoutput, "Id", "Fullname");
 

@@ -29,11 +29,11 @@ namespace Exwhyzee.AANI.Web.Areas.Main.Pages.ContributorsPage.ContributorList
         {
         ViewData["ContributorCategoryId"] = new SelectList(_context.ContributorCategories, "Id", "Title");
 
-            var partaccount = _userManager.Users.AsQueryable();
+            var partaccount = _userManager.Users.Where(x => x.MniStatus == Domain.Enums.MniStatus.MNI).AsQueryable();
             var output = partaccount.Select(x => new ParticipantDropdownDto
             {
                 Id = x.Id,
-                Fullname = x.Title + " " + x.Surname + " " + x.FirstName + " " + x.OtherName
+                Fullname =  x.Surname + " " + x.FirstName + " " + x.OtherName
             });
             ViewData["ParticipantId"] = new SelectList(output, "Id", "Fullname"); return Page();
         }

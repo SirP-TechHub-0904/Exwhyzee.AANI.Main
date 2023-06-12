@@ -1,0 +1,62 @@
+﻿@page
+@model Exwhyzee.AANI.Web.Areas.Admin.Pages.Dashboard.MemberDetailsModel
+@{
+}
+<div class="">
+    <section class="content" style="margin-top:10px;">
+        <div class="container-fluid">
+
+
+            <div class="row" style="margin-top:20px;">
+                <div class="col-md-3"></div>
+                <div class="col-md-6">
+                    <div class="card card-primary card-outline">
+                        <div class="card-body box-profile">
+                            <div class="text-center">
+                                <a asp-page="./UpdateImage" asp-route-id="@Model.Participant.Id">
+                                    @if (Model.Participant.PictureUrl != null)
+                                    {
+                                        <img class="profile-user-img img-fluid img-circle" src="@Model.Participant.PictureUrl" alt="User profile picture">
+                                    }
+                                    else
+                                    {
+                                        <img class="profile-user-img img-fluid img-circle" src="~/img/upload.jpg" alt="User profile picture">
+                                    }
+
+                                </a>
+                            </div>
+
+                            <h3 class="profile-username text-center">
+                                @Html.DisplayFor(modelItem => Model.Participant.Surname)
+                                @Html.DisplayFor(modelItem => Model.Participant.FirstName)
+                                @Html.DisplayFor(modelItem => Model.Participant.OtherName)
+                            </h3>
+
+                            <p class="text-muted text-center" style="margin-bottom: 0.1rem;">@Model.Participant.CurrentOffice</p>
+                            <p class="text-muted text-center" style="margin-bottom: 0.1rem;">@Model.Participant.CurrentPosition</p>
+                            <a asp-page="./UpdateMyData" class="float-right btn btn-primary btn-xs">Update My Profile</a>
+                            <div class="clearfix"></div>
+                            <ul class="list-group list-group-unbordered mb-3">
+                                <li class="list-group-item">
+                                    <b>Email</b> <a class="float-right">@Model.Participant.Email</a>
+                                </li>
+                                <li class="list-group-item">
+                                    <b>Phone No.</b> <a class="float-right">@Model.Participant.PhoneNumber</a>
+                                </li>
+
+                            </ul>
+                            <div>
+                                <h4>BIOGRAPHY</h4>
+                                <div>
+                                    @Html.Raw(Model.Participant.Bio)
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

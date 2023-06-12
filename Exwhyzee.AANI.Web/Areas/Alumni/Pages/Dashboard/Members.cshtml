@@ -56,14 +56,9 @@
                                 FULLNAME
                             </th>
                             <th>
-                                SPONSOR
+                                OFFICE
                             </th>
-                            <th>
-                                PHONE
-                            </th>
-                            <th>
-                                EMAIL
-                            </th>
+                            
 
                             <th>SEC YEAR</th>
 
@@ -80,7 +75,7 @@
                                 </td>
                                 <td>
                                     <a asp-page="./MemberDetails" asp-route-id="@item.Id" class="uppercase-text">
-                                        @Html.DisplayFor(modelItem => item.Title)
+                                       
                                         @Html.DisplayFor(modelItem => item.Surname)
                                         @Html.DisplayFor(modelItem => item.FirstName)
                                         @Html.DisplayFor(modelItem => item.OtherName)
@@ -89,12 +84,7 @@
                                 <td>
                                     @Html.DisplayFor(modelItem => item.Sponsor)
                                 </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.PhoneNumber)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Email)
-                                </td>
+                                
 
                                 <td>
                                     SEC @Html.DisplayFor(modelItem => item.SEC.Number) (@Html.DisplayFor(modelItem => item.SEC.Year))

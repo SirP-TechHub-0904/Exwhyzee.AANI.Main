@@ -22,7 +22,7 @@ namespace Exwhyzee.AANI.Web.Pages.AlumniPage
         public SEC SEC { get; set; }
         public async Task OnGetAsync(long id)
         {
-            Participants = _userManager.Users.Include(x => x.SEC).Where(x=>x.SECId == id).AsQueryable();
+            Participants = _userManager.Users.Include(x => x.SEC).Where(x=>x.SECId == id && x.MniStatus == Domain.Enums.MniStatus.MNI).AsQueryable();
             //await Task.Run();
             SEC = await _context.SECs.FirstOrDefaultAsync(x => x.Id == id);
         }

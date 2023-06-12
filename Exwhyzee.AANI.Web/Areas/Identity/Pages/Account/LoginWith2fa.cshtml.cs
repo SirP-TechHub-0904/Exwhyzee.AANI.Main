@@ -114,7 +114,29 @@ namespace Exwhyzee.AANI.Host.Areas.Identity.Pages.Account
             if (result.Succeeded)
             {
                 _logger.LogInformation("User with ID '{UserId}' logged in with 2fa.", user.Id);
-                return LocalRedirect(returnUrl);
+                var xAdmin = await _userManager.IsInRoleAsync(user, "Admin");
+                var mni = await _userManager.IsInRoleAsync(user, "MNI");
+                var xSuper = await _userManager.IsInRoleAsync(user, "mSuperAdmin");
+
+                if (returnUrl != null)
+                {
+                    return Redirect(returnUrl);
+                }
+                else if (mni.Equals(true))
+                {
+                    return RedirectToPage("/Dashboard/Index", new { area = "Alumni" });
+                }
+                else if (xAdmin.Equals(true))
+                {
+                    return RedirectToPage("/Dashboard/Index", new { area = "Admin" });
+
+                }
+                else if (xSuper.Equals(true))
+                {
+                    return RedirectToPage("/Dashboard/Index", new { area = "Main" });
+
+                }
+                return RedirectToPage("/Index", new { area = "" });
             }
             else if (result.IsLockedOut)
             {
