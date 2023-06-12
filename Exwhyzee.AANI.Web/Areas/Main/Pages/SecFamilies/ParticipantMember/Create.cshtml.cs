@@ -30,11 +30,11 @@ namespace Exwhyzee.AANI.Web.Areas.Main.Pages.SecFamilies.ParticipantMember
         {
         ViewData["SubCategoryFamiliesOnSECId"] = new SelectList(_context.SubCategoryFamiliesOnSECs, "Id", "Title");
 
-            var partaccount = _userManager.Users.Include(x => x.SEC).AsQueryable();
+            var partaccount = _userManager.Users.Include(x => x.SEC).Where(x => x.MniStatus == Domain.Enums.MniStatus.MNI).AsQueryable();
             var secoutput = partaccount.Select(x => new ParticipantDropdownDto
             {
                 Id = x.Id,
-                Fullname = x.Title + " " + x.Surname + " " + x.FirstName + " " + x.OtherName + "(SEC " + x.SEC.Number + "- " + x.SEC.Year + ")"
+                Fullname =  x.Surname + " " + x.FirstName + " " + x.OtherName + "(SEC " + x.SEC.Number + "- " + x.SEC.Year + ")"
             });
             ViewData["PId"] = new SelectList(secoutput, "Id", "Fullname");
 

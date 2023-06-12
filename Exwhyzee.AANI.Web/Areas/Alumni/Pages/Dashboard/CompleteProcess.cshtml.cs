@@ -131,7 +131,7 @@ namespace Exwhyzee.AANI.Web.Areas.Alumni.Pages.Dashboard
                             if (resolve.Succeeded)
                             {
                                 TempData["login"] = "login";
-                                TempData["response"] = "Your Upate has been Successfully Submitted. <br>Kindly click the button bellow to login with your email address and password.";
+                                TempData["response"] = "Your Upate has been Successfully Submitted. <br>Kindly click the button below to login with your email address and password.";
                                 return RedirectToPage("./Response");
                             }
 

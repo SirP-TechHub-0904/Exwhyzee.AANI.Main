@@ -2,24 +2,42 @@
 @model Exwhyzee.AANI.Web.Pages.CampaignModel
 @{
 }
+
+<style>
+
+    .team-member {
+        margin: 0;
+    }
+    .h5, h5 {
+        font-size: 1.05rem;
+    }
+</style>
+<div class="page-title-section" style="background-image: url('../img/bred.jpg');">
+    <div class="container">
+        <h1>2023 AANI ELECTION CAMPAIGN</h1>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="#">Campaign</a></li>
+        </ul>
+    </div>
+</div>
 <div class="section-block">
     <div class="container-fluid">
         <div class="section-heading center-holder">
-            <h3>2023 AANI ELECTION CAMPAIGN</h3>
+            <h3></h3>
         </div>
-        <div class="row mt-60">
+        <div class="row">
 
             @foreach (var item in Model.ExecutivePositions)
             {
 
                 <div class="col-md-12">
-                    <div class="" style="width: 100%; padding: 0 8%; ">
+                    <div class="" style="width: 100%; padding: 0 8%; margin-top:15px;">
                         <div class="" style="padding:14px;background-color: #eaeaea59; ">
-                            <h3>CANDIDATES FOR AANI @item.Position</h3>
-                            <div class="owl-carousel owl-theme clients" id="clientsss">
+                            <h5>CANDIDATES FOR AANI @item.Position</h5>
+                            <div class="">
 
                                 @await Component.InvokeAsync("CampainList", new { id = item.Id })
-
 
                             </div>
                         </div>

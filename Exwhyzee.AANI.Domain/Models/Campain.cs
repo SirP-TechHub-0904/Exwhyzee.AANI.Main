@@ -18,6 +18,8 @@ namespace Exwhyzee.AANI.Domain.Models
 
         public string? Manifesto { get; set; }
         public string? CampaignQoute { get; set; }
+        public string? ImageUrl { get; set; }
+        public string? ImageKey { get; set; }
 
         public ICollection<CampainPost> CampainPosts { get; set; }
     }

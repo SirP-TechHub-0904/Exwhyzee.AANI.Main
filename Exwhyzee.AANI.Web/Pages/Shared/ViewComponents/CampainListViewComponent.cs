@@ -20,7 +20,7 @@ namespace Exwhyzee.AANI.Web.Pages.Shared.ViewComponents
 
         public async Task<IViewComponentResult> InvokeAsync(long id)
         {
-            var list = await _context.Campains.Where(x => x.ExecutivePositionId == id).ToListAsync();
+            var list = await _context.Campains.Include(x=>x.Participant).ThenInclude(x=>x.SEC).Where(x => x.ExecutivePositionId == id).ToListAsync();
 
             return View(list);
         }

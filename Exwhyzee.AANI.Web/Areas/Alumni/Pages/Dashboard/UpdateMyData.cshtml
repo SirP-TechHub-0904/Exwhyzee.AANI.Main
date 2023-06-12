@@ -1,0 +1,48 @@
+﻿@page
+@model Exwhyzee.AANI.Web.Areas.Alumni.Pages.Dashboard.UpdateMyDataModel
+
+@{
+    ViewData["Title"] = "UpdateMyData";
+}
+ 
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script type="text/jscript">
+        $(function () {
+            $('#State').change(function () {
+
+                $.ajax({
+                    type: 'GET',
+                    url: 'Edit?handler=LGA',
+                    dataType: "json",
+                    data: {
+                        id: $('#State').val()
+                    },
+                    contentType: "application/json; charset=utf-8",
+                    error: function () {
+                        console.log("error");
+                    },
+                    success: function (data) {
+                        console.log("yes");
+
+                        console.log(data);
+                        var items = '<option>Choose LGA</option>';
+                        $.each(jQuery.map(data, function (i, local) {
+                            items += "<option value='" + i.value + "'>" + i.text + "</option>";
+                            console.log("vin")
+                        }));
+
+                        $('#LGA').html(items);
+
+                    }
+                });
+                console.log("pass")
+            });
+        });
+    </script>
+
+}

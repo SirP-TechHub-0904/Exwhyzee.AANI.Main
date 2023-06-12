@@ -10,6 +10,8 @@ using Exwhyzee.AANI.Web.Data;
 
 namespace Exwhyzee.AANI.Web.Areas.Alumni.Pages.Dashboard
 {
+    [Microsoft.AspNetCore.Authorization.Authorize(Roles = "MNI")]
+
     public class ContestantsModel : PageModel
     {
         private readonly Exwhyzee.AANI.Web.Data.AaniDbContext _context;

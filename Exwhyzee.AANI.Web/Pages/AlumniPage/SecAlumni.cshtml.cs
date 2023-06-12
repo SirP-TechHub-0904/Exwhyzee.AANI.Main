@@ -41,29 +41,29 @@ namespace Exwhyzee.AANI.Web.Pages.AlumniPage
             {
                 CurrentFilter = "Search Alumni";
             }
-            IQueryable<Participant> participantlist = from s in _userManager.Users.Include(x => x.SEC)
-                                                      .OrderByDescending(x => x.SEC.Year).ThenBy(x => Convert.ToInt32(x.SEC.Number))
-                                                      select s;
+            //IQueryable<Participant> participantlist = from s in _userManager.Users.Include(x => x.SEC)
+            //                                          .OrderByDescending(x => x.SEC.Year).ThenBy(x => Convert.ToInt32(x.SEC.Number))
+            //                                          select s;
 
-            if (!String.IsNullOrEmpty(searchString))
-            {
-                participantlist = participantlist.Where(s => s.Surname.Contains(searchString)
-                                       || s.Title.Contains(searchString)
-                                       || s.FirstName.Contains(searchString)
-                                       || s.OtherName.Contains(searchString)
-                                       || s.Sponsor.Contains(searchString)
+            //if (!String.IsNullOrEmpty(searchString))
+            //{
+            //    participantlist = participantlist.Where(s => s.Surname.Contains(searchString)
+            //                           || s.Title.Contains(searchString)
+            //                           || s.FirstName.Contains(searchString)
+            //                           || s.OtherName.Contains(searchString)
+            //                           || s.Sponsor.Contains(searchString)
 
-                                       );
-            }
+            //                           );
+            //}
 
-            AllCount = participantlist.Count();
+            //AllCount = participantlist.Count();
 
-            var pageSize = 40;
-            TotalPage = AllCount / pageSize;
-            Participants = await PaginatedList<Participant>.CreateAsync(
-                participantlist.AsNoTracking(), pageIndex ?? 1, pageSize);
+            //var pageSize = 40;
+            //TotalPage = AllCount / pageSize;
+            //Participants = await PaginatedList<Participant>.CreateAsync(
+            //    participantlist.AsNoTracking(), pageIndex ?? 1, pageSize);
 
-            PageIndex = pageIndex ?? 1;
+            //PageIndex = pageIndex ?? 1;
         }
     }
 }

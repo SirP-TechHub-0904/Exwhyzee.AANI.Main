@@ -30,8 +30,8 @@ namespace Exwhyzee.AANI.Web.Areas.Alumni.Pages.Dashboard
         public int Active { get; set; }
         public async Task<IActionResult> OnGetAsync(AliveStatus aliveStatus = 0, GenderStatus genderStatus = 0, ActiveStatus activeStatus = 0, long chapterid = 0, long secid = 0)
         {
-            Participants = _userManager.Users.Include(x => x.SEC).Where(x => x.Email != "jinmcever@gmail.com").AsQueryable();
-            var DataParticipants = _userManager.Users.Include(x => x.SEC).Where(x => x.Email != "jinmcever@gmail.com").AsQueryable();
+            Participants = _userManager.Users.Include(x => x.SEC).Where(x => x.MniStatus == Domain.Enums.MniStatus.MNI).AsQueryable();
+            var DataParticipants = _userManager.Users.Include(x => x.SEC).Where(x => x.MniStatus == Domain.Enums.MniStatus.MNI).AsQueryable();
             AllAlumni = await DataParticipants.CountAsync();
             Active = await DataParticipants.Where(x => x.ActiveStatus == Domain.Enums.ActiveStatus.Active).CountAsync();
             Alive = await DataParticipants.Where(x => x.AliveStatus == Domain.Enums.AliveStatus.Alive).CountAsync();

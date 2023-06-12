@@ -8,7 +8,7 @@
         position: relative;
         background: #fff;
         display: flex;
-        border-top: 3px solid #d21e2b;
+        border-top: 3px solid #d21e2b00;
         overflow: hidden;
         box-shadow: 0 10px 20px 0 rgb(0 0 0 / 10%);
         padding: 10px;
@@ -48,7 +48,7 @@
         <h1>PAPERS FOR @Model.PaperCategory.Title</h1>
         <ul>
             <li><a href="/">Home</a></li>
-            <li><a href="#">PAPERS FOR @Model.PaperCategory.Title</a></li>
+            <li><a href="#">@Model.PaperCategory.Title</a></li>
         </ul>
     </div>
 </div>
@@ -56,10 +56,8 @@
     <div class="container">
         <div class="section-heading center-holder">
             <h3>PAPERS FOR @Model.PaperCategory.Title</h3>
-            <div class="section-heading-line"></div>
-            <p>@Model.PaperCategory.Description</p>
         </div>
-        <div class="row mt-60">
+        <div class="row">
 
             <div class="col-md-4 col-sm-12 col-6">
             </div>
@@ -82,7 +80,7 @@
             </div>
         </div>
 
-        <div class="row mt-60">
+        <div class="row">
             @foreach (var x in Model.Papers)
             {
                 <div class="col-md-6 col-sm-12 col-6">
@@ -98,9 +96,8 @@
                                 @x.Participant.Fullname (SEC @x.Participant.SEC.Number - @x.Participant.SEC.Year)
 
                             </h4>
-                            <a href="#" class="feature-box-4-link">Read More <i class="fa fa-chevron-right"></i></a>
-                        </div>
-                        <i class="feature-box-4-icon-bg icon-worldwide2"></i>
+                         </div>
+                        @*<i class="feature-box-4-icon-bg icon-worldwide2"></i>*@
                     </div>
                 </div>
 
@@ -111,13 +108,13 @@
             var nextDisabled = !Model.Papers.HasNextPage ? "disabled" : "";
         }
 
-        <a asp-page="./SecAlumni"
+        <a asp-page="./PaperList"
            asp-route-pageIndex="@(Model.Papers.PageIndex - 1)"
            asp-route-currentFilter="@Model.CurrentFilter"
            class="primary-button button-sm mb-15-xs @prevDisabled">
             Previous
         </a>
-        <a asp-page="./SecAlumni"
+        <a asp-page="./PaperList"
            asp-route-pageIndex="@(Model.Papers.PageIndex + 1)"
            asp-route-currentFilter="@Model.CurrentFilter"
            class="primary-button button-sm mb-15-xs @nextDisabled">

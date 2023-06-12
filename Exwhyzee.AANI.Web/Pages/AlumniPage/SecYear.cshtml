@@ -4,7 +4,32 @@
 @{
     ViewData["Title"] = "SecYear";
 }
-
+<style>
+    .feature-box-4-icon {
+        flex: 0 0 40px;
+    }
+     
+    .feature-box-4 h4, .feature-box-4 p, .feature-box-4 .feature-box-4-link {
+        position: relative;
+        z-index: 99;
+        line-height: 1;
+        height: 30px;
+    }
+    .feature-box-4-icon i {
+        color: #d21e2b;
+        font-size: 30px;
+    }
+    .boxed-div {
+        position: relative;
+        border: 1px solid #eee;
+        background: #fff;
+        box-shadow: 0px 10px 30px 0px rgba(50, 50, 50, 0.16);
+        border-radius: 5px;
+        overflow: hidden;
+        padding: 10px 10px;
+        margin-top: 10px;
+    }
+</style>
 <div class="page-title-section" style="background-image: url('../img/bred.jpg');">
     <div class="container">
         <h1>SENIOR EXECUTIVE COURSE ALUMNI</h1>
@@ -17,31 +42,28 @@
 <div class="section-block">
     <div class="container">
         <div class="section-heading center-holder">
-            <h3>SEC YEAR FROM 1979 TILL DATE</h3>
-            <div class="section-heading-line"></div>
+            <h3>SEC YEAR FROM 1979 TILL DATE</h3> 
          </div>
-        <div class="row mt-60">
+        <div class="row">
             @foreach (var x in Model.SEC)
             {
 
-               
-                    <div class="col-md-4 col-sm-12 col-12" style="margin-bottom:10px;">
-                        <div class="serv-section-2" style="box-shadow: 2px 2px 2px 2px #333333;">
-                            <div class="serv-section-2-icon">
-                                <i class="icon-checked"></i>
-                            </div>
-                            <div class="serv-section-desc">
-                                <a asp-page="/AlumniPage/List" asp-route-id="@x.Id"> <h4>SEC @x.Number</h4>
-                                <h5>@x.Year SET</h5></a>
-                            </div>
-                            <div class="section-heading-line-left"></div>
-                            <a asp-page="/AlumniPage/List" asp-route-id="@x.Id"> <h4>Theme</h4>
-                            <p class="text">
-                                @x.Title
-                            </p>
+                <div class="col-md-6 col-sm-12 col-6">
+                    <div class="boxed-div feature-box-4" style="border-top: 3px solid #d21e2b08;">
+                        <div class="feature-box-4-icon">
+                            <i class="fa fa-check"></i>
+                        </div>
+                        <div class="feature-box-4-content">
+                            <a asp-page="/Dashboard/Members" asp-area="Alumni" asp-route-secid="@x.Id">
+                                <h4 style="text-transform:uppercase;">SEC @x.Number (@x.Year)</h4>
+                                <p>
+                                    @x.Title
+                                </p>
                             </a>
                         </div>
                     </div>
+                </div>
+                
             }
         </div>
     </div>

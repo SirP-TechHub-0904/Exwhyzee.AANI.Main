@@ -20,46 +20,40 @@ namespace Exwhyzee.AANI.Web.Pages.Shared.ViewComponents
 
         public async Task<IViewComponentResult> InvokeAsync(DateTime date)
         {
-            string treturn = date.ToString();
-            DateTime value = date;
-            bool approximate = true;
-            StringBuilder sb = new StringBuilder();
+            string treturn = date.ToString("yyyy, M, d");
+             
+            DateRepresentationGenerator generator = new DateRepresentationGenerator();
+            string dateRepresentation = generator.GetDateRepresentation(date);
 
-            string suffix = (value > DateTime.Now) ? " from now" : " ago";
-
-            TimeSpan timeSpan = new TimeSpan(Math.Abs(DateTime.Now.Subtract(value).Ticks));
-
-            if (timeSpan.Days > 0)
-            {
-                sb.AppendFormat("{0} {1}", timeSpan.Days,
-                  (timeSpan.Days > 1) ? "days" : "day");
-                if (approximate)
-                    treturn =  sb.ToString() + suffix;
-            }
-            if (timeSpan.Hours > 0)
-            {
-                sb.AppendFormat("{0}{1} {2}", (sb.Length > 0) ? ", " : string.Empty,
-                  timeSpan.Hours, (timeSpan.Hours > 1) ? "hours" : "hour");
-                if (approximate) treturn =  sb.ToString() + suffix;
-            }
-            if (timeSpan.Minutes > 0)
-            {
-                sb.AppendFormat("{0}{1} {2}", (sb.Length > 0) ? ", " : string.Empty,
-                  timeSpan.Minutes, (timeSpan.Minutes > 1) ? "minutes" : "minute");
-                if (approximate) treturn =  sb.ToString() + suffix;
-            }
-            if (timeSpan.Seconds > 0)
-            {
-                sb.AppendFormat("{0}{1} {2}", (sb.Length > 0) ? ", " : string.Empty,
-                  timeSpan.Seconds, (timeSpan.Seconds > 1) ? "seconds" : "second");
-                if (approximate) treturn =  sb.ToString() + suffix;
-            }
-            if (sb.Length == 0) treturn =  "right now";
-
-            sb.Append(suffix);
-            treturn = sb.ToString();
-            ViewBag.tt = treturn;
+            ViewBag.tt = dateRepresentation;
             return View();
         }
     }
+
+    public class DateRepresentationGenerator
+    {
+        public string GetDateRepresentation(DateTime date)
+        {
+            DateTime currentDate = DateTime.Now;
+            TimeSpan timeSinceDate = currentDate - date;
+
+            if (timeSinceDate.TotalMinutes < 1)
+            {
+                return "Few minutes ago";
+            }
+            else if (timeSinceDate.TotalDays < 1)
+            {
+                return $"Few hours ago";
+            }
+            else if (timeSinceDate.TotalDays < 30)
+            {
+                return $"{(int)timeSinceDate.TotalDays} days ago";
+            }
+            else
+            {
+                return date.ToString("dd MMM yyyy");
+            }
+        }
+    }
+
 }

@@ -9,8 +9,6 @@ namespace Exwhyzee.AANI.Domain.Enums
         NONE = 0,
         [Description("MNI")]
         MNI = 2,
-        [Description("Attended")]
-        Attended = 3
-
+        
     }
 }

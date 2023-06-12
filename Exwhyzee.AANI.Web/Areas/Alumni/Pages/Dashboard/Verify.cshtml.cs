@@ -85,7 +85,7 @@ namespace Exwhyzee.AANI.Web.Areas.Alumni.Pages.Dashboard
 
         public async Task<JsonResult> OnGetLGA(long id)
         {
-            var partaccount =await _userManager.Users.Include(x => x.SEC).Where(x=>x.SECId == id).OrderBy(x=>x.Surname).ToListAsync();
+            var partaccount =await _userManager.Users.Include(x => x.SEC).Where(x=>x.SECId == id && x.MniStatus == Domain.Enums.MniStatus.MNI).OrderBy(x=>x.Surname).ToListAsync();
 
             var countf = partaccount.Count();
             LgaList = partaccount.Select(x => new SelectListItem
