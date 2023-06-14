@@ -82,7 +82,7 @@ namespace Exwhyzee.AANI.Web.Areas.Main.Pages.ExecutivePage.MemberCampain
                         SecretKey = _config["AwsConfiguration:AWSSecretKey"]
                     };
 
-                    var xresult = await _storageService.UploadFileReturnUrlAsync(s3Obj, cred, "");
+                    var xresult = await _storageService.UploadFileReturnUrlAsync(s3Obj, cred, Campain.ImageKey);
                     // 
                     if (xresult.Message.Contains("200"))
                     {
@@ -119,7 +119,7 @@ namespace Exwhyzee.AANI.Web.Areas.Main.Pages.ExecutivePage.MemberCampain
                 }
             }
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("/Account/Contestants", new {area="Datapage", id = Campain.Id});
         }
 
         private bool CampainExists(long id)

@@ -7,6 +7,8 @@
 
  
 <div class="">
+    @if (TempData["checkifexist"] != null)
+    {
     <section class="content" style="margin-top:10px;">
         <div class="container-fluid card">
 
@@ -21,24 +23,20 @@
             </div>
             <div class="row">
                 <div class="col-md-12">
-
-
+                     
                     <div class="marquee">
                         <div>
-                            <span>++HAPPY BIRTHDAY AIG XXX XXXX (SEC 43)</span>
-                            <span>++HAPPY BIRTHDAY LADY XXX XXXX (SEC 20)</span>
-                            <span>++HAPPY BIRTHDAY MR XXX XXXX (SEC 34)</span>
-                            <span>++HAPPY BIRTHDAY DR XXX XXXX (SEC 28)</span>
-                            <!-- you need the second one - otherwise there is a lot of blank space and it will look odd -->
-                         </div>
+                        @Model.DateofBirthList    
+                        </div>
                     </div>
                 </div>
             </div>
         </div><!-- /.container-fluid -->
     </section>
-    <section class="content" style="margin-top:10px;">
-        <div class="container-fluid card">
 
+    }
+    <section class="content" style="margin-top:10px;">
+        <div class="container-fluid card"> 
             <div class="content-header" style="padding:1px 0;">
                 <div class="container-fluid">
                     <div class="row">
@@ -48,18 +46,14 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
-
-                <div class="col-lg-4 col-6">
-
-                    <!-- small box -->
+            <div class="row"> 
+                <div class="col-lg-4 col-6"> 
                     <a asp-page="./Members" class="small-box-footer">
                         <div class="small-box bg-primary" style="margin-bottom: 7.5px;margin-top: 7.5px;">
                             <div class="inner">
                                 <h3 style="white-space: normal;text-align: center;margin:auto;">
                                     TOTAL MEMBERS
-                                </h3>
-
+                                </h3> 
                                 <p style="text-align: center;font-weight: 900;font-size: 2.0em;margin: 0;">@Model.AllAlumni</p>
 
                             </div>

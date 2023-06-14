@@ -22,10 +22,10 @@ namespace Exwhyzee.AANI.Web.Pages
 
         public async Task OnGetAsync()
         {
-            Sliders = _context.Sliders.OrderByDescending(d => d.SortOrder).ToList();
+            Sliders = _context.Sliders.OrderBy(d => d.SortOrder).ToList();
             Blogs = _context.Blogs.OrderByDescending(d => d.Date).Take(5).ToList();
-            ExecutivePositions = _context.ExecutivePositions.Include(x=>x.Campains).ToList();
-             
+            ExecutivePositions = _context.ExecutivePositions.Include(x => x.Campains).ToList();
+
         }
     }
 }

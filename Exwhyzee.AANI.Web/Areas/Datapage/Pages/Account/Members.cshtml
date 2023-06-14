@@ -1,5 +1,5 @@
 ﻿@page
-@model Exwhyzee.AANI.Web.Areas.Alumni.Pages.Dashboard.MembersModel
+@model Exwhyzee.AANI.Web.Areas.Datapage.Pages.Account.MembersModel
 @{
 
     
@@ -7,8 +7,15 @@
 
 <div class="card">
     <div class="card-header">
-        <h3 class="card-title">@TempData["data"]</h3>
+        <h3 class="card-title">
+            @TempData["data"]
 
+
+            </h3>
+        <div class="hidden-sm hidden-xs">
+            <a href="javascript:history.back()" class="btn bg-gradient-warning btn-xs" style="float: right; font-size: .775rem;">Back</a>
+
+        </div>
     </div>   
     <div class="card-body">
                   <div class="row">

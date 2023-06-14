@@ -1,0 +1,296 @@
+﻿@page
+@model Exwhyzee.AANI.Web.Areas.Datapage.Pages.Account.ContestantsModel
+
+@{
+    ViewData["Title"] = "Contestants";
+}
+
+
+<style>
+    .card-widget {
+        border: 0;
+        position: relative;
+    }
+
+    .card {
+        box-shadow: 0 0 1px rgba(0,0,0,.125), 0 1px 3px rgba(0,0,0,.2);
+        margin-bottom: 1rem;
+    }
+
+    .shadow-lg {
+        box-shadow: 0 1rem 3rem rgba(0,0,0,.175) !important;
+    }
+
+    .card {
+        position: relative;
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-direction: column;
+        flex-direction: column;
+        min-width: 0;
+        word-wrap: break-word;
+        background-color: #fff;
+        background-clip: border-box;
+        border: 0 solid rgba(0,0,0,.125);
+        border-radius: .25rem;
+    }
+
+    .widget-user .widget-user-header {
+        border-top-left-radius: .25rem;
+        border-top-right-radius: .25rem;
+        height: 135px;
+        padding: 1rem;
+        text-align: center;
+    }
+
+    .text-white {
+        color: #fff !important;
+    }
+
+    .text-white {
+        color: #fff !important;
+    }
+
+    .widget-user .widget-user-username {
+        font-size: 25px;
+        font-weight: 300;
+        margin-bottom: 0;
+        margin-top: 0;
+        text-shadow: 0 1px 1px rgba(0,0,0,.2);
+    }
+
+    .text-right {
+        text-align: right !important;
+    }
+
+    .widget-user .widget-user-desc {
+        margin-top: 0;
+    }
+
+    .text-right {
+        text-align: right !important;
+    }
+
+    .h5, h5 {
+        font-size: 1.25rem;
+    }
+
+    .h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
+        margin-bottom: .5rem;
+        font-family: inherit;
+        font-weight: 500;
+        line-height: 1.2;
+        color: inherit;
+    }
+
+    .widget-user .widget-user-image {
+        left: 50%;
+        margin-left: -45px;
+        position: absolute;
+        top: 80px;
+    }
+
+        .widget-user .widget-user-image > img {
+            border: 3px solid #fff;
+            height: auto;
+            width: 90px;
+        }
+
+    .img-circle {
+        border-radius: 50%;
+    }
+</style>
+<div class="">
+
+
+    <section class="content" style="margin-top:10px;">
+        <div class="container-fluid card">
+
+            <div class="content-header" style="padding:1px 0;">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-sm-12" style="padding-left:0;">
+                            <h5 class="m-0" style="font-weight:900;">CONTESTANTS FOR @Model.ExecutivePosition.Position</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+
+                <div class="col-lg-12">
+                    <div class="row">
+
+                        @foreach (var item in Model.Campain)
+                        {
+
+                            <div class="col-md-4">
+                                <div class="card card-widget widget-user">
+                                    <!-- Add the bg color to the header using any of the bg-* classes -->
+                                    <div class="widget-user-header text-white"
+                                         style="background: url('../../img/bgaani.jpg') center center;">
+                                        <h3 class="widget-user-username text-right">@item.Participant.Fullname</h3>
+                                        <h5 class="widget-user-desc text-right">SEC @item.Participant.SEC.Number (@item.Participant.SEC.Year)</h5>
+                                    </div>
+                                    <div class="widget-user-image">
+
+                                        @if (item.ImageUrl != null)
+                                        {
+                                            <a onclick="showPictureModal('@item.Id')" style="cursor: zoom-out;">
+                                                <img class="profile-user-img img-fluid img-circle" src="@item.ImageUrl" alt="campaign picture">
+                                            </a>
+                                        }
+                                        else
+                                        { <a onclick="showPictureModal('@item.Id')" style="cursor: zoom-out;">
+                                                <img class="profile-user-img img-fluid img-circle" src="~/img/campaign.jpg" alt="campaign picture">
+                                            </a>
+                                        }
+
+                                    </div>
+                                    <div class="card-footer">
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <div class="description-block">
+                                                    <a class="btn btn-primary" style="border-color: #123308; background-color: gray; color: white;" onclick="showModal('@item.Id')">
+                                                        Manifesto
+                                                    </a>
+                                                </div>
+                                                <!-- /.description-block -->
+                                            </div>
+                                            <!-- /.col -->
+                                            <div class="col-sm-6">
+                                                <div class="description-block">
+                                                    <a class="btn btn-primary" style="border-color: #123308; background-color: gray; color: white; " asp-page="./MemberDetails" asp-route-id="@item.Participant.Id">
+                                                        Biography
+                                                    </a>
+                                                </div>
+                                                <!-- /.description-block -->
+                                            </div>
+                                        </div>
+                                        @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                                        {
+                                            <div class="row">
+                                                <div class="col-sm-4"></div>
+                                                <div class="col-sm-4">
+                                                    <a asp-page="/ExecutivePage/MemberCampain/Edit" asp-area="Main" asp-route-id="@item.Id">
+                                                        Update Campaign
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        }
+
+
+                                        <!-- /.row -->
+                                    </div>
+                                </div>
+                            </div>
+
+                        }
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div><!-- /.container-fluid -->
+    </section>
+
+
+
+
+</div>
+
+@section Modal {
+
+    <div class="modal" id="userModalP" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="userDetailsTilte"></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div id="userDetailsP"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="userModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="userDetailsT"></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div id="userDetails"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+        function showModal(userId) {
+            console.log(userId)
+            // Make an AJAX request to retrieve user details by the ID
+            $.ajax({
+                url: 'Contestants?handler=Details',
+                type: 'GET', dataType: "json",
+                data: {
+                    id: userId
+                }, contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    console.log(data)
+                    $('#userDetails').html(data.description);
+                    console.log(data.description)
+                    $('#userDetailsT').html(data.title);
+                    console.log(data.title)
+                    $('#userModal').modal('show'); // Show the modal
+                },
+                error: function () {
+                    alert('Error retrieving user details.');
+                }
+            });
+        }
+
+    </script>
+    <script>
+        function showPictureModal(userId) {
+            console.log(userId)
+            // Make an AJAX request to retrieve user details by the ID
+            $.ajax({
+                url: 'Contestants?handler=DetailsPicture',
+                type: 'GET', dataType: "json",
+                data: {
+                    id: userId
+                }, contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    console.log(data)
+                    $('#userDetailsP').html(data.description);
+                    console.log(data.description)
+                    $('#userDetailsTilte').html(data.title);
+                    console.log(data.title)
+                    $('#userModalP').modal('show'); // Show the modal
+                },
+                error: function () {
+                    alert('Error retrieving user details.');
+                }
+            });
+        }
+
+    </script>
+}

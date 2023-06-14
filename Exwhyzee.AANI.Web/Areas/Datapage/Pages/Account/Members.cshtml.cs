@@ -6,9 +6,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 
-namespace Exwhyzee.AANI.Web.Areas.Alumni.Pages.Dashboard
+namespace Exwhyzee.AANI.Web.Areas.Datapage.Pages.Account
 {
-    [Microsoft.AspNetCore.Authorization.Authorize(Roles = "MNI")]
+    [Microsoft.AspNetCore.Authorization.Authorize(Roles = "Admin,MNI")]
 
     public class MembersModel : PageModel
     {
@@ -95,7 +95,7 @@ namespace Exwhyzee.AANI.Web.Areas.Alumni.Pages.Dashboard
                 {
                     return RedirectToPage("./Members");
                 }
-                TempData["data"] = "MEMBERS OF " + secs.Number.ToUpper() + " ("+secs.Year+")";
+                TempData["data"] = secs.Number.ToUpper() + " ("+secs.Year+") "+ Participants.Count() + " MEMBERS";
 
                 return Page();
             }
