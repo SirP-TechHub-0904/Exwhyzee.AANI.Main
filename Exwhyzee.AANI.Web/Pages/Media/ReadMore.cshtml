@@ -2,8 +2,14 @@
 @model Exwhyzee.AANI.Web.Pages.Media.ReadMoreModel
 
 @{
-    ViewData["Title"] = "ReadMore";
+    ViewData["Title"] = Model.Blog.BlogCategory.Title;
+
+    ViewData["PageName"] = Model.Blog.Title;
+    ViewData["Description"] = Model.Blog.ShortDescription;
+    ViewData["Image"] = Model.Blog.ImageUrl;
 }
+
+
 <!-- Page Title START -->
 <div class="page-title-section" style="background-image: url('../img/bred.jpg');">
     <div class="container">
@@ -26,10 +32,10 @@
                 <div class="clearfix"></div>
 
                 <div class="blog-list-left" style="box-shadow: 2px 2px 2px 2px #706b6b;padding: 20px;">
-                    @if (!String.IsNullOrEmpty(Model.Blog.Image))
+                    @if (!String.IsNullOrEmpty(Model.Blog.ImageUrl))
                     {
                         <div style="margin:0 auto;text-align:center">
-                            <img src="@Model.Blog.Image" alt="img" style="margin:0 auto;text-align:center">
+                            <img src="@Model.Blog.ImageUrl" alt="img" style="margin:0 auto;text-align:center">
                         </div>
                     }
                     else
@@ -45,7 +51,12 @@
                     <div class="blog-title-box">
                         <h2>@Model.Blog.Title</h2>
                         <span><i class="fa fa-calendar"></i>@Model.Blog.Date.ToString("dd MMM, yyyy hh:mm tt") </span>
-                        <span><i class="fa fa-globe"></i>	AANI Secetary</span>
+                        <span>
+                            <i class="fa fa-globe"></i>	 @if (Model.Blog.BlogCategory != null)
+                            {
+                                @Model.Blog.BlogCategory.Title
+                            }
+                        </span>
                         <span><i class="fa fa-comments"></i>	@Model.Blog.Comments.Count() Comments</span>
                     </div>
 
@@ -55,7 +66,7 @@
                         </div>
 
                         <hr />
-                      
+
                     </div>
 
 
@@ -78,7 +89,7 @@
                                             {
                                                 @x.Participant.Fullname
                                             }
-                                        </h6><strong> @await Component.InvokeAsync("DateAgo", new{date = x.Date})</strong>
+                                        </h6><strong> @await Component.InvokeAsync("DateAgo", new { date = x.Date })</strong>
                                         <p>
                                             @x.Content
                                         </p>

@@ -2,16 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using Exwhyzee.AANI.Web.Data;
 using Exwhyzee.AANI.Domain.Models;
+using Exwhyzee.AANI.Web.Data;
 
-namespace Exwhyzee.AANI.Web.Areas.Main.Pages.BlogNews
+namespace Exwhyzee.AANI.Web.Areas.Main.Pages.BlogNews.Category
 {
-
     [Microsoft.AspNetCore.Authorization.Authorize(Roles = "Admin")]
 
     public class IndexModel : PageModel
@@ -23,11 +21,11 @@ namespace Exwhyzee.AANI.Web.Areas.Main.Pages.BlogNews
             _context = context;
         }
 
-        public IList<Blog> Blogs { get; set; }
+        public IList<BlogCategory> BlogCategory { get;set; }
 
         public async Task OnGetAsync()
         {
-            Blogs = await _context.Blogs.Include(x => x.BlogCategory).OrderByDescending(d => d.Date).ToListAsync();
+            BlogCategory = await _context.BlogCategories.ToListAsync();
         }
     }
 }

@@ -1,11 +1,15 @@
-﻿using Exwhyzee.AANI.Domain.Models;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using Exwhyzee.AANI.Domain.Models;
+using Exwhyzee.AANI.Web.Data;
 
-namespace Exwhyzee.AANI.Web.Areas.Main.Pages.BlogNews
+namespace Exwhyzee.AANI.Web.Areas.Main.Pages.BlogNews.Category
 {
-
     [Microsoft.AspNetCore.Authorization.Authorize(Roles = "Admin")]
 
     public class DeleteModel : PageModel
@@ -18,7 +22,7 @@ namespace Exwhyzee.AANI.Web.Areas.Main.Pages.BlogNews
         }
 
         [BindProperty]
-        public Blog Blog { get; set; }
+        public BlogCategory BlogCategory { get; set; }
 
         public async Task<IActionResult> OnGetAsync(long? id)
         {
@@ -27,9 +31,9 @@ namespace Exwhyzee.AANI.Web.Areas.Main.Pages.BlogNews
                 return NotFound();
             }
 
-            Blog = await _context.Blogs.FirstOrDefaultAsync(m => m.Id == id);
+            BlogCategory = await _context.BlogCategories.FirstOrDefaultAsync(m => m.Id == id);
 
-            if (Blog == null)
+            if (BlogCategory == null)
             {
                 return NotFound();
             }
@@ -43,11 +47,11 @@ namespace Exwhyzee.AANI.Web.Areas.Main.Pages.BlogNews
                 return NotFound();
             }
 
-            Blog = await _context.Blogs.FindAsync(id);
+            BlogCategory = await _context.BlogCategories.FindAsync(id);
 
-            if (Blog != null)
+            if (BlogCategory != null)
             {
-                _context.Blogs.Remove(Blog);
+                _context.BlogCategories.Remove(BlogCategory);
                 await _context.SaveChangesAsync();
             }
 

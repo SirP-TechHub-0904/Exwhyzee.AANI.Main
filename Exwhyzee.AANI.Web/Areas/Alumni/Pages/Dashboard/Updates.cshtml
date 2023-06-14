@@ -1,0 +1,134 @@
+﻿@page
+@model Exwhyzee.AANI.Web.Areas.Alumni.Pages.Dashboard.UpdatesModel
+@{
+}
+
+<link href="~/css/cardstyle.css" rel="stylesheet" />
+<div class="">
+
+
+    <!-- /.content -->
+
+    @{
+        string[] colors = {
+        "bg-primary", "bg-secondary", "bg-success", "bg-danger", "bg-warning", "bg-info",
+        "bg-dark", "bg-light", "bg-info", "bg-danger", "bg-primary", "bg-warning",
+        "bg-success", "bg-info", "bg-dark", "bg-primary", "bg-secondary", "bg-success",
+        "bg-danger", "bg-warning", "bg-info", "bg-dark", "bg-light", "bg-primary",
+        "bg-secondary", "bg-success", "bg-danger", "bg-warning", "bg-info", "bg-dark",
+        "bg-light", "bg-primary", "bg-secondary", "bg-success", "bg-danger", "bg-warning",
+        "bg-info", "bg-dark", "bg-light"
+    };
+        Random random = new Random();
+    }
+    <section class="content" style="margin-top:10px;">
+        <div class="container-fluid card">
+
+            <div class="row">
+
+                <div class="col-lg-12">
+                    <div class="row">
+
+                        @foreach (var item in Model.BlogCategory)
+                        {
+                            <div class="col-md-3 col-sm-6 col-xs-6">
+                                <a asp-page="./Updates" asp-route-cid="@item.Id" class="small-box-footer">
+                                    <div class="small-box @colors[random.Next(colors.Length)]" style="margin-bottom: 7.5px;margin-top: 7.5px;">
+                                        <div class="inner">
+                                            <h3 style="white-space: normal; text-align: center; font-size: 1.2rem; margin: auto;">
+                                                @item.Title
+                                            </h3>
+
+                                        </div>
+
+                                    </div>
+                                </a>
+                            </div>
+                        }
+
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+
+                <div class="col-md-4 col-sm-12 col-6">
+                </div>
+                <div class="col-md-4 col-sm-12 col-6">
+
+                    <form asp-page="./Updates" method="get">
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="searchString" placeholder="@Model.CurrentFilter" style="border: 2px solid #d21e2b;">
+                            <div class="input-group-btn">
+                                <button class="btn btn-default btnn" type="submit">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+            <hr />
+            <div class="row">
+                <div class="clearfix"></div>
+                @foreach (var x in Model.Blog)
+                {
+                    <div class="col-md-4">
+                        <div class="example-1 card">
+                            <div class="wrapper" style=" background: url(@x.ImageUrl) 20% 1%/cover no-repeat; ">
+                                <div class="date">
+                                    <span class="day">@x.Date.ToString("dd")</span>
+                                    <span class="month">@x.Date.ToString("MMM")</span>
+                                    <span class="year">@x.Date.ToString("yyyy")</span>
+                                </div>
+                                <div class="data">
+                                    <div class="content">
+                                        <span class="author">
+                                            @if (x.BlogCategory != null)
+                                            {
+                                                @x.BlogCategory.Title
+                                            }
+                                        </span>
+                                        <h1 class="title" style="font-size:1.23em;font-weight:900;color:black;margin-top:0;"><a asp-page="./Continue" asp-route-id="@x.Id" asp-route-title="@x.Title.Replace(",", "-").Replace(".", "-").Replace("&", "-").Replace(" ", "-").Replace("@", "-")">@x.Title</a></h1>
+                                        <p class="text" style=" line-height: 1.1; text-align: justify; font-size: 0.9em;">@x.ShortDescription</p>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+            @{
+                var prevDisabled = !Model.Blog.HasPreviousPage ? "disabled" : "";
+                var nextDisabled = !Model.Blog.HasNextPage ? "disabled" : "";
+            }
+            <hr />
+            <div class="row">
+                <div class="col-md-3"></div>
+                <div class="col-md-6" style="text-align:center;margin:0 auto;">
+                    <a asp-page="./Updates"
+                       asp-route-pageIndex="@(Model.Blog.PageIndex - 1)"
+                       asp-route-currentFilter="@Model.CurrentFilter"
+                       class="btn btn-success mb-15-xs @prevDisabled">
+                        Previous
+                    </a>
+                    <a asp-page="./Updates"
+                       asp-route-pageIndex="@(Model.Blog.PageIndex + 1)"
+                       asp-route-currentFilter="@Model.CurrentFilter"
+                       class="btn btn-success mb-15-xs @nextDisabled">
+                        Next
+                    </a>
+                    <i>Page Number (@Model.PageIndex of @Model.TotalPage)</i>
+                </div>
+            </div>
+
+        </div><!-- /.container-fluid -->
+    </section>
+
+
+
+
+</div>
