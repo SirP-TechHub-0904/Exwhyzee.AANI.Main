@@ -33,6 +33,8 @@ namespace Exwhyzee.AANI.Web.Areas.Alumni.Pages.Dashboard
 
         public List<Chapter> Chapters { get; set; }
         public List<SEC> SECs { get; set; }
+
+        public string DateofBirthList { get; set; }
         public async Task<IActionResult> OnGetAsync()
         {
             var alumni = _userManager.Users.Include(x => x.SEC).Where(x => x.MniStatus == Domain.Enums.MniStatus.MNI).AsQueryable();
@@ -46,6 +48,21 @@ namespace Exwhyzee.AANI.Web.Areas.Alumni.Pages.Dashboard
             Dead = await alumni.Where(x => x.AliveStatus == Domain.Enums.AliveStatus.Dead).CountAsync();
             Active = await alumni.Where(x => x.ActiveStatus == Domain.Enums.ActiveStatus.Active).CountAsync();
 
+             
+              var listdob = from s in _userManager.Users.Include(x => x.SEC).Where(x => x.MniStatus == Domain.Enums.MniStatus.MNI)
+                    .OrderByDescending(x => x.DOB)
+                                 .Where(ob => ob.DOB.Date == DateTime.UtcNow.Date)
+                               select s;
+             
+            foreach(var listx in listdob)
+            {
+                DateofBirthList = DateofBirthList + "<span>++HAPPY BIRTHDAY "+listx.Fullname +" (SEC"+listx.SEC.Number+")</span>";
+                 
+            }
+            if(listdob.Count() > 0)
+            {
+                TempData["checkifexist"] = "exist";
+            }
             return Page();
         }
     }

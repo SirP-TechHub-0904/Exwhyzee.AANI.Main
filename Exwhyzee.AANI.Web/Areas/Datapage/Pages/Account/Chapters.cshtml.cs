@@ -8,24 +8,24 @@ using Microsoft.EntityFrameworkCore;
 using Exwhyzee.AANI.Domain.Models;
 using Exwhyzee.AANI.Web.Data;
 
-namespace Exwhyzee.AANI.Web.Areas.Alumni.Pages.Dashboard
+namespace Exwhyzee.AANI.Web.Areas.Datapage.Pages.Account
 {
-    [Microsoft.AspNetCore.Authorization.Authorize(Roles = "MNI")]
+    [Microsoft.AspNetCore.Authorization.Authorize(Roles = "Admin,MNI")]
 
-    public class CampainPageModel : PageModel
+    public class ChaptersModel : PageModel
     {
         private readonly Exwhyzee.AANI.Web.Data.AaniDbContext _context;
 
-        public CampainPageModel(Exwhyzee.AANI.Web.Data.AaniDbContext context)
+        public ChaptersModel(Exwhyzee.AANI.Web.Data.AaniDbContext context)
         {
             _context = context;
         }
 
-        public IList<ExecutivePosition> ExecutivePosition { get;set; }
+        public IList<Chapter> Chapter { get;set; }
 
         public async Task OnGetAsync()
         {
-            ExecutivePosition = await _context.ExecutivePositions.Include(x=>x.Campains).ToListAsync();
+            Chapter = await _context.Chapters.ToListAsync();
         }
     }
 }

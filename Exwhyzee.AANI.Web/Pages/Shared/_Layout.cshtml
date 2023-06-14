@@ -267,7 +267,7 @@
                         <a asp-page="/Contact">Contact</a>
                     </li>
                     <li>
-                        <a asp-page="/Account/Login" asp-area="Identity">Member Login</a>
+                        <a asp-page="/Account/Login" asp-area="Identity">Login</a>
                     </li>
                 </ul>
             </div>
@@ -320,10 +320,10 @@
                             <a asp-page="/PapersCategory">Papers</a>
                         </li>
 
-                         
+
                         <li>
                             <a asp-page="/Media/News">News & Events</a>
-                        </li> 
+                        </li>
                     </ul>
                 </div>
                 <!-- Column 3 End -->
@@ -332,8 +332,8 @@
                     <h3>The National Institute</h3>
                     <ul class="footer-list">
                         <li><a asp-page="/AlumniPage/AaniExecutive">AANI Executive</a></li>
-                        <li><a asp-page="/AlumniPage/SecYear">SEC YEAR</a></li> 
-                        <li><a asp-page="/AlumniPage/Families">Families on SEC</a></li> 
+                        <li><a asp-page="/AlumniPage/SecYear">SEC YEAR</a></li>
+                        <li><a asp-page="/AlumniPage/Families">Families on SEC</a></li>
                         <li><a asp-page="/AlumniPage/PastAaniExecutive">Past AANI Executive</a></li>
                         <li><a href="https://nipsskuru.gov.ng/senior-executive-course-2/" target="_blank">About NIPSS</a></li>
 
@@ -396,6 +396,9 @@
     <script src="~/web/js/main.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
     @RenderSection("Scripts", required: false)
+
+    @await RenderSectionAsync("Modal", required: false)
+
     @if (TempData["aasuccess"] != null)
     {
         <script>
@@ -453,26 +456,26 @@
                 adjustImageHeight(i, i, i, i);
             }
         });
- 
 
 
 
 
 
 
-        </script>
+
+    </script>
 
     @*<script>
-        window.addEventListener('DOMContentLoaded', adjustImageHeight);
+            window.addEventListener('DOMContentLoaded', adjustImageHeight);
 
-        function adjustImageHeight() {
-            const image = document.querySelector('.image img');
-            const text = document.querySelector('.text');
-            const textHeight = image.offsetHeight;
-            console.log(textHeight);
-            text.style.height = textHeight + 'px';
-        }
-    </script>*@
+            function adjustImageHeight() {
+                const image = document.querySelector('.image img');
+                const text = document.querySelector('.text');
+                const textHeight = image.offsetHeight;
+                console.log(textHeight);
+                text.style.height = textHeight + 'px';
+            }
+        </script>*@
 </body>
 </html>
 

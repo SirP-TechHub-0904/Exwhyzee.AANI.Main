@@ -30,6 +30,7 @@ namespace Exwhyzee.AANI.Web.Areas.Admin.Pages.Dashboard
         public int Alive { get; set; }
         public int Dead { get; set; }
         public int Active { get; set; }
+        public string DateofBirthList { get; set; }
 
         public List<Chapter> Chapters { get; set; }
         public List<SEC> SECs { get; set; }
@@ -45,7 +46,20 @@ namespace Exwhyzee.AANI.Web.Areas.Admin.Pages.Dashboard
             Alive = await alumni.Where(x => x.AliveStatus == Domain.Enums.AliveStatus.Alive).CountAsync();
             Dead = await alumni.Where(x => x.AliveStatus == Domain.Enums.AliveStatus.Dead).CountAsync();
             Active = await alumni.Where(x => x.ActiveStatus == Domain.Enums.ActiveStatus.Active).CountAsync();
+            var listdob = from s in _userManager.Users.Include(x => x.SEC).Where(x => x.MniStatus == Domain.Enums.MniStatus.MNI)
+                   .OrderByDescending(x => x.DOB)
+                                .Where(ob => ob.DOB.Date == DateTime.UtcNow.Date)
+                          select s;
 
+            foreach (var listx in listdob)
+            {
+                DateofBirthList = DateofBirthList + "<span>++HAPPY BIRTHDAY " + listx.Fullname + " (SEC" + listx.SEC.Number + ")</span>";
+
+            }
+            if (listdob.Count() > 0)
+            {
+                TempData["checkifexist"] = "exist";
+            }
             return Page();
         }
     }

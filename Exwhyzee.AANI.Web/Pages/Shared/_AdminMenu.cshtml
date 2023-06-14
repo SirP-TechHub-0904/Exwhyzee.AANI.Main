@@ -1,6 +1,6 @@
 ﻿<li class="nav-header" style="background-color: #c8cacc;border-radius: 4px;font-weight: bolder;color: black;">NAVIGATION</li>
 <li class="nav-item">
-    <a asp-page="/Dashboard/Index" asp-area="Alumni" class="nav-link">
+    <a asp-page="/Dashboard/Index" asp-area="Admin" class="nav-link">
         <i class="nav-icon fas fa-th"></i>
         <p>
             DASHBAORD
@@ -8,16 +8,15 @@
     </a>
 </li>
 <li class="nav-item">
-    <a asp-page="/Dashboard/MemberDetails" asp-area="Alumni" class="nav-link">
+    <a asp-page="/Dashboard/Chapters" asp-area="Alumni" class="nav-link">
         <i class="nav-icon fas fa-th"></i>
         <p>
-            PROFILE
+            EMAILS
         </p>
     </a>
 </li>
-
 <li class="nav-item">
-    <a asp-page="/Dashboard/Chapters" asp-area="Alumni" class="nav-link">
+    <a asp-page="/Account/Chapters" asp-area="Datapage" class="nav-link">
         <i class="nav-icon fas fa-th"></i>
         <p>
             CHAPTERS
@@ -26,7 +25,7 @@
 </li>
 
 <li class="nav-item">
-    <a asp-page="/Dashboard/SecPage" asp-area="Alumni" class="nav-link">
+    <a asp-page="/Account/SecPage" asp-area="Datapage" class="nav-link">
         <i class="nav-icon fas fa-th"></i>
         <p>
             SEC
@@ -34,23 +33,105 @@
     </a>
 </li>
 <li class="nav-item">
-    <a asp-page="/Dashboard/CampainPage" asp-area="Alumni" class="nav-link">
+    <a asp-page="/Account/Members" asp-area="Datapage" class="nav-link">
         <i class="nav-icon fas fa-th"></i>
         <p>
-            CAMPAINS
+            MEMBERS
         </p>
     </a>
 </li>
 <li class="nav-item">
-    <a asp-page="/Dashboard/Elections" asp-area="Alumni" class="nav-link">
+    <a asp-page="/Account/CampainPage" asp-area="Datapage" class="nav-link">
         <i class="nav-icon fas fa-th"></i>
         <p>
-            ELECTIONS <span class="right badge badge-danger">coming 16<sup>th</sup></span>
+            CAMPAIGN
         </p>
     </a>
 </li>
 <li class="nav-item">
-    <a asp-page="/Dashboard/Birthdays" asp-area="Alumni" class="nav-link">
+    <a href="#" class="nav-link">
+        <i class="nav-icon fas fa-th"></i>
+        <p>
+            OFFICIALS
+            <i class="fas fa-angle-left right"></i>
+        </p>
+    </a>
+    <ul class="nav nav-treeview">
+        <li class="nav-item">
+            <a asp-page="/" asp-area="Main" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Executives</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a asp-page="/" asp-area="Main" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Committees</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a asp-page="/" asp-area="Main" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Staff</p>
+            </a>
+        </li>
+    </ul>
+</li>
+<li class="nav-item">
+    <a href="#" class="nav-link">
+        <i class="nav-icon fas fa-th"></i>
+        <p>
+            ELECTION
+            <i class="fas fa-angle-left right"></i>
+        </p>
+    </a>
+    <ul class="nav nav-treeview">
+        <li class="nav-item">
+            <a asp-page="/" asp-area="Main" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Candidates</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a asp-page="/" asp-area="Main" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Votes</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a asp-page="/" asp-area="Main" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Result</p>
+            </a>
+        </li>
+    </ul>
+</li>
+<li class="nav-item">
+    <a href="#" class="nav-link">
+        <i class="nav-icon fas fa-th"></i>
+        <p>
+            FUNDS
+            <i class="fas fa-angle-left right"></i>
+        </p>
+    </a>
+    <ul class="nav nav-treeview">
+        <li class="nav-item">
+            <a asp-page="/" asp-area="Main" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Category</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a asp-page="/" asp-area="Main" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Transaction</p>
+            </a>
+        </li>
+        
+    </ul>
+</li>
+<li class="nav-item">
+    <a asp-page="/Account/BirthdayCelebration" asp-area="Datapage" class="nav-link">
         <i class="nav-icon fas fa-th"></i>
         <p>
             BIRTHDAYS
@@ -62,6 +143,62 @@
         <i class="nav-icon fas fa-th"></i>
         <p>
             CELEBRATIONS
+        </p>
+    </a>
+</li>
+<li class="nav-item">
+    <a href="#" class="nav-link">
+        <i class="nav-icon fas fa-th"></i>
+        <p>
+            NOTIFICATION
+            <i class="fas fa-angle-left right"></i>
+        </p>
+    </a>
+    <ul class="nav nav-treeview">
+        <li class="nav-item">
+            <a asp-page="/" asp-area="Main" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Daily Quote</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a asp-page="/" asp-area="Main" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Newsletter</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a asp-page="/" asp-area="Main" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>SMS</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a asp-page="/" asp-area="Main" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Emails</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a asp-page="/" asp-area="Main" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Whaatsapp Notification</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a asp-page="/" asp-area="Main" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>NEWS</p>
+            </a>
+        </li>
+    </ul>
+</li>
+
+<li class="nav-item">
+    <a asp-page="/Dashboard/Celebrations" asp-area="Alumni" class="nav-link">
+        <i class="nav-icon fas fa-th"></i>
+        <p>
+            WEB BANNER
         </p>
     </a>
 </li>

@@ -1,0 +1,110 @@
+﻿@page
+@model Exwhyzee.AANI.Web.Areas.Datapage.Pages.Account.UpdateDobModel
+@{
+}
+<div class="row">
+    <div class="col-md-12">
+        <div class="card card-default">
+            <div class="card-header">
+                <h3 class="card-title">UPDATE DOB FOR @Model.Participant.Fullname.ToUpper()</h3>
+
+
+            </div>
+            <div class="card-body">
+
+                <div class="row">
+                    <div class="col-md-6" style="margin-top:10px;">
+                        <h4>Existing DOB: @Model.Participant.DOB.ToString("dd/MMM")</h4>
+                        <form method="post" enctype="multipart/form-data">
+                            <input type="hidden" asp-for="Participant.Id" />
+                           
+                                <div class="form-group">
+                                    <label asp-for="Participant.DOB" class="control-label">DOB (MONTH/DAY)</label>
+                                    <br />
+                                    <select id="monthDropdown" asp-for="Month" style="border: 1px solid #0000002e; padding: .375rem .75rem; font-size: 1rem; line-height: 1.5; border-radius: .25rem;width:50%;"></select>
+                                    <select id="yearDropdown" hidden="hidden"></select>
+                                    <select id="dayDropdown" asp-for="Day" style="border: 1px solid #0000002e; padding: .375rem .75rem; font-size: 1rem; line-height: 1.5; border-radius: .25rem;width:45%;"></select>
+
+                                </div>
+                                <div class="form-group">
+                                    <input type="submit" value="Update" class="btn btn-primary" />
+                                </div>
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+        <!-- /.card -->
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+
+    <script>
+        // Get references to the dropdown elements
+        const monthDropdown = document.getElementById("monthDropdown");
+        const yearDropdown = document.getElementById("yearDropdown");
+        const dayDropdown = document.getElementById("dayDropdown");
+
+        // Define the abbreviated month names
+        const monthNames = [
+            "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+            "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+        ];
+
+        // Get the current year
+        const currentYear = new Date().getFullYear();
+
+        // Populate the month dropdown with options
+        for (let i = 0; i < monthNames.length; i++) {
+            const option = document.createElement("option");
+            option.value = i + 1; // Month value is 1-based
+            option.text = monthNames[i];
+            monthDropdown.appendChild(option);
+        }
+
+        // Create an option for the current year
+        const currentYearOption = document.createElement("option");
+        currentYearOption.value = currentYear;
+        currentYearOption.text = currentYear;
+        yearDropdown.appendChild(currentYearOption);
+
+        // Update the day dropdown based on the selected month and year
+        function updateDayDropdown() {
+            const selectedMonth = parseInt(monthDropdown.value);
+            const selectedYear = parseInt(yearDropdown.value);
+
+            // Clear existing options
+            dayDropdown.innerHTML = "";
+
+            // Get the number of days in the selected month
+            const daysInMonth = new Date(selectedYear, selectedMonth, 0).getDate();
+
+            // Populate the day dropdown with options
+            for (let i = 1; i <= daysInMonth; i++) {
+                const option = document.createElement("option");
+                option.value = i;
+                option.text = i;
+                dayDropdown.appendChild(option);
+            }
+        }
+
+        // Add event listener to month dropdown
+        monthDropdown.addEventListener("change", updateDayDropdown);
+
+        // Set the initial value for the year dropdown to the current year
+        yearDropdown.value = currentYear;
+
+        // Trigger the initial update of the day dropdown
+        updateDayDropdown();
+
+    </script>
+
+}

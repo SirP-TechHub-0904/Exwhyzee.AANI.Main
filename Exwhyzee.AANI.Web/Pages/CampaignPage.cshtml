@@ -8,6 +8,7 @@
     .team-member {
         margin: 0;
     }
+
     .h5, h5 {
         font-size: 1.05rem;
     }
@@ -48,3 +49,60 @@
         </div>
     </div>
 </div>
+
+@section Modal {
+
+     
+
+    <div class="modal" id="userModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="userDetailsT"></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div id="userDetailsImage" style="margin-bottom:10px;"></div>
+                    <div id="userDetails"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+        function showModal(userId) {
+            console.log(userId)
+            // Make an AJAX request to retrieve user details by the ID
+            $.ajax({
+                url: 'CampaignPage?handler=Details',
+                type: 'GET', dataType: "json",
+                data: {
+                    id: userId
+                }, contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    console.log(data)
+                    $('#userDetailsImage').html(data.image);
+                    $('#userDetails').html(data.description);
+                    console.log(data.description)
+                    $('#userDetailsT').html(data.title);
+                    console.log(data.title)
+                    $('#userModal').modal('show'); // Show the modal
+                },
+                error: function () {
+                    alert('Error retrieving user details.');
+                }
+            });
+        }
+
+    </script>
+     
+}

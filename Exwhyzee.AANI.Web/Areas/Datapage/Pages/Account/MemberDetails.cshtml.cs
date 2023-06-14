@@ -4,9 +4,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace Exwhyzee.AANI.Web.Areas.Alumni.Pages.Dashboard
+namespace Exwhyzee.AANI.Web.Areas.Datapage.Pages.Account
 {
-    [Microsoft.AspNetCore.Authorization.Authorize(Roles = "MNI")]
+    [Microsoft.AspNetCore.Authorization.Authorize(Roles = "Admin,MNI")]
 
     public class MemberDetailsModel : PageModel
     {

@@ -7,35 +7,34 @@
 
  
 <div class="">
-    <section class="content" style="margin-top:10px;">
-        <div class="container-fluid card">
+    @if (TempData["checkifexist"] != null)
+    {
+        <section class="content" style="margin-top:10px;">
+            <div class="container-fluid card">
 
-            <div class="content-header" style="padding:1px 0;">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-sm-12" style="padding-left:0;">
-                            <h5 class="m-0" style="font-weight:900;">TODAYS BIRTHDAY</h5>
+                <div class="content-header" style="padding:1px 0;">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-sm-12" style="padding-left:0;">
+                                <h5 class="m-0" style="font-weight:900;">TODAYS BIRTHDAY</h5>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-12">
 
-
-                    <div class="marquee">
-                        <div>
-                            <span>++HAPPY BIRTHDAY AIG XXX XXXX (SEC 43)</span>
-                            <span>++HAPPY BIRTHDAY LADY XXX XXXX (SEC 20)</span>
-                            <span>++HAPPY BIRTHDAY MR XXX XXXX (SEC 34)</span>
-                            <span>++HAPPY BIRTHDAY DR XXX XXXX (SEC 28)</span>
-                            <!-- you need the second one - otherwise there is a lot of blank space and it will look odd -->
-                         </div>
+                        <div class="marquee">
+                            <div>
+                                @Model.DateofBirthList
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div><!-- /.container-fluid -->
-    </section>
+            </div><!-- /.container-fluid -->
+        </section>
+
+    }
     <section class="content" style="margin-top:10px;">
         <div class="container-fluid card">
 

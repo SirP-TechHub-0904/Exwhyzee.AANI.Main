@@ -11,22 +11,26 @@
 
 <div class="col-md-4">
                 <div class="item">
-                    <div class="team-member">
-                        <div class="team-member-img" style="margin:0 auto;text-align:center;">
-                            @if (!String.IsNullOrEmpty(item.ImageUrl))
-                            {
-                                <img src="@item.ImageUrl" alt="img" style="margin:0 auto;text-align:center;">
+                    <a onclick="showModal('@item.Id')">
+                        <div class="team-member">
+                            <div class="team-member-img" style="margin:0 auto;text-align:center;">
+                                @if (!String.IsNullOrEmpty(item.ImageUrl))
+                                {
+                                    <img src="@item.ImageUrl" alt="img" style="margin:0 auto;text-align:center;">
 
-                            }
-                        </div>
-                        <div class="team-member-text">
-                            <h4><a href="#">@item.Participant.Fullname</a></h4>
+                                }
+                            </div>
+                            <div class="team-member-text">
+                                <h4>
+                                    @item.Participant.Fullname
+                            </h4>
                             <span>SEC @item.Participant.SEC.Number (@item.Participant.SEC.Year)</span>
                             <p>
                                 @item.CampaignQoute
                             </p>
                         </div>
                     </div>
+                    </a>
                 </div>
             </div>
         }

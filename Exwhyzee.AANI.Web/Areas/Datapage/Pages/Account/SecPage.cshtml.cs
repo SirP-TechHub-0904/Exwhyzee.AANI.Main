@@ -8,8 +8,10 @@ using Microsoft.EntityFrameworkCore;
 using Exwhyzee.AANI.Domain.Models;
 using Exwhyzee.AANI.Web.Data;
 
-namespace Exwhyzee.AANI.Web.Areas.Alumni.Pages.Dashboard
+namespace Exwhyzee.AANI.Web.Areas.Datapage.Pages.Account
 {
+    [Microsoft.AspNetCore.Authorization.Authorize(Roles = "Admin,MNI")]
+
     public class SecPageModel : PageModel
     {
         private readonly Exwhyzee.AANI.Web.Data.AaniDbContext _context;

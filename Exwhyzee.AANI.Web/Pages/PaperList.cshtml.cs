@@ -74,7 +74,7 @@ namespace Exwhyzee.AANI.Web.Pages
 
             var pageSize = 30; TotalPage = AllCount / pageSize;
             Papers = await PaginatedList<Paper>.CreateAsync(
-                paperList.AsNoTracking(), pageIndex ?? 1, pageSize);
+                paperList.AsNoTracking().OrderBy(x=>x.Title), pageIndex ?? 1, pageSize);
 
             PageIndex = pageIndex ?? 1;
 
