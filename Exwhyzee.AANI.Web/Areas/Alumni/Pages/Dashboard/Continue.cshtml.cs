@@ -1,20 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Exwhyzee.AANI.Domain.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using Exwhyzee.AANI.Domain.Models;
-using Exwhyzee.AANI.Web.Data;
 
-namespace Exwhyzee.AANI.Web.Pages.Media
+namespace Exwhyzee.AANI.Web.Areas.Alumni.Pages.Dashboard
 {
-    public class ReadMoreModel : PageModel
+    [Microsoft.AspNetCore.Authorization.Authorize(Roles = "MNI")]
+
+    public class ContinueModel : PageModel
     {
         private readonly Exwhyzee.AANI.Web.Data.AaniDbContext _context;
 
-        public ReadMoreModel(Exwhyzee.AANI.Web.Data.AaniDbContext context)
+        public ContinueModel(Exwhyzee.AANI.Web.Data.AaniDbContext context)
         {
             _context = context;
         }
@@ -28,7 +25,10 @@ namespace Exwhyzee.AANI.Web.Pages.Media
                 return NotFound();
             }
 
-            Blog = await _context.Blogs.Include(x => x.BlogCategory).Include(x=>x.Comments).FirstOrDefaultAsync(m => m.Id == id);
+            Blog = await _context.Blogs
+                .Include(x => x.BlogCategory)
+                .Include(x => x.Comments)
+                .FirstOrDefaultAsync(m => m.Id == id);
 
             if (Blog == null)
             {
@@ -49,7 +49,8 @@ namespace Exwhyzee.AANI.Web.Pages.Media
             await _context.SaveChangesAsync();
             TempData["aasuccess"] = "commented successfully";
 
-            return RedirectToPage("/Media/ReadMore", new { id = Comment.BlogId });
+            return RedirectToPage("/Continue", new { id = Comment.BlogId });
         }
     }
+
 }

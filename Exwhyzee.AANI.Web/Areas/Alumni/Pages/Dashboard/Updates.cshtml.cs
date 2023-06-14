@@ -1,23 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Exwhyzee.AANI.Domain.Models;
+using Exwhyzee.AANI.Web.Helper;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using Exwhyzee.AANI.Domain.Models;
-using Exwhyzee.AANI.Web.Data;
-using Exwhyzee.AANI.Web.Helper;
-using Microsoft.AspNetCore.Identity;
 
-namespace Exwhyzee.AANI.Web.Pages.Media
+namespace Exwhyzee.AANI.Web.Areas.Alumni.Pages.Dashboard
 {
-    public class NewsModel : PageModel
+    public class UpdatesModel : PageModel
     {
         private readonly UserManager<Participant> _userManager;
         private readonly Exwhyzee.AANI.Web.Data.AaniDbContext _context;
         private readonly IConfiguration Configuration;
-        public NewsModel(UserManager<Participant> userManager, Data.AaniDbContext context, IConfiguration configuration)
+        public UpdatesModel(UserManager<Participant> userManager, Data.AaniDbContext context, IConfiguration configuration)
         {
             _userManager = userManager;
             _context = context;
@@ -30,8 +25,8 @@ namespace Exwhyzee.AANI.Web.Pages.Media
         public string CurrentFilter { get; set; }
         public int PageIndex { get; set; }
         public int TotalPage { get; set; }
-
-        public async Task<IActionResult> OnGetAsync(string currentFilter, string searchString, int? pageIndex)
+        public IList<BlogCategory> BlogCategory { get; set; }
+        public async Task<IActionResult> OnGetAsync(string currentFilter, string searchString, int? pageIndex, long cid = 0)
         {
 
             if (searchString != null)
@@ -52,7 +47,11 @@ namespace Exwhyzee.AANI.Web.Pages.Media
                                         .Include(x => x.BlogCategory)
                                         .Include(x => x.Comments)
                                                       .OrderByDescending(x => x.Date)
-                                          select s;
+                                        select s;
+            if(cid > 0)
+            {
+                bloglist = bloglist.Where(x => x.BlogCategoryId == cid);
+            }
 
             if (!String.IsNullOrEmpty(searchString))
             {
@@ -65,12 +64,13 @@ namespace Exwhyzee.AANI.Web.Pages.Media
 
             AllCount = bloglist.Count();
 
-            var pageSize = 10; TotalPage = AllCount / pageSize;
+            var pageSize = 9; TotalPage = AllCount / pageSize;
             Blog = await PaginatedList<Blog>.CreateAsync(
                 bloglist.AsNoTracking(), pageIndex ?? 1, pageSize);
 
             PageIndex = pageIndex ?? 1;
 
+            BlogCategory = await _context.BlogCategories.ToListAsync();
             return Page();
         }
 

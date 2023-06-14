@@ -1,18 +1,12 @@
 ﻿@page
-@model Exwhyzee.AANI.Web.Areas.Main.Pages.BlogNews.IndexModel
-
+@model Exwhyzee.AANI.Web.Areas.Main.Pages.BlogNews.Category.PostModel
 @{
-    ViewData["Title"] = "Index";
 }
-
-
 <div class="card">
     <div class="card-header">
         <h3 class="card-title">Blog</h3>
 
-        <a asp-page="./Create" class="btn bg-gradient-warning btn-sm" style="float:right;">Create New</a>
-        <a asp-page="/BlogNews/Category/Index" class="btn bg-gradient-danger btn-sm" style="float:right;margin-right:5px;">Categories</a>
-    </div>
+     </div>
     <!-- /.card-header -->
     <div class="card-body">
         <div class="table-responsive">
@@ -20,11 +14,13 @@
                 <thead>
                     <tr>
                         <th>S/N</th>
-                        <th>Category</th>
                         <th>
                             @Html.DisplayNameFor(model => model.Blogs[0].Title)
                         </th>
-                         
+
+                        <th>
+                            @Html.DisplayNameFor(model => model.Blogs[0].ShortDescription)
+                        </th>
                         <th>
                             @Html.DisplayNameFor(model => model.Blogs[0].SortOrder)
                         </th>
@@ -57,12 +53,12 @@
                                 @sn
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.BlogCategory.Title)
-                            </td>
-                            <td>
                                 @Html.DisplayFor(modelItem => item.Title)
                             </td>
-                             
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ShortDescription)
+                            </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.SortOrder)
                             </td>

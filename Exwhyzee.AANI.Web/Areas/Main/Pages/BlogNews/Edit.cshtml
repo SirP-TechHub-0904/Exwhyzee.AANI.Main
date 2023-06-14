@@ -17,7 +17,12 @@
         <form method="post" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Blog.Id" />
-            <input type="hidden" asp-for="Blog.Image" />
+            <input type="hidden" asp-for="Blog.ImageUrl" />
+            <input type="hidden" asp-for="Blog.ImageKey" />
+            <div class="form-group">
+                <label asp-for="Blog.BlogCategoryId" class="control-label"></label>
+                <select asp-for="Blog.BlogCategoryId" class="form-control" asp-items="ViewBag.BlogCategoryId"></select>
+            </div>
             <div class="form-group">
                 <label asp-for="Blog.Title" class="control-label"></label>
                 <input asp-for="Blog.Title" class="form-control" />
@@ -39,10 +44,10 @@
                 <span asp-validation-for="Blog.SortOrder" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <img src="@Model.Blog.Image" height="70" />
+                <img src="@Model.Blog.ImageUrl" height="70" />
                 <label class="control-label">Image(650 by 650)</label>
                 <div class="">
-                    <input class="form-control" type="file" accept="image/*" name="filesPhoto" id="gallery-photo-add" />
+                    <input class="form-control" type="file" accept="image/*" asp-for="imagefile" id="gallery-photo-add" />
                     <div class="gallery"></div>
                 </div>
             </div>
@@ -56,7 +61,7 @@
                 <input asp-for="Blog.Date" class="form-control" />
                 <span asp-validation-for="Blog.Date" class="text-danger"></span>
             </div>
-          
+
             <div class="form-group">
                 <input type="submit" value="Submit" class="btn btn-primary" />
                 <a asp-page="./Index" class="btn bg-gradient-warning btn-sm" style="float:right;">Back</a>
