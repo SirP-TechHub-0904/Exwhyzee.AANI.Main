@@ -4,6 +4,7 @@ using Exwhyzee.AANI.Web.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Exwhyzee.AANI.Web.Migrations
 {
     [DbContext(typeof(AaniDbContext))]
-    partial class AaniDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230615085504_init908")]
+    partial class init908
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -882,7 +884,7 @@ namespace Exwhyzee.AANI.Web.Migrations
                     b.Property<int>("GenderStatus")
                         .HasColumnType("int");
 
-                    b.Property<long>("MessageTemplateCategoryId")
+                    b.Property<long?>("MessageTemplateCategoryId")
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
@@ -1551,9 +1553,6 @@ namespace Exwhyzee.AANI.Web.Migrations
                     b.Property<int>("MaritalStatus")
                         .HasColumnType("int");
 
-                    b.Property<long?>("MessageTemplateCategoryId")
-                        .HasColumnType("bigint");
-
                     b.Property<int>("MniStatus")
                         .HasColumnType("int");
 
@@ -1591,8 +1590,6 @@ namespace Exwhyzee.AANI.Web.Migrations
                         .HasColumnType("int");
 
                     b.HasIndex("ChapterId");
-
-                    b.HasIndex("MessageTemplateCategoryId");
 
                     b.HasIndex("SECId");
 
@@ -1822,13 +1819,9 @@ namespace Exwhyzee.AANI.Web.Migrations
 
             modelBuilder.Entity("Exwhyzee.AANI.Domain.Models.MessageTemplateContent", b =>
                 {
-                    b.HasOne("Exwhyzee.AANI.Domain.Models.MessageTemplateCategory", "MessageTemplateCategory")
+                    b.HasOne("Exwhyzee.AANI.Domain.Models.MessageTemplateCategory", null)
                         .WithMany("MessageTemplateContents")
-                        .HasForeignKey("MessageTemplateCategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("MessageTemplateCategory");
+                        .HasForeignKey("MessageTemplateCategoryId");
                 });
 
             modelBuilder.Entity("Exwhyzee.AANI.Domain.Models.OfficialRole", b =>
@@ -1999,10 +1992,6 @@ namespace Exwhyzee.AANI.Web.Migrations
                         .WithMany()
                         .HasForeignKey("ChapterId");
 
-                    b.HasOne("Exwhyzee.AANI.Domain.Models.MessageTemplateCategory", "MessageTemplateCategory")
-                        .WithMany()
-                        .HasForeignKey("MessageTemplateCategoryId");
-
                     b.HasOne("Exwhyzee.AANI.Domain.Models.SEC", "SEC")
                         .WithMany("Participants")
                         .HasForeignKey("SECId")
@@ -2010,8 +1999,6 @@ namespace Exwhyzee.AANI.Web.Migrations
                         .IsRequired();
 
                     b.Navigation("Chapter");
-
-                    b.Navigation("MessageTemplateCategory");
 
                     b.Navigation("SEC");
                 });

@@ -52,6 +52,8 @@ namespace Exwhyzee.AANI.Web.Data
         public DbSet<QouteOfDay> QouteOfDays { get; set; } = default!;
         public DbSet<Slider> Sliders { get; set; } = default!;
         public DbSet<BlogCategory> BlogCategories { get; set; } = default!;
+        public DbSet<MessageTemplateCategory> MessageTemplateCategories { get; set; } = default!;
+        public DbSet<MessageTemplateContent> MessageTemplateContents { get; set; } = default!;
 
 
     }

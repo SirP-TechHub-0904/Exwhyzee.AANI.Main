@@ -72,6 +72,7 @@ namespace Exwhyzee.AANI.Web.Areas.Datapage.Pages.Account
             {
 
             }
+            updatedata.MessageTemplateCategoryId = Participant.MessageTemplateCategoryId;
             await _userManager.UpdateAsync(updatedata);
             TempData["success"] = "Successful";
 

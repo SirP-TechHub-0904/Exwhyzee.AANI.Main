@@ -4,6 +4,7 @@ using Exwhyzee.AANI.Web.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Exwhyzee.AANI.Web.Migrations
 {
     [DbContext(typeof(AaniDbContext))]
-    partial class AaniDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230615093140_in7908")]
+    partial class in7908
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -882,7 +884,7 @@ namespace Exwhyzee.AANI.Web.Migrations
                     b.Property<int>("GenderStatus")
                         .HasColumnType("int");
 
-                    b.Property<long>("MessageTemplateCategoryId")
+                    b.Property<long?>("MessageTemplateCategoryId")
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
@@ -1822,13 +1824,9 @@ namespace Exwhyzee.AANI.Web.Migrations
 
             modelBuilder.Entity("Exwhyzee.AANI.Domain.Models.MessageTemplateContent", b =>
                 {
-                    b.HasOne("Exwhyzee.AANI.Domain.Models.MessageTemplateCategory", "MessageTemplateCategory")
+                    b.HasOne("Exwhyzee.AANI.Domain.Models.MessageTemplateCategory", null)
                         .WithMany("MessageTemplateContents")
-                        .HasForeignKey("MessageTemplateCategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("MessageTemplateCategory");
+                        .HasForeignKey("MessageTemplateCategoryId");
                 });
 
             modelBuilder.Entity("Exwhyzee.AANI.Domain.Models.OfficialRole", b =>
