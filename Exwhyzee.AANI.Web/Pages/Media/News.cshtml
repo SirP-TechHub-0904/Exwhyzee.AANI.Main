@@ -57,7 +57,13 @@
                     </div>
                     <div class="col-md-7 col-sm-7 col-12">
                         <div class="blog-list-simple-text">
-                            <span>@x.BlogCategory.Title.ToUpper()</span>
+                            <span>
+                                
+                                                        @if (x.BlogCategory != null)
+                                                        {
+                                                            @x.BlogCategory.Title.ToUpper()
+                                                        }
+                                                    </span>
                             <a asp-page="./ReadMore" asp-route-id="@x.Id" asp-route-title="@x.Title.Replace(",", "-").Replace(".", "-").Replace("&", "-").Replace(" ", "-").Replace("@", "-")">
                                 <h4>@x.Title</h4>
                             </a>

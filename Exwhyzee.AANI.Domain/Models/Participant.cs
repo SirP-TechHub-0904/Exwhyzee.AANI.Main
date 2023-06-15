@@ -41,6 +41,10 @@ namespace Exwhyzee.AANI.Domain.Models
         public long? ChapterId { get; set; }
         public Chapter Chapter { get; set; } = default!;
 
+
+        public long? MessageTemplateCategoryId { get; set; }
+        public MessageTemplateCategory MessageTemplateCategory { get; set; } = default!;
+
         public ICollection<OfficialRole> OfficialRoles { get; set; } = default!;
 
         public string? EmergencyContactName { get; set; }

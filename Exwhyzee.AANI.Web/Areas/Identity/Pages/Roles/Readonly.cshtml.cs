@@ -27,8 +27,8 @@ namespace Exwhyzee.AANI.Web.Areas.Identity.Pages.Roles
 
             var user = new Participant
             {
-                UserName = "aaniadmin@gmail.com",
-                Email = "aaniadmin@gmail.com",
+                UserName = "mainadmin@gmail.com",
+                Email = "mainadmin@gmail.com",
                 PhoneNumber = "",
                 FirstName = "Admin",
                 Surname = "Admin",
@@ -38,7 +38,7 @@ namespace Exwhyzee.AANI.Web.Areas.Identity.Pages.Roles
                 SECId = 1
             };
             Guid pass = Guid.NewGuid();
-            var result = await _userManager.CreateAsync(user, "Admin@2022");
+            var result = await _userManager.CreateAsync(user, "CAC@2022");
 
             if (result.Succeeded)
             {
