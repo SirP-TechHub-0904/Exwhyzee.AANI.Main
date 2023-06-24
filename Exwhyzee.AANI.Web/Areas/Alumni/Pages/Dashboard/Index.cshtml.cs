@@ -49,10 +49,11 @@ namespace Exwhyzee.AANI.Web.Areas.Alumni.Pages.Dashboard
             Active = await alumni.Where(x => x.ActiveStatus == Domain.Enums.ActiveStatus.Active).CountAsync();
 
              
-              var listdob = from s in _userManager.Users.Include(x => x.SEC).Where(x => x.MniStatus == Domain.Enums.MniStatus.MNI)
+              var listdob = from s in _userManager.Users.Include(x => x.SEC)
+                            .Where(x => x.MniStatus == Domain.Enums.MniStatus.MNI)
                     .OrderByDescending(x => x.DOB)
-                                 .Where(ob => ob.DOB.Date == DateTime.UtcNow.Date)
-                               select s;
+                                 .Where(u => u.DOB.Day == DateTime.UtcNow.Day && u.DOB.Month == DateTime.UtcNow.Month)
+                            select s;
              
             foreach(var listx in listdob)
             {

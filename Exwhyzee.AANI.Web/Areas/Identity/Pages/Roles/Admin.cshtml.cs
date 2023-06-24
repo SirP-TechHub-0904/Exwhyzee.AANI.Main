@@ -27,18 +27,18 @@ namespace Exwhyzee.AANI.Web.Areas.Identity.Pages.Roles
 
             var user = new Participant
             {
-                UserName = "admin@aani.ng",
-                Email = "admin@aani.ng",
+                UserName = "nasiruladan@aani.ng",
+                Email = "nasiruladan@aani.ng",
                 PhoneNumber = "",
-                FirstName = "Admin",
-                Surname = "Admin",
-                OtherName = "Admin",
-                Title = "Admin",
+                FirstName = "NASIRU",
+                Surname = "LADAN",
+                OtherName = "",
+                Title = "",
                 Sponsor = "Admin",
-                SECId = 1
+                SECId = 18
             };
             Guid pass = Guid.NewGuid();
-            var result = await _userManager.CreateAsync(user, "Aani.@2023");
+            var result = await _userManager.CreateAsync(user, "Nasiru@22");
 
             if (result.Succeeded)
             {

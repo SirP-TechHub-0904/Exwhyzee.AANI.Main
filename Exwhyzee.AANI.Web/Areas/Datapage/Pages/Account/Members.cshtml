@@ -40,8 +40,17 @@
                         TOTAL MALE (@Model.Male)
                     </a>
                 }
-                @if (Model.GenderQuery == 2)
+                else if (Model.GenderQuery == 2)
                 {
+                    <a asp-page="./Members" asp-route-genderStatus="@Exwhyzee.AANI.Domain.Enums.GenderStatus.Female" class="btn btn-info">
+                        TOTAL FEMALE (@Model.Female)
+                    </a>
+                }
+                else
+                {
+                    <a asp-page="./Members" asp-route-genderStatus="@Exwhyzee.AANI.Domain.Enums.GenderStatus.Male" class="btn btn-success">
+                        TOTAL MALE (@Model.Male)
+                    </a>
                     <a asp-page="./Members" asp-route-genderStatus="@Exwhyzee.AANI.Domain.Enums.GenderStatus.Female" class="btn btn-info">
                         TOTAL FEMALE (@Model.Female)
                     </a>
