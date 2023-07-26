@@ -24,10 +24,10 @@
                         </th>
                         @*<th>
                                 @Html.DisplayNameFor(model => model.Executive[0].Date)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Executive[0].Position)
                             </th>*@
+                            <th>
+                                Position
+                            </th>
                         @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
                         {
                             <th></th>
@@ -52,10 +52,10 @@
                             </td>
                             @*<td>
                                     @Html.DisplayFor(modelItem => item.Date)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Position)
                                 </td>*@
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ExecutivePosition.Position)
+                                </td>
                             @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
                             {
                                 <td>

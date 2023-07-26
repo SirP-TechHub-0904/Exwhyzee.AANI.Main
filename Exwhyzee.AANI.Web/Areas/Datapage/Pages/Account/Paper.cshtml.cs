@@ -7,12 +7,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Exwhyzee.AANI.Web.Pages
 {
-    public class PaperListModel : PageModel
+    public class PaperModel : PageModel
     {
         private readonly UserManager<Participant> _userManager;
         private readonly Exwhyzee.AANI.Web.Data.AaniDbContext _context;
         private readonly IConfiguration Configuration;
-        public PaperListModel(UserManager<Participant> userManager, Data.AaniDbContext context, IConfiguration configuration)
+        public PaperModel(UserManager<Participant> userManager, Data.AaniDbContext context, IConfiguration configuration)
         {
             _userManager = userManager;
             _context = context;

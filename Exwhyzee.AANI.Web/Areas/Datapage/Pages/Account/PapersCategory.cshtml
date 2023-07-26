@@ -1,0 +1,107 @@
+﻿@page
+@model Exwhyzee.AANI.Web.Areas.Datapage.Pages.Account.PapersCategoryModel
+
+@{
+    ViewData["Title"] = "PapersCategory";
+}
+<style>
+    .small-box h3 {
+        font-size: 1.5vw;
+    }
+</style>
+<div class="">
+ 
+    <section class="content" style="margin-top:10px;">
+        <div class="container-fluid card">
+            <div class="content-header" style="padding:1px 0;">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-sm-12" style="padding-left:0;">
+                            <h5 class="m-0" style="font-weight:900;">OUR LIBRARY</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                @foreach (var x in Model.PaperCategory.Take(1))
+                {
+
+                    <div class="col-lg-4 col-6">
+                        <a asp-page="./PaperList" asp-route-id="@x.Id" class="small-box-footer">
+                            <div class="small-box bg-primary" style="margin-bottom: 7.5px;margin-top: 7.5px;">
+                                <div class="inner">
+                                    <h3 style="white-space: normal;text-align: center;margin:auto;height:70px;">
+                                        @x.Title
+                                    </h3>
+
+                                </div>
+
+                            </div>
+                        </a>
+                    </div>
+                }
+                @foreach (var x in Model.PaperCategory.Skip(1).Take(1))
+                {
+
+                    <div class="col-lg-4 col-6">
+                        <a asp-page="./PaperList" asp-route-id="@x.Id" class="small-box-footer">
+                            <div class="small-box bg-danger" style="margin-bottom: 7.5px;margin-top: 7.5px;">
+                                <div class="inner">
+                                    <h3 style="white-space: normal; text-align: center; margin: auto; height: 70px;">
+                                        @x.Title
+                                    </h3>
+
+                                </div>
+
+                            </div>
+                        </a>
+                    </div>
+                }
+
+                @foreach (var x in Model.PaperCategory.Skip(2).Take(1))
+                {
+
+                    <div class="col-lg-4 col-6">
+                        <a asp-page="./PaperList" asp-route-id="@x.Id" class="small-box-footer">
+                            <div class="small-box bg-success" style="margin-bottom: 7.5px;margin-top: 7.5px;">
+                                <div class="inner">
+                                    <h3 style="white-space: normal; text-align: center; margin: auto; height: 70px;">
+                                        @x.Title
+                                    </h3>
+
+                                </div>
+
+                            </div>
+                        </a>
+                    </div>
+                }
+                @foreach (var x in Model.PaperCategory.Skip(3))
+                {
+
+                    <div class="col-lg-4 col-6">
+                        <a asp-page="./PaperList" asp-route-id="@x.Id" class="small-box-footer">
+                            <div class="small-box bg-info" style="margin-bottom: 7.5px;margin-top: 7.5px;">
+                                <div class="inner">
+                                    <h3 style="white-space: normal; text-align: center; margin: auto; height: 70px;">
+                                        @x.Title
+                                    </h3>
+
+                                </div>
+
+                            </div>
+                        </a>
+                    </div>
+                }
+
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+   
+     
+
+
+</div>
+
+
+
+ 

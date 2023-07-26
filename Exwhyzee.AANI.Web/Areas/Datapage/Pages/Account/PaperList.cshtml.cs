@@ -5,8 +5,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 
-namespace Exwhyzee.AANI.Web.Pages
-{
+namespace Exwhyzee.AANI.Web.Areas.Datapage.Pages.Account
+{    [Microsoft.AspNetCore.Authorization.Authorize(Roles = "Admin,MNI")]
+
     public class PaperListModel : PageModel
     {
         private readonly UserManager<Participant> _userManager;
@@ -21,6 +22,7 @@ namespace Exwhyzee.AANI.Web.Pages
         public PaperCategory PaperCategory { get; set; }
 
         public PaginatedList<Paper>? Papers { get; set; }
+        public IList<Paper> MyPapers { get; set; }
         public int AllCount { get; set; }
         public SEC SEC { get; set; }
         public string CurrentFilter { get; set; }
@@ -29,6 +31,14 @@ namespace Exwhyzee.AANI.Web.Pages
 
         public async Task<IActionResult> OnGetAsync(string currentFilter, string searchString, int? pageIndex, long? id)
         {
+
+             var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return NotFound($"Unable to load user");
+            }
+           
+
             if (id == null)
             {
                 return NotFound();
@@ -40,6 +50,8 @@ namespace Exwhyzee.AANI.Web.Pages
             {
                 return NotFound();
             }
+             MyPapers = await _context.Papers.Where(x=>x.PaperCategoryId == id).Where(x=>x.ParticipantId == user.Id).ToListAsync();
+
             if (searchString != null)
             {
                 pageIndex = 1;
@@ -53,7 +65,7 @@ namespace Exwhyzee.AANI.Web.Pages
             
             IQueryable<Paper> paperList = from s in _context.Papers.Include(x => x.PaperCategory)
                                           .Include(x=>x.Participant).ThenInclude(c=>c.SEC)
-                                                      .OrderByDescending(x => x.Year).Where(x=>x.PaperCategoryId == id)
+                                                      .OrderByDescending(x => x.Year).Where(x=>x.PaperCategoryId == id).Where(x=>x.ParticipantId != user.Id)
                                                       select s;
 
             if (!String.IsNullOrEmpty(searchString))

@@ -1,0 +1,154 @@
+﻿@page
+@model Exwhyzee.AANI.Web.Areas.Datapage.Pages.Account.PaperListModel
+@{
+}
+
+
+
+<div class="">
+    <section class="content" style="margin-top:10px;">
+        <div class="container-fluid card">
+            <div class="content-header" style="padding:1px 0;">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-sm-12" style="padding-left:0;">
+                            <h5 class="m-0" style="font-weight:900;">MY PAPERS FOR @Model.PaperCategory.Title</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="container">
+ 
+                    <div class="row">
+                        @if (Model.MyPapers.Count() > 0)
+                        {
+                            foreach (var x in Model.MyPapers)
+                            {
+                                <div class="col-md-6 col-sm-12 col-12">
+
+                                    <div class="small-box" style="margin-bottom: 7.5px; margin-top: 7.5px; border: 1px solid #3532324d;">
+                                        <div class="inner">
+                                            <h4>Topic:</h4>
+                                            <h5 style="height: 70px; font-size: .950rem; line-height: 1.13; ">@x.Title</h5>
+                                            <div class="section-heading-line-left"></div>
+                                            <h4 style="font-size: 0.9rem; font-weight: 900;">
+                                                @x.Participant.Fullname (SEC @x.Participant.SEC.Number - @x.Participant.SEC.Year)
+
+                                            </h4>
+                                            <a asp-page="/" class="btn btn-primary">Upload</a>
+                                            <a asp-page="/" class="btn btn-primary">Download</a>
+                                            <a asp-page="/" class="btn btn-primary">Open</a>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            }
+
+
+
+                        }
+                        else
+                        {
+                            <div class="col-md-6 col-sm-12 col-12">
+                                <h4>NO DOCUMENT YET</h4>
+                                </div>
+                                }
+                            </div>
+
+                        </div>
+            </div>
+        </div>
+    </section>
+    <section class="content" style="margin-top:10px;">
+        <div class="container-fluid card">
+            <div class="content-header" style="padding:1px 0;">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-sm-12" style="padding-left:0;">
+                            <h5 class="m-0" style="font-weight:900;">PAPERS FOR @Model.PaperCategory.Title</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="container">
+
+                    <div class="row">
+
+                        <div class="col-md-4 col-sm-12 col-12">
+                        </div>
+                        <div class="col-md-4 col-sm-12 col-12">
+
+                            <form asp-page="./PaperList" method="get">
+                                <input hidden="hidden" name="id" value="@Model.PaperCategory.Id" />
+                                <div class="input-group">
+                                    <input type="text" class="form-control" name="searchString" placeholder="@Model.CurrentFilter" style="border: 2px solid black;">
+                                    <div class="input-group-btn">
+                                        <button class="btn btn-default btnn" type="submit">
+                                            <i class="fa fa-search"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+
+                            <p style="text-align:center;">
+                                <i>Page Number (@Model.PageIndex of @Model.TotalPage)</i>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        @foreach (var x in Model.Papers)
+                        {
+                            <div class="col-md-6 col-sm-12 col-12">
+
+                                <div class="small-box" style="margin-bottom: 7.5px; margin-top: 7.5px; border: 1px solid #3532324d;">
+                                    <div class="inner">
+                                        <h4>Topic:</h4>
+                                        <h5 style="height: 70px; font-size: .950rem; line-height: 1.13; ">@x.Title</h5>
+                                        <div class="section-heading-line-left"></div>
+                                        <h4 style="font-size: 0.9rem; font-weight: 900;">
+                                            @x.Participant.Fullname (SEC @x.Participant.SEC.Number - @x.Participant.SEC.Year)
+
+                                        </h4>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        }
+                    </div>
+                    @{
+                        var prevDisabled = !Model.Papers.HasPreviousPage ? "disabled" : "";
+                        var nextDisabled = !Model.Papers.HasNextPage ? "disabled" : "";
+                    }
+
+                    <a asp-page="./PaperList"
+                       asp-route-pageIndex="@(Model.Papers.PageIndex - 1)"
+                       asp-route-currentFilter="@Model.CurrentFilter"
+                       asp-route-id="@Model.PaperCategory.Id"
+                       class="btn btn-primary button-sm mb-15-xs @prevDisabled">
+                        Previous
+                    </a>
+                    <a asp-page="./PaperList"
+                       asp-route-pageIndex="@(Model.Papers.PageIndex + 1)"
+                       asp-route-currentFilter="@Model.CurrentFilter"
+                       asp-route-id="@Model.PaperCategory.Id"
+                       class="btn btn-primary button-sm mb-15-xs @nextDisabled">
+                        Next
+                    </a>
+                    <i>Page Number (@Model.PageIndex of @Model.TotalPage)</i>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+
+
+               

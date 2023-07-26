@@ -35,6 +35,9 @@ namespace Exwhyzee.AANI.Web.Areas.Main.Pages.ExecutivePage.ActiveExecutive
                 Fullname =   x.Surname + " " + x.FirstName + " " + x.OtherName + "(SEC " + x.SEC.Number + "- " + x.SEC.Year + ")"
             });
             ViewData["ParticipantId"] = new SelectList(secoutput, "Id", "Fullname");
+            ViewData["ExecutivePositionId"] = new SelectList(_context.ExecutivePositions, "Id", "Position");
+
+
             return Page();
         }
 
