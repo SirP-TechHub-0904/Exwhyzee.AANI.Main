@@ -4,22 +4,33 @@
 @{
     ViewData["Title"] = "PapersCategory";
 }
-
+<style>
+    .serv-section-2 h4 {
+        color: #333;
+        font-size: 20px;
+        height: 40px;
+        font-weight: 500;
+        line-height: 1.5;
+    }
+    .serv-section-2:hover:before {
+        background: none;
+    }
+</style>
 <div class="page-title-section" style="background-image: url('../img/bred.jpg');">
     <div class="container">
-        <h1>SENIOR EXECUTIVE COURSE PAPERS</h1>
+        <h1>LIBRARY</h1>
         <ul>
             <li><a href="/">Home</a></li>
-            <li><a href="#">SENIOR EXECUTIVE COURSE PAPERS</a></li>
+            <li><a href="#">LIBRARY</a></li>
         </ul>
     </div>
 </div>
 <div class="section-block">
     <div class="container">
-        <div class="section-heading center-holder">
+        @*<div class="section-heading center-holder">
             <h3>SENIOR EXECUTIVE COURSE PAPERS</h3>
             <div class="section-heading-line"></div>
-        </div>
+        </div>*@
         <div class="row mt-60">
             @foreach (var x in Model.PaperCategory)
             {
@@ -36,7 +47,7 @@
                         <div class="section-heading-line-left"></div>
                         <a asp-page="/PaperList" asp-route-id="@x.Id">
 
-                            <p class="text text-justify">
+                            <p class="text text-justify" style="font-size: 12px !important;">
                                 @x.Description
                             </p>
                         </a>

@@ -208,6 +208,39 @@
             -moz-transition: all .4s ease;
             transition: all .4s ease;
         }
+        .serv-section-2:before {
+            position: absolute;
+            top: 0;
+            right: 0px;
+            z-index: 0;
+            content: " ";
+            width: 120px;
+            height: 120px;
+            background: none;
+            border-bottom-left-radius: 136px;
+            transition: all 0.4s ease-in-out;
+            -webkit-transition: all 0.4s ease-in-out;
+        }
+        .blog-list-simple-text p {
+            font-size: 14px;
+            color: #181818;
+            line-height: 1.9;
+        }
+        .blog-list-simple-text ul li {
+            color: #432828;
+            font-size: 14px;
+            font-weight: 500;
+            padding: 3px 0px;
+        }
+        .medium-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: transparent;
+            opacity: 0.6;
+        }
     </style>
 
 </head>
@@ -249,13 +282,13 @@
                         <ul class="nav-dropdown">
                             <li><a asp-page="/AlumniPage/AaniExecutive">AANI Executive</a></li>
                             <li><a asp-page="/AlumniPage/SecYear">SEC YEAR</a></li>
-                            <li><a asp-page="/AlumniPage/Families">Families on SEC</a></li>
+                            @*<li><a asp-page="/AlumniPage/Families">Families on SEC</a></li>*@
                             <li><a asp-page="/AlumniPage/PastAaniExecutive">Past AANI Executive</a></li>
 
                         </ul>
                     </li>
                     <li>
-                        <a asp-page="/CampaignPage">2023 AANI ELECTION</a>
+                        <a asp-page="/PapersCategory">Library</a>
                     </li>
 
 
@@ -267,7 +300,7 @@
                         <a asp-page="/Contact">Contact</a>
                     </li>
                     <li>
-                        <a asp-page="/Account/Login" asp-area="Identity">Login</a>
+                        <a asp-page="/Account/Login" asp-area="Identity">Member Login</a>
                     </li>
                 </ul>
             </div>
@@ -291,8 +324,7 @@
                             <ul>
                                 <li><a href="#"><i class="fa fa-facebook-square"></i></a></li>
                                 <li><a href="#"><i class="fa fa-instagram"></i></a></li>
-                                <li><a href="#"><i class="fa fa-pinterest"></i></a></li>
-                                <li><a href="#"><i class="fa fa-skype"></i></a></li>
+                                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
                                 <li><a href="#"><i class="fa fa-youtube"></i></a></li>
                             </ul>
                         </div>
@@ -324,6 +356,9 @@
                         <li>
                             <a asp-page="/Media/News">News & Events</a>
                         </li>
+                        <li>
+                            <a asp-page="/Dashboard/Verify" asp-area="Alumni">Membership Verification</a>
+                        </li>
                     </ul>
                 </div>
                 <!-- Column 3 End -->
@@ -333,7 +368,7 @@
                     <ul class="footer-list">
                         <li><a asp-page="/AlumniPage/AaniExecutive">AANI Executive</a></li>
                         <li><a asp-page="/AlumniPage/SecYear">SEC YEAR</a></li>
-                        <li><a asp-page="/AlumniPage/Families">Families on SEC</a></li>
+                        @*<li><a asp-page="/AlumniPage/Families">Families on SEC</a></li>*@
                         <li><a asp-page="/AlumniPage/PastAaniExecutive">Past AANI Executive</a></li>
                         <li><a href="https://nipsskuru.gov.ng/senior-executive-course-2/" target="_blank">About NIPSS</a></li>
 

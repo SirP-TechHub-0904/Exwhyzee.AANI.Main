@@ -47,7 +47,9 @@ namespace Exwhyzee.AANI.Web.Pages.Shared.ViewComponents
             }
             else if (timeSinceDate.TotalDays < 30)
             {
-                return $"{(int)timeSinceDate.TotalDays} days ago";
+                int res = (int)timeSinceDate.TotalDays;
+                int mees = res + 1;
+                return $"{mees} days ago";
             }
             else
             {

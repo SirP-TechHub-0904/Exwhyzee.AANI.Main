@@ -243,11 +243,11 @@
                         {
                             <partial name="_MniMenu" />
                         }
-                        else if (User.Identity.IsAuthenticated && User.IsInRole("mSuperAdmin"))
+                        @if (User.Identity.IsAuthenticated && User.IsInRole("mSuperAdmin"))
                         {
                             <partial name="_MajorMenu" />
                         }
-                        else if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                        @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
                         {
                             <partial name="_AdminMenu" />
                         }
