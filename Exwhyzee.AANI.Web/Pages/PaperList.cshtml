@@ -43,7 +43,7 @@
 </style>
 <div class="page-title-section" style="background-image: url('../img/bred.jpg');">
     <div class="container">
-        <h1>PAPERS FOR @Model.PaperCategory.Title</h1>
+        <h1>@Model.PaperCategory.Title</h1>
         <ul>
             <li><a href="/">Home</a></li>
             <li><a href="#">@Model.PaperCategory.Title</a></li>
@@ -51,86 +51,88 @@
     </div>
 </div>
 <div class="section-block">
-    <div class="container">
-        <div class="section-heading center-holder">
-            <h3>PAPERS FOR @Model.PaperCategory.Title</h3>
-        </div>
-        <div class="row">
+    <div class="container" style="box-shadow: 2px 2px 2px 2px #333333;">
+        <div class="" style="padding:15px;">
+            <div class="row">
 
-            <div class="col-md-4 col-sm-12 col-6">
-            </div>
-            <div class="col-md-4 col-sm-12 col-6">
+                <div class="col-md-4 col-sm-12 col-6">
+                </div>
+                <div class="col-md-4 col-sm-12 col-6">
 
-                <form asp-page="./PaperList" method="get">
-                    <input hidden="hidden" name="id" value="@Model.PaperCategory.Id" />
-                    <div class="input-group">
-                        <input type="text" class="form-control" name="searchString" placeholder="@Model.CurrentFilter" style="border: 2px solid #d21e2b;">
-                        <div class="input-group-btn">
-                            <button class="btn btn-default btnn" type="submit">
-                                <i class="fa fa-search"></i>
-                            </button>
+                    <form asp-page="./PaperList" method="get">
+                        <input hidden="hidden" name="id" value="@Model.PaperCategory.Id" />
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="searchString" placeholder="@Model.CurrentFilter" style="border: 2px solid #d21e2b;">
+                            <div class="input-group-btn">
+                                <button class="btn btn-default btnn" type="submit">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </div>
                         </div>
-                    </div>
-                </form>
+                    </form>
 
-                <p style="text-align:center;">
-                    <i>Page Number (@Model.PageIndex of @Model.TotalPage)</i>
-                </p>
+                    <p style="text-align:center;">
+                        <i>Page Number (@Model.PageIndex of @Model.TotalPage)</i>
+                    </p>
+                </div>
             </div>
-        </div>
 
-        <div class="row">
-            @foreach (var x in Model.Papers)
-            {
-                <div class="col-md-6 col-sm-12 col-12">
-                    <div class="feature-box-4">
-                        <div class="feature-box-4-icon">
-                            <i class="fa fa-check-square"></i>
-                        </div>
-                        <div class="feature-box-4-content">
-                            <h4>Topic:</h4>
-                            <h5 style="height: 70px; font-size: .950rem; line-height: 1.13; ">@x.Title</h5>
-                            <div class="section-heading-line-left"></div>
-                            <h4 style="font-size: 0.9rem; font-weight: 900;">
+            <div class="row">
+                @foreach (var x in Model.Papers)
+                {
+                    <div class="col-md-6 col-sm-12 col-12">
+                        <div class="feature-box-4">
+                            <div class="feature-box-4-icon">
+                                <i class="fa fa-check-square"></i>
+                            </div>
+                            <div class="feature-box-4-content">
+
+                                <h5 style="height: 45px; font-size: .950rem; line-height: 1.13; ">@x.Title</h5>
+                                <div class="section-heading-line-left"></div>
                                 @if (x.Participant != null)
                                 {
-                                  <span>
-                                      (SEC @x.Participant.SEC.Number - @x.Participant.SEC.Year)
-                                  </span>
-}
-else
-                {
-                            <span>
-                                Year @x.Year
-                            </span> 
-                }
-                            </h4>
+                                    <h6>@x.Participant.Fullname</h6>
+                                }
+                                <h4 style="font-size: 0.9rem; font-weight: 900;">
+                                    @if (x.Participant != null)
+                                    {
+                                        <span>
+                                            (SEC @x.Participant.SEC.Number - @x.Participant.SEC.Year)
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span>
+                                            Year @x.Year
+                                        </span>
+                                    }
+                                </h4>
+                            </div>
+                            @*<i class="feature-box-4-icon-bg icon-worldwide2"></i>*@
                         </div>
-                        @*<i class="feature-box-4-icon-bg icon-worldwide2"></i>*@
                     </div>
-                </div>
 
+                }
+            </div>
+            @{
+                var prevDisabled = !Model.Papers.HasPreviousPage ? "disabled" : "";
+                var nextDisabled = !Model.Papers.HasNextPage ? "disabled" : "";
             }
-        </div>
-        @{
-            var prevDisabled = !Model.Papers.HasPreviousPage ? "disabled" : "";
-            var nextDisabled = !Model.Papers.HasNextPage ? "disabled" : "";
-        }
 
-        <a asp-page="./PaperList"
-           asp-route-pageIndex="@(Model.Papers.PageIndex - 1)"
-           asp-route-currentFilter="@Model.CurrentFilter"
-           asp-route-id="@Model.PaperCategory.Id"
-           class="primary-button button-sm mb-15-xs @prevDisabled">
-            Previous
-        </a>
-        <a asp-page="./PaperList"
-           asp-route-pageIndex="@(Model.Papers.PageIndex + 1)"
-           asp-route-currentFilter="@Model.CurrentFilter"
-           asp-route-id="@Model.PaperCategory.Id"
-           class="primary-button button-sm mb-15-xs @nextDisabled">
-            Next
-        </a>
-        <i>Page Number (@Model.PageIndex of @Model.TotalPage)</i>
-    </div>
-</div>
+            <a asp-page="./PaperList"
+               asp-route-pageIndex="@(Model.Papers.PageIndex - 1)"
+               asp-route-currentFilter="@Model.CurrentFilter"
+               asp-route-id="@Model.PaperCategory.Id"
+               class="primary-button button-sm mb-15-xs @prevDisabled">
+                Previous
+            </a>
+            <a asp-page="./PaperList"
+               asp-route-pageIndex="@(Model.Papers.PageIndex + 1)"
+               asp-route-currentFilter="@Model.CurrentFilter"
+               asp-route-id="@Model.PaperCategory.Id"
+               class="primary-button button-sm mb-15-xs @nextDisabled">
+                Next
+            </a>
+            <i>Page Number (@Model.PageIndex of @Model.TotalPage)</i>
+        </div>
+    </div>    </div>
