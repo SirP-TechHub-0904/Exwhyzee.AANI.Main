@@ -12,8 +12,20 @@
         font-weight: 500;
         line-height: 1.5;
     }
+
     .serv-section-2:hover:before {
         background: none;
+    }
+    .text {
+         height: 25px;
+        
+    }
+    .serv-section-2-icon i {
+        color: #d21e2b;
+        font-size: 35px;
+        line-height: 65px;
+        transition: all 0.4s ease-in-out;
+        -webkit-transition: all 0.4s ease-in-out;
     }
 </style>
 <div class="page-title-section" style="background-image: url('../img/bred.jpg');">
@@ -26,34 +38,94 @@
     </div>
 </div>
 <div class="section-block">
-    <div class="container">
-        @*<div class="section-heading center-holder">
-            <h3>SENIOR EXECUTIVE COURSE PAPERS</h3>
-            <div class="section-heading-line"></div>
-        </div>*@
-        <div class="row mt-60">
-            @foreach (var x in Model.PaperCategory)
-            {
+    <div class="container" style="box-shadow: 2px 2px 2px 2px #333333;">
+        <div class="" style="padding:15px;">
 
 
-                <div class="col-md-4 col-sm-12 col-12" style="margin-bottom:10px;">
-                    <div class="serv-section-2" style="box-shadow: 2px 2px 2px 2px #333333;">
-                        <div class="serv-section-2-icon">
-                            <i class="icon-file"></i>
-                        </div>
-                        <a asp-page="/PaperList" asp-route-id="@x.Id">
-                            <h4>@x.Title</h4>
-                        </a>
-                        <div class="section-heading-line-left"></div>
-                        <a asp-page="/PaperList" asp-route-id="@x.Id">
+            <div class="row">
 
-                            <p class="text text-justify" style="font-size: 12px !important;">
-                                @x.Description
-                            </p>
-                        </a>
+                <div class="col-md-6 col-sm-12 col-12">
+                    <div class="row">
+                        @foreach (var x in Model.PaperCategory)
+                        {
+
+
+                            <div class="col-md-12 col-sm-12 col-12" style="margin-bottom:10px;">
+                                <div class="serv-section-2" style="box-shadow: 2px 2px 2px 2px #333333; padding: 10px 30PX;">
+                                    <div class="serv-section-2-icon">
+                                        <i class="icon-file"></i>
+                                    </div>
+                                    <a asp-page="/PaperList" asp-route-id="@x.Id">
+                                        <h4>@x.Title</h4>
+                                    </a>
+                                    <div class="section-heading-line-left"></div>
+                                    <a asp-page="/PaperList" asp-route-id="@x.Id">
+
+                                        <p class="text text-justify" style="font-size: 12px !important;">
+                                            @x.Description
+                                        </p>
+                                    </a>
+                                </div>
+                            </div>
+                        }
                     </div>
                 </div>
-            }
+                <div class="col-md-6 col-sm-12 col-12">
+
+                    <div class="section-clients" style="padding:0;">
+                        <div class="container">
+                            <div class="owl-carousel owl-theme clients" id="clients123">
+                                <div class="item" style="margin:0 auto;text-align:center;">
+                                    <img src="~/img/4.jpg" style="height: 475px; opacity: 1; margin: 0 auto; text-align: center;" />
+                                </div>
+
+                                <div class="item" style="margin:0 auto;text-align:center;">
+                                    <img src="~/img/1.jpg" style="height: 475px; opacity: 1; margin: 0 auto; text-align: center;" />
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Clients Carousel END -->
+
+                </div>
+            </div>
+
         </div>
     </div>
 </div>
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+ 
+
+
+<script>
+    $('#clients123').owlCarousel({
+        loop: true,
+        nav: false,
+        dots: false,
+        smartSpeed: 8500,
+        autoplay: true,
+        autoplayTimeout: 6000,
+        responsiveClass: true,
+        autoplayHoverPause: false,
+        responsive: {
+            0: {
+                items: 1,
+                margin: 50,
+            },
+            600: {
+                items: 1,
+                margin: 30,
+            },
+            1000: {
+                items: 1,
+                margin: 40,
+            }
+        }
+    })
+</script>
+}

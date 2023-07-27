@@ -270,9 +270,9 @@ $(document).ready(function () {
     loop: true,
     nav: false,
     dots: false,
-    smartSpeed: 850,
+    smartSpeed: 8500,
     autoplay: true,
-    autoplayTimeout: 3000,
+    autoplayTimeout: 9000,
     responsiveClass: true,
     autoplayHoverPause: false,
     responsive: {
