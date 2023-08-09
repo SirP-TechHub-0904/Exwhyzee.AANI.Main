@@ -73,6 +73,9 @@
                             PHONE
                         </th>
                         <th>
+                            Gender
+                        </th>
+                        <th>
                             EMAIL
                         </th>
                         <th>MNI Status</th>
@@ -80,7 +83,7 @@
                         @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
                         {
                             <th></th>
-}
+                        }
                     </tr>
                 </thead>
                 @{int sn = 0;}
@@ -93,7 +96,7 @@
                                 @sn
                             </td>
                             <td>
-                                <a asp-page="./Details" asp-route-id="@item.Id"> 
+                                <a asp-page="./Details" asp-route-id="@item.Id">
                                     @Html.DisplayFor(modelItem => item.Surname)
                                     @Html.DisplayFor(modelItem => item.FirstName)
                                     @Html.DisplayFor(modelItem => item.OtherName)
@@ -104,6 +107,9 @@
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.PhoneNumber)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.GenderStatus)
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.Email)
