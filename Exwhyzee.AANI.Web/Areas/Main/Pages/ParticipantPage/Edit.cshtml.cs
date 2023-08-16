@@ -49,7 +49,7 @@ namespace Exwhyzee.AANI.Web.Areas.Main.Pages.ParticipantPage
 
             if (Participant == null)
             {
-                return RedirectToPage("/Notfound", new {area=""});
+                return RedirectToPage("/Notfound", new { area = "" });
             }
 
             ViewData["StateId"] = new SelectList(_context.States, "StateName", "StateName");
@@ -61,6 +61,7 @@ namespace Exwhyzee.AANI.Web.Areas.Main.Pages.ParticipantPage
                 SecYear = "SEC " + x.Number + " (" + x.Year + ")"
             });
             ViewData["SECId"] = new SelectList(output, "Id", "SecYear");
+            ViewData["ChapterId"] = new SelectList(_context.Chapters.OrderBy(x => x.State), "Id", "State");
 
             return Page();
         }
@@ -96,7 +97,11 @@ namespace Exwhyzee.AANI.Web.Areas.Main.Pages.ParticipantPage
                 updateparticipant.FirstName = Participant.FirstName;
                 updateparticipant.OtherName = Participant.OtherName;
                 updateparticipant.Title = Participant.Title;
-                updateparticipant.LGA = Participant.LGA;
+
+                if (!String.IsNullOrEmpty(Participant.LGA))
+                {
+                    updateparticipant.LGA = Participant.LGA;
+                }
                 updateparticipant.State = Participant.State;
                 updateparticipant.ContactAddress = Participant.ContactAddress;
                 updateparticipant.HomeAddress = Participant.HomeAddress;
@@ -109,6 +114,8 @@ namespace Exwhyzee.AANI.Web.Areas.Main.Pages.ParticipantPage
                 updateparticipant.DOB = Participant.DOB;
                 updateparticipant.SECId = Participant.SECId;
                 updateparticipant.Bio = Participant.Bio;
+                updateparticipant.ChapterId = Participant.ChapterId;
+                updateparticipant.CurrentOffice = Participant.CurrentOffice;
 
                 updateparticipant.EmergencyContactEmail = Participant.EmergencyContactEmail;
                 updateparticipant.EmergencyContactPhone = Participant.EmergencyContactPhone;
@@ -136,6 +143,6 @@ namespace Exwhyzee.AANI.Web.Areas.Main.Pages.ParticipantPage
             return RedirectToPage("./Index");
         }
 
-       
+
     }
 }
