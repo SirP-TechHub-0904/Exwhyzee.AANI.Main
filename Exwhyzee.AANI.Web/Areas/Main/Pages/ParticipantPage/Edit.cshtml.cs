@@ -106,11 +106,13 @@ namespace Exwhyzee.AANI.Web.Areas.Main.Pages.ParticipantPage
                 updateparticipant.ContactAddress = Participant.ContactAddress;
                 updateparticipant.HomeAddress = Participant.HomeAddress;
                 updateparticipant.AltPhoneNumber = Participant.AltPhoneNumber;
+                updateparticipant.PhoneNumber = Participant.PhoneNumber;
                 updateparticipant.Sponsor = Participant.Sponsor;
                 updateparticipant.GenderStatus = Participant.GenderStatus;
                 updateparticipant.MaritalStatus = Participant.MaritalStatus;
                 updateparticipant.ReligionStatus = Participant.ReligionStatus;
                 updateparticipant.UserStatus = Participant.UserStatus;
+                updateparticipant.MniStatus = Participant.MniStatus;
                 updateparticipant.DOB = Participant.DOB;
                 updateparticipant.SECId = Participant.SECId;
                 updateparticipant.Bio = Participant.Bio;
