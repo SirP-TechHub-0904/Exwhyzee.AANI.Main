@@ -22,27 +22,27 @@
                             <div class="col-lg-6">
                                 <label asp-for="Participant.Title" class="control-label"></label>
                                 <select asp-for="Participant.Title" class="form-control" required="required">
- <option value="Mr">Mr</option>
-                            <option value="Mrs">Mrs</option>
-                            <option value="Chief">Chief</option>
-                            <option value="Alhaji">Alhaji</option>
-                            <option value="Mallam">Mallam</option>
-                            <option value="Ambassador">Ambassador</option>
-                            <option value="Col.">Col.</option>
-                            <option value="Major General">Major General</option>
-                            <option value="Comrade">Comrade</option>
-                            <option value="Captain">Captain</option>
-                            <option value="Capt Navy.">Capt Navy.</option>
-                            <option value="Brig Gen.">Brig Gen.</option>
-                            <option value="Air Comdr.">Air Comdr.</option>
-                            <option value="AVM">AVM</option>
-                            <option value="Gp Capt.">Gp Capt.</option>
-                            <option value="Dr">Dr</option>
-                            <option value="Engr.">Engr.</option>
-                            <option value="Pharm.">Pharm.</option>
-                            <option value="CP">CP</option>
-                            <option value="AIG">AIG</option>
-                            <option value="DIG">DIG</option>
+                                    <option value="Mr">Mr</option>
+                                    <option value="Mrs">Mrs</option>
+                                    <option value="Chief">Chief</option>
+                                    <option value="Alhaji">Alhaji</option>
+                                    <option value="Mallam">Mallam</option>
+                                    <option value="Ambassador">Ambassador</option>
+                                    <option value="Col.">Col.</option>
+                                    <option value="Major General">Major General</option>
+                                    <option value="Comrade">Comrade</option>
+                                    <option value="Captain">Captain</option>
+                                    <option value="Capt Navy.">Capt Navy.</option>
+                                    <option value="Brig Gen.">Brig Gen.</option>
+                                    <option value="Air Comdr.">Air Comdr.</option>
+                                    <option value="AVM">AVM</option>
+                                    <option value="Gp Capt.">Gp Capt.</option>
+                                    <option value="Dr">Dr</option>
+                                    <option value="Engr.">Engr.</option>
+                                    <option value="Pharm.">Pharm.</option>
+                                    <option value="CP">CP</option>
+                                    <option value="AIG">AIG</option>
+                                    <option value="DIG">DIG</option>
                                     <option value="Prof.">Prof.</option>
                                     <option value="Barr.">Barr.</option>
 
@@ -52,10 +52,10 @@
                                     <option value="Princess">Princess</option>
                                     <option value="Commodore">Commodore</option>
                                     <option value="Brig.">Brig.</option>
-                                     <option value="Major">Major</option>
-                            <option value="Hon.">Hon.</option>
-                            <option value="Hon. Justice">Hon. Justice</option>
-                            <option value="HRH">HRH</option>
+                                    <option value="Major">Major</option>
+                                    <option value="Hon.">Hon.</option>
+                                    <option value="Hon. Justice">Hon. Justice</option>
+                                    <option value="HRH">HRH</option>
                                 </select>                        <span asp-validation-for="Participant.Title" class="text-danger"></span>
                             </div>
                             <div class="col-md-6">
@@ -108,9 +108,22 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <label asp-for="Participant.CurrentOffice" class="control-label"></label>
+                        <input asp-for="Participant.CurrentOffice" class="form-control" />
+                        <span asp-validation-for="Participant.CurrentOffice" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
                         <label asp-for="Participant.Sponsor" class="control-label"></label>
                         <input asp-for="Participant.Sponsor" class="form-control" />
                         <span asp-validation-for="Participant.Sponsor" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Participant.ChapterId" class="control-label">Your Chapter</label>
+                        <select asp-for="Participant.ChapterId" asp-items="ViewBag.ChapterId" required="required" id="" class="form-control uppercase-text">
+                            <option>Select Chapter</option>
+
+                        </select>
+                        <span asp-validation-for="Participant.ChapterId" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label asp-for="Participant.Bio" class="control-label">Participant Biography</label>
@@ -207,7 +220,7 @@
                         @Html.DropDownListFor(model => model.Participant.UserStatus, new SelectList(Enum.GetValues(typeof(Exwhyzee.AANI.Domain.Enums.UserStatus))), new { @class = "form-control" })
                         <span asp-validation-for="Participant.UserStatus" class="text-danger"></span>
                     </div>
-                     <div class="form-group">
+                    <div class="form-group">
                         <label asp-for="Participant.MniStatus" class="control-label">MNI Status</label>
                         @Html.DropDownListFor(model => model.Participant.MniStatus, new SelectList(Enum.GetValues(typeof(Exwhyzee.AANI.Domain.Enums.MniStatus))), new { @class = "form-control" })
                         <span asp-validation-for="Participant.MniStatus" class="text-danger"></span>
@@ -268,4 +281,4 @@
         });
     </script>
 
-    }
+}
