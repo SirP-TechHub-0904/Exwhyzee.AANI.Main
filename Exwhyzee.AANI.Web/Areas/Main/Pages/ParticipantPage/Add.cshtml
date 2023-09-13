@@ -1,5 +1,5 @@
 ﻿@page
-@model Exwhyzee.AANI.Web.Areas.Main.Pages.ParticipantPage.CreateModel
+@model Exwhyzee.AANI.Web.Areas.Main.Pages.ParticipantPage.AddModel
 
 @{
     ViewData["Title"] = "Create";
@@ -11,6 +11,11 @@
 
 
     </div>
+    @if (TempData["aasssuccess"] != null)
+    {
+        @TempData["aasssuccess"]
+
+    }
     <!-- /.card-header -->
     <div class="card-body">
         <div class="row">
@@ -18,9 +23,7 @@
                 <form method="post">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <div class="form-group">
-                        <label class="control-label">SEARCH THE NAME TO COMFIRM IF IT EXIST. THANKS</label>
-                        <select asp-items="ViewBag.PId" class="form-control select2 select2-primary js-example-basic-single" data-dropdown-css-class="select2-primary">
-                        </select>
+                        <label class="control-label">UPLOAD NAMES YOU KNOW DOES NOT EXIST. THANKS</label>
 
                     </div>
                     <hr />
