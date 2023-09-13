@@ -21,7 +21,7 @@ namespace Exwhyzee.AANI.Web.Areas.Main.Pages.ParticipantPage
 {
     [Microsoft.AspNetCore.Authorization.Authorize(Roles = "Admin")]
 
-    public class CreateModel : PageModel
+    public class AddModel : PageModel
     {
         private readonly SignInManager<Participant> _signInManager;
         private readonly UserManager<Participant> _userManager;
@@ -29,7 +29,7 @@ namespace Exwhyzee.AANI.Web.Areas.Main.Pages.ParticipantPage
         private readonly IEmailSender _emailSender;
         private readonly Exwhyzee.AANI.Web.Data.AaniDbContext _context;
 
-        public CreateModel(
+        public AddModel(
             UserManager<Participant> userManager,
             SignInManager<Participant> signInManager,
             AaniDbContext context)
@@ -42,14 +42,7 @@ namespace Exwhyzee.AANI.Web.Areas.Main.Pages.ParticipantPage
         public IActionResult OnGet()
         {
 
-            var partaccount = _userManager.Users.Include(x => x.SEC).Where(x => x.MniStatus == Domain.Enums.MniStatus.MNI).AsQueryable();
-            var secoutput = partaccount.Select(x => new ParticipantDropdownDto
-            {
-                Id = x.Id,
-                Fullname =  x.Surname + " " + x.FirstName + " " + x.OtherName + "(SEC " + x.SEC.Number + "- " + x.SEC.Year + ")"
-            });
-            ViewData["PId"] = new SelectList(secoutput, "Id", "Fullname");
-
+           
             var secs = _context.SECs.AsQueryable();
             var output = secs.Select(x => new SecDropdownListDto
             {
@@ -121,22 +114,14 @@ namespace Exwhyzee.AANI.Web.Areas.Main.Pages.ParticipantPage
             if (result.Succeeded)
             {
                 await _userManager.AddToRoleAsync(user, "MNI");
-                TempData["aasuccess"] = "Account created successfully";
-                return RedirectToPage("./Index");
+                TempData["aasuccess"] = "Account created successfully for "+user.Fullname;
+                TempData["aasssuccess"] = "Account created successfully for "+user.Fullname;
+                return RedirectToPage("./Add");
             }
             //foreach (var error in result.Errors)
             //{
             //    ModelState.AddModelError(string.Empty, error.Description);
             //}
-
-            var partaccount = _userManager.Users.Include(x => x.SEC).Where(x => x.MniStatus == Domain.Enums.MniStatus.MNI).AsQueryable();
-            var secoutput = partaccount.Select(x => new ParticipantDropdownDto
-            {
-                Id = x.Id,
-                Fullname = x.Surname + " " + x.FirstName + " " + x.OtherName + "(SEC " + x.SEC.Number + "- " + x.SEC.Year + ")"
-            });
-            ViewData["PId"] = new SelectList(secoutput, "Id", "Fullname");
-
             string messages = string.Join("; ", ModelState.Values
                                         .SelectMany(x => x.Errors)
                                         .Select(x => x.ErrorMessage));
