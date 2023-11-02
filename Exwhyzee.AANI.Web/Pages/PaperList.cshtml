@@ -40,6 +40,19 @@
         display: inline-block;
         margin-top: 0px;
     }
+
+    
+
+    feature-box-4-content h5 {
+        height: 45px;
+        font-size: .950rem;
+        line-height: 1.13;
+    }
+    @@media (max-width: 350px) {
+        feature-box-4-content h5 {
+            height: auto !important;
+        }
+    }
 </style>
 <div class="page-title-section" style="background-image: url('../img/bred.jpg');">
     <div class="container">
@@ -87,7 +100,7 @@
                             </div>
                             <div class="feature-box-4-content">
 
-                                <h5 style="height: 45px; font-size: .950rem; line-height: 1.13; ">@x.Title</h5>
+                                <h5 style=" ">@x.Title</h5>
                                 <div class="section-heading-line-left"></div>
                                 @if (x.Participant != null)
                                 {
