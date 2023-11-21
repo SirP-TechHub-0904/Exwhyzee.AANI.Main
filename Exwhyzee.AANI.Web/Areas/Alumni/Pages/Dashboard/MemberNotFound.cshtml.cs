@@ -36,12 +36,12 @@ namespace Exwhyzee.AANI.Web.Areas.Alumni.Pages.Dashboard
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
-            
-                MemberNotRecorded.DOB =  Day+"/"+Month+"/" +2000.ToString();
-             
+
+            MemberNotRecorded.DOB = Day + "/" + Month + "/" + 2000.ToString();
+
             _context.MemberNotRecorded.Add(MemberNotRecorded);
             await _context.SaveChangesAsync();
-            TempData["response"] = "Your Submission is Under Review. You will get a call and an email. Once your Data is verified. Thanks";
+            TempData["response"] = "Your Submission is Under Review. You will get a call or notification on your email. Once your Data is verified. Thanks";
             return RedirectToPage("./Response");
         }
     }
