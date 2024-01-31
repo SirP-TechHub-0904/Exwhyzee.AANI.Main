@@ -16,6 +16,7 @@ using Exwhyzee.AANI.Domain.Enums;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
+using Exwhyzee.AANI.Web.Helper.AWS;
 
 namespace Exwhyzee.AANI.Web.Areas.Main.Pages.ParticipantPage
 {
@@ -28,17 +29,23 @@ namespace Exwhyzee.AANI.Web.Areas.Main.Pages.ParticipantPage
         private readonly ILogger<CreateModel> _logger;
         private readonly IEmailSender _emailSender;
         private readonly Exwhyzee.AANI.Web.Data.AaniDbContext _context;
-
+        private readonly IConfiguration _config;
+        private readonly IStorageService _storageService;
         public AddModel(
             UserManager<Participant> userManager,
             SignInManager<Participant> signInManager,
-            AaniDbContext context)
+            AaniDbContext context,
+            IConfiguration config,
+            IStorageService storageService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _context = context;
+            _config = config;
+            _storageService = storageService;
         }
-
+        [BindProperty]
+        public IFormFile? imagefile { get; set; }
         public IActionResult OnGet()
         {
 
@@ -89,7 +96,52 @@ namespace Exwhyzee.AANI.Web.Areas.Main.Pages.ParticipantPage
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
+            string imgKey = string.Empty;
+            string imgUrl = string.Empty;
+            //image
+            if (imagefile != null)
+            {
+                try
+                {
+                    // Process file
+                    await using var memoryStream = new MemoryStream();
+                    await imagefile.CopyToAsync(memoryStream);
 
+                    var fileExt = Path.GetExtension(imagefile.FileName);
+                    var docName = $"{Guid.NewGuid()}{fileExt}";
+                    // call server
+
+                    var s3Obj = new Domain.Dtos.S3Object()
+                    {
+                        BucketName = "aani2023",
+                        InputStream = memoryStream,
+                        Name = docName
+                    };
+
+                    var cred = new AwsCredentials()
+                    {
+                        AccessKey = _config["AwsConfiguration:AWSAccessKey"],
+                        SecretKey = _config["AwsConfiguration:AWSSecretKey"]
+                    };
+
+                    var xresult = await _storageService.UploadFileReturnUrlAsync(s3Obj, cred, "");
+                    // 
+                    if (xresult.Message.Contains("200"))
+                    {
+                        imgUrl = xresult.Url;
+                        imgKey = xresult.Key;
+                    }
+                    else
+                    {
+                        TempData["error"] = "unable to upload image";
+                        //return Page();
+                    }
+                }
+                catch (Exception c)
+                {
+
+                }
+            }
             var user = new Participant
             {
                 UserName = Input.Email,
@@ -106,7 +158,9 @@ namespace Exwhyzee.AANI.Web.Areas.Main.Pages.ParticipantPage
                 AliveStatus = AliveStatus.Alive,
                 VerificationStatus = VerificationStatus.NONE,
                 ActiveStatus = ActiveStatus.NONE,
-                UserStatus = UserStatus.MNI
+                UserStatus = UserStatus.MNI,
+                PictureKey = imgKey,
+                PictureUrl = imgUrl,
             };
             Guid pass = Guid.NewGuid();
             var result = await _userManager.CreateAsync(user, pass.ToString().Replace("-", ".") + "XY");
@@ -116,7 +170,7 @@ namespace Exwhyzee.AANI.Web.Areas.Main.Pages.ParticipantPage
                 await _userManager.AddToRoleAsync(user, "MNI");
                 TempData["aasuccess"] = "Account created successfully for "+user.Fullname;
                 TempData["aasssuccess"] = "Account created successfully for "+user.Fullname;
-                return RedirectToPage("./Add");
+                return RedirectToPage("./Details", new { id = user.Id });
             }
             //foreach (var error in result.Errors)
             //{

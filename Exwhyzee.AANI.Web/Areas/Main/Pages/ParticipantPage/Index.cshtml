@@ -10,7 +10,7 @@
         @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
         {
 
-            <a asp-page="./Create" class="btn bg-gradient-warning btn-sm" style="float:right;">Add New Alumni</a>
+            <a asp-page="./Add" class="btn bg-gradient-warning btn-sm" style="float:right;">Add New Alumni</a>
         }
     </div>
     <!-- /.card-header -->
@@ -136,6 +136,8 @@
                                             <div class="dropdown-menu" style="">
 
                                                 <a class="dropdown-item" asp-page="./Edit" asp-route-id="@item.Id">Edit</a>
+                                                <a class="dropdown-item" asp-page="./UpdateIDCard" asp-route-id="@item.Id">Update ID Card</a>
+                                                <a class="dropdown-item" asp-page="./IDCardQrCode" asp-route-id="@item.Id">View ID Data</a>
                                                 <a class="dropdown-item" asp-page="./ResetPassword" asp-route-id="@item.Id">Reset Password</a>
                                                 <a class="dropdown-item" asp-page="./UpdateMNI" asp-route-id="@item.Id">Update MNI</a>
                                                 @*<a class="dropdown-item" asp-page="./Delete" asp-route-id="@item.Id">Delete</a>*@

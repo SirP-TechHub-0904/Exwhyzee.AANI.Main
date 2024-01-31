@@ -61,6 +61,6 @@ namespace Exwhyzee.AANI.Domain.Models
         }
         public string? PictureUrl { get; set; }
         public string? PictureKey { get; set; }
-
+        public string? IdDigit { get; set; }
     }
 }
