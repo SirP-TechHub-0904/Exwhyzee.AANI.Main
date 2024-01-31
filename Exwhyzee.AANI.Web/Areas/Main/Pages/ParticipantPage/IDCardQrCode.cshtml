@@ -1,0 +1,70 @@
+﻿@page
+@model Exwhyzee.AANI.Web.Areas.Main.Pages.ParticipantPage.IDCardQrCodeModel
+@{
+}
+
+<div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title text-upper">BARCODE DETAILS</h3>
+
+    </div>
+    <!-- /.card-header -->
+
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                <h4>@Model.UserDatas.Title @Model.UserDatas.Surname @Model.UserDatas.FirstName @Model.UserDatas.OtherName <span style="font-size:small;">mni</span> </h4>
+                <div style="padding:20px;background-color:white;">
+                    <img class="" src="data:image/jpg;base64,@(Convert.ToBase64String(Model.Image))" />
+
+                </div>
+                <div>
+
+                    <a href="data:application/octet-stream;base64,@(Convert.ToBase64String(Model.Image))" download="@Model.UserDatas.Surname-@Model.UserDatas.FirstName-@Model.UserDatas.OtherName-Barcode.jpg" title="@Model.UserDatas.Surname-@Model.UserDatas.FirstName-@Model.UserDatas.OtherName-Barcode">
+                        Download @Model.UserDatas.Title @Model.UserDatas.Surname @Model.UserDatas.FirstName @Model.UserDatas.OtherName BarCode
+                    </a>
+
+                </div>
+            </div>
+            <hr />
+            <div class="col-md-12" style="margin-top:40px;">
+                
+                <table class="table table-bordered">
+                    <tr>
+                        <th>Name</th>
+                        <td>@Model.UserDatas.Title @Model.UserDatas.Surname @Model.UserDatas.FirstName @Model.UserDatas.OtherName <span style="font-size:small;">mni</span> </td>
+                    </tr>
+                    <tr>
+                        <th>SEC</th>
+                        <td>@Model.GetSEC.Number</td>
+                    </tr>
+                    <tr>
+                        <th>Year</th>
+                        <td>@Model.GetSEC.Year</td>
+                    </tr>
+                    <tr>
+                        <th>Passport Photograph</th>
+                        <td>
+                            <img src="@Model.UserDatas.PictureUrl" style="max-height:200px;" class="img-responsive" />
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <th>Status</th>
+                        <td>
+                            <img src="~/verified.png" style="max-height:50px;" class="img-responsive" />
+                        </td>
+                    </tr>
+                </table>
+
+            </div>
+        </div>
+        <!-- /.card-body -->
+        <div class="card-footer">
+            <a href="javascript:history.back()" class="btn bg-gradient-warning btn-sm">Back</a>
+
+        </div>
+    </div>
+</div>
+
+

@@ -1,0 +1,273 @@
+﻿@page "/Identify/{id}"
+@model Exwhyzee.AANI.Web.Pages.IdentifyModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AANI - Alumni Association of The National Institute - Verification</title>
+    <link rel="shortcut icon" href="~/img/icon.jpg" />
+
+    <meta property="og:site_name" content="AANI">
+
+    <meta property="og:title" content="Member Verification" />
+    <meta property="og:description" content="Member" />
+    <meta property="og:image" itemprop="image" content="~/img/icon.jpg">
+    <meta property="og:type" content="website" />
+    <meta property="og:updated_time" content="@DateTime.UtcNow.AddHours(1)" />
+
+
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <style>
+        body {
+            padding: 20px;
+        }
+
+        .custom-style {
+            color: #007bff;
+            font-size: 20px;
+            margin-top: 10px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+
+
+        .bg-cover {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgb(1 57 22 / 43%);
+            z-index: -1;
+        }
+
+        .container {
+            width: 400px;
+            height: 500px;
+            background-color: #013916;
+            margin: 50px auto;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .header i {
+            font-size: 20px;
+            color: rgba(255,255,255,0.7);
+            padding: 10px;
+            margin-top: 20px;
+        }
+
+        .fa-bars {
+            float: left;
+            margin-left: 20px;
+        }
+
+            .fa-bars:hover {
+                cursor: pointer;
+                animation: bars 0.3s ease-in forwards;
+            }
+
+        .fa-cog {
+            float: right;
+            margin-right: 20px;
+        }
+
+            .fa-cog:hover {
+                cursor: pointer;
+                animation: rotate 1s ease-in infinite;
+            }
+
+        div.middle {
+            position: relative;
+            text-align: center;
+            top: 70px;
+        }
+
+        img.user-pic {
+            width: 110px;
+            height: 110px;
+            border-radius: 100%;
+            background: rgba(255,255,255,0.7);
+            border: 5px solid rgba(255,255,255,1);
+        }
+
+        h4.name {
+            font-size: 18px;
+            color: rgba(255,255,255,0.8);
+            padding: 10px;
+        }
+
+        h4.work {
+            font-size: 14px;
+            color: rgba(255,255,255,0.5);
+            padding: 10px;
+            padding-top: 0px;
+        }
+
+        h4.social {
+            font-size: 15px;
+            color: rgba(255,255,255,0.5);
+            padding: 15px;
+        }
+
+        div.footer {
+            position: relative;
+            top: 110px;
+            height: 60px;
+            text-align: center;
+        }
+
+        .btn-follow {
+            position: relative;
+            padding: 15px 70px;
+            top: -22px;
+            background: rgba(255,255,255,1);
+            border: none;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #013916;
+            box-shadow: 0px 5px 45px rgba(249,105,14,0.4);
+            border: 1px solid transparent;
+            transition: all 0.5s ease-in;
+        }
+
+
+        .profile-status {
+            font-size: 12px;
+            color: rgba(0,0,0,0.2);
+            padding-top: 7px;
+        }
+
+        @@keyframes rotate {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(180deg);
+            }
+        }
+
+        @@keyframes bars {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(90deg);
+            }
+        }
+
+        @@keyframes img3d {
+            0% {
+                transform: rotateY(0deg);
+            }
+
+            100% {
+                transform: rotateY(55deg);
+            }
+        }
+
+
+
+        /* transform-origin: left top;
+         animation: swing 2s ease-in forwards;
+        }
+
+
+        @@-moz-keyframes swing {
+          0% {
+            -moz-transform: rotate(0deg);
+            transform: rotate(0deg);
+          }
+          100% {
+            -moz-transform: rotate(45deg);
+            transform: rotate(45deg);
+          }
+        }
+        @@-webkit-keyframes swing {
+          0% {
+            -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+          }
+          100% {
+            -webkit-transform: rotate(45deg);
+            transform: rotate(45deg);
+          }
+        }
+        @@keyframes swing {
+          0% {
+            -moz-transform: rotate(0deg);
+            -ms-transform: rotate(0deg);
+            -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+          }
+          100% {
+            -moz-transform: rotate(45deg);
+            -ms-transform: rotate(45deg);
+            -webkit-transform: rotate(45deg);
+            transform: rotate(45deg);
+          }
+        }
+        */
+    </style>
+</head>
+
+<body>
+    <div style="text-align:center;margin:0 auto;">
+        <img src="~/AANI-logo-rest.png" style="text-align:center;margin:0 auto;height:100px;" />
+
+    </div>
+    <div class="bg-cover"></div>
+    <div class="container">
+        <div class="header">
+            <i class="fa fa-bars"></i>
+            <i class="fa fa-cog"></i>
+        </div>
+        @if (Model.NotFound == false)
+        {
+            <div class="middle">
+                <img src="@Model.UserDatas.PictureUrl" alt="" class="user-pic" />
+                <h4 class="name">@Model.UserDatas.Title @Model.UserDatas.Surname @Model.UserDatas.FirstName @Model.UserDatas.OtherName <span style="font-size:small;">mni</span></h4>
+                <h4 class="work">SEC @Model.UserDatas.SEC.Number (@Model.UserDatas.SEC.Year)</h4>
+            </div>
+            <div class="footer">
+                <button class="btn-follow">
+                    Verified
+                    <img src="~/verified.png" style="max-height:20px;" class="img-responsive" />
+                </button><br />
+
+            </div>
+        }
+        else
+        {
+
+            <div class="footer">
+                <button class="btn-follow btn-warning">
+                    Unable to Verify mni.
+                </button><br />
+
+            </div>
+        }
+    </div>
+
+    <!-- Bootstrap JS and Popper.js -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</body>
+
+</html>

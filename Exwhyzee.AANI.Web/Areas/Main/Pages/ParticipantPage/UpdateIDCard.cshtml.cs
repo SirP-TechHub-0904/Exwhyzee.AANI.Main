@@ -1,23 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Exwhyzee.AANI.Domain.Dtos;
+using Exwhyzee.AANI.Domain.Models;
+using Exwhyzee.AANI.Web.Data;
+using Exwhyzee.AANI.Web.Helper.AWS;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using Exwhyzee.AANI.Domain.Models;
-using Exwhyzee.AANI.Web.Data;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI.Services;
-using Exwhyzee.AANI.Domain.Dtos;
-using Exwhyzee.AANI.Web.Helper.AWS;
 
 namespace Exwhyzee.AANI.Web.Areas.Main.Pages.ParticipantPage
 {
     [Microsoft.AspNetCore.Authorization.Authorize(Roles = "Admin")]
 
-    public class EditModel : PageModel
+    public class UpdateIDCardModel : PageModel
     {
         private readonly SignInManager<Participant> _signInManager;
         private readonly UserManager<Participant> _userManager;
@@ -26,7 +20,7 @@ namespace Exwhyzee.AANI.Web.Areas.Main.Pages.ParticipantPage
         private readonly IStorageService _storageService;
 
 
-        public EditModel(
+        public UpdateIDCardModel(
             UserManager<Participant> userManager,
             SignInManager<Participant> signInManager,
             AaniDbContext context,
@@ -59,8 +53,7 @@ namespace Exwhyzee.AANI.Web.Areas.Main.Pages.ParticipantPage
                 return RedirectToPage("/Notfound", new { area = "" });
             }
 
-            ViewData["StateId"] = new SelectList(_context.States, "StateName", "StateName");
-
+ 
             var secs = _context.SECs.AsQueryable();
             var output = secs.Select(x => new SecDropdownListDto
             {
@@ -68,31 +61,10 @@ namespace Exwhyzee.AANI.Web.Areas.Main.Pages.ParticipantPage
                 SecYear = "SEC " + x.Number + " (" + x.Year + ")"
             });
             ViewData["SECId"] = new SelectList(output, "Id", "SecYear");
-            ViewData["ChapterId"] = new SelectList(_context.Chapters.OrderBy(x => x.State), "Id", "State");
-
+ 
             return Page();
         }
-        public List<SelectListItem> LgaList { get; set; }
-
-        public async Task<JsonResult> OnGetLGA(string id)
-        {
-
-            List<LocalGoverment> lga = new List<LocalGoverment>();
-
-            var query = await _context.LocalGoverments
-                .Include(x => x.States)
-                .Where(x => x.States.StateName == id).ToListAsync();
-
-
-            LgaList = query.Select(a =>
-                                new SelectListItem
-                                {
-                                    Value = a.LGAName,
-                                    Text = a.LGAName
-                                }).ToList();
-            return new JsonResult(LgaList);
-        }
-
+      
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
@@ -149,31 +121,10 @@ namespace Exwhyzee.AANI.Web.Areas.Main.Pages.ParticipantPage
                 updateparticipant.OtherName = Participant.OtherName;
                 updateparticipant.Title = Participant.Title;
 
-                if (!String.IsNullOrEmpty(Participant.LGA))
-                {
-                    updateparticipant.LGA = Participant.LGA;
-                }
-                updateparticipant.State = Participant.State;
-                updateparticipant.ContactAddress = Participant.ContactAddress;
-                updateparticipant.HomeAddress = Participant.HomeAddress;
-                updateparticipant.AltPhoneNumber = Participant.AltPhoneNumber;
-                updateparticipant.PhoneNumber = Participant.PhoneNumber;
-                updateparticipant.Sponsor = Participant.Sponsor;
-                updateparticipant.GenderStatus = Participant.GenderStatus;
-                updateparticipant.MaritalStatus = Participant.MaritalStatus;
-                updateparticipant.ReligionStatus = Participant.ReligionStatus;
-                updateparticipant.UserStatus = Participant.UserStatus;
-                updateparticipant.MniStatus = Participant.MniStatus;
-                updateparticipant.DOB = Participant.DOB;
-                updateparticipant.SECId = Participant.SECId;
-                updateparticipant.Bio = Participant.Bio;
-                updateparticipant.ChapterId = Participant.ChapterId;
-                updateparticipant.CurrentOffice = Participant.CurrentOffice;
+                
+                updateparticipant.GenderStatus = Participant.GenderStatus; 
+                updateparticipant.SECId = Participant.SECId; 
 
-                updateparticipant.EmergencyContactEmail = Participant.EmergencyContactEmail;
-                updateparticipant.EmergencyContactPhone = Participant.EmergencyContactPhone;
-                updateparticipant.EmergencyContactName = Participant.EmergencyContactName;
-                 
                 await _userManager.UpdateAsync(updateparticipant);
                 TempData["aasuccess"] = "Updated successfully";
             }
@@ -193,9 +144,10 @@ namespace Exwhyzee.AANI.Web.Areas.Main.Pages.ParticipantPage
                 return Page();
             }
 
-            return RedirectToPage("./Details", new { id = updateparticipant.Id });
+            return RedirectToPage("./IDCardQrCode", new {id = updateparticipant.Id});
         }
 
 
     }
+
 }

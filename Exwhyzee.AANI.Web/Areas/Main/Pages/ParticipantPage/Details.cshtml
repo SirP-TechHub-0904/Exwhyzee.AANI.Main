@@ -14,7 +14,11 @@
 </style>
 <div class="row">
     <div class="col-md-12">
+        @if (TempData["aasssuccess"] != null)
+        {
+            @TempData["aasssuccess"]
 
+        }
         <!-- Profile Image -->
         <div class="card card-primary card-outline">
             <div class="card-body box-profile">
@@ -44,7 +48,7 @@
                     </div>
                 </div>
                 @*  @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
-                            {*@
+                {*@
                 <div class="btn-group">
                     <a asp-page="./Edit" asp-route-id="@Model.Participant.Id" class="btn btn-warning">Edit</a>
                     <a asp-page="./UpdateEmail" asp-route-id="@Model.Participant.Id" class="btn btn-primary">Update Email</a>
@@ -52,7 +56,7 @@
                     <a asp-page="./ResetPassword" asp-route-id="@Model.Participant.Id" class="btn btn-danger">Reset Password</a>
                     <a asp-page="./History" asp-route-id="@Model.Participant.Id" class="btn btn-success">Funds History</a>
                     <a asp-page="./Papers" asp-route-id="@Model.Participant.Id" class="btn btn-primary">Papers Presented/Written</a>
-                    
+
                 </div>
             </div>
             <!-- /.card-body -->
@@ -140,9 +144,9 @@
                 <strong><i class="fas fa-user mr-1"></i>DOB</strong>
 
                 <p class="text-muted">
-                  
-                        <span>@Model.Participant.DOB</span>
-                     
+
+                    <span>@Model.Participant.DOB</span>
+
                 </p>
 
                 <hr>
@@ -200,7 +204,7 @@
                 </p>
 
                 <hr>
-                
+
 
 
                 <strong><i class="fas fa-book mr-1"></i> Biography</strong>
@@ -265,7 +269,7 @@
                 </p>
 
                 <hr>
-               
+
 
             </div>
             <!-- /.card-body -->
