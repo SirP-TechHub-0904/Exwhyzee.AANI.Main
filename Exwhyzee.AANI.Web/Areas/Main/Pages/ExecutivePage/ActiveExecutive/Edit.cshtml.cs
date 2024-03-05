@@ -39,7 +39,7 @@ namespace Exwhyzee.AANI.Web.Areas.Main.Pages.ExecutivePage.ActiveExecutive
             {
                 return NotFound();
             }
-           ViewData["ParticipantId"] = new SelectList(_context.Set<Participant>(), "Id", "Id");      
+           ViewData["ParticipantId"] = new SelectList(_context.Set<Participant>(), "Id", "Fullname");      
             ViewData["ExecutivePositionId"] = new SelectList(_context.ExecutivePositions, "Id", "Position");
 
             return Page();
