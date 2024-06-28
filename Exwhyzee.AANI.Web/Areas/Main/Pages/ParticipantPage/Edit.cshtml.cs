@@ -173,7 +173,31 @@ namespace Exwhyzee.AANI.Web.Areas.Main.Pages.ParticipantPage
                 updateparticipant.EmergencyContactEmail = Participant.EmergencyContactEmail;
                 updateparticipant.EmergencyContactPhone = Participant.EmergencyContactPhone;
                 updateparticipant.EmergencyContactName = Participant.EmergencyContactName;
-                 
+                try
+                {
+                    var email = await _userManager.GetEmailAsync(updateparticipant);
+                    if (Participant.Email != email)
+                    {
+                        var userId = await _userManager.GetUserIdAsync(updateparticipant);
+                        var code = await _userManager.GenerateChangeEmailTokenAsync(updateparticipant, Participant.Email);
+                        //code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
+
+                        //var xcode = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(code));
+                        var result = await _userManager.ChangeEmailAsync(updateparticipant, Participant.Email, code);
+                        if (!result.Succeeded)
+                        {
+                            TempData["aaerror1"] = "Error changing email.";
+                             
+                        }
+                        TempData["aasuccess"] = "Email Updated successfully";
+                         
+                    }
+
+                }
+                catch(Exception ex)
+                {
+
+                }
                 await _userManager.UpdateAsync(updateparticipant);
                 TempData["aasuccess"] = "Updated successfully";
             }
