@@ -8,11 +8,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="web.configF" />
+    <None Remove="web.configh" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="web.configF" />
+    <Content Include="web.configh" />
   </ItemGroup>
 
   <ItemGroup>
