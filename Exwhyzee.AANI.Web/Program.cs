@@ -19,7 +19,8 @@ builder.Services.AddDbContext<AaniDbContext>(options =>
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddIdentity<Participant, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
-    .AddEntityFrameworkStores<AaniDbContext>();
+    .AddEntityFrameworkStores<AaniDbContext>()
+    .AddDefaultTokenProviders();
 builder.Services.AddAWSService<IAmazonS3>();
 builder.Services.AddTransient<IFileManagement, FileManagement>(); 
 builder.Services.AddTransient<IStorageService, StorageService>();
