@@ -113,7 +113,7 @@
                                 @Html.DisplayFor(modelItem => item.GenderStatus)
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.DOB)
+                                @item.DOB.ToString("dd MMMM, yyyy")
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.Email)
