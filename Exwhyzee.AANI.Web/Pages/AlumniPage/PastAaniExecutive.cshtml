@@ -37,17 +37,33 @@
                                     <div class="panel-body accordion-body">
                                         @foreach (var n in x.PastExecutiveMembers)
                                         {
-                                            <div class="col-md-4 col-sm-4 col-12">
-                                                <div class="team-member">
-                                                  
-                                                    <div class="team-member-text">
-                                                        <h4><a href="#">@n.Participant.Fullname</a></h4>
-                                                        <span>@n.Position</span>
-                                                         
+                                            @*<div class="col-md-4 col-sm-4 col-12">
+                                                    <div class="team-member">
+
+                                                        <div class="team-member-text">
+                                                            <h4><a href="#">@n.Participant.Fullname</a></h4>
+                                                            <span>@n.Position</span>
+
+                                                        </div>
+                                                    </div>
+                                                </div>*@
+
+                                            <div class="col-md-4 col-sm-4 col-12 mb-4">
+                                                <div class="card shadow-sm" style="border: none; border-radius: 10px; overflow: hidden; box-shadow: 0 6px 20px rgba(0,0,0,0.15);">
+                                                    <div style="
+            background-image: url('@n.Participant.PictureUrl');
+            background-size: cover;
+            background-position: center;
+            height: 320px;">
+                                                    </div>
+                                                    <div class="card-body text-center" style="background-color: #f9f9f9;">
+                                                        <h5 class="card-title mb-1 text-uppercase" style="font-weight: 600;">
+                                                            <a href="#" style="text-decoration: none; color: inherit;">@n.Participant.Fullname</a>
+                                                        </h5>
+                                                        <span style="color: #cc0000; font-weight: 600;">@n.Position</span>
                                                     </div>
                                                 </div>
                                             </div>
-
 
                                         }
 

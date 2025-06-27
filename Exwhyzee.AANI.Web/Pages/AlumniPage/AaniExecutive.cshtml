@@ -25,12 +25,34 @@
             @foreach (var item in Model.Executive)
             {
 
-                <div class="col-md-12">
-                    <div class="" style="width: 100%; padding: 0 8%; margin-top:15px;">
-                        <div class="" style="padding:14px;background-color: #eaeaea59; ">
-                            <h5>@item.Participant.Fullname</h5>
-                            <div class="">
-                                <strong>
+                @*<div class="col-md-4">
+                <div class="" style="width: 100%; padding: 0 8%; margin-top:15px;">
+                    <div class="" style="padding:14px;background-color: #eaeaea59; ">
+                        <img src="@item.Participant.PictureUrl" />
+                        <h5>@item.Participant.Fullname</h5>
+                        <div class="">
+                            <strong>
+                                @if (item.ExecutivePosition != null)
+                                {
+                                    @item.ExecutivePosition.Position
+                                }
+                            </strong>
+                        </div>
+                    </div>
+                </div>
+            </div>*@
+                <div class="col-md-4 mb-4">
+                    <div class="card shadow-sm" style="border: none; border-radius: 10px; overflow: hidden; box-shadow: 0 6px 20px rgba(0,0,0,0.15);">
+                        <div style="
+            background-image: url('@item.Participant.PictureUrl');
+            background-size: cover;
+            background-position: center;
+            height: 320px;">
+                        </div>
+                        <div class="card-body text-center" style="background-color: #f9f9f9;">
+                            <h5 class="card-title mb-1 text-uppercase" style="font-weight: 600;">@item.Participant.Fullname</h5>
+                            <div class="card-text">
+                                <strong style="color: #cc0000;">
                                     @if (item.ExecutivePosition != null)
                                     {
                                         @item.ExecutivePosition.Position
@@ -40,6 +62,8 @@
                         </div>
                     </div>
                 </div>
+
+
             }
 
         </div>

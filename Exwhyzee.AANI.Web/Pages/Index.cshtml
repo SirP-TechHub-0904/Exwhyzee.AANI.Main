@@ -54,8 +54,8 @@
                             </div>
                         </div>
                         @*<div class="animated fadeInUp mt-30">
-                            <a asp-page="/Web/About" class="primary-button button-md">Know More</a>
-                        </div>*@
+                                <a asp-page="/Web/About" class="primary-button button-md">Know More</a>
+                            </div>*@
                     </div>
                 </div>
             </div>
@@ -68,6 +68,72 @@
     <div class="swiper-pagination"></div>
 </div>
 <!-- Slider END -->
+<div class="section-block">
+    <div class="container">
+        <div class="boxed-div">
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-12">
+                    <div class="">
+
+                        <button style="width:100%;" class="primary-button button-sm mb-15-xs" data-toggle="modal" data-target="#upcomingCandidatesModal">
+                            View AANI 2025 Election Candidates
+                        </button>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="upcomingCandidatesModal" tabindex="-1" role="dialog" aria-labelledby="upcomingCandidatesLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-primary text-white" style="background-color: #7dc366 !important; ">
+                <h5 class="modal-title" id="upcomingCandidatesLabel">AANI 2025 Election Candidates</h5>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="overflow-y: auto;">
+
+                <img src="~/AANI-candidates-updated.jpg" />
+            </div>
+        </div>
+    </div>
+</div>
+<div class="section-block-grey">
+    <div class="container">
+        <div class="section-heading center-holder">
+            <h3>Meet the AANI Executives</h3>
+            <div class="section-heading-line"></div>
+            <p>Our esteemed executive team dedicated to driving the mission of AANI forward with excellence and integrity.</p>
+        </div>
+
+        <div class="row mt-4">
+            <div class="owl-carousel owl-theme" id="aaniExecutivesCarousel">
+                @foreach (var exec in Model.Executive)
+                {
+                    <div class="item">
+                        <div class="card text-center shadow-sm" style="border: none; border-radius: 10px; overflow: hidden;">
+                            <div style="
+                                background-image: url('@exec.Participant.PictureUrl');
+                                background-size: cover;
+                                background-position: center;
+                                height: 320px;">
+                            </div>
+                            <div class="card-body" style="background-color: #fff;">
+                                <h5 class="text-uppercase mb-1" style="font-weight: 600;">@exec.Participant.Fullname</h5>
+                                <strong style="color: #cc0000;">@exec.ExecutivePosition.Position</strong>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
 
 
 <div class="section-block">
@@ -125,8 +191,8 @@
                     </div>
                     <div class="text-content ">
                         <p>
-                            
-                            AANI was first inaugurated in March 1980 during the graduation ceremony of Senior Executive Course 1, 1979, in Jos, conducted by the pioneer Director-General, late Major-General TB Ogundeko. The second inauguration took place on Saturday, February 28, 1981. 
+
+                            AANI was first inaugurated in March 1980 during the graduation ceremony of Senior Executive Course 1, 1979, in Jos, conducted by the pioneer Director-General, late Major-General TB Ogundeko. The second inauguration took place on Saturday, February 28, 1981.
                             <br /> In Kuru, under the chairmanship of late Alhaji Ahmed Talib, a prominent member of the inaugural Board of Governors. The primary objective of the association remains providing former students with a structured avenue to engage with the ideas and activities of the Institute continually.
                         </p>
                     </div>
@@ -175,37 +241,37 @@
 
 
 @* <div class="section-block section-block2">
-    <div class="container">
-        <div class="boxed-div">
+        <div class="container">
+            <div class="boxed-div">
 
-            <div class="row">
+                <div class="row">
 
-                <div class="col-md-6 col-sm-6 col-12">
-                    <div class="section-heading title4">
-                        <h5>Summing up on Contributions by NIPSS and AANI</h5>
-                        <div class="section-heading-line-left"></div>
+                    <div class="col-md-6 col-sm-6 col-12">
+                        <div class="section-heading title4">
+                            <h5>Summing up on Contributions by NIPSS and AANI</h5>
+                            <div class="section-heading-line-left"></div>
+                        </div>
+                        <div class="text-content ">
+                            <p>
+
+                                National Institute for Policy and Strategic Studies and her Alumni Association do not hold the key to the solution of the nation's socio-economic and related developmental problems. Neither do they have the monopoly.
+                            </p>
+                            <p>
+                                However, the establishment of NIPSS was not an accident. It was created to serve as melting pot of ideas for Nigeria's development by providing an environment and atmosphere for coordinating input from all other policy-oriented research establishments for use by the government
+                            </p>
+
+                        </div>
+                        <div class="button4">
+
+                        </div>
                     </div>
-                    <div class="text-content ">
-                        <p>
-
-                            National Institute for Policy and Strategic Studies and her Alumni Association do not hold the key to the solution of the nation's socio-economic and related developmental problems. Neither do they have the monopoly.
-                        </p>
-                        <p>
-                            However, the establishment of NIPSS was not an accident. It was created to serve as melting pot of ideas for Nigeria's development by providing an environment and atmosphere for coordinating input from all other policy-oriented research establishments for use by the government
-                        </p>
-
+                    <div class="col-md-6 col-sm-6 col-12 image4">
+                        <img src="~/img/comment5.jpg" class="mb-15-xs" alt="map">
                     </div>
-                    <div class="button4">
-
-                    </div>
-                </div>
-                <div class="col-md-6 col-sm-6 col-12 image4">
-                    <img src="~/img/comment5.jpg" class="mb-15-xs" alt="map">
                 </div>
             </div>
         </div>
-    </div>
-</div> *@
+    </div> *@
 
 <!--<!-- Feature Boxes Section START -->
 <!--<div class="section-block-grey">
@@ -217,44 +283,44 @@
             <div class="col-md-4 col-sm-4 col-12">
                 <div class="team-member">
                     <div class="team-member-img">-->
-                        @*<img src="~/img/t1.jpg" alt="img">*@
-                    <!--</div>
-                    <div class="team-member-text">
-                        <h4><a href="#">IGP MD Abubakar, Cfr NPM PSC mni</a></h4>
-                        <span>President</span>
+@*<img src="~/img/t1.jpg" alt="img">*@
+<!--</div>
+        <div class="team-member-text">
+            <h4><a href="#">IGP MD Abubakar, Cfr NPM PSC mni</a></h4>
+            <span>President</span>
 
-                    </div>
-                </div>
-            </div>
+        </div>
+    </div>
+</div>
 
-            <div class="col-md-4 col-sm-4 col-12">
-                <div class="team-member">
-                    <div class="team-member-img">-->
-                        @*<img src="~/img/t2.jpg" alt="img">*@
-                    <!--</div>
-                    <div class="team-member-text">
-                        <h4><a href="#">Amb. Emmanuel Obi Okafor, mni</a></h4>
-                        <span>Vic President</span>
+<div class="col-md-4 col-sm-4 col-12">
+    <div class="team-member">
+        <div class="team-member-img">-->
+@*<img src="~/img/t2.jpg" alt="img">*@
+<!--</div>
+        <div class="team-member-text">
+            <h4><a href="#">Amb. Emmanuel Obi Okafor, mni</a></h4>
+            <span>Vic President</span>
 
-                    </div>
-                </div>
-            </div>
+        </div>
+    </div>
+</div>
 
-            <div class="col-md-4 col-sm-4 col-12">
-                <div class="team-member">
-                    <div class="team-member-img">-->
-                        @*<img src="~/img/t3.jpg" alt="img">*@
-                    @*</div>
-                    <div class="team-member-text">
-                        <h4><a href="#">Abubakar Ismaila Isa, CNA, mni</a></h4>
-                        <span>Secretary-General</span>
+<div class="col-md-4 col-sm-4 col-12">
+    <div class="team-member">
+        <div class="team-member-img">-->
+@*<img src="~/img/t3.jpg" alt="img">*@
+@*</div>
+                        <div class="team-member-text">
+                            <h4><a href="#">Abubakar Ismaila Isa, CNA, mni</a></h4>
+                            <span>Secretary-General</span>
 
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</div>-->*@
+    </div>-->*@
 <div class="section-block-bg" style="background-image: url('../img/bg00.jpg');">
     <div class="container">
         <div class="row">
@@ -272,7 +338,7 @@
                         To serve as think-tank to the Federal, State and Local Governments of Nigeria on all matters of national development.
                     </p>
                 </div>
-               
+
             </div>
         </div>
     </div>
