@@ -29,7 +29,7 @@ namespace Exwhyzee.AANI.Web.Areas.Main.Pages.ParticipantPage
 
         [BindProperty]
         public Participant UserDatas { get; set; }
-        public string ProfileLink { get; set; } 
+        public string ProfileLink { get; set; }
         public SEC GetSEC { get; set; }
         public async Task<IActionResult> OnGetAsync(string id)
         {
@@ -39,13 +39,13 @@ namespace Exwhyzee.AANI.Web.Areas.Main.Pages.ParticipantPage
             }
 
             UserDatas = await _userManager.FindByIdAsync(id);
-             if (UserDatas == null)
+            if (UserDatas == null)
             {
                 return NotFound();
             }
             if (String.IsNullOrEmpty(UserDatas.PictureUrl))
             {
-                return RedirectToPage("./UpdateIDCard", new {id = UserDatas.Id});
+                return RedirectToPage("./UpdateIDCard", new { id = UserDatas.Id });
             }
 
             var queryableSource = _context.SECs.AsQueryable();
@@ -89,7 +89,7 @@ namespace Exwhyzee.AANI.Web.Areas.Main.Pages.ParticipantPage
             {
 
             }
-            
+
             return Page();
         }
         [BindProperty]

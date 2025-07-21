@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 
 namespace Exwhyzee.AANI.Web.Areas.Main.Pages.ParticipantPage
 {
@@ -53,7 +54,7 @@ namespace Exwhyzee.AANI.Web.Areas.Main.Pages.ParticipantPage
                 return RedirectToPage("/Notfound", new { area = "" });
             }
 
- 
+
             var secs = _context.SECs.AsQueryable();
             var output = secs.Select(x => new SecDropdownListDto
             {
@@ -61,10 +62,10 @@ namespace Exwhyzee.AANI.Web.Areas.Main.Pages.ParticipantPage
                 SecYear = "SEC " + x.Number + " (" + x.Year + ")"
             });
             ViewData["SECId"] = new SelectList(output, "Id", "SecYear");
- 
+
             return Page();
         }
-      
+
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
@@ -121,11 +122,18 @@ namespace Exwhyzee.AANI.Web.Areas.Main.Pages.ParticipantPage
                 updateparticipant.OtherName = Participant.OtherName;
                 updateparticipant.Title = Participant.Title;
 
-                
-                updateparticipant.GenderStatus = Participant.GenderStatus; 
-                updateparticipant.SECId = Participant.SECId; 
 
-                await _userManager.UpdateAsync(updateparticipant);
+                updateparticipant.GenderStatus = Participant.GenderStatus;
+                updateparticipant.SECId = Participant.SECId;
+
+
+                _context.Attach(updateparticipant).State = EntityState.Modified;
+                 
+                    await _context.SaveChangesAsync();
+
+                var xccccccccccc = await _userManager.FindByIdAsync(updateparticipant.Id);
+
+                //await _userManager.UpdateAsync(updateparticipant);
                 TempData["aasuccess"] = "Updated successfully";
             }
             catch (Exception)
@@ -144,7 +152,7 @@ namespace Exwhyzee.AANI.Web.Areas.Main.Pages.ParticipantPage
                 return Page();
             }
 
-            return RedirectToPage("./IDCardQrCode", new {id = updateparticipant.Id});
+            return RedirectToPage("./IDCardQrCode", new { id = updateparticipant.Id });
         }
 
 
