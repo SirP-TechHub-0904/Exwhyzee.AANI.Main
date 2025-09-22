@@ -1,65 +1,75 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
-  <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-    <Nullable>enable</Nullable>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <UserSecretsId>aspnet-Exwhyzee.AANI.Web-3067E30B-3CE9-46CB-BF0E-2D63512BA73A</UserSecretsId>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net9.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<UserSecretsId>aspnet-Exwhyzee.AANI.Web-3067E30B-3CE9-46CB-BF0E-2D63512BA73A</UserSecretsId>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <None Remove="web.configh" />
-  </ItemGroup>
+	<ItemGroup>
+		<None Remove="web.configh" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <Content Include="web.configh" />
-  </ItemGroup>
+	<ItemGroup>
+		<Content Include="web.configh" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="AWSSDK.Extensions.NETCore.Setup" Version="3.7.2" />
-    <PackageReference Include="AWSSDK.S3" Version="3.7.101.14" />
-    <PackageReference Include="EntityFramework" Version="6.4.4" />
-    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="6.0.10" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.10" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.10" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.18" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.18">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.14" />
-    <PackageReference Include="Zen.Barcode.Rendering.Framework" Version="3.1.10729.1" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="AWSSDK.S3" Version="3.7.306.2" />
+		<PackageReference Include="AWSSDK.Extensions.NETCore.Setup" Version="3.7.2" />
+		<!-- EF6 (classic) stays the same -->
+		<PackageReference Include="EntityFramework" Version="6.4.4" />
 
-  <ItemGroup>
-    <ProjectReference Include="..\Exwhyzee.AANI.Domain\Exwhyzee.AANI.Domain.csproj" />
-  </ItemGroup>
+		<!-- ASP.NET Core Identity & Diagnostics (upgrade to 9.x) -->
+		<PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="9.0.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="9.0.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="9.0.0" />
 
-  <ItemGroup>
-    <Folder Include="wwwroot\web\img\" />
-  </ItemGroup>
+		<!-- EF Core (upgrade to 9.x) -->
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.0" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.0">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
 
-  <ItemGroup>
-    <None Include="Areas\Main\Pages\ISliders\Create.cshtml" />
-    <None Include="Areas\Main\Pages\ISliders\Delete.cshtml" />
-    <None Include="Areas\Main\Pages\ISliders\Details.cshtml" />
-    <None Include="Areas\Main\Pages\ISliders\Edit.cshtml" />
-    <None Include="Areas\Main\Pages\ISliders\Index.cshtml" />
-  </ItemGroup>
+		<!-- Scaffolding tools -->
+		<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="9.0.0" />
+		<PackageReference Include="System.Drawing.Common" Version="9.0.0" />
+		<!-- Barcode library (no update available, keep existing version) -->
+		<PackageReference Include="Zen.Barcode.Rendering.Framework" Version="3.1.10729.1" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <Content Update="Areas\Admin\Pages\Dashboard\Index.cshtml">
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
-    <Content Update="Areas\Admin\Pages\Dashboard\MemberDetails.cshtml">
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
-    <Content Update="Areas\Admin\Pages\Dashboard\Members.cshtml">
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
-  </ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Exwhyzee.AANI.Domain\Exwhyzee.AANI.Domain.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Folder Include="wwwroot\web\img\" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Include="Areas\Main\Pages\ISliders\Create.cshtml" />
+		<None Include="Areas\Main\Pages\ISliders\Delete.cshtml" />
+		<None Include="Areas\Main\Pages\ISliders\Details.cshtml" />
+		<None Include="Areas\Main\Pages\ISliders\Edit.cshtml" />
+		<None Include="Areas\Main\Pages\ISliders\Index.cshtml" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Content Update="Areas\Admin\Pages\Dashboard\Index.cshtml">
+			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+			<CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+		</Content>
+		<Content Update="Areas\Admin\Pages\Dashboard\MemberDetails.cshtml">
+			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+			<CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+		</Content>
+		<Content Update="Areas\Admin\Pages\Dashboard\Members.cshtml">
+			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+			<CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+		</Content>
+	</ItemGroup>
 
 </Project>

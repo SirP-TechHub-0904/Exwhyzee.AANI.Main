@@ -55,6 +55,10 @@ namespace Exwhyzee.AANI.Web.Data
         public DbSet<MessageTemplateCategory> MessageTemplateCategories { get; set; } = default!;
         public DbSet<MessageTemplateContent> MessageTemplateContents { get; set; } = default!;
 
+        public DbSet<WebPage> WebPages { get; set; } 
+        public DbSet<PageSection> PageSections { get; set; }
+        public DbSet<PageSectionList> PageSectionLists { get; set; }
+        public DbSet<PageCategory> PageCategories { get; set; }
 
     }
 }

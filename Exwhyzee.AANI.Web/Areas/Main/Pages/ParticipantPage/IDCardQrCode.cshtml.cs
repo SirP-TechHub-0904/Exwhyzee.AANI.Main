@@ -62,7 +62,25 @@ namespace Exwhyzee.AANI.Web.Areas.Main.Pages.ParticipantPage
                 if (check == null)
                 {
                     // If not found, update the UserDatas and exit the loop
-                    await _userManager.UpdateAsync(UserDatas);
+                    //await _userManager.UpdateAsync(UserDatas);
+
+                    var result = await _userManager.UpdateAsync(UserDatas);
+
+                    if (!result.Succeeded)
+                    {
+                        foreach (var error in result.Errors)
+                        {
+                            Console.WriteLine($"{error.Code}: {error.Description}");
+                            // Or log it to a file or display in the UI
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("User updated successfully.");
+                    }
+
+
+
                     break;
                 }
                 else

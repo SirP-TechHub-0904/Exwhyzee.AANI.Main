@@ -1,0 +1,429 @@
+﻿@page
+@model IndexAModel
+@{
+    ViewData["Title"] = "Home page";
+}
+<style>
+    .feature-flex-content p {
+        color: #343131;
+        font-weight: 400;
+        margin-top: 10px;
+    }
+</style>
+<style>
+
+    .image1, .image2, .image3, .image4, .image5, .image6, .image7, .image8 {
+        flex-shrink: 0;
+        overflow: hidden;
+    }
+
+        .image1, .image2, .image3, .image4, .image5, .image6, .image7 img {
+            display: block;
+            height: 100%;
+            object-fit: cover;
+            overflow: hidden;
+        }
+
+    .text1, .text2, .text3, .text4, .text5, .text6, .text7 {
+        flex-grow: 1;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+</style>
+
+
+<!-- Slider START -->
+<!-- Slider START -->
+<div class="swiper-main-slider-fade swiper-container">
+    <div class="swiper-wrapper">
+        @foreach (var item in Model.Sliders)
+        {
+            <!-- Slide 1 Start -->
+            <div class="swiper-slide" style="background-image: url('@item.Url');">
+                <div class="medium-overlay"></div>
+                <div class="container">
+                    <div class="slider-content left-holder">
+                        <h2 class="animated fadeInDown">
+                            @Html.Raw(item.Title)
+                        </h2>
+                        <div class="row">
+                            <div class="col-md-6 col-sm-12 col-12">
+                                <p class="animated fadeInDown">
+                                    @Html.Raw(item.Text)
+                                </p>
+                            </div>
+                        </div>
+                        @*<div class="animated fadeInUp mt-30">
+                                <a asp-page="/Web/About" class="primary-button button-md">Know More</a>
+                            </div>*@
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    <!-- Add Arrows -->
+    <div class="swiper-button-next"></div>
+    <div class="swiper-button-prev"></div>
+    <!-- Add Pagination -->
+    <div class="swiper-pagination"></div>
+</div>
+<!-- Slider END -->
+<div class="section-block">
+    <div class="container">
+        <div class="boxed-div">
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-12">
+                    <div class="">
+
+                        <button style="width:100%;" class="primary-button button-sm mb-15-xs" data-toggle="modal" data-target="#upcomingCandidatesModal">
+                            View AANI 2025 Election Candidates
+                        </button>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="upcomingCandidatesModal" tabindex="-1" role="dialog" aria-labelledby="upcomingCandidatesLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-primary text-white" style="background-color: #7dc366 !important; ">
+                <h5 class="modal-title" id="upcomingCandidatesLabel">AANI 2025 Election Candidates</h5>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="overflow-y: auto;">
+
+                <img src="~/AANI-candidates-updated.jpg" />
+            </div>
+        </div>
+    </div>
+</div>
+<div class="section-block-grey">
+    <div class="container">
+        <div class="section-heading center-holder">
+            <h3>Meet the AANI Executives</h3>
+            <div class="section-heading-line"></div>
+            <p>Our esteemed executive team dedicated to driving the mission of AANI forward with excellence and integrity.</p>
+        </div>
+
+        <div class="row mt-4">
+            <div class="owl-carousel owl-theme" id="aaniExecutivesCarousel">
+                @foreach (var exec in Model.Executive)
+                {
+                    <div class="item">
+                        <div class="card text-center shadow-sm" style="border: none; border-radius: 10px; overflow: hidden;">
+                            <div style="
+                                background-image: url('@exec.Participant.PictureUrl');
+                                background-size: cover;
+                                background-position: center;
+                                height: 320px;">
+                            </div>
+                            <div class="card-body" style="background-color: #fff;">
+                                <h5 class="text-uppercase mb-1" style="font-weight: 600;">@exec.Participant.Fullname</h5>
+                                <strong style="color: #cc0000;">@exec.ExecutivePosition.Position</strong>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="section-block">
+    <div class="container">
+        <div class="boxed-div">
+            <div class="row">
+                <div class="col-md-6 col-sm-6 col-12">
+                    <div class="image1">
+                        <img src="~/bg/aboutaani.jpg" class="rounded-border shadow-primary" alt="img">
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-6 col-12">
+
+                    <div class="">
+                        <div class="section-heading title1">
+                            <h4>The Antecedence of NIPSS</h4>
+                        </div>
+                        <div class="text-content-big " style=" margin-top: 8px;">
+                            <p style="margin-bottom:0;">
+                                During the Second National Development Plan of 1970-1974, provisions were made to establish the Nigerian Institute of Strategic Studies (NISS) as part of the public sector program. An allocation of £4.897 million was designated for the Institute over the four-year period, intending to place it under the auspices of the Federal Ministry of Economic Development and Reconstruction.
+                            </p>
+                            <p style="margin-bottom:0;">
+                                Efforts were undertaken during this period to secure resources and lay the groundwork for the Institute's operation, with Mr. J.O.E. Sagay appointed as its Executive Secretary in 1973. However, progress beyond the inception of the Institute was limited before the plan period ended, though the determination to establish it remained....
+                            </p>
+                        </div>
+
+                        <div class="button1">
+                            <a asp-page="/Web/About" class="primary-button button-sm mb-15-xs" style="margin-top: 34px;">Know More</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .section-block2 {
+        padding: 20px 0px 20px 0px;
+        background-color: #fff;
+    }
+</style>
+
+<div class="section-block section-block2">
+    <div class="container">
+        <div class="boxed-div">
+
+            <div class="row">
+
+                <div class="col-md-6 col-sm-6 col-12">
+                    <div class="section-heading title2">
+                        <h5>The Emergence of AANI</h5>
+                        <div class="section-heading-line-left"></div>
+                    </div>
+                    <div class="text-content ">
+                        <p>
+
+                            AANI was first inaugurated in March 1980 during the graduation ceremony of Senior Executive Course 1, 1979, in Jos, conducted by the pioneer Director-General, late Major-General TB Ogundeko. The second inauguration took place on Saturday, February 28, 1981.
+                            <br /> In Kuru, under the chairmanship of late Alhaji Ahmed Talib, a prominent member of the inaugural Board of Governors. The primary objective of the association remains providing former students with a structured avenue to engage with the ideas and activities of the Institute continually.
+                        </p>
+                    </div>
+                    <div class="button2">
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-6 col-12 image2">
+                    <img src="~/img/ei.jpeg" class="mb-15-xs" alt="map">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="section-block section-block2">
+
+    <div class="container">
+        <div class="boxed-div">
+
+            <div class="row">
+                <div class="col-md-6 col-sm-6 col-12 image3">
+                    <img src="~/img/coment2.jpg" class="mb-15-xs" alt="map">
+                </div>
+                <div class="col-md-6 col-sm-6 col-12">
+                    <div class="section-heading title3">
+                        <h5>Contributions of AANI post 1999</h5>
+                        <div class="section-heading-line-left"></div>
+                    </div>
+                    <div class="text-content ">
+                        <p>
+                            The list of AANI members who are serving the country in various administrative, academic, business, legislative, or professional capacities grows every year with the graduation of SEC participants who qualify for the award of the mni certificate.
+                        </p>
+                        <p>
+                            A full roll call of all persons, who have achieved career progress in their respective professions or callings after successfully graduating from the SEC programme practically Impossible.
+                        </p>
+                    </div>
+                    <div class="button3">
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+@* <div class="section-block section-block2">
+        <div class="container">
+            <div class="boxed-div">
+
+                <div class="row">
+
+                    <div class="col-md-6 col-sm-6 col-12">
+                        <div class="section-heading title4">
+                            <h5>Summing up on Contributions by NIPSS and AANI</h5>
+                            <div class="section-heading-line-left"></div>
+                        </div>
+                        <div class="text-content ">
+                            <p>
+
+                                National Institute for Policy and Strategic Studies and her Alumni Association do not hold the key to the solution of the nation's socio-economic and related developmental problems. Neither do they have the monopoly.
+                            </p>
+                            <p>
+                                However, the establishment of NIPSS was not an accident. It was created to serve as melting pot of ideas for Nigeria's development by providing an environment and atmosphere for coordinating input from all other policy-oriented research establishments for use by the government
+                            </p>
+
+                        </div>
+                        <div class="button4">
+
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-12 image4">
+                        <img src="~/img/comment5.jpg" class="mb-15-xs" alt="map">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> *@
+
+<!--<!-- Feature Boxes Section START -->
+<!--<div class="section-block-grey">
+    <div class="container">
+        <div class="section-heading center-holder">
+            <h3>AANI EXECUTIVES</h3>
+        </div>
+        <div class="row mt-50">
+            <div class="col-md-4 col-sm-4 col-12">
+                <div class="team-member">
+                    <div class="team-member-img">-->
+@*<img src="~/img/t1.jpg" alt="img">*@
+<!--</div>
+        <div class="team-member-text">
+            <h4><a href="#">IGP MD Abubakar, Cfr NPM PSC mni</a></h4>
+            <span>President</span>
+
+        </div>
+    </div>
+</div>
+
+<div class="col-md-4 col-sm-4 col-12">
+    <div class="team-member">
+        <div class="team-member-img">-->
+@*<img src="~/img/t2.jpg" alt="img">*@
+<!--</div>
+        <div class="team-member-text">
+            <h4><a href="#">Amb. Emmanuel Obi Okafor, mni</a></h4>
+            <span>Vic President</span>
+
+        </div>
+    </div>
+</div>
+
+<div class="col-md-4 col-sm-4 col-12">
+    <div class="team-member">
+        <div class="team-member-img">-->
+@*<img src="~/img/t3.jpg" alt="img">*@
+@*</div>
+                        <div class="team-member-text">
+                            <h4><a href="#">Abubakar Ismaila Isa, CNA, mni</a></h4>
+                            <span>Secretary-General</span>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>-->*@
+<div class="section-block-bg" style="background-image: url('../img/bg00.jpg');">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="section-heading">
+                    <h3><strong style="color:#fff;">Aim and Objectives</strong></h3>
+                    <div class="section-heading-line-left"></div>
+                </div>
+                <div class="text-content-big mt-20">
+                    <p style="color:white;">
+
+                        To establish the means of contributing positively and objectively to national discourse on any issues affecting the development of Nigeria and proffer appropriate recommendations and implementation strategies to Government;
+                    </p>
+                    <p style="color:white;">
+                        To serve as think-tank to the Federal, State and Local Governments of Nigeria on all matters of national development.
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Feature Boxes Section END -->
+<!-- Background Section START -->
+<!-- Background Section END -->
+<!-- Counters Section START -->
+
+
+<div class="section-block">
+    <div class="container">
+        <div clclass="row">
+            <div class="col-md-12 col-sm-12 col-12">
+                <div class="section-heading mt-15">
+                    <span>Latest Happenings at the Alumni Association of the National Institute</span>
+                    <h3>Information Update</h3>
+                    <div class="section-heading-line-left"></div>
+                </div>
+            </div>
+        </div>
+        @foreach (var x in Model.Blogs)
+        {
+            <div class="blog-list-simple boxed-div">
+                <div class="row">
+                    <div class="col-md-5 col-sm-5 col-12">
+                        <div class="blog-list-simple-img">
+                            <img src="@x.ImageUrl" alt="img">
+                            <div class="data-box-simple">
+
+                                <h4>@x.Date.ToString("dd")</h4>
+                                <p>@x.Date.ToString("MMM")</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-7 col-sm-7 col-12">
+                        <div class="blog-list-simple-text">
+                            <span>NEWS</span>
+                            <a asp-page="/Media/ReadMore" asp-route-id="@x.Id" asp-route-title="@x.Title.Replace(",", "-").Replace(".", "-").Replace("&", "-").Replace(" ", "-").Replace("@", "-")">
+                                <h4>@x.Title</h4>
+                            </a>
+                            <ul>
+
+
+                                <li><i class="fa fa-envelope"></i>AANI Secetary</li>
+                                <li>
+                                    <i class="fa fa-clock-o"></i>
+                                    @await Component.InvokeAsync("DateAgo", new { date = x.Date })
+
+                                </li>
+                            </ul>
+                            <p>
+                                @x.ShortDescription
+                            </p>
+                            <div class="mt-20 left-holder">
+                                <a asp-page="/Media/ReadMore" asp-route-id="@x.Id" asp-route-title="@x.Title.Replace(",", "-").Replace(".", "-").Replace("&", "-").Replace(" ", "-").Replace("@", "-")" class="primary-button button-sm">Read More</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    <div class="mt-20" style="text-align:center;">
+        <a asp-page="/Media/News" class="primary-button button-sm" style="width: 50%;">More News</a>
+    </div>
+</div>
+<!-- Counters Section END -->
+<!-- Newsletter START -->
+<div class="section-block-grey border-top border-bottom">
+    <div class="container">
+        <div class="section-heading center-holder">
+            <h2>Stay <strong>informed</strong></h2>
+            <div class="section-heading-line"></div>
+            <p>Receive our news letter/updates on information and opportunities</p>
+        </div>
+        <div class="mt-30 center-holder">
+            <!-- Newsletter Form START -->
+            <form class="newsletter-form" method="post" action="#">
+                <input type="email" name="email" placeholder="Enter Your Email adress">
+                <button type="submit">Subscribe</button>
+            </form>
+            <!-- Newsletter Form END -->
+        </div>
+    </div>
+</div>
