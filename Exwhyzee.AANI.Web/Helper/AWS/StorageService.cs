@@ -26,10 +26,7 @@ namespace Exwhyzee.AANI.Web.Helper.AWS
 
         public async Task<S3ResponseDto> UploadFileAsync(Domain.Dtos.S3Object obj, AwsCredentials awsCredentialsValues)
         {
-            //var awsCredentialsValues = _config.ReadS3Credentials();
-            ////
-            // Console.WriteLine($"Key: {awsCredentialsValues.AccessKey}, Secret: {awsCredentialsValues.SecretKey}");
-
+            
             var credentials = new BasicAWSCredentials(awsCredentialsValues.AccessKey, awsCredentialsValues.SecretKey);
 
             var config = new AmazonS3Config()
