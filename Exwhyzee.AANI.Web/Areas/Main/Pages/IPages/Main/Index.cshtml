@@ -17,6 +17,7 @@
     <div class="card-header">
         <a asp-page="/IPages/Category/Index" target="_blank" class="btn bg-gradient-warning btn-sm" style="">VIEW PAGE CATEGORIES</a>
         <a asp-page="/IPages/PreviewAll" target="_blank" class="btn bg-danger btn-sm" style="">VIEW ALL SECTION</a>
+        <a asp-page="/IPages/PageSearch" target="_blank" class="btn bg-success btn-sm" style="">Search</a>
     </div>
 
     <!-- /.card-header -->
@@ -26,28 +27,29 @@
                 <thead>
                     <tr>
                         <th>S/N</th>
-            <th>
-                @Html.DisplayNameFor(model => model.WebPage[0].Title)
-            </th>
                         <th>
-                           Category
+                            @Html.DisplayNameFor(model => model.WebPage[0].Title)
                         </th>
-            <th>
-                @Html.DisplayNameFor(model => model.WebPage[0].SortOrder)
-            </th>
-           
-            <th>
-                @Html.DisplayNameFor(model => model.WebPage[0].Publish)
-            </th>
-            <th></th>
-        </tr>
+                        <th>
+                            Category
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.WebPage[0].SortOrder)
+                        </th>
+
+                        <th>
+                            @Html.DisplayNameFor(model => model.WebPage[0].Publish)
+                        </th>
+                        <th></th>
+                    </tr>
                 </thead>
 
                 @{
                     int sn = 0;
                 }
-    <tbody>
-@foreach (var item in Model.WebPage) {
+                <tbody>
+                    @foreach (var item in Model.WebPage)
+                    {
                         <tr>
 
                             <td>
@@ -56,19 +58,19 @@
                                 }
                                 @sn
                             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Title)
+                            </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.PageCategory.Title)
                             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SortOrder)
-            </td>
-            
-            <td>
-                @Html.DisplayFor(modelItem => item.Publish)
-            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.SortOrder)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Publish)
+                            </td>
                             <td>
                                 <div class="btn-group">
                                     <button type="button" class="btn btn-success">Action</button>

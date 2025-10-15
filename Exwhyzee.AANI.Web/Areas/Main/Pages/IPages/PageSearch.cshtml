@@ -1,0 +1,58 @@
+﻿@page
+@model Exwhyzee.AANI.Web.Areas.Main.Pages.IPages.PageSearchModel
+@{
+    ViewData["Title"] = "Page Search";
+}
+
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">Page Search</h3>
+
+    </div>
+    <div class="card-header">
+
+        <form method="get">
+            <div class="form-group">
+                <input type="text" name="query" value="@Request.Query["query"]" class="form-control" placeholder="Enter search keyword..." />
+            </div>
+            <button type="submit" class="btn btn-primary mt-2">Search</button>
+        </form>
+
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body">
+        <div class="table-responsive">
+
+
+            @if (!string.IsNullOrEmpty(Request.Query["query"]))
+            {
+                <h4>Search Results for '@Request.Query["query"]'</h4>
+                <p>Total Matches: @Model.TotalMatches</p>
+
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Type</th>
+                            <th>Field</th>
+                            <th>Value</th>
+                            <th>Path</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var result in Model.Results)
+                        {
+                            <tr>
+                                <td>@result.Type</td>
+                                <td>@result.Field</td>
+                                <td>@Html.Raw(result.Value)</td>
+                                <td>
+                                    <a class="btn btn-sm btn-primary" href="@result.Path" target="_blank">View/Edit</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+        </div>
+    </div>
+</div>

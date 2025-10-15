@@ -20,10 +20,13 @@ namespace Exwhyzee.AANI.Web.Pages
         }
 
         public IList<PaperCategory> PaperCategory { get;set; }
+        public ContactSettingsModel ContactSettings { get; set; }
 
         public async Task OnGetAsync()
         {
             PaperCategory = await _context.paperCategories.ToListAsync();
+            ContactSettings = await _context.ContactSettings
+               .FirstOrDefaultAsync();
         }
     }
 }

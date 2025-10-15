@@ -28,15 +28,25 @@
         -webkit-transition: all 0.4s ease-in-out;
     }
 </style>
-<div class="page-title-section" style="background-image: url('../img/bred.jpg');">
-    <div class="container">
-        <h1>LIBRARY</h1>
-        <ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="#">LIBRARY</a></li>
-        </ul>
+ 
+<section class="page-header">
+    <div class="page-header__bg"
+         style='background-image: url("@(string.IsNullOrEmpty(Model.ContactSettings?.BreadcrumImageUrl) ? "default-image.jpg" : Model.ContactSettings.BreadcrumImageUrl)")'>
     </div>
-</div>
+
+    <div class="container">
+        <div class="page-header__inner">
+            <h2>LIBRARY</h2>
+            <div class="thm-breadcrumb__box">
+                <ul class="thm-breadcrumb list-unstyled">
+                    <li><a href="/"><i class="fas fa-home"></i>Home</a></li>
+                    <li><span class="icon-right-arrow-1"></span></li>
+                    <li class="active">LIBRARY</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
 <div class="section-block">
     <div class="container" style="box-shadow: 2px 2px 2px 2px #333333;">
         <div class="" style="padding:15px;">

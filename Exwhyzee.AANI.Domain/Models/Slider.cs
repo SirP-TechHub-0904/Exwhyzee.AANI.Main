@@ -22,11 +22,13 @@ namespace Exwhyzee.AANI.Domain.Models
 
         [Display(Name = "Title")]
         public string? Title { get; set; }
+        public string? MiniTitle { get; set; }
 
         [Display(Name = "Text")]
         public string? Text { get; set; }
 
-         
+         public string? SliderLinkUrl { get; set; }
+         public string? SliderLinkUrlTitle { get; set; }
     }
 
 }

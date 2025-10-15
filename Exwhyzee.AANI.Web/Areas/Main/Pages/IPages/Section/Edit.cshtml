@@ -215,6 +215,11 @@
                     </div>
 
                     <div class="form-group">
+                        <label class="control-label">Second Image</label><br />
+                        <input type="file" class="control-label" asp-for="imagefile2" accept="image/*" />
+                    </div>
+
+                    <div class="form-group">
                         <label asp-for="PageSection.CustomClass" class="control-label">Custom Class</label>
                         <input asp-for="PageSection.CustomClass" class="form-control" />
                         <span asp-validation-for="PageSection.CustomClass" class="text-danger"></span>

@@ -29,6 +29,7 @@ namespace Exwhyzee.AANI.Web.Areas.Main.Pages.IPages
             PageSections = await _context.PageSections
                 .Include(w => w.PageSectionLists)
                 .Include(w => w.WebPage)
+                .ThenInclude(w => w.PageCategory)
                 .OrderBy(x=>x.WebPage.Id).ToListAsync();
               
             return Page();

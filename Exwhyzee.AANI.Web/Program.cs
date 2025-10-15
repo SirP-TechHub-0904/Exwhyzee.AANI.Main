@@ -4,6 +4,7 @@ using Exwhyzee.AANI.Web.Data;
 using Exwhyzee.AANI.Web.FileManager;
 using Exwhyzee.AANI.Web.Helper;
 using Exwhyzee.AANI.Web.Helper.AWS;
+using Exwhyzee.AANI.Web.Helper.BaseHelper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -24,7 +25,8 @@ builder.Services.AddIdentity<Participant, IdentityRole>(options => options.SignI
 builder.Services.AddAWSService<IAmazonS3>();
 builder.Services.AddTransient<IFileManagement, FileManagement>(); 
 builder.Services.AddTransient<IStorageService, StorageService>();
- 
+builder.Services.AddTransient<IBaseModel, BaseModel>();
+
 builder.Services.Configure<IdentityOptions>(options =>
 {
     // Password settings.

@@ -1,0 +1,203 @@
+﻿@using Exwhyzee.AANI.Web.Helper.BaseHelper;
+@using Exwhyzee.AANI.Domain.Models;
+@inject IBaseModel BaseModel;
+@using System.Text.RegularExpressions;
+
+@{
+    FooterMenuDataDto menuData = await BaseModel.GetFooterMenuDataAsync();
+    Regex regex = new Regex("[^a-zA-Z0-9]");
+}
+
+
+<footer class="site-footer max-footer">
+    <div class="container">
+        <div class="site-footer__top">
+            <div class="row">
+                <div class="col-xl-9">
+
+                    <div class="footer-widget__column footer-widget__newsletter">
+                        <h3 class="footer-widget__newsletter-title">
+                            Subscribe To Our Newsletter To
+                            <br>
+
+                            Get Latest Update
+                        </h3>
+                        <form class="footer-widget__newsletter-form mc-form">
+                            <div class="footer-widget__newsletter-form-input-box">
+                                <input type="email" placeholder="Enter email" name="EMAIL">
+                            </div>
+                            <button type="submit" class="thm-btn">
+                                <span class="thm-btn-text">
+                                    Subscribe
+                                </span>
+                                <span class="thm-btn-icon-box">
+                                    <i class="fas fa-arrow-right"></i>
+                                </span>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-3 wow fadeInUp animated" data-wow-delay="100ms" style="visibility: visible; animation-delay: 100ms; animation-name: fadeInUp;">
+                    <div class="footer-widget__column footer-widget__about">
+                        <div class="site-footer__bg-color"></div>
+                        <div class="footer-widget__logo">
+                            <a href="/">
+                                <img src="~/img/logo.png" alt="AANI">
+                            </a>
+                        </div>
+                        <p class="footer-widget__about-text">
+                            @if (menuData.Settings?.AboutText != null)
+                            {
+                            @menuData.Settings.AboutText
+                            }
+                        </p>
+                    </div>
+                </div>
+                <div class="col-xl-9">
+                    <div class="footer-widget__right">
+
+                        <div class="footer-widget__right-bottom">
+                            <div class="row">
+                                <div class="col-xl-4 col-lg-4 col-md-4 wow fadeInUp animated" data-wow-delay="200ms">
+                                    <div class="footer-widget__column footer-widget__usefull-link">
+                                        <div class="footer-widget__title-box">
+                                            <h3 class="footer-widget__title">Quick Links</h3>
+                                        </div>
+                                        <div class="footer-widget__link-box">
+                                            <ul class="footer-widget__link list-unstyled">
+                                                @foreach (var item in menuData.Pages)
+                                                {
+                                                <li>
+                                                    <a asp-page="/Source" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")"><i class="fas fa-caret-circle-right"></i> @item.Title</a>
+                                                </li>
+                                                }
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-4 col-lg-4 col-md-4 wow fadeInUp animated" data-wow-delay="300ms">
+                                    <div class="footer-widget__column footer-widget__services">
+                                        <div class="footer-widget__title-box">
+                                            <h3 class="footer-widget__title">Navigation</h3>
+                                        </div>
+                                        <ul class="footer-widget__link list-unstyled">
+                                            @foreach (var secPage in menuData.SecPages)
+                                            {
+                                            <li>
+                                                <a asp-page="/Source" asp-route-id="@secPage.Id" asp-route-title="@regex.Replace(secPage.Title, "-")">@secPage.Title</a>
+                                            </li>
+                                            }
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="col-xl-4 col-lg-4 col-md-4 wow fadeInUp animated" data-wow-delay="400ms">
+                                    <div class="footer-widget__contact-box">
+                                        <div class="footer-widget__title-box">
+                                            <h3 class="footer-widget__title">Official info</h3>
+                                        </div>
+                                        <ul class="footer-widget__contact list-unstyled">
+                                            <li>
+                                                <div class="icon">
+                                                    <span class="icon-call"></span>
+                                                </div>
+                                                <div class="content">
+                                                    @if (menuData.Settings?.PhoneNumbers != null)
+                                                    {
+                                                    @foreach (var phone in menuData.Settings.PhoneNumbers.Where(p => !string.IsNullOrEmpty(p.Number)))
+                                                        {
+                                                    <p>
+                                                        <a href="tel:@phone.Number">@phone.Number</a>
+                                                    </p>
+                                                        }
+                                                    }
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="icon">
+                                                    <span class="icon-email"></span>
+                                                </div>
+                                                <div class="content">
+                                                    @if (menuData.Settings?.Emails != null)
+                                                    {
+                                                    @foreach (var email in menuData.Settings.Emails.Where(e => !string.IsNullOrEmpty(e.Email)))
+                                                        {
+                                                    <p>
+                                                        <a href="mailto:@email.Email">@email.Email</a>
+                                                    </p>
+                                                        }
+                                                    }
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="icon">
+                                                    <span class="icon-pin"></span>
+                                                </div>
+                                                <div class="content">
+                                                    @if (menuData.Settings?.Addresses != null && menuData.Settings.Addresses.Any())
+                                                    {
+                                                    <p>
+                                                        @menuData.Settings.Addresses.FirstOrDefault()?.Address
+                                                    </p>
+                                                    }
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="site-footer__social">
+                                @if (menuData.Settings?.SocialMedia != null)
+                                {
+                                @if (!string.IsNullOrWhiteSpace(menuData.Settings.SocialMedia.Facebook))
+                                    {
+                                <a href="@menuData.Settings.SocialMedia.Facebook" target="_blank">
+                                    <i class="icon-facebook-app-symbol"></i>
+                                </a>
+                                    }
+                                @if (!string.IsNullOrWhiteSpace(menuData.Settings.SocialMedia.Instagram))
+                                    {
+                                <a href="@menuData.Settings.SocialMedia.Instagram" target="_blank">
+                                    <i class="icon-instagram"></i>
+                                </a>
+                                    }
+                                @if (!string.IsNullOrWhiteSpace(menuData.Settings.SocialMedia.Twitter))
+                                    {
+                                <a href="@menuData.Settings.SocialMedia.Twitter" target="_blank">
+                                    <i class="icon-pinterest"></i>
+                                </a>
+                                    }
+                                @if (!string.IsNullOrWhiteSpace(menuData.Settings.SocialMedia.LinkedIn))
+                                    {
+                                <a href="@menuData.Settings.SocialMedia.LinkedIn" target="_blank">
+                                    <i class="icon-linkedin"></i>
+                                </a>
+                                    }
+                                @* Add more as needed *@
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="site-footer__bottom">
+        <div class="container">
+            <div class="site-footer__bottom-inner">
+                <p class="site-footer__bottom-text">
+                    © Copyright @DateTime.UtcNow.Year by
+                    <a href="">
+                        AANI
+                    </a>
+                    All Rights Reserved.
+
+                    <a style="color: #d21e2b !important;" href="https://www.exwhyzee.ng/">EXWHYZEE Technologies LTD</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>

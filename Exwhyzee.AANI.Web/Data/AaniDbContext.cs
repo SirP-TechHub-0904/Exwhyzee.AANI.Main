@@ -60,5 +60,14 @@ namespace Exwhyzee.AANI.Web.Data
         public DbSet<PageSectionList> PageSectionLists { get; set; }
         public DbSet<PageCategory> PageCategories { get; set; }
 
+
+        public DbSet<ContactSettingsModel> ContactSettings { get; set; }
+        public DbSet<PhoneNumberInfo> PhoneNumbers { get; set; }
+        public DbSet<EmailInfo> Emails { get; set; }
+        public DbSet<AddressInfo> Addresses { get; set; }
+        public DbSet<SocialMediaLinks> SocialMediaLinks { get; set; }
+
+
+        public DbSet<StylingConfig> StylingConfigs { get; set; }
     }
 }

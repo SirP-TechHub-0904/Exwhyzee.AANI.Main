@@ -34,7 +34,14 @@
                             @Html.DisplayNameFor(model => model.Slider[0].Title)
                         </th>
                         <th>
+                            @Html.DisplayNameFor(model => model.Slider[0].MiniTitle)
+                        </th>
+                        <th>
                             @Html.DisplayNameFor(model => model.Slider[0].Text)
+                        </th>
+
+                        <th>
+                            @Html.DisplayNameFor(model => model.Slider[0].SliderLinkUrl)
                         </th>
 
                         <th></th>
@@ -69,7 +76,15 @@
                                 @Html.DisplayFor(modelItem => item.Title)
                             </td>
                             <td>
+                                @Html.DisplayFor(modelItem => item.MiniTitle)
+                            </td>
+                            <td>
                                 @Html.DisplayFor(modelItem => item.Text)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.SliderLinkUrl)
+                                (text: @item.SliderLinkUrlTitle)
                             </td>
 
                             <td>
@@ -81,6 +96,7 @@
                                         </button>
                                         <div class="dropdown-menu" style="">
 
+                                            <a class="dropdown-item" asp-page="./Details" asp-route-id="@item.Id">Details</a>
                                             <a class="dropdown-item" asp-page="./Edit" asp-route-id="@item.Id">Edit</a>
 
                                         </div>

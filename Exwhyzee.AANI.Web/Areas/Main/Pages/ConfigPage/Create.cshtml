@@ -1,0 +1,39 @@
+﻿@page
+@model Exwhyzee.AANI.Web.Areas.Main.Pages.ConfigPage.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>StylingConfig</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="StylingConfig.CSSStyle" class="control-label"></label>
+                <input asp-for="StylingConfig.CSSStyle" class="form-control" />
+                <span asp-validation-for="StylingConfig.CSSStyle" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="StylingConfig.Config" class="control-label"></label>
+                <input asp-for="StylingConfig.Config" class="form-control" />
+                <span asp-validation-for="StylingConfig.Config" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

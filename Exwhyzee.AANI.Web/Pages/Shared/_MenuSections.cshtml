@@ -1,0 +1,482 @@
+﻿@using Exwhyzee.AANI.Web.Helper.BaseHelper;
+@using Exwhyzee.AANI.Domain.Models;
+@inject IBaseModel BaseModel;
+@using System.Text.RegularExpressions;
+@{
+
+    MenuDataDto GetMenuDataDto = await BaseModel.GetMenuData();
+}
+@{
+    MenuDataDto menuData = await BaseModel.GetMenuData();
+    Regex regex = new Regex("[^a-zA-Z0-9]");
+}
+<header class="main-header">
+
+    <div class="main-menu__top">
+
+        <div class="main-menu__top-inner">
+
+            <ul class="list-unstyled main-menu__contact-list">
+
+
+                <li>
+                    <div class="icon">
+
+                        <i class="fas fa-envelope">
+                        </i>
+
+                    </div>
+
+                    <div class="text">
+
+                        <p>
+
+                            <a href="mailto:contact@aani.ng">
+                                contact@aani.ng
+                            </a>
+
+                        </p>
+
+                    </div>
+
+                </li>
+
+                <li>
+
+                    <div class="icon">
+
+                        <i class="icon-pin">
+                        </i>
+
+                    </div>
+
+                    <div class="text">
+
+                        <p>
+                            AANI National Secretariat, Maitama, Abuja, Nigeria
+                        </p>
+
+                    </div>
+
+                </li>
+
+            </ul>
+
+            <div class="main-menu__top-right">
+
+
+                <div class="main-menu__social">
+
+                    <a href="#">
+                        <i class="fab fa-youtube">
+                        </i>
+                    </a>
+                    <a href="#">
+                        <i class="fab fa-twitter">
+                        </i>
+                    </a>
+
+                    <a href="#">
+                        <i class="fab fa-facebook">
+                        </i>
+                    </a>
+
+
+                    <a href="#">
+                        <i class="fab fa-instagram">
+                        </i>
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <nav class="main-menu">
+
+        <div class="main-menu__wrapper">
+
+            <div class="main-menu__wrapper-inner">
+
+                <div class="main-menu__left">
+
+                    <div class="main-menu__logo">
+
+                        <a href="/">
+                            <img src="~/img/logo.png" class="main-logo" alt="AANI">
+                        </a>
+
+                    </div>
+
+                </div>
+
+                <div class="main-menu__main-menu-box">
+
+                    <a href="#" class="mobile-nav__toggler">
+                        <i class="fas fa-bars">
+                        </i>
+                    </a>
+
+                    <ul class="main-menu__list">
+
+
+                        <!-- Single pages at TOP position -->
+                        @foreach (var item in menuData.SinglePages.Where(x => x.ShowInMainMenu == true))
+                        {
+                            if (item.EnableDirectUrl == true)
+                            {
+                                <li>
+                                    <a href="@item.DirectUrl">@item.Title</a>
+                                </li>
+                            }
+                            else
+                            {
+                                <li>
+                                    <a asp-page="/Source" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")">@item.Title</a>
+                                </li>
+                            }
+                        }
+
+                        <!-- Categories at TOP position -->
+                        @foreach (var item in menuData.PageCategories.Where(x => x.HomeSortFrom == HomeSortFrom.Top))
+                        {
+                            <li class="dropdown">
+                                <a href="#">@item.Title</a>
+                                @{
+                                    IEnumerable<Domain.Models.WebPage> itemlist = item.WebPages;
+                                }
+                                <ul class="shadow-box">
+                                    @foreach (var xitem in itemlist.Where(x => x.Publish == true && x.ShowInMenuDropDown == true).OrderBy(x => x.SortOrder).ToList())
+                                    {
+                                        if (xitem.EnableDirectUrl == true)
+                                        {
+                                            <li>
+                                                <a target="_blank" href="@xitem.DirectUrl">@xitem.Title</a>
+                                            </li>
+                                        }
+                                        else
+                                        {
+                                            <li>
+                                                <a asp-page="/Source" asp-route-id="@xitem.Id" asp-route-title="@regex.Replace(xitem.Title, "-")">@xitem.Title</a>
+                                            </li>
+                                        }
+                                    }
+                                </ul>
+                            </li>
+                        }
+
+
+
+                        <!-- Categories at BOTTOM position -->
+                        @foreach (var item in menuData.PageCategories.Where(x => x.HomeSortFrom == HomeSortFrom.Bottom))
+                        {
+                            <li class="dropdown">
+                                <a href="#">@item.Title</a>
+                                @{
+                                    IEnumerable<Domain.Models.WebPage> itemlist = item.WebPages;
+                                }
+                                <ul class="shadow-box">
+                                    @foreach (var xitem in itemlist.Where(x => x.Publish == true && x.ShowInMenuDropDown == true).OrderBy(x => x.SortOrder).ToList())
+                                    {
+                                        if (xitem.EnableDirectUrl == true)
+                                        {
+                                            <li>
+                                                <a target="_blank" href="@xitem.DirectUrl">@xitem.Title</a>
+                                            </li>
+                                        }
+                                        else
+                                        {
+                                            <li>
+                                                <a asp-page="/Source" asp-route-id="@xitem.Id" asp-route-title="@regex.Replace(xitem.Title, "-")">@xitem.Title</a>
+                                            </li>
+                                        }
+                                    }
+                                </ul>
+                            </li>
+                        }
+
+                        <!-- Single pages at BOTTOM position -->
+                        @foreach (var item in menuData.SinglePages.Where(x => x.ShowInMainMenu == true))
+                        {
+                            if (item.EnableDirectUrl == true)
+                            {
+                                <li>
+                                    <a href="@item.DirectUrl">@item.Title</a>
+                                </li>
+                            }
+                            else
+                            {
+                                <li>
+                                    <a asp-page="/Source" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")">@item.Title</a>
+                                </li>
+                            }
+                        }
+
+                        @foreach (var item in menuData.DropdownExternalLinks)
+                        {
+                            <li>
+                                <a href="@item.DirectUrl">@item.Title</a>
+                            </li>
+                        }
+
+
+                    </ul>
+
+                </div>
+
+                <div class="main-menu__right">
+ 
+
+                    <div class="main-menu__btn-box">
+
+                        <a href="about" class="thm-btn">
+
+                            <span class="thm-btn-text">
+                               AANI TV
+                            </span>
+
+                            <span class="thm-btn-icon-box">
+                                <i class="fas fa-arrow-right">
+                                </i>
+                            </span>
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </nav>
+
+</header>
+
+
+<div class="stricky-header stricked-menu main-menu">
+
+    <div class="sticky-header__content">
+
+        <div class="main-menu__wrapper">
+
+            <div class="main-menu__wrapper-inner">
+
+                <div class="main-menu__left">
+
+                    <div class="main-menu__logo">
+
+                        <a href="/">
+                            <img src="~/img/logo.png" class="mobile-logo" alt="AANI">
+                        </a>
+
+                    </div>
+
+                </div>
+
+                <div class="main-menu__main-menu-box">
+
+                    <a href="#" class="mobile-nav__toggler">
+                        <i class="fa fa-bars">
+                        </i>
+                    </a>
+
+                    <ul class="main-menu__list">
+
+
+                        <!-- Single pages at TOP position -->
+                        @foreach (var item in menuData.SinglePages.Where(x => x.ShowInMainMenu == true))
+                        {
+                            if (item.EnableDirectUrl == true)
+                            {
+                                <li>
+                                    <a href="@item.DirectUrl">@item.Title</a>
+                                </li>
+                            }
+                            else
+                            {
+                                <li>
+                                    <a asp-page="/Source" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")">@item.Title</a>
+                                </li>
+                            }
+                        }
+
+                        <!-- Categories at TOP position -->
+                        @foreach (var item in menuData.PageCategories.Where(x => x.HomeSortFrom == HomeSortFrom.Top))
+                        {
+                            <li class="dropdown">
+                                <a href="#">@item.Title</a>
+                                @{
+                                    IEnumerable<Domain.Models.WebPage> itemlist = item.WebPages;
+                                }
+                                <ul class="shadow-box">
+                                    @foreach (var xitem in itemlist.Where(x => x.Publish == true && x.ShowInMenuDropDown == true).OrderBy(x => x.SortOrder).ToList())
+                                    {
+                                        if (xitem.EnableDirectUrl == true)
+                                        {
+                                            <li>
+                                                <a target="_blank" href="@xitem.DirectUrl">@xitem.Title</a>
+                                            </li>
+                                        }
+                                        else
+                                        {
+                                            <li>
+                                                <a asp-page="/Source" asp-route-id="@xitem.Id" asp-route-title="@regex.Replace(xitem.Title, "-")">@xitem.Title</a>
+                                            </li>
+                                        }
+                                    }
+                                </ul>
+                            </li>
+                        }
+
+
+
+                        <!-- Categories at BOTTOM position -->
+                        @foreach (var item in menuData.PageCategories.Where(x => x.HomeSortFrom == HomeSortFrom.Bottom))
+                        {
+                            <li class="dropdown">
+                                <a href="#">@item.Title</a>
+                                @{
+                                    IEnumerable<Domain.Models.WebPage> itemlist = item.WebPages;
+                                }
+                                <ul class="shadow-box">
+                                    @foreach (var xitem in itemlist.Where(x => x.Publish == true).OrderBy(x => x.SortOrder).ToList())
+                                    {
+                                        if (xitem.EnableDirectUrl == true)
+                                        {
+                                            <li>
+                                                <a target="_blank" href="@xitem.DirectUrl">@xitem.Title</a>
+                                            </li>
+                                        }
+                                        else
+                                        {
+                                            <li>
+                                                <a asp-page="/Source" asp-route-id="@xitem.Id" asp-route-title="@regex.Replace(xitem.Title, "-")">@xitem.Title</a>
+                                            </li>
+                                        }
+                                    }
+                                </ul>
+                            </li>
+                        }
+
+                        <!-- Single pages at BOTTOM position -->
+                        @foreach (var item in menuData.SinglePages.Where(x => x.ShowInMainMenu == true))
+                        {
+                            if (item.EnableDirectUrl == true)
+                            {
+                                <li>
+                                    <a href="@item.DirectUrl">@item.Title</a>
+                                </li>
+                            }
+                            else
+                            {
+                                <li>
+                                    <a asp-page="/Source" asp-route-id="@item.Id" asp-route-title="@regex.Replace(item.Title, "-")">@item.Title</a>
+                                </li>
+                            }
+                        }
+
+                        @foreach (var item in menuData.DropdownExternalLinks)
+                        {
+                            <li>
+                                <a href="@item.DirectUrl">@item.Title</a>
+                            </li>
+                        }
+
+
+
+                    </ul>
+
+                </div>
+
+                <div class="main-menu__right">
+
+                    <div class="main-menu__nav-sidebar-icon">
+
+                        <a class="navSidebar-button" href="#">
+
+                            <span class="icon-dots-menu-one">
+                            </span>
+
+                            <span class="icon-dots-menu-two">
+                            </span>
+
+                            <span class="icon-dots-menu-three">
+                            </span>
+
+                        </a>
+
+                    </div>
+
+                    <div class="main-menu__btn-box">
+
+                        <a href="about" class="thm-btn">
+
+                            <span class="thm-btn-text">
+                                AANI TV
+                            </span>
+
+                            <span class="thm-btn-icon-box">
+                                <i class="fas fa-arrow-right">
+                                </i>
+                            </span>
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+    <!-- /.sticky-header__content -->
+
+</div>
+
+
+
+<div class="mobile-nav__wrapper">
+
+    <div class="mobile-nav__overlay mobile-nav__toggler">
+    </div>
+
+    <!-- /.mobile-nav__overlay -->
+
+    <div class="mobile-nav__content">
+
+        <span class="mobile-nav__close mobile-nav__toggler">
+            <i class="fa fa-times">
+            </i>
+        </span>
+
+
+        <div class="logo-box">
+
+            <a href="/" aria-label="logo image">
+                <img src="~/img/logo.png" style="padding: 5px; background-color: white; height: 50px; " alt="AANI">
+            </a>
+
+        </div>
+
+        <!-- /.logo-box -->
+
+        <div class="mobile-nav__container">
+
+            <ul class="main-menu__list">
+ 
+            </ul>
+
+        </div>
+
+    </div>
+
+    <!-- /.mobile-nav__content -->
+
+</div>

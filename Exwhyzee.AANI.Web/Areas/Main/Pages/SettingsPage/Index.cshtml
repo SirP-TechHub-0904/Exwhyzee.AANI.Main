@@ -1,0 +1,465 @@
+﻿@page
+@model Exwhyzee.AANI.Web.Areas.Main.Pages.SettingsPage.IndexModel
+@{
+    // Bootstrap 5 and FontAwesome should be included in your _Layout.cshtml.
+}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+<style>
+    .cs-card-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 2rem;
+        margin-bottom: 2rem;
+    }
+
+    .cs-card {
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 2px 14px rgba(0,0,0,0.07);
+        padding: 1.5rem 1.2rem 1.2rem 1.2rem;
+        min-width: 330px;
+        max-width: 395px;
+        flex: 1 1 330px;
+        margin-bottom: 1rem;
+    }
+
+    .cs-card-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.5rem;
+        margin-bottom: 1.3rem;
+    }
+
+    .cs-header-main {
+        display: flex;
+        align-items: center;
+        gap: 0.7rem;
+        font-size: 1.35rem;
+        font-weight: 700;
+    }
+
+    .cs-card-header .cs-add-btn {
+        background: none;
+        border: none;
+        color: #222;
+        font-size: 1.35rem;
+        cursor: pointer;
+        margin-left: 0.5rem;
+        padding: 0.15rem 0.45rem;
+        border-radius: 5px;
+        transition: background 0.14s;
+    }
+
+        .cs-card-header .cs-add-btn:hover {
+            background: #eee;
+        }
+
+    .cs-list {
+        width: 100%;
+        margin: 0;
+        padding: 0;
+    }
+
+    .cs-item-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-size: 1.11rem;
+        padding: 0.3rem 0;
+        border-bottom: 1px solid #ededed;
+        gap: 0.6rem;
+    }
+
+        .cs-item-row:last-child {
+            border-bottom: none;
+        }
+
+    .cs-item-content {
+        flex: 1 1 0;
+        min-width: 0;
+        /*display: flex;*/
+        align-items: center;
+        gap: 0.5rem;
+        word-break: break-word;
+    }
+
+    .cs-actions {
+        display: flex;
+        align-items: center;
+        gap: 0.35rem;
+        margin-left: 1.3rem;
+    }
+
+    .cs-icon-btn {
+        background: none;
+        border: none;
+        padding: 0.2rem 0.35rem;
+        font-size: 1.22rem;
+        cursor: pointer;
+        color: #888;
+        transition: color 0.17s, background 0.11s;
+        border-radius: 4px;
+    }
+
+        .cs-icon-btn:hover {
+            color: #2979ff;
+            background: #f5faff;
+        }
+
+        .cs-icon-btn.delete:hover {
+            color: #e74c3c;
+            background: #fff0f0;
+        }
+    /* Social media section */
+    .cs-card-social {
+        max-width: 500px;
+    }
+
+    .cs-card-title {
+        font-size: 1.15rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+        letter-spacing: 0.01em;
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+    }
+
+    .cs-social-label {
+        font-weight: 600;
+        margin-bottom: 0.18rem;
+        margin-top: 0.7rem;
+        font-size: 1rem;
+    }
+
+    .cs-social-input {
+        width: 100%;
+        margin-bottom: 0.4rem;
+    }
+
+    @@media (max-width: 900px) {
+        .cs-card-list {
+            flex-direction: column;
+        }
+
+        .cs-card {
+            width: 100%;
+            min-width: unset;
+            max-width: unset;
+        }
+    }
+</style>
+
+<div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title">Contact Settings</h3>
+    </div>
+    <div class="card-body">
+
+        <div class="cs-card-list">
+            <!-- Phone Numbers Card -->
+            <div class="cs-card">
+                <div class="cs-card-header">
+                    <span class="cs-header-main">
+                        <i class="fa fa-phone"></i> Phone Numbers
+                    </span>
+                    <button class="cs-add-btn" data-bs-toggle="modal" data-bs-target="#addPhoneModal" title="Add Phone">
+                        <i class="fa fa-plus"></i>
+                    </button>
+                </div>
+                <div class="cs-list">
+                    @foreach (var phone in Model.ContactSettings.PhoneNumbers)
+                    {
+                        <div class="cs-item-row">
+                            <div class="cs-item-content">@phone.Number</div>
+                            <div class="cs-actions">
+                                <button class="cs-icon-btn" data-bs-toggle="modal" data-bs-target="#editPhoneModal-@phone.Id" title="Edit"><i class="fa fa-pen"></i></button>
+                                <button class="cs-icon-btn delete" data-bs-toggle="modal" data-bs-target="#deletePhoneModal-@phone.Id" title="Delete"><i class="fa fa-trash"></i></button>
+                            </div>
+                        </div>
+                        <!-- Edit Modal -->
+                        <div class="modal fade" id="editPhoneModal-@phone.Id" tabindex="-1">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <form method="post" asp-page-handler="EditPhone">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">Edit Phone</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <input type="hidden" name="id" value="@phone.Id" />
+                                            <input type="text" name="number" value="@phone.Number" class="form-control" />
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="submit" class="btn btn-primary">Save</button>
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Delete Modal -->
+                        <div class="modal fade" id="deletePhoneModal-@phone.Id" tabindex="-1">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <form method="post" asp-page-handler="DeletePhone" asp-route-id="@phone.Id">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">Delete Phone</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            Are you sure you want to delete <b>@phone.Number</b>?
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="submit" class="btn btn-danger">Delete</button>
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <!-- Emails Card -->
+            <div class="cs-card">
+                <div class="cs-card-header">
+                    <span class="cs-header-main">
+                        <i class="fa fa-envelope"></i> Emails
+                    </span>
+                    <button class="cs-add-btn" data-bs-toggle="modal" data-bs-target="#addEmailModal" title="Add Email">
+                        <i class="fa fa-plus"></i>
+                    </button>
+                </div>
+                <div class="cs-list">
+                    @foreach (var email in Model.ContactSettings.Emails)
+                    {
+                        <div class="cs-item-row">
+                            <div class="cs-item-content"><strong>@email.Title</strong>: @email.Email</div>
+                            <div class="cs-actions">
+                                <button class="cs-icon-btn" data-bs-toggle="modal" data-bs-target="#editEmailModal-@email.Id" title="Edit"><i class="fa fa-pen"></i></button>
+                                <button class="cs-icon-btn delete" data-bs-toggle="modal" data-bs-target="#deleteEmailModal-@email.Id" title="Delete"><i class="fa fa-trash"></i></button>
+                            </div>
+                        </div>
+                        <!-- Edit Modal -->
+                        <div class="modal fade" id="editEmailModal-@email.Id" tabindex="-1">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <form method="post" asp-page-handler="EditEmail">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">Edit Email</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <input type="hidden" name="id" value="@email.Id" />
+                                            <input type="text" name="title" value="@email.Title" class="form-control" placeholder="Title" />
+                                            <input type="text" name="email" value="@email.Email" class="form-control" placeholder="Email" />
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="submit" class="btn btn-primary">Save</button>
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Delete Modal -->
+                        <div class="modal fade" id="deleteEmailModal-@email.Id" tabindex="-1">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <form method="post" asp-page-handler="DeleteEmail" asp-route-id="@email.Id">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">Delete Email</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            Are you sure you want to delete <b>@email.Title</b>: @email.Email?
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="submit" class="btn btn-danger">Delete</button>
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <!-- Addresses Card -->
+            <div class="cs-card">
+                <div class="cs-card-header">
+                    <span class="cs-header-main">
+                        <i class="fa fa-map-marker-alt"></i> Addresses
+                    </span>
+                    <button class="cs-add-btn" data-bs-toggle="modal" data-bs-target="#addAddressModal" title="Add Address">
+                        <i class="fa fa-plus"></i>
+                    </button>
+                </div>
+                <div class="cs-list">
+                    @foreach (var addr in Model.ContactSettings.Addresses)
+                    {
+                        <div class="cs-item-row">
+                            <div class="cs-item-content"><strong>@addr.Title</strong>: @addr.Address</div>
+                            <div class="cs-actions">
+                                <button class="cs-icon-btn" data-bs-toggle="modal" data-bs-target="#editAddressModal-@addr.Id" title="Edit"><i class="fa fa-pen"></i></button>
+                                <button class="cs-icon-btn delete" data-bs-toggle="modal" data-bs-target="#deleteAddressModal-@addr.Id" title="Delete"><i class="fa fa-trash"></i></button>
+                            </div>
+                        </div>
+                        <!-- Edit Modal -->
+                        <div class="modal fade" id="editAddressModal-@addr.Id" tabindex="-1">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <form method="post" asp-page-handler="EditAddress">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">Edit Address</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <input type="hidden" name="id" value="@addr.Id" />
+                                            <input type="text" name="title" value="@addr.Title" class="form-control" placeholder="Title" />
+                                            <input type="text" name="address" value="@addr.Address" class="form-control" placeholder="Address" />
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="submit" class="btn btn-primary">Save</button>
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Delete Modal -->
+                        <div class="modal fade" id="deleteAddressModal-@addr.Id" tabindex="-1">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <form method="post" asp-page-handler="DeleteAddress" asp-route-id="@addr.Id">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">Delete Address</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            Are you sure you want to delete <b>@addr.Title</b>: @addr.Address?
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="submit" class="btn btn-danger">Delete</button>
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <!-- Add Modals -->
+        <!-- Add Phone Modal -->
+        <div class="modal fade" id="addPhoneModal" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form method="post" asp-page-handler="AddPhone">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Add Phone</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body">
+                            <input asp-for="NewPhone.Number" class="form-control" placeholder="Phone number" />
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Add</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- Add Email Modal -->
+        <div class="modal fade" id="addEmailModal" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form method="post" asp-page-handler="AddEmail">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Add Email</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body">
+                            <input asp-for="NewEmail.Title" class="form-control" placeholder="Title" />
+                            <input asp-for="NewEmail.Email" class="form-control" placeholder="Email" />
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Add</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- Add Address Modal -->
+        <div class="modal fade" id="addAddressModal" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form method="post" asp-page-handler="AddAddress">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Add Address</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body">
+                            <input asp-for="NewAddress.Title" class="form-control" placeholder="Title" />
+                            <input asp-for="NewAddress.Address" class="form-control" placeholder="Address" />
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Add</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Social Media Card -->
+        <div class="cs-card cs-card-social">
+            <div class="cs-card-title">
+                <i class="fa fa-share-alt"></i> Social Media
+            </div>
+            <form method="post" asp-page-handler="EditSocialMedia" class="social-media-section">
+                <label class="cs-social-label">Facebook</label>
+                <input asp-for="ContactSettings.SocialMedia.Facebook" class="cs-social-input" />
+
+                <label class="cs-social-label">Twitter</label>
+                <input asp-for="ContactSettings.SocialMedia.Twitter" class="cs-social-input" />
+
+                <label class="cs-social-label">Instagram</label>
+                <input asp-for="ContactSettings.SocialMedia.Instagram" class="cs-social-input" />
+
+                <label class="cs-social-label">LinkedIn</label>
+                <input asp-for="ContactSettings.SocialMedia.LinkedIn" class="cs-social-input" />
+
+                <label class="cs-social-label">Youtube</label>
+                <input asp-for="ContactSettings.SocialMedia.Youtube" class="cs-social-input" />
+
+                <button type="submit" class="cs-add-btn" style="margin-top:0.8rem;"><i class="fa fa-save"></i> Update Social Media</button>
+            </form>
+        </div>
+
+        <div class="cs-card" style="max-width: 600px;">
+            <div class="cs-card-title">
+                <i class="fa fa-info-circle"></i> About Section
+            </div>
+            <form method="post" asp-page-handler="UpdateAboutText">
+                <textarea asp-for="ContactSettings.AboutText" class="form-control" rows="4" placeholder="Enter about text..."></textarea>
+                <button type="submit" class="cs-add-btn" style="margin-top:0.8rem;">
+                    <i class="fa fa-save"></i> Save About Text
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap JS (required for modals) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>

@@ -19,6 +19,7 @@ namespace Exwhyzee.AANI.Web.Pages
             Configuration = configuration;
         }
         public PaperCategory PaperCategory { get; set; }
+        public ContactSettingsModel ContactSettings { get; set; }
 
         public PaginatedList<Paper>? Papers { get; set; }
         public int AllCount { get; set; }
@@ -50,11 +51,11 @@ namespace Exwhyzee.AANI.Web.Pages
             }
 
             CurrentFilter = searchString;
-            
+
             IQueryable<Paper> paperList = from s in _context.Papers.Include(x => x.PaperCategory)
-                                          .Include(x=>x.Participant).ThenInclude(c=>c.SEC)
-                                                      .OrderByDescending(x => x.Year).Where(x=>x.PaperCategoryId == id)
-                                                      select s;
+                                          .Include(x => x.Participant).ThenInclude(c => c.SEC)
+                                                      .OrderByDescending(x => x.Year).Where(x => x.PaperCategoryId == id)
+                                          select s;
 
             if (!String.IsNullOrEmpty(searchString))
             {
@@ -71,10 +72,11 @@ namespace Exwhyzee.AANI.Web.Pages
 
             var pageSize = 30; TotalPage = AllCount / pageSize;
             Papers = await PaginatedList<Paper>.CreateAsync(
-                paperList.AsNoTracking().OrderByDescending(x=>x.Year), pageIndex ?? 1, pageSize);
+                paperList.AsNoTracking().OrderByDescending(x => x.Year), pageIndex ?? 1, pageSize);
 
             PageIndex = pageIndex ?? 1;
-
+            ContactSettings = await _context.ContactSettings
+               .FirstOrDefaultAsync();
             return Page();
         }
 

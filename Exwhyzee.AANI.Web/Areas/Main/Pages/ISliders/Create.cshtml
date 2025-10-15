@@ -16,36 +16,49 @@
         <div class="row">
             <div class="col-md-12">
                 <form method="post" enctype="multipart/form-data">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-           
-            
-            <div class="form-group">
-                <label asp-for="Slider.SortOrder" class="control-label"></label>
-                <input asp-for="Slider.SortOrder" class="form-control" />
-                <span asp-validation-for="Slider.SortOrder" class="text-danger"></span>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="Slider.Show" /> @Html.DisplayNameFor(model => model.Slider.Show)
-                </label>
-            </div>
-            <div class="form-group">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+
+                    <div class="form-group">
+                        <label asp-for="Slider.SortOrder" class="control-label"></label>
+                        <input asp-for="Slider.SortOrder" class="form-control" />
+                        <span asp-validation-for="Slider.SortOrder" class="text-danger"></span>
+                    </div>
+                    <div class="form-group form-check">
+                        <label class="form-check-label">
+                            <input class="form-check-input" asp-for="Slider.Show" /> @Html.DisplayNameFor(model => model.Slider.Show)
+                        </label>
+                    </div>
+                    <div class="form-group">
                         <label asp-for="Slider.Title" class="control-label">Title  (Note Add "&lt;br&gt;" if you want to enter next line)</label>
-                <input asp-for="Slider.Title" class="form-control" />
-                <span asp-validation-for="Slider.Title" class="text-danger"></span>
-            </div>
-            <div class="form-group">
+                        <input asp-for="Slider.Title" class="form-control" />
+                        <span asp-validation-for="Slider.Title" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Slider.MiniTitle" class="control-label"></label>
+                        <input asp-for="Slider.MiniTitle" class="form-control" />
+                        <span asp-validation-for="Slider.MiniTitle" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
                         <label asp-for="Slider.Text" class="control-label">Text  (Note Add "&lt;br&gt;" if you want to enter next line)</label>
-                <textarea asp-for="Slider.Text" class="form-control" ></textarea>
-                <span asp-validation-for="Slider.Text" class="text-danger"></span>
-            </div>
-           
+                        <textarea asp-for="Slider.Text" class="form-control"></textarea>
+                        <span asp-validation-for="Slider.Text" class="text-danger"></span>
+                    </div>
+
                     <div class="form-group">
                         <label class="control-label">Image</label><br />
                         <input type="file" class="control-label" asp-for="imagefile" accept="image/*" />
                     </div>
-
-
+                    <div class="form-group">
+                        <label asp-for="Slider.SliderLinkUrl" class="control-label"></label>
+                        <input asp-for="Slider.SliderLinkUrl" class="form-control" />
+                        <span asp-validation-for="Slider.SliderLinkUrl" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Slider.SliderLinkUrlTitle" class="control-label"></label>
+                        <input asp-for="Slider.SliderLinkUrlTitle" class="form-control" />
+                        <span asp-validation-for="Slider.SliderLinkUrlTitle" class="text-danger"></span>
+                    </div>
                     <div class="form-group">
                         <input type="submit" value="Submit" class="btn btn-primary" />
                         <a asp-page="./Index" class="btn bg-gradient-warning btn-sm" style="float:right;">Back</a>

@@ -4,67 +4,112 @@
 }
 
 <style>
-    .feature-box-4 {
-        position: relative;
-        background: #fff;
+    .book-section {
         display: flex;
-        border-top: 3px solid #d21e2b00;
-        overflow: hidden;
-        box-shadow: 0 10px 20px 0 rgb(0 0 0 / 10%);
-        padding: 10px;
-        margin: 15px 0;
+        align-items: center;
+        margin-bottom: 2rem;
+        background: rgba(0,0,0,0.05);
+        border-radius: 8px;
+        padding: 2rem 1rem;
     }
 
-    .feature-box-4-icon {
-        flex: 0 0 30px;
+    .book-image-box {
+        flex: 1;
+        text-align: right;
     }
 
-        .feature-box-4-icon i {
-            color: #d21e2b;
-            font-size: 20px;
+        .book-image-box img {
+            max-width: 220px;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.15);
         }
 
-    .feature-box-4 h4 {
-        margin-bottom: 0px;
+    .book-content-box {
+        flex: 1;
+        text-align: left;
+        padding-left: 2rem;
     }
 
-    .section-heading-line-left {
-        margin-top: 1px;
-        margin-bottom: 4px;
-    }
+        .book-content-box h2 {
+            font-size: 1rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: #222;
+        }
 
-    .feature-box-4-link {
+        .book-content-box h4 {
+            font-size: 0.7rem;
+            font-weight: 600;
+            margin-bottom: 0.1rem;
+            color: #555;
+        }
+
+        .book-content-box p {
+            color: #333;
+            margin-bottom: 1.2rem;
+            line-height: 1.2;
+        }
+
+    .btn-read-more {
+        padding: 0.5rem 1.25rem;
+        border: 2px solid #222;
+        background: transparent;
         color: #222;
-        font-size: 10px;
-        font-weight: 500;
-        display: inline-block;
-        margin-top: 0px;
+        border-radius: 4px;
+        font-weight: 600;
+        transition: background 0.2s, color 0.2s;
     }
 
-    
-
-    feature-box-4-content h5 {
-        height: 45px;
-        font-size: .950rem;
-        line-height: 1.13;
+    .book-meta {
+        font-size: 0.65rem;
+        color: #888;
+        margin-bottom: 0rem;
+        line-height: 1.6;
     }
-    @@media (max-width: 350px) {
-        feature-box-4-content h5 {
-            height: auto !important;
+
+    .btn-read-more:hover {
+        background: #222;
+        color: #fff;
+    }
+
+    @@media (max-width: 991px) {
+        .book-section {
+            flex-direction: column;
+            text-align: center;
         }
+
+        .book-image-box, .book-content-box {
+            text-align: center !important;
+            padding-left: 0 !important;
+        }
+
+            .book-image-box img {
+                margin-bottom: 1rem;
+            }
     }
 </style>
-<div class="page-title-section" style="background-image: url('../img/bred.jpg');">
-    <div class="container">
-        <h1>@Model.PaperCategory.Title</h1>
-        <ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="#">@Model.PaperCategory.Title</a></li>
-        </ul>
+
+<section class="page-header">
+    <div class="page-header__bg"
+         style='background-image: url("@(string.IsNullOrEmpty(Model.ContactSettings?.BreadcrumImageUrl) ? "default-image.jpg" : Model.ContactSettings.BreadcrumImageUrl)")'>
     </div>
-</div>
+
+    <div class="container">
+        <div class="page-header__inner">
+            <h2>@Model.PaperCategory.Title</h2>
+            <div class="thm-breadcrumb__box">
+                <ul class="thm-breadcrumb list-unstyled">
+                    <li><a href="/"><i class="fas fa-home"></i>Home</a></li>
+                    <li><span class="icon-right-arrow-1"></span></li>
+                    <li class="active">@Model.PaperCategory.Title</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
 <div class="section-block">
-    <div class="container" style="box-shadow: 2px 2px 2px 2px #333333;">
+    <div class="container">
         <div class="" style="padding:15px;">
             <div class="row">
 
@@ -93,59 +138,120 @@
             <div class="row">
                 @foreach (var x in Model.Papers)
                 {
-                    <div class="col-md-6 col-sm-12 col-12">
-                        <div class="feature-box-4">
-                            <div class="feature-box-4-icon">
-                                <i class="fa fa-check-square"></i>
+                    <div class="col-md-6">
+                        <div class="book-section">
+                            <div class="book-image-box">
+                                <img src="~/slider-book.png" alt="Book Cover 1">
                             </div>
-                            <div class="feature-box-4-content">
-
-                                <h5 style=" ">@x.Title</h5>
-                                <div class="section-heading-line-left"></div>
-                                @if (x.Participant != null)
-                                {
-                                    <h6>@x.Participant.Fullname</h6>
-                                }
-                                <h4 style="font-size: 0.9rem; font-weight: 900;">
-                                    @if (x.Participant != null)
-                                    {
-                                        <span>
-                                            (SEC @x.Participant.SEC.Number - @x.Participant.SEC.Year)
-                                        </span>
-                                    }
-                                    else
-                                    {
-                                        <span>
-                                            Year @x.Year
-                                        </span>
-                                    }
-                                </h4>
+                            <div class="book-content-box">
+                                <h2 class="text-uppercase">@x.Title</h2>
+                                <h4>@x.PaperCategory.Title</h4>
+                                <div class="book-meta">
+                                    <div>
+                                        Author:
+                                        @(
+            x.Participant?.Fullname ?? "AANI"
+        )
+                                    </div>
+                                    <div>
+                                        Year:
+                                        @if (x.Participant?.SEC != null)
+                                        {
+                                            <span>(SEC @x.Participant.SEC.Number - @x.Participant.SEC.Year)</span>
+                                        }
+                                        else
+                                        {
+                                            <span>Year @x.Year</span>
+                                        }
+                                    </div>
+                                </div>
+                                <p>
+                                    @Html.Raw(x.Description)
+                                </p>
+                                <button class="btn btn-read-more">READ NOW</button>
                             </div>
-                            @*<i class="feature-box-4-icon-bg icon-worldwide2"></i>*@
                         </div>
                     </div>
 
+
                 }
             </div>
-            @{
-                var prevDisabled = !Model.Papers.HasPreviousPage ? "disabled" : "";
-                var nextDisabled = !Model.Papers.HasNextPage ? "disabled" : "";
-            }
+            @if (Model.TotalPage > 1)
+            {
+                <nav class="mt-4">
+                    <ul class="pagination">
 
-            <a asp-page="./PaperList"
-               asp-route-pageIndex="@(Model.Papers.PageIndex - 1)"
-               asp-route-currentFilter="@Model.CurrentFilter"
-               asp-route-id="@Model.PaperCategory.Id"
-               class="primary-button button-sm mb-15-xs @prevDisabled">
-                Previous
-            </a>
-            <a asp-page="./PaperList"
-               asp-route-pageIndex="@(Model.Papers.PageIndex + 1)"
-               asp-route-currentFilter="@Model.CurrentFilter"
-               asp-route-id="@Model.PaperCategory.Id"
-               class="primary-button button-sm mb-15-xs @nextDisabled">
-                Next
-            </a>
-            <i>Page Number (@Model.PageIndex of @Model.TotalPage)</i>
+                        <!-- First page «« -->
+                        <li class="page-item @(Model.PageIndex == 1 ? "disabled" : "")">
+                            <a class="page-link" href="?searchString=@Model.CurrentFilter&id=@Model.PaperCategory.Id&pageIndex=1">&laquo;&laquo;</a>
+                        </li>
+
+                        <!-- Previous page « -->
+                        <li class="page-item @(Model.PageIndex == 1 ? "disabled" : "")">
+                            <a class="page-link" href="?searchString=@Model.CurrentFilter&id=@Model.PaperCategory.Id&pageIndex=@(Model.PageIndex - 1)">&laquo;</a>
+                        </li>
+
+                        <!-- First 3 pages -->
+                        @for (int i = 1; i <= Math.Min(3, Model.TotalPage); i++)
+                        {
+                            <li class="page-item @(i == Model.PageIndex ? "active" : "")">
+                                <a class="page-link" href="?searchString=@Model.CurrentFilter&id=@Model.PaperCategory.Id&pageIndex=@i">@i</a>
+                            </li>
+                        }
+
+                        <!-- Ellipsis -->
+                        @if (Model.TotalPage > 6)
+                        {
+                            <li class="page-item disabled"><span class="page-link">...</span></li>
+                        }
+
+                        <!-- Last 3 pages -->
+                        @for (int i = Model.TotalPage - 2; i <= Model.TotalPage; i++)
+                        {
+                            if (i > 3)
+                            {
+                                <li class="page-item @(i == Model.PageIndex ? "active" : "")">
+                                    <a class="page-link" href="?searchString=@Model.CurrentFilter&id=@Model.PaperCategory.Id&pageIndex=@i">@i</a>
+                                </li>
+                            }
+                        }
+
+                        <!-- Next page » -->
+                        <li class="page-item @(Model.PageIndex == Model.TotalPage ? "disabled" : "")">
+                            <a class="page-link" href="?searchString=@Model.CurrentFilter&id=@Model.PaperCategory.Id&pageIndex=@(Model.PageIndex + 1)">&raquo;</a>
+                        </li>
+
+                        <!-- Last page »» -->
+                        <li class="page-item @(Model.PageIndex == Model.TotalPage ? "disabled" : "")">
+                            <a class="page-link" href="?searchString=@Model.CurrentFilter&id=@Model.PaperCategory.Id&pageIndex=@Model.TotalPage">&raquo;&raquo;</a>
+                        </li>
+
+                    </ul>
+                </nav>
+            }
+            @*@{
+            var prevDisabled = !Model.Papers.HasPreviousPage ? "disabled" : "";
+            var nextDisabled = !Model.Papers.HasNextPage ? "disabled" : "";
+        }
+
+        <a asp-page="./PaperList"
+           asp-route-pageIndex="@(Model.Papers.PageIndex - 1)"
+           asp-route-currentFilter="@Model.CurrentFilter"
+           asp-route-id="@Model.PaperCategory.Id"
+           class="primary-button button-sm mb-15-xs @prevDisabled">
+            Previous
+        </a>
+        <a asp-page="./PaperList"
+           asp-route-pageIndex="@(Model.Papers.PageIndex + 1)"
+           asp-route-currentFilter="@Model.CurrentFilter"
+           asp-route-id="@Model.PaperCategory.Id"
+           class="primary-button button-sm mb-15-xs @nextDisabled">
+            Next
+        </a>
+        <i>Page Number (@Model.PageIndex of @Model.TotalPage)</i>*@
         </div>
-    </div>    </div>
+    </div>
+</div>
+
+
+ 

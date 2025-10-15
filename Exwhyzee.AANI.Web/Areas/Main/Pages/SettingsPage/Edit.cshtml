@@ -1,0 +1,73 @@
+﻿@page "{id:int}"
+@model Exwhyzee.AANI.Web.Areas.Main.Pages.SettingsPage.EditModel
+
+@{
+    ViewData["Title"] = "Edit Contact Settings";
+}
+<div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title">Edit Contact Settings</h3>
+
+
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body">
+
+        <form method="post">
+            <h4>Phone Numbers</h4>
+            @for (int i = 0; i < 3; i++)
+            {
+                <div>
+                    <label>Phone </label>
+                    <input asp-for="ContactSettings.PhoneNumbers[i].Number" class="form-control" />
+                </div>
+            }
+
+            <h4>Emails</h4>
+            @for (int i = 0; i < 4; i++)
+            {
+                <div>
+                    <label>Title</label>
+                    <input asp-for="ContactSettings.Emails[i].Title" class="form-control" />
+                    <label>Email</label>
+                    <input asp-for="ContactSettings.Emails[i].Email" class="form-control" />
+                </div>
+            }
+
+            <h4>Addresses</h4>
+            @for (int i = 0; i < 4; i++)
+            {
+                <div>
+                    <label>Title</label>
+                    <input asp-for="ContactSettings.Addresses[i].Title" class="form-control" />
+                    <label>Address</label>
+                    <input asp-for="ContactSettings.Addresses[i].Address" class="form-control" />
+                </div>
+            }
+
+            <h4>Social Media</h4>
+            <div>
+                <label>Facebook</label>
+                <input asp-for="ContactSettings.SocialMedia.Facebook" class="form-control" />
+            </div>
+            <div>
+                <label>Twitter</label>
+                <input asp-for="ContactSettings.SocialMedia.Twitter" class="form-control" />
+            </div>
+            <div>
+                <label>Instagram</label>
+                <input asp-for="ContactSettings.SocialMedia.Instagram" class="form-control" />
+            </div>
+            <div>
+                <label>LinkedIn</label>
+                <input asp-for="ContactSettings.SocialMedia.LinkedIn" class="form-control" />
+            </div>
+            <div>
+                <label>Youtube</label>
+                <input asp-for="ContactSettings.SocialMedia.Youtube" class="form-control" />
+            </div>
+
+            <button type="submit" class="btn btn-primary">Save</button>
+        </form>
+    </div>
+</div>

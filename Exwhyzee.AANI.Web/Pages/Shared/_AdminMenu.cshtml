@@ -1,77 +1,95 @@
-﻿<li class="nav-header" style="background-color: #c8cacc;border-radius: 4px;font-weight: bolder;color: black;">NAVIGATION</li>
-<li class="nav-item">
-    <a asp-page="/Dashboard/Index" asp-area="Admin" class="nav-link">
-        <i class="nav-icon fas fa-th"></i>
-        <p>
-            DASHBAORD
-        </p>
-    </a>
+﻿<li class="nav-header" style="background-color: #c8cacc; border-radius: 4px; font-weight: bolder; color: black;">
+    Navigation
 </li>
 <li class="nav-item">
-    <a asp-page="/Dashboard/Chapters" asp-area="Alumni" class="nav-link">
-        <i class="nav-icon fas fa-th"></i>
-        <p>
-            EMAILS
-        </p>
+    <a asp-page="/Dashboard/Index" asp-area="Admin" class="nav-link">
+        <i class="nav-icon fa fa-tachometer"></i>
+        <p>Dashboard</p>
     </a>
 </li>
 <li class="nav-item">
     <a asp-page="/Account/Chapters" asp-area="Datapage" class="nav-link">
-        <i class="nav-icon fas fa-th"></i>
-        <p>
-            CHAPTERS
-        </p>
+        <i class="nav-icon fa fa-sitemap"></i>
+        <p>Chapters</p>
     </a>
 </li>
-
 <li class="nav-item">
     <a asp-page="/Account/SecPage" asp-area="Datapage" class="nav-link">
-        <i class="nav-icon fas fa-th"></i>
-        <p>
-            SEC
-        </p>
+        <i class="nav-icon fa fa-shield"></i>
+        <p>SEC</p>
     </a>
 </li>
 <li class="nav-item">
     <a asp-page="/Account/Members" asp-area="Datapage" class="nav-link">
-        <i class="nav-icon fas fa-th"></i>
-        <p>
-            MEMBERS
-        </p>
+        <i class="nav-icon fa fa-users"></i>
+        <p>Members</p>
     </a>
 </li>
 <li class="nav-item">
     <a asp-page="/Account/CampainPage" asp-area="Datapage" class="nav-link">
-        <i class="nav-icon fas fa-th"></i>
-        <p>
-            CAMPAIGN
-        </p>
+        <i class="nav-icon fa fa-bullhorn"></i>
+        <p>Campaign</p>
     </a>
 </li>
 <li class="nav-item">
     <a href="#" class="nav-link">
-        <i class="nav-icon fas fa-th"></i>
+        <i class="nav-icon fa fa-tree"></i>
         <p>
-            OFFICIALS
-            <i class="fas fa-angle-left right"></i>
+            Event Manager
+            <i class="fa fa-angle-left right"></i>
+        </p>
+    </a>
+    <ul class="nav nav-treeview">
+        <li class="nav-item">
+            <a asp-page="/EventPage/EventManager/Index" asp-area="Main" class="nav-link">
+                <i class="fa fa-circle nav-icon"></i>
+                <p>Events</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a asp-page="/EventPage/Committee/Index" asp-area="Main" class="nav-link">
+                <i class="fa fa-circle nav-icon"></i>
+                <p>Committee</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a asp-page="/EventPage/Attendance/Index" asp-area="Main" class="nav-link">
+                <i class="fa fa-circle nav-icon"></i>
+                <p>Attendance</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a asp-page="/EventPage/Comments/Index" asp-area="Main" class="nav-link">
+                <i class="fa fa-circle nav-icon"></i>
+                <p>Eveluations/Comments</p>
+            </a>
+        </li>
+    </ul>
+</li>
+<li class="nav-item">
+    <a href="#" class="nav-link">
+        <i class="nav-icon fa fa-briefcase"></i>
+        <p>
+            Officials
+            <i class="fa fa-angle-left right"></i>
         </p>
     </a>
     <ul class="nav nav-treeview">
         <li class="nav-item">
             <a asp-page="/" asp-area="Main" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
+                <i class="fa fa-user-secret nav-icon"></i>
                 <p>Executives</p>
             </a>
         </li>
         <li class="nav-item">
             <a asp-page="/" asp-area="Main" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
+                <i class="fa fa-users nav-icon"></i>
                 <p>Committees</p>
             </a>
         </li>
         <li class="nav-item">
             <a asp-page="/" asp-area="Main" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
+                <i class="fa fa-user nav-icon"></i>
                 <p>Staff</p>
             </a>
         </li>
@@ -79,28 +97,28 @@
 </li>
 <li class="nav-item">
     <a href="#" class="nav-link">
-        <i class="nav-icon fas fa-th"></i>
+        <i class="nav-icon fa fa-gavel"></i>
         <p>
-            ELECTION
-            <i class="fas fa-angle-left right"></i>
+            Election
+            <i class="fa fa-angle-left right"></i>
         </p>
     </a>
     <ul class="nav nav-treeview">
         <li class="nav-item">
             <a asp-page="/" asp-area="Main" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
+                <i class="fa fa-male nav-icon"></i>
                 <p>Candidates</p>
             </a>
         </li>
         <li class="nav-item">
             <a asp-page="/" asp-area="Main" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
+                <i class="fa fa-check-square-o nav-icon"></i>
                 <p>Votes</p>
             </a>
         </li>
         <li class="nav-item">
             <a asp-page="/" asp-area="Main" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
+                <i class="fa fa-trophy nav-icon"></i>
                 <p>Result</p>
             </a>
         </li>
@@ -108,96 +126,159 @@
 </li>
 <li class="nav-item">
     <a href="#" class="nav-link">
-        <i class="nav-icon fas fa-th"></i>
+        <i class="nav-icon fa fa-bank"></i>
         <p>
-            FUNDS
-            <i class="fas fa-angle-left right"></i>
+            Funds
+            <i class="fa fa-angle-left right"></i>
         </p>
     </a>
     <ul class="nav nav-treeview">
         <li class="nav-item">
             <a asp-page="/" asp-area="Main" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
+                <i class="fa fa-list-alt nav-icon"></i>
                 <p>Category</p>
             </a>
         </li>
         <li class="nav-item">
             <a asp-page="/" asp-area="Main" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
+                <i class="fa fa-exchange nav-icon"></i>
                 <p>Transaction</p>
             </a>
         </li>
-        
+    </ul>
+</li>
+<li class="nav-item">
+    <a href="#" class="nav-link">
+        <i class="nav-icon fa fa-book"></i>
+        <p>
+            Library
+            <i class="fa fa-angle-left right"></i>
+        </p>
+    </a>
+    <ul class="nav nav-treeview">
+        <li class="nav-item">
+            <a asp-page="/PaperPage/category/Index" asp-area="Main" class="nav-link">
+                <i class="fa fa-bookmark nav-icon"></i>
+                <p>Shelves</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a asp-page="/PaperPage/PaperList/Index" asp-area="Main" class="nav-link">
+                <i class="fa fa-file-text nav-icon"></i>
+                <p>Books & Documents</p>
+            </a>
+        </li>
+    </ul>
+</li>
+<li class="nav-item">
+    <a href="#" class="nav-link">
+        <i class="nav-icon fa fa-money"></i>
+        <p>
+            Finances
+            <i class="fa fa-angle-left right"></i>
+        </p>
+    </a>
+    <ul class="nav nav-treeview">
+        <li class="nav-item">
+            <a asp-page="/Funding/category/Index" asp-area="Main" class="nav-link">
+                <i class="fa fa-list-ul nav-icon"></i>
+                <p>Fund Category</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a asp-page="/Funding/FundPage/Index" asp-area="Main" class="nav-link">
+                <i class="fa fa-credit-card nav-icon"></i>
+                <p>Funds</p>
+            </a>
+        </li>
     </ul>
 </li>
 <li class="nav-item">
     <a asp-page="/Account/BirthdayCelebration" asp-area="Datapage" class="nav-link">
-        <i class="nav-icon fas fa-th"></i>
-        <p>
-            BIRTHDAYS
-        </p>
+        <i class="nav-icon fa fa-birthday-cake"></i>
+        <p>Birthdays</p>
     </a>
 </li>
- 
 <li class="nav-item">
     <a href="#" class="nav-link">
-        <i class="nav-icon fas fa-th"></i>
+        <i class="nav-icon fa fa-wrench"></i>
         <p>
-            TOOLS
-            <i class="fas fa-angle-left right"></i>
+            Tools
+            <i class="fa fa-angle-left right"></i>
         </p>
     </a>
     <ul class="nav nav-treeview">
         <li class="nav-item">
             <a asp-page="/MessagePage/Quote/Index" asp-area="Admin" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
+                <i class="fa fa-quote-left nav-icon"></i>
                 <p>Daily Quote</p>
             </a>
         </li>
         <li class="nav-item">
             <a asp-page="/" asp-area="Main" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
+                <i class="fa fa-newspaper-o nav-icon"></i>
                 <p>Newsletter</p>
             </a>
         </li>
         <li class="nav-item">
             <a asp-page="/" asp-area="Main" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
+                <i class="fa fa-comment nav-icon"></i>
                 <p>SMS</p>
             </a>
         </li>
         <li class="nav-item">
             <a asp-page="/" asp-area="Main" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
+                <i class="fa fa-paper-plane nav-icon"></i>
                 <p>Emails</p>
             </a>
         </li>
         <li class="nav-item">
-            <a asp-page="/" asp-area="Main" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Whatsapp Notification</p>
-            </a>
-        </li>
-        <li class="nav-item">
             <a asp-page="/BlogNews/Index" asp-area="Main" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>NEWS</p>
+                <i class="fa fa-rss nav-icon"></i>
+                <p>News</p>
             </a>
         </li>
         <li class="nav-item">
             <a asp-page="/MessagePage/Category/Index" asp-area="Admin" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
+                <i class="fa fa-file-text-o nav-icon"></i>
                 <p>Message Template</p>
             </a>
         </li>
     </ul>
 </li>
-
 <li class="nav-item">
-    <a asp-page="/Dashboard/Celebrations" asp-area="Alumni" class="nav-link">
-        <i class="nav-icon fas fa-th"></i>
-        <p>
-            WEB BANNER
-        </p>
+    <a asp-page="/ISliders/Index" asp-area="Main" class="nav-link">
+        <i class="nav-icon fa fa-sliders"></i>
+        <p>Slider</p>
+    </a>
+</li>
+<li class="nav-item">
+    <a asp-page="/GalleryPage/Index" asp-area="Main" class="nav-link">
+        <i class="nav-icon fa fa-picture-o"></i>
+        <p>Gallery Page</p>
+    </a>
+</li>
+<li class="nav-item">
+    <a asp-page="/IPages/Main/Index" asp-area="Main" class="nav-link">
+        <i class="nav-icon fa fa-paint-brush"></i>
+        <p>Website Design</p>
+    </a>
+</li>
+<li class="nav-item">
+    <a asp-page="/SettingsPage/Index" asp-area="Main" class="nav-link">
+        <i class="nav-icon fa fa-cogs"></i>
+        <p>Contact Settings</p>
+    </a>
+</li>
+<li class="nav-item">
+    <a asp-page="/SettingsPage/OtherSettings" asp-area="Main" class="nav-link">
+        <i class="nav-icon fa fa-gears"></i>
+        <p>Other Settings</p>
+    </a>
+</li>
+<li class="nav-item">
+    <a asp-page="/ConfigPage/Index" asp-area="Main" class="nav-link">
+        <i class="nav-icon fa fa-cog"></i>
+        <p>Config Page</p>
     </a>
 </li>

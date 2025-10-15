@@ -79,7 +79,7 @@
                         <hr />
                         <h4>@Html.DisplayNameFor(model => model.PageSection.BlogSectionPosition)</h4>
                         <p>@Html.DisplayFor(model => model.PageSection.BlogSectionPosition)</p>
-                        <hr /> 
+                        <hr />
                         @if (!String.IsNullOrEmpty(Model.PageSection.YoutubeUrlLink))
                         {
                             <h4>Youtube Video</h4>
@@ -98,7 +98,17 @@
                             <br>
                             <img src="@Model.PageSection.ImageUrl" class="img-fluid" style="max-height:150px;" />
                             <hr />
-                        }   @if (!String.IsNullOrEmpty(Model.PageSection.VideoUrl))
+                        }
+
+                        @if (!String.IsNullOrEmpty(Model.PageSection.SecondImageUrl))
+                        {
+                            <h4>Second Image</h4>
+                            <br>
+                            <img src="@Model.PageSection.SecondImageUrl" class="img-fluid" style="max-height:150px;" />
+                            <hr />
+                        }
+
+                        @if (!String.IsNullOrEmpty(Model.PageSection.VideoUrl))
                         {
                             <h4>Video</h4>
                             <br>

@@ -1,0 +1,37 @@
+﻿@page
+@model Exwhyzee.AANI.Web.Areas.Main.Pages.IPages.TemplatesModel
+@{
+}
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">Section Templates</h3>
+
+    </div>
+    
+    <!-- /.card-header -->
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Template Name</th>
+                        <th>Preview</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 1; i <= 22; i++)
+                    {
+                        var fileName = $"{i}.png";
+                        var imagePath = $"/ptc/theme/{fileName}";
+                        <tr>
+                            <td>@fileName</td>
+                            <td>
+                                <img src="@imagePath" alt="@fileName" style="max-width:120px;max-height:80px;border:1px solid #ccc;" />
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

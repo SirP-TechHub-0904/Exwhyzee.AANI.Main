@@ -12,13 +12,16 @@
         <h3 class="card-title">
             <i class="fas fa-edit"></i>
             @Model.WebPage.Title  <span style="font-size: 0.9rem;padding-left:20px;">web page</span>
-        </h3>    
+        </h3>
         <a asp-page="./Index" class="btn bg-gradient-warning btn-sm" style="float:right;">Back</a>
         <a asp-page="./Edit" asp-route-id="@Model.WebPage.Id" class="btn bg-gradient-warning btn-sm" style="float:right;">Update</a>
+        <a asp-page="/IPages/PageSearch" target="_blank" class="btn bg-success btn-sm" style="float: right;">Search</a>
 
     </div>
     <div class="card-header">
-        <a asp-page="/ITemplate/Index" target="_blank" class="btn bg-gradient-warning btn-sm" style="">VIEW TEMPLATE DESIGNS</a>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#themeModal">
+            Show Templates
+        </button>
     </div>
     <div class="card-body">
         <h4>Sort Order</h4>
@@ -205,7 +208,7 @@
                             <label asp-for="PageSection.ButtonLink" class="control-label"></label>
                             <select asp-for="PageSection.ButtonLink" class="form-control" asp-items="ViewBag.WebPageId">
                                 <option value="0">#</option>
-                                <option value="Direct">Direct Link (https://www.juray.ng/)</option>
+                                <option value="Direct">Direct Link (https://www.aani.ng/)</option>
                                 <option value="000">Contact Us Page</option>
 
                             </select>
@@ -256,7 +259,13 @@
                             </label>
                         </div>
                         <div class="form-group">
-                            <label asp-for="PageSection.TemplateKey" class="control-label"></label>
+                            <label asp-for="PageSection.TemplateKey" class="control-label">
+                                TemplateKey
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#themeModal">
+                                    Show Templates
+                                </button>
+
+                            </label>
                             <select asp-for="PageSection.TemplateKey" class="form-control">
                                 <option value="1">1</option>
                                 <option value="2">2</option>
@@ -282,36 +291,7 @@
                                 <option value="21">21</option>
                                 <option value="22">22</option>
                                 <option value="23">23</option>
-                                <option value="24">24</option>
-                                <option value="25">25</option>
-                                <option value="26">26</option>
-                                <option value="27">27</option>
-                                <option value="28">28</option>
-                                <option value="29">29</option>
-                                <option value="30">30</option>
-                                <option value="31">31</option>
-                                <option value="32">32</option>
-                                <option value="33">33</option>
-                                <option value="34">34</option>
-                                <option value="35">35</option>
-                                <option value="36">36</option>
-                                <option value="37">37</option>
-                                <option value="38">38</option>
-                                <option value="39">39</option>
-                                <option value="40">40</option>
-                                <option value="41">41</option>
-                                <option value="42">42</option>
-                                <option value="43">43</option>
-                                <option value="44">44</option>
-                                <option value="45">45</option>
-                                <option value="46">46</option>
-                                <option value="47">47</option>
-                                <option value="48">48</option>
-                                <option value="49">49</option>
-                                <option value="50">50</option>
-                                <option value="51">51</option>
-                                <option value="52">52</option>
-                                <option value="53">53</option>
+
                             </select>
                         </div>
                         <div class="form-group">
@@ -377,5 +357,84 @@
 
 
 </div>
-<!-- /.card -->
-<!-- /.card -->
+
+
+
+
+<!-- Main Table Modal -->
+<div class="modal fade" id="themeModal" tabindex="-1" aria-labelledby="themeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="themeModalLabel">Theme Templates</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" style="max-height:70vh; overflow-y:auto;">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Template Name</th>
+                            <th>Preview</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (int i = 1; i <= 22; i++)
+                        {
+                            var fileName = $"{i}.png";
+                            var imagePath = $"{fileName}";
+                            <tr>
+                                <td>@fileName</td>
+                                <td>
+                                    <img src="~/theme/@imagePath"
+                                         alt="@fileName"
+                                         style="max-width:120px;max-height:80px;cursor:pointer;border:1px solid #ccc;"
+                                         data-bs-toggle="modal"
+                                         data-bs-target="#fullImageModal"
+                                         onclick="showFullImage('/theme/@imagePath')" />
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Full Image Modal -->
+<div class="modal fade" id="fullImageModal" tabindex="-1" aria-labelledby="fullImageModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="fullImageModalLabel">Full Image Preview</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <img id="modalFullImage" src="" alt="Template Full Size" style="max-width:100%;max-height:80vh;" />
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Script to set image src dynamically -->
+ 
+<script>
+    function showFullImage(imageUrl) {
+        try {
+            var img = document.getElementById('modalFullImage');
+            if (!img) {
+                console.error('modalFullImage element not found');
+                return;
+            }
+            img.src = imageUrl;
+            console.log('Set full image src:', imageUrl);
+
+            // If using Bootstrap 5, show the modal programmatically (for robust opening)
+            var modal = new bootstrap.Modal(document.getElementById('fullImageModal'));
+            modal.show();
+            console.log('Full Image Modal opened');
+        } catch (err) {
+            console.error('Error showing full image:', err);
+        }
+    }
+</script>
