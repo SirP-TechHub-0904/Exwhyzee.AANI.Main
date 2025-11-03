@@ -16,5 +16,10 @@ namespace Exwhyzee.AANI.Domain.Models
         public DateTime EndDate { get; set; }
         public long? ExecutivePositionId { get; set; }
         public ExecutivePosition ExecutivePosition { get; set; }
+
+        // --- NEW: Link to OperationYear ---
+        public long? OperationYearId { get; set; }
+        public OperationYear? OperationYear { get; set; }
+
     }
 }

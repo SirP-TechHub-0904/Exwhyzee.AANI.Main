@@ -81,7 +81,7 @@ namespace Exwhyzee.AANI.Web.Areas.Datapage.Pages.Account
 
             AllCount = paperList.Count();
 
-            var pageSize = 30; TotalPage = AllCount / pageSize;
+            var pageSize = 9; TotalPage = AllCount / pageSize;
             Papers = await PaginatedList<Paper>.CreateAsync(
                 paperList.AsNoTracking().OrderByDescending(x=>x.Year), pageIndex ?? 1, pageSize);
 

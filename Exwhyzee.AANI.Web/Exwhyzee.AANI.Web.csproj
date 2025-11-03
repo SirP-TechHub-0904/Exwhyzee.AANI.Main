@@ -19,7 +19,6 @@
 		<PackageReference Include="AWSSDK.S3" Version="3.7.306.2" />
 		<PackageReference Include="AWSSDK.Extensions.NETCore.Setup" Version="3.7.2" />
 		<!-- EF6 (classic) stays the same -->
-		<PackageReference Include="EntityFramework" Version="6.4.4" />
 
 		<!-- ASP.NET Core Identity & Diagnostics (upgrade to 9.x) -->
 		<PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="9.0.0" />
@@ -35,6 +34,8 @@
 
 		<!-- Scaffolding tools -->
 		<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="9.0.0" />
+		<PackageReference Include="SkiaSharp" Version="3.119.1" />
+		<PackageReference Include="SkiaSharp.Svg" Version="1.60.0" />
 		<PackageReference Include="System.Drawing.Common" Version="9.0.0" />
 		<!-- Barcode library (no update available, keep existing version) -->
 		<PackageReference Include="Zen.Barcode.Rendering.Framework" Version="3.1.10729.1" />

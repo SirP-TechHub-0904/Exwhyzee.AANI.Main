@@ -1,63 +1,470 @@
 ﻿@page
 @model Exwhyzee.AANI.Web.Areas.Datapage.Pages.Account.MemberDetailsModel
-@{
-}
-<div class="">
-    <section class="content" style="margin-top:10px;">
-        <div class="container-fluid">
 
+<section class="content" style="margin-top:10px;">
+    <div class="container-fluid">
+        <div class="row" style="margin-top:20px;">
+            <div class="col-md-3">
 
-            <div class="row" style="margin-top:20px;">
-                <div class="col-md-3"></div>
-                <div class="col-md-6">
-                    <div class="card card-primary card-outline">
-                        <div class="card-body box-profile">
-                            <div class="text-center">
-                                <a asp-page="./UpdateImage" asp-route-id="@Model.Participant.Id">
-                                    @if (Model.Participant.PictureUrl != null)
+                <!-- Profile Image -->
+                <div class="card card-primary card-outline">
+                    <div class="card-body box-profile">
+                        <div class="text-center">
+                            <a asp-page="./UpdateImage" asp-route-id="@Model.Participant.Id">
+                                @if (!string.IsNullOrEmpty(Model.Participant.PictureUrl))
+                                {
+                                    <img class="profile-user-img img-fluid img-circle" src="@Model.Participant.PictureUrl" alt="User profile picture" />
+                                }
+                                else
+                                {
+                                    <img class="profile-user-img img-fluid img-circle" src="~/img/upload.jpg" alt="User profile picture" />
+                                }
+                            </a>
+                        </div>
+
+                        <h3 class="profile-username text-center">@Model.Participant.Fullname</h3>
+
+                        <p class="text-muted" style="text-align:left;margin-bottom:0;"><i class="fas fa-envelope" style="font-weight:900;"></i> @Model.Participant.Email</p>
+                        <p class="text-muted" style="text-align: left; margin-bottom: 0;"><i class="fas fa-phone" style="font-weight:900;"></i> @Model.Participant.PhoneNumber</p>
+                        <p class="text-muted" style="text-align: left; margin-bottom: 0;">
+                            <i class="fas fa-map" style="font-weight:900;"></i>
+                            @{
+                                if (Model.Participant?.Office != null)
+                                {
+                                    var cat = Model.Participant.Office.Category?.Name ?? "N/A";
+                                    var officeName = Model.Participant.Office.Name ?? "N/A";
+                                    @($"{cat} / {officeName}")
+                                }
+                                else
+                                {
+                                    @("N/A")
+                                }
+                            }
+                        </p>
+                        <p class="text-muted" style="text-align: left; margin-bottom: 0;">
+                            <i class="fas fa-globe" style="font-weight:900;"></i>
+                            @($"{Model.Participant.CurrentOffice} / {Model.Participant.CurrentPosition}")
+                        </p>
+
+                        <!-- Operation Year selector / Display -->
+                        <div class="form-group" style="margin-top:0.5rem;">
+                            <label class="small text-muted mb-1">Operation Year</label>
+                            @if (Model.OperationYears != null && Model.OperationYears.Any())
+                            {
+                                <select id="operationYearSelect" class="form-control form-control-sm">
+                                    @foreach (var op in Model.OperationYears)
                                     {
-                                        <img class="profile-user-img img-fluid img-circle" src="@Model.Participant.PictureUrl" alt="User profile picture">
+                                        <option value="@op.Id" selected="@(Model.OperationYearId.HasValue && op.Id == Model.OperationYearId.Value ? "selected" : null)">
+                                            @(!string.IsNullOrEmpty(op.Name) ? op.Name : $"{op.StartDate:yyyy} - {op.EndDate:yyyy}")
+                                        </option>
+                                    }
+                                </select>
+                            }
+                            else
+                            {
+                                <div class="text-muted">No operation years defined</div>
+                            }
+                        </div>
+
+                        <ul class="list-group list-group-unbordered mb-3">
+                            <li class="list-group-item">
+                                <b>Total Attendance in Events/Meetings</b> <a class="float-right">@Model.TotalAttendance</a>
+                            </li>
+                            <li class="list-group-item">
+                                <b>Total Funds Contributed/Payment</b> <a class="float-right">@($"₦{Model.TotalFundsContributed:N0}")</a>
+                            </li>
+                            <li class="list-group-item">
+                                <b>Total Login</b> <a class="float-right">@Model.TotalLogins</a>
+                            </li>
+                        </ul>
+                        <a asp-page="./UpdateAccount" asp-route-id="@Model.Participant.Id" class="float-right btn btn-primary btn-xs">Update My Profile</a>
+                        <a asp-page="./UpdateImage" asp-route-id="@Model.Participant.Id" class="float-right btn btn-primary btn-xs" style="margin-right:5px;">Change Photo</a>
+
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+                <!-- About Me Box / Committees / Chapter / SEC -->
+                <div class="card card-primary">
+                    <div class="card-header" style="padding-top:0;padding-bottom:0;">
+                        <h3 class="card-title btn-xs" style="font-size:18px;">More</h3>
+                    </div>
+                    <div class="card-body">
+                        <strong><i class="fas fa-book mr-1"></i> Committee Involved</strong>
+                        <div class="mb-2">
+                            @if (Model.Committees != null && Model.Committees.Any())
+                            {
+                                <div class="dropdown">
+                                    <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" id="committeesDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        View committees (@Model.Committees.Count)
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="committeesDropdown">
+                                        @foreach (var c in Model.Committees)
+                                        {
+                                            <a class="dropdown-item" href="@Url.Page("/Events/Details", new { id = c.EventId })">
+                                                <strong>@(string.IsNullOrEmpty(c.EventTitle) ? "Untitled event" : c.EventTitle)</strong>
+                                                <div class="small text-muted">@c.Position</div>
+                                            </a>
+                                        }
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="text-muted">No committee assignments for this operation year.</div>
+                            }
+                        </div>
+
+                        <hr />
+                        <strong><i class="fas fa-map-marker-alt mr-1"></i> Chapter</strong>
+                        <p class="text-muted">@Model.Participant.Chapter?.State</p>
+
+                        <hr />
+                        <strong><i class="fas fa-shield-alt mr-1"></i> SEC</strong>
+                        <p class="text-muted">
+                            @if (Model.Participant.SEC != null)
+                            {
+                                @($"SEC {Model.Participant.SEC.Number} ({Model.Participant.SEC.Year})")
+                            }
+                            else
+                            {
+                                <span>N/A</span>
+                            }
+                        </p>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+
+            </div>
+            <!-- /.col -->
+
+            <div class="col-md-9">
+                <div class="card">
+                    <div class="card-header p-2">
+                        <ul class="nav nav-pills">
+                            <li class="nav-item"><a class="nav-link active" href="#activity" data-toggle="tab">Biography</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#timeline" data-toggle="tab">Financial Record</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#settings" data-toggle="tab">Events Attended</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#idcard" data-toggle="tab">ID Card Info</a></li>
+                        </ul>
+                    </div><!-- /.card-header -->
+                    <div class="card-body">
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="activity">
+                                <h4>Biography</h4>
+                                <div>
+                                    @if (!string.IsNullOrWhiteSpace(Model.Participant.Bio))
+                                    {
+                                        @* Bio is rendered as HTML. Ensure bios are sanitized on save to avoid XSS. *@
+                                        @Html.Raw(Model.Participant.Bio)
                                     }
                                     else
                                     {
-                                        <img class="profile-user-img img-fluid img-circle" src="~/img/upload.jpg" alt="User profile picture">
+                                        <p class="text-muted">No biography available.</p>
                                     }
-
-                                </a>
-                            </div>
-
-                            <h3 class="profile-username text-center">
-                                @Html.DisplayFor(modelItem => Model.Participant.Surname)
-                                @Html.DisplayFor(modelItem => Model.Participant.FirstName)
-                                @Html.DisplayFor(modelItem => Model.Participant.OtherName)
-                            </h3>
-
-                            <p class="text-muted text-center" style="margin-bottom: 0.1rem;">@Model.Participant.CurrentOffice</p>
-                            <p class="text-muted text-center" style="margin-bottom: 0.1rem;">@Model.Participant.CurrentPosition</p>
-                            <a asp-page="./UpdateMyData" asp-route-id="@Model.Participant.Id" class="float-right btn btn-primary btn-xs">Update My Profile</a>
-                            <a asp-page="./UpdateImage" asp-route-id="@Model.Participant.Id" class="float-right btn btn-primary btn-xs" style="margin-right:5px;">Change Photo</a>
-                            <div class="clearfix"></div>
-                            <ul class="list-group list-group-unbordered mb-3" style="margin-top:10px;">
-                                <li class="list-group-item">
-                                    <b>Email</b> <a class="float-right">@Model.Participant.Email</a>
-                                </li>
-                                <li class="list-group-item">
-                                    <b>Phone No.</b> <a class="float-right">@Model.Participant.PhoneNumber</a>
-                                </li>
-
-                            </ul>
-                            <div>
-                                <h4>BIOGRAPHY</h4>
-                                <div>
-                                    @Html.Raw(Model.Participant.Bio)
                                 </div>
                             </div>
-                        </div>
-                        <!-- /.card-body -->
-                    </div>
+                            <!-- /.tab-pane -->
 
+                            <div class="tab-pane" id="timeline">
+                                <h4>Financial Record</h4>
+                                @if (Model.FinancialRecords != null && Model.FinancialRecords.Any())
+                                {
+                                    <div class="table-responsive">
+                                        <table class="table table-sm table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>Date</th>
+                                                    <th>Category</th>
+                                                    <th>Event</th>
+                                                    <th class="text-right">Amount</th>
+                                                    <th>Status</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var f in Model.FinancialRecords)
+                                                {
+                                                    <tr>
+                                                        <td>@f.DatePaid.ToString("dd MMM yyyy")</td>
+                                                        <td>@f.Category</td>
+                                                        <td>@f.EventTitle</td>
+                                                        <td class="text-right">@f.Amount.ToString("C0")</td>
+                                                        <td>@f.Status</td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="text-muted">No financial records for the selected operation year.</div>
+                                }
+                            </div>
+
+                            <div class="tab-pane" id="settings">
+                                <h4>Events Attended</h4>
+                                @if (Model.EventsAttended != null && Model.EventsAttended.Any())
+                                {
+                                    <ul class="timeline timeline-inverse">
+                                        @foreach (var e in Model.EventsAttended)
+                                        {
+                                            <li>
+                                                <div class="timeline-item">
+                                                    <span class="time"><i class="fas fa-clock"></i> @e.StartDate.ToString("dd MMM yyyy")</span>
+                                                    <h3 class="timeline-header"><a href="@Url.Page("/Events/Details", new { id = e.EventId })">@e.Title</a></h3>
+                                                    <div class="timeline-body">
+                                                        <strong>Location:</strong> @e.Location
+                                                    </div>
+                                                    <div class="timeline-footer">
+                                                        <small class="text-muted">Arrival: @e.Arrival.ToString("dd MMM yyyy HH:mm")</small>
+                                                        &nbsp;|&nbsp;
+                                                        <small class="text-muted">Departure: @e.Departure.ToString("dd MMM yyyy HH:mm")</small>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        }
+                                    </ul>
+                                }
+                                else
+                                {
+                                    <div class="text-muted">No events attended for the selected operation year.</div>
+                                }
+                            </div>
+                            <!-- /.tab-pane -->
+                            <div class="tab-pane" id="idcard">
+                                <!-- Responsive ID preview -->
+                                <div class="idcard-preview">
+                                    @if (!string.IsNullOrEmpty(Model.IdCardSvg))
+                                    {
+                                        <div class="idcard-frame" data-filename="@Model.UserFullname" aria-label="ID card preview">
+                                            @* Insert the raw SVG, but wrapped so CSS can target it. If your SVG string contains width/height attributes, they will be overridden by CSS. *@
+                                            @Html.Raw(Model.IdCardSvg)
+                                        </div>
+
+                                        <div class="idcard-actions mt-2">
+                                            <a asp-page-handler="DownloadSvg" asp-route-id="@Model.Participant.Id" class="btn btn-xs btn-secondary" title="Download SVG">
+                                                Download SVG
+                                            </a>
+                                            
+                                            <button id="downloadPngBtn" class="btn btn-xs btn-primary">Download PNG</button>
+
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="text-muted p-3">ID preview not available</div>
+                                    }
+                                </div>
+
+
+                            </div>
+                        </div>
+                        <!-- /.tab-content -->
+                    </div><!-- /.card-body -->
                 </div>
+                <!-- /.card -->
             </div>
+            <!-- /.col -->
         </div>
-    </section>
-</div>
+        <!-- /.row -->
+    </div><!-- /.container-fluid -->
+</section>
+
+@section Scripts {
+    <script>
+        (function () {
+            const select = document.getElementById('operationYearSelect');
+            if (!select) return;
+
+            select.addEventListener('change', function () {
+                const opId = this.value;
+                const url = new URL(window.location.href);
+
+                // preserve participant id query param if present
+                // If your route uses "id" in route rather than query, you may need to adjust accordingly.
+                url.searchParams.set('operationYearId', opId);
+
+                window.location.href = url.toString();
+            });
+        })();
+    </script>
+
+
+
+
+
+    <script>
+        // Replace your conversion click handler with this improved version
+        document.getElementById('downloadPngBtn').addEventListener('click', function () {
+            const svgEl = document.querySelector('.idcard-frame svg');
+            if (!svgEl) { alert('SVG preview not found'); return; }
+
+            // Clone the SVG so we don't modify the page
+            const clone = svgEl.cloneNode(true);
+
+            // Get viewBox if present
+            const vb = svgEl.viewBox && svgEl.viewBox.baseVal && svgEl.viewBox.baseVal.width
+                ? svgEl.viewBox.baseVal
+                : null;
+
+            // Desired pixel scale for output (2 = double resolution)
+            const scale = 2;
+
+            // Compute intrinsic pixel width/height:
+            // - If the SVG has explicit width/height attributes, use them.
+            // - Else if it has viewBox, use viewBox width/height.
+            // - Else fall back to computed client size.
+            let vbWidth = 0, vbHeight = 0;
+            const explicitW = svgEl.getAttribute('width');
+            const explicitH = svgEl.getAttribute('height');
+
+            if (explicitW && explicitH) {
+                vbWidth = parseFloat(explicitW);
+                vbHeight = parseFloat(explicitH);
+            } else if (vb) {
+                vbWidth = vb.width;
+                vbHeight = vb.height;
+            } else {
+                // fallback to computed size (CSS)
+                vbWidth = svgEl.clientWidth || svgEl.getBoundingClientRect().width || 900;
+                vbHeight = svgEl.clientHeight || svgEl.getBoundingClientRect().height || 1400;
+            }
+
+            // Make sure we have sensible numeric values
+            if (!vbWidth || !vbHeight) {
+                // sensible defaults if everything else fails
+                vbWidth = 900;
+                vbHeight = 1400;
+            }
+
+            // Set explicit width/height on cloned SVG in pixels so the browser will rasterize it at that size
+            clone.setAttribute('width', vbWidth);
+            clone.setAttribute('height', vbHeight);
+            // Optional: ensure viewBox remains for correct scaling
+            if (!clone.getAttribute('viewBox') && vb) {
+                clone.setAttribute('viewBox', `0 0 ${vbWidth} ${vbHeight}`);
+            }
+
+            // Inline styles if you used external CSS (optional step — only if needed)
+            try {
+                let cssText = '';
+                Array.from(document.styleSheets).forEach(ss => {
+                    try {
+                        Array.from(ss.cssRules || []).forEach(rule => {
+                            if (rule.cssText) cssText += rule.cssText + '\n';
+                        });
+                    } catch (e) {
+                        // ignore cross-origin stylesheets
+                    }
+                });
+                if (cssText) {
+                    const styleEl = document.createElement('style');
+                    styleEl.textContent = cssText;
+                    clone.insertBefore(styleEl, clone.firstChild);
+                }
+            } catch (e) { /* ignore */ }
+
+            // Serialize
+            const svgString = new XMLSerializer().serializeToString(clone);
+            const blob = new Blob([svgString], { type: 'image/svg+xml;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+
+            const img = new Image();
+            img.crossOrigin = 'anonymous';
+            img.onload = () => {
+                // Use natural size of the image (which now honors the width/height we set)
+                const w = Math.max(1, Math.round((img.naturalWidth || vbWidth) * scale));
+                const h = Math.max(1, Math.round((img.naturalHeight || vbHeight) * scale));
+                const canvas = document.createElement('canvas');
+                canvas.width = w;
+                canvas.height = h;
+                const ctx = canvas.getContext('2d');
+
+                // Scale canvas drawing so we get high-res output
+                ctx.setTransform(scale, 0, 0, scale, 0, 0);
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.drawImage(img, 0, 0);
+
+                canvas.toBlob(function (pngBlob) {
+                    if (!pngBlob) { alert('PNG conversion failed'); URL.revokeObjectURL(url); return; }
+                    const a = document.createElement('a');
+                    a.href = URL.createObjectURL(pngBlob);
+                    const wrapper = document.querySelector('.idcard-frame');
+                    const userFullname = wrapper?.dataset?.filename || 'aani-id-card';
+                    a.download = userFullname + '.png';
+                    //a.download = UserFullname+'.png';
+                    document.body.appendChild(a);
+                    a.click();
+                    a.remove();
+                    URL.revokeObjectURL(url);
+                }, 'image/png', 1.0);
+            };
+            img.onerror = () => {
+                URL.revokeObjectURL(url);
+                alert('Error loading SVG as image (CORS or invalid SVG).');
+            };
+            img.src = url;
+        });
+    </script>
+}
+
+<style>
+    /* Responsive ID card preview styles */
+    .idcard-preview {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    /* The frame that contains the SVG. Controls max preview size to avoid overshoot. */
+    .idcard-frame {
+        width: 100%;
+        max-width: 680px; /* max width for on-screen preview — tweak as needed */
+        /* preserve aspect ratio: viewBox is 900x1400 -> aspect ratio = 900/1400 = 0.642857...
+     We set height automatically to maintain aspect ratio by using an inner rule below. */
+        overflow: hidden;
+        /* optional subtle border/shadow for preview */
+        border-radius: 6px;
+        background: #fff;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+
+        /* Ensure SVG inside idcard-frame scales without overflowing */
+        .idcard-frame svg {
+            display: block;
+            width: 100% !important; /* occupy container width */
+            height: auto !important; /* scale proportionally */
+            max-height: calc(100vh - 200px); /* avoid vertical overshoot on short screens */
+            box-sizing: border-box;
+        }
+
+            /* Keep svg images (embedded <image>) responsive inside svg too */
+            .idcard-frame svg image {
+                /* Nothing usually needed here; preserveAspectRatio in SVG controls image sizing.
+     But to be defensive: */
+                max-width: 100%;
+                max-height: 100%;
+            }
+
+    /* Actions row */
+    .idcard-actions {
+        display: flex;
+        gap: 0.5rem;
+        margin-top: 0.5rem;
+    }
+
+    /* Mobile adjustments */
+    @@media (max-width: 480px) {
+        .idcard-frame {
+            max-width: 92vw; /* leave small margin on tiny screens */
+        }
+
+            .idcard-frame svg {
+                max-height: calc(100vh - 180px);
+            }
+    }
+</style>

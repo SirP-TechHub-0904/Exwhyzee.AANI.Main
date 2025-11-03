@@ -4,20 +4,202 @@
 @{
     ViewData["Title"] = "PapersCategory";
 }
+
+<!-- Responsive Bookshelf Section -->
+<div class="card bookshelf-card">
+    <div class="card-header">
+        <h3 class="card-title">
+            OUR LIBRARY SHELF
+        </h3>
+        <div class="hidden-sm hidden-xs">
+            <a href="javascript:history.back()" class="btn bg-gradient-warning btn-xs" style="float: right; font-size: .775rem;">Back</a>
+
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="bookshelf-bg">
+            <!-- First Shelf -->
+            <div class="bookshelf-row">
+                @foreach (var paper in Model.PaperCategory.Take(3))
+                {
+                    <div class="book-card">
+                        <a asp-page="./PaperList" asp-route-id="@paper.Id" style="text-decoration:none;">
+                            <img class="book-cover" src="@paper.CoverUrl" alt="@paper.Title" />
+                            <div class="book-info">
+                                <div class="book-title">@paper.Title</div>
+                                <div class="book-meta">@paper.Description</div>
+                            </div>
+                        </a>
+                    </div>
+                }
+            </div>
+            <div class="shelf-bar"></div>
+            <!-- Second Shelf -->
+            <div class="bookshelf-row">
+                @foreach (var paper in Model.PaperCategory.Skip(3).Take(5))
+                {
+                    <div class="book-card">
+                        <a asp-page="./PaperList" asp-route-id="@paper.Id" style="text-decoration:none;">
+                            <img class="book-cover" src="@paper.CoverUrl" alt="@paper.Title" />
+                            <div class="book-info">
+                                <div class="book-title">@paper.Title</div>
+                                <div class="book-meta">@paper.Description</div>
+                            </div>
+                        </a>
+                    </div>
+                }
+            </div>
+            <div class="shelf-bar"></div>
+        </div>
+    </div>
+
+</div>
+<!-- Link to external CSS -->
 <style>
-    .small-box h3 {
-        font-size: 1.5vw;
+     
+    .bookshelf-card {
+        background: #f7f7f7;
+        border-radius: 16px;
+        margin: 32px auto;
+        max-width: 100%;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.10);
+    }
+
+    .bookshelf-bg {
+        background: url('../../bg-book-category.png') repeat;
+        border-radius: 16px;
+        padding: 32px 16px 16px 16px;
+        position: relative;
+    }
+
+    .bookshelf-row {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: end;
+        gap: 24px;
+        margin-bottom: 38px;
+        position: relative;
+    }
+
+    .book-card {
+        background: #fff;
+        width: 33%;
+        min-width: 33%;
+        max-width: 33%;
+        box-shadow: 0 2px 12px rgba(0,0,0,0.13);
+        border-radius: 6px;
+        overflow: hidden;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        transition: transform 0.2s;
+    }
+
+        .book-card:hover {
+            transform: translateY(-6px) scale(1.05);
+        }
+
+    .book-cover {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+        border-bottom: 1px solid #eee;
+    }
+
+    .book-info {
+        padding: 7px 7px 10px;
+    }
+
+    .book-title {
+        font-size: 0.98rem;
+        font-weight: bold;
+        margin-bottom: 3px;
+        color: #333;
+    }
+
+    .book-meta {
+        font-size: 0.90rem;
+        color: #666;
+        margin-bottom: 2px;
+    }
+
+    .shelf-bar {
+        width: 100%;
+        height: 18px;
+        background: linear-gradient(90deg, #194f35 0%, #224f34 100%);
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.09), 0 1.5px 0 #224f34 inset;
+        border-radius: 6px;
+        margin: -20px 0 34px 0;
+        position: relative;
+        z-index: 0;
+    }
+
+    /* Responsive */
+    @@media (max-width: 700px) {
+        .bookshelf-bg {
+            padding: 20px 6px 12px 6px !important;
+        }
+
+        .bookshelf-row {
+            gap: 16px !important;
+        }
+
+        .book-card {
+            width: 33% !important;
+            min-width: 33% !important;
+            max-width: 33% !important;
+        }
+
+        .book-cover {
+            height: 110px !important;
+        }
+    }
+
+    @@media (max-width: 490px) {
+        .bookshelf-bg {
+            max-width: 99vw !important;
+            padding: 7vw 2vw !important;
+        }
+
+        .bookshelf-row {
+            gap: 10px !important;
+        }
+
+        .book-card {
+            width: 100% !important;
+            min-width: 100% !important;
+            max-width: 100% !important;
+        }
+
+        .book-cover {
+            height: 80px !important;
+        }
+
+        .book-title {
+            font-size: 0.83rem !important;
+        }
+
+        .book-meta {
+            font-size: 0.80rem !important;
+        }
     }
 </style>
-<div class="">
- 
+
+
+
+
+
+
+<!--<div class="">
+
     <section class="content" style="margin-top:10px;">
         <div class="container-fluid card">
             <div class="content-header" style="padding:1px 0;">
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-sm-12" style="padding-left:0;">
-                            <h5 class="m-0" style="font-weight:900;">OUR LIBRARY</h5>
+                            <h5 class="m-0" style="font-weight:900;"></h5>
                         </div>
                     </div>
                 </div>
@@ -94,14 +276,11 @@
                 }
 
             </div>
-        </div><!-- /.container-fluid -->
-    </section>
-   
-     
-
-
-</div>
+        </div>-->
+<!-- /.container-fluid -->
+<!--</section>
 
 
 
- 
+
+</div>-->

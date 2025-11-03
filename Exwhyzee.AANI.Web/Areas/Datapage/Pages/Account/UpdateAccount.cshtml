@@ -1,189 +1,291 @@
-﻿@page
+﻿@page "{id?}"
 @model Exwhyzee.AANI.Web.Areas.Datapage.Pages.Account.UpdateAccountModel
 @{
+    ViewData["Title"] = "Update Account";
 }
+
 <div class="card card-default">
     <div class="card-header">
-        <h3 class="card-title">UPDATE @Model.Participant.Title @Model.Participant.Surname @Model.Participant.FirstName @Model.Participant.OtherName </h3>
-
-
+        <h3 class="card-title">Update @Model.Participant.Title @Model.Participant.Surname @Model.Participant.FirstName @Model.Participant.OtherName</h3>
     </div>
-    <!-- /.card-header -->
     <div class="card-body">
-        <div class="row">
-            <div class="col-md-12">
-                <form method="post">
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <input type="hidden" asp-for="Participant.Id" />
-                    <div class="form-group">
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <label asp-for="Participant.Title" class="control-label"></label>
-                                <select asp-for="Participant.Title" class="form-control" required="required">
-                                    <option value="Mr">Mr</option>
-                                    <option value="Mrs">Mrs</option>
-                                    <option value="Chief">Chief</option>
-                                    <option value="Alhaji">Alhaji</option>
-                                    <option value="Mallam">Mallam</option>
-                                    <option value="Ambassador">Ambassador</option>
-                                    <option value="Col.">Col.</option>
-                                    <option value="Major General">Major General</option>
-                                    <option value="Comrade">Comrade</option>
-                                    <option value="Captain">Captain</option>
-                                    <option value="Capt Navy.">Capt Navy.</option>
-                                    <option value="Brig Gen.">Brig Gen.</option>
-                                    <option value="Air Comdr.">Air Comdr.</option>
-                                    <option value="AVM">AVM</option>
-                                    <option value="Gp Capt.">Gp Capt.</option>
-                                    <option value="Dr">Dr</option>
-                                    <option value="Engr.">Engr.</option>
-                                    <option value="Pharm.">Pharm.</option>
-                                    <option value="CP">CP</option>
-                                    <option value="AIG">AIG</option>
-                                    <option value="DIG">DIG</option>
-                                    <option value="Prof.">Prof.</option>
-                                    <option value="Barr.">Barr.</option>
+        <form method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Participant.Id" />
+            <input type="hidden" asp-for="Participant.PictureUrl" />
+            <input type="hidden" asp-for="Participant.PictureKey" />
+            <input type="hidden" asp-for="Phase" value="@Model.Phase" />
+            <ul class="nav nav-tabs" id="updateTab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link @(Model.Phase == 1 ? "active" : "")" data-toggle="tab" href="#basicInfo" role="tab">Basic Info</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link @(Model.Phase == 2 ? "active" : (Model.Phase > 2 ? "" : "disabled"))" data-toggle="tab" href="#officeInfo" role="tab">Office/Position</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link @(Model.Phase == 3 ? "active" : "disabled")" data-toggle="tab" href="#biography" role="tab">Biography</a>
+                </li>
+            </ul>
+            <div class="tab-content mt-3">
+                <!-- Phase 1: Basic Info -->
+                <div class="tab-pane fade @(Model.Phase == 1 ? "show active" : "")" id="basicInfo" role="tabpanel">
+                    <div class="form-group row">
+                        <div class="col-12">
+                            <label asp-for="Participant.Title">Title</label>
+                            <select asp-for="Participant.Title" class="form-control" required>
+                                <option value="">Select Title</option>
+                                <option value="Mr">Mr</option>
+                                <option value="Mrs">Mrs</option>
+                                <option value="Chief">Chief</option>
+                                <option value="Alhaji">Alhaji</option>
+                                <option value="Mallam">Mallam</option>
+                                <option value="Ambassador">Ambassador</option>
+                                <option value="Col.">Col.</option>
+                                <option value="Major General">Major General</option>
+                                <option value="Comrade">Comrade</option>
+                                <option value="Captain">Captain</option>
+                                <option value="Capt Navy.">Capt Navy.</option>
+                                <option value="Brig Gen.">Brig Gen.</option>
+                                <option value="Air Comdr.">Air Comdr.</option>
+                                <option value="AVM">AVM</option>
+                                <option value="Gp Capt.">Gp Capt.</option>
+                                <option value="Dr">Dr</option>
+                                <option value="Engr.">Engr.</option>
+                                <option value="Pharm.">Pharm.</option>
+                                <option value="CP">CP</option>
+                                <option value="AIG">AIG</option>
+                                <option value="DIG">DIG</option>
+                                <option value="Prof.">Prof.</option>
+                                <option value="Barr.">Barr.</option>
+                                <option value="Hajiya">Hajiya</option>
+                                <option value="Prince">Prince</option>
+                                <option value="Miss">Miss</option>
+                                <option value="Princess">Princess</option>
+                                <option value="Commodore">Commodore</option>
+                                <option value="Brig.">Brig.</option>
+                                <option value="Major">Major</option>
+                                <option value="Hon.">Hon.</option>
+                                <option value="Hon. Justice">Hon. Justice</option>
+                                <option value="HRH">HRH</option>
+                            </select>
+                            <span asp-validation-for="Participant.Title" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                            <label asp-for="Participant.Surname"></label>
+                            <input asp-for="Participant.Surname" class="form-control" />   
+                            <span asp-validation-for="Participant.Surname" class="text-danger"></span>
 
-                                    <option value="Hajiya">Hajiya</option>
-                                    <option value="Prince">Prince</option>
-                                    <option value="Miss">Miss</option>
-                                    <option value="Princess">Princess</option>
-                                    <option value="Commodore">Commodore</option>
-                                    <option value="Brig.">Brig.</option>
-                                    <option value="Major">Major</option>
-                                    <option value="Hon.">Hon.</option>
-                                    <option value="Hon. Justice">Hon. Justice</option>
-                                    <option value="HRH">HRH</option>
-                                </select>                        <span asp-validation-for="Participant.Title" class="text-danger"></span>
-                            </div>
-                            <div class="col-md-6">
-                                <label asp-for="Participant.Surname" class="control-label"></label>
-                                <input asp-for="Participant.Surname" class="form-control" />
-                                <span asp-validation-for="Participant.Surname" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-4">
+                            <label asp-for="Participant.FirstName"></label>
+                            <input asp-for="Participant.FirstName" class="form-control" />
+                            <span asp-validation-for="Participant.FirstName" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-4">
+                            <label asp-for="Participant.OtherName"></label>
+                            <input asp-for="Participant.OtherName" class="form-control" />
+                            <span asp-validation-for="Participant.OtherName" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                            <label asp-for="DOB">Date of Birth</label>
+                            <input asp-for="DOB" class="form-control" type="date" />
+                            <span asp-validation-for="DOB" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-4">
+                            <label asp-for="Participant.GenderStatus">Gender</label>
+                            @Html.DropDownListFor(model => model.Participant.GenderStatus, new SelectList(Enum.GetValues(typeof(Exwhyzee.AANI.Domain.Enums.GenderStatus))), new { @class = "form-control" })
+
+                            <span asp-validation-for="Participant.GenderStatus" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-4">
+                            <label asp-for="Participant.MaritalStatus">Marital Status</label>
+                            @Html.DropDownListFor(model => model.Participant.MaritalStatus, new SelectList(Enum.GetValues(typeof(Exwhyzee.AANI.Domain.Enums.MaritalStatus))), new { @class = "form-control" })
+
+                            <span asp-validation-for="Participant.MaritalStatus" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                            <label asp-for="Participant.ReligionStatus">Religion</label>
+                            @Html.DropDownListFor(model => model.Participant.ReligionStatus, new SelectList(Enum.GetValues(typeof(Exwhyzee.AANI.Domain.Enums.ReligionStatus))), new { @class = "form-control" })
+
+                            <span asp-validation-for="Participant.ReligionStatus" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-4">
+                            <label asp-for="PhoneNumber">Phone Number</label>
+                            <input asp-for="PhoneNumber" class="form-control" />
+                            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-4">
+                            <label asp-for="AltPhoneNumber">Alternate Phone</label>
+                            <input asp-for="AltPhoneNumber" class="form-control" />
+                            <span asp-validation-for="AltPhoneNumber" class="text-danger"></span>
+                        </div>
+
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                            <label asp-for="State">State</label>
+                            <select asp-for="State" class="form-control" id="stateSelect">
+                                <option value="">-- Select State --</option>
+                                @foreach (var state in Model.StateList)
+                                {
+                                    <option value="@state.Value" @@(Model.State= =state.Value ? "selected" : "" )>@state.Text</option>
+                                }
+                            </select>
+                            <span asp-validation-for="State" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-4">
+                            <label asp-for="LGA">LGA</label>
+                            <select asp-for="LGA" class="form-control" id="lgaSelect">
+                                <option value="">-- Select LGA --</option>
+                                @foreach (var lga in Model.LGAList)
+                                {
+                                    <option value="@lga.Value" @@(Model.LGA= =lga.Value ? "selected" : "" )>@lga.Text</option>
+                                }
+                            </select>
+                            <span asp-validation-for="LGA" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-4">
+                            <label asp-for="Participant.ChapterId">Chapter</label>
+                            <select asp-for="Participant.ChapterId" asp-items="Model.ChapterList" class="form-control"></select>
+
+                            <span asp-validation-for="Participant.ChapterId" class="text-danger"></span>
+                        </div>
+
+
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-6">
+                            <label asp-for="Participant.SECId">SEC Year</label>
+                            <select asp-for="Participant.SECId" asp-items="Model.SECList" class="form-control"></select>
+
+                            <span asp-validation-for="Participant.SECId" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-6">
+                            <label asp-for="Participant.Sponsor"></label>
+                            <input asp-for="Participant.Sponsor" class="form-control" />
+                            <span asp-validation-for="Participant.Sponsor" class="text-danger"></span>
+                        </div>
+
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-6">
+
+                            @if (!String.IsNullOrEmpty(Model.Participant.PictureUrl))
+                            {
+                                <div class="form-group">
+                                    <label class="control-label">Previous Passport Photograph</label><br />
+                                    <img src="@Model.Participant.PictureUrl" style="max-height:200px;" />
+                                </div>
+                            }
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label">Passport Photograph</label><br />
+                                <input type="file" class="control-label" asp-for="imagefile" accept="image/*" />
+                                <span asp-validation-for="imagefile" class="text-danger"></span>
                             </div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <label asp-for="Participant.FirstName" class="control-label"></label>
-                                <input asp-for="Participant.FirstName" class="form-control" />
-                                <span asp-validation-for="Participant.FirstName" class="text-danger"></span>
-                            </div>
-                            <div class="col-md-6">
-                                <label asp-for="Participant.OtherName" class="control-label"></label>
-                                <input asp-for="Participant.OtherName" class="form-control" />
-                                <span asp-validation-for="Participant.OtherName" class="text-danger"></span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <div class="row">
-                            
-                            <div class="col-md-12">
-                                <label asp-for="Participant.GenderStatus" class="control-label">Gender</label>
-                                @Html.DropDownListFor(model => model.Participant.GenderStatus, new SelectList(Enum.GetValues(typeof(Exwhyzee.AANI.Domain.Enums.GenderStatus))), new { @class = "form-control" })
-                                <span asp-validation-for="Participant.GenderStatus" class="text-danger"></span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="Participant.Sponsor" class="control-label"></label>
-                        <input asp-for="Participant.Sponsor" class="form-control" />
-                        <span asp-validation-for="Participant.Sponsor" class="text-danger"></span>
-                    </div>
-                     
-                    <div class="form-group">
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <label asp-for="Participant.MaritalStatus" class="control-label">Marital Status</label>
-                                @Html.DropDownListFor(model => model.Participant.MaritalStatus, new SelectList(Enum.GetValues(typeof(Exwhyzee.AANI.Domain.Enums.MaritalStatus))), new { @class = "form-control" })
-                                <span asp-validation-for="Participant.MaritalStatus" class="text-danger"></span>
-                            </div>
-                            <div class="col-md-6">
-                                <label asp-for="Participant.ReligionStatus" class="control-label">Religion</label>
-                                @Html.DropDownListFor(model => model.Participant.ReligionStatus, new SelectList(Enum.GetValues(typeof(Exwhyzee.AANI.Domain.Enums.ReligionStatus))), new { @class = "form-control" })
-                                <span asp-validation-for="Participant.ReligionStatus" class="text-danger"></span>
-                            </div>
-                        </div>
-                    </div>
-
-                     
-                     
-
-                     
-                    <div class="form-group">
-                        <label asp-for="Participant.SECId" class="control-label">SEC YEAR</label>
-                        <select asp-for="Participant.SECId" asp-items="ViewBag.SECId" required="required" class="form-control select2 select2-primary js-example-basic-single" data-dropdown-css-class="select2-primary">
-                            <option>Select SEC</option>
-
-                        </select>                        <span asp-validation-for="Participant.SECId" class="text-danger"></span>
-                    </div>
-
-                    
-                    <div class="form-group">
-                        <label asp-for="Participant.MessageTemplateCategoryId" class="control-label">Message Template Category</label>
-                        <select asp-for="Participant.MessageTemplateCategoryId" asp-items="ViewBag.MessageId" required="required">
-                            <option>Select SEC</option>
-
-                        </select>                        <span asp-validation-for="Participant.MessageTemplateCategoryId" class="text-danger"></span>
-                    </div>
+                    <button type="submit" class="btn btn-primary">Save & Next</button>
+                </div>
+                <!-- Phase 2: Office/Position -->
+                <div class="tab-pane fade @(Model.Phase == 2 ? "show active" : "")" id="officeInfo" role="tabpanel">
 
                     <div class="form-group">
-                        <input type="submit" value="Save" class="btn btn-primary" />
-                        <a asp-page="./Members" class="btn bg-gradient-warning btn-sm" style="float:right;">Back</a>
-
+                        <label asp-for="SelectedOfficeCategoryId"><b>Office Category</b></label>
+                        <select asp-for="SelectedOfficeCategoryId" id="officeCategorySelect" asp-items="Model.OfficeCategoryList" class="form-control">
+                            <option value="">-- Select Category --</option>
+                        </select>
+                        <span asp-validation-for="SelectedOfficeCategoryId" class="text-danger"></span>
                     </div>
-                </form>
+                    <div class="form-group">
+                        <label for="officeSelect"><b>Office</b></label>
+                        <select asp-for="OfficeId" asp-items="Model.OfficeList" id="officeSelect" class="form-control"></select>
+
+                        <span asp-validation-for="OfficeId" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label>Current Position/Role</label>
+                        <input name="OfficerRole" value="@Model.OfficerRole" id="officeSelect" class="form-control" />
+
+                        <span asp-validation-for="OfficerRole" class="text-danger"></span>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Save & Next</button>
+                </div>
+                <!-- Phase 3: Biography -->
+                <div class="tab-pane fade @(Model.Phase == 3 ? "show active" : "")" id="biography" role="tabpanel">
+                    <div class="form-group">
+                        <label>Biography</label>
+                        <textarea asp-for="Biography" class="form-control" id="biography-editor"></textarea>
+                        <span asp-validation-for="Biography" class="text-danger"></span>
+                    </div>
+                    <button type="submit" class="btn btn-success">Finish & Save</button>
+                </div>
             </div>
-        </div>
-
-
-        <!-- /.row -->
+        </form>
     </div>
-    <!-- /.card-body -->
     <div class="card-footer">
+        <a asp-page="./Members" class="btn bg-gradient-warning btn-sm" style="float:right;">Back</a>
     </div>
 </div>
 
-
 @section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
-    <script type="text/jscript">
-        $(function () {
-            $('#State').change(function () {
+    <partial name="_ValidationScriptsPartial" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/summernote-bs4.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/summernote-bs4.min.css" />
 
+    <script>
+        $(function () {
+            // Tab activation logic
+            $('a[data-toggle="tab"]').on('show.bs.tab', function (e) {
+                var target = $(e.target).attr("href");
+                var currPhase = @Model.Phase;
+                var tabIdx = { "#basicInfo": 1, "#officeInfo": 2, "#biography": 3 }[target];
+                if (tabIdx > currPhase) return false;
+            });
+
+            // Summernote for bio
+            if (@Model.Phase == 3) {
+                $('#biography-editor').summernote({
+                    height: 200
+                });
+            }
+
+            // Office Category → Office
+            $('#officeCategorySelect').change(function () {
+    var catId = $(this).val();
+    $('#officeSelect').html('<option>Loading...</option>');
+    $.get('@Url.Page("UpdateAccount", "Offices")', { categoryId: catId }, function (data) {
+        var html = '<option value="">-- Select Office --</option>';
+        $.each(data, function (i, item) {
+            html += '<option value="' + item.id + '">' + item.name + '</option>';
+        });
+        $('#officeSelect').html(html);
+    });
+});
+
+            // State → LGA
+            $('#stateSelect').change(function () {
                 $.ajax({
                     type: 'GET',
-                    url: 'UpdateAccount?handler=LGA',
+                    url: '@Url.Page("UpdateAccount", "LGA")',
                     dataType: "json",
-                    data: {
-                        id: $('#State').val()
-                    },
-                    contentType: "application/json; charset=utf-8",
-                    error: function () {
-                        console.log("error");
-                    },
+                    data: { stateName: $('#stateSelect').val() },
                     success: function (data) {
-                        console.log("yes");
-
-                        console.log(data);
-                        var items = '<option>Choose LGA</option>';
-                        $.each(jQuery.map(data, function (i, local) {
-                            items += "<option value='" + i.value + "'>" + i.text + "</option>";
-                            console.log("vin")
-                        }));
-
-                        $('#LGA').html(items);
-
+                        var items = '<option value="">-- Select LGA --</option>';
+                        $.each(data, function (i, local) {
+                            items += "<option value='" + local.value + "'>" + local.text + "</option>";
+                        });
+                        $('#lgaSelect').html(items);
                     }
                 });
-                console.log("pass")
             });
         });
     </script>
-
 }

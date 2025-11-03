@@ -1,7 +1,7 @@
 using Exwhyzee.AANI.Domain.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.Data.Entity;
+using Microsoft.EntityFrameworkCore;
 
 namespace Exwhyzee.AANI.Web.Pages
 {

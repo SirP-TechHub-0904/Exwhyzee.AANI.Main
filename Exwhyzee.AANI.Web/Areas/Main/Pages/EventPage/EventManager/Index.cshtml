@@ -2,88 +2,84 @@
 @model Exwhyzee.AANI.Web.Areas.Main.Pages.EventPage.EventManager.IndexModel
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Event Manager";
 }
 
 <div class="card">
     <div class="card-header">
-        <h3 class="card-title">EVENT MANAGER</h3>
-        @if (User.Identity.IsAuthenticated && User.IsInRole("Admin")){
-        <a asp-page="./Create" class="btn bg-gradient-warning btn-sm" style="float:right;">Create New</a>
-        } </div>
-    <!-- /.card-header -->
+        <h3 class="card-title mb-0">EVENTS - @Model.CurrentOperationYear?.Name</h3>
+        <div style="float:right;">
+
+
+            <div class="d-flex align-items-center">
+                <!-- NEW: OperationYear Filter Dropdown -->
+                <form class="form-inline mr-3">
+                    <div class="form-group">
+                        <label for="yearFilter" class="mr-2" style="font-weight:normal;">Filter by Year</label>
+                        <select id="yearFilter" class="form-control form-control-sm" asp-for="OperationYearId" asp-items="Model.OperationYearsSL"></select>
+                    </div>
+                </form>
+
+                @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                {
+                    <!-- The OperationYearId is passed to the Create page -->
+                    <a asp-page="./Create" asp-route-OperationYearId="@Model.OperationYearId" class="btn bg-gradient-warning btn-xs">Add New Event</a>
+                }
+            </div>
+        </div>
+    </div>
     <div class="card-body">
+
+        <!-- The old filter form has been removed from here -->
+
         <div class="table-responsive">
             <table id="example1" class="table table-bordered table-striped">
                 <thead>
                     <tr>
                         <th>S/N</th>
-            <th>
-                @Html.DisplayNameFor(model => model.Event[0].Title)
-            </th>
-           <th>Topic</th>
-            <th>
-                @Html.DisplayNameFor(model => model.Event[0].StartDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Event[0].EndDate)
-            </th>
-          <th>Location</th>
-            <th>
-                @Html.DisplayNameFor(model => model.Event[0].EventStatus)
-            </th>
-           @if (User.Identity.IsAuthenticated && User.IsInRole("Admin")){<th></th>}
-        </tr>
-                </thead>  @{
+                        <th>@Html.DisplayNameFor(model => model.Event[0].Title)</th>
+                        <th>Topic</th>
+                        <th>@Html.DisplayNameFor(model => model.Event[0].StartDate)</th>
+                        <th>@Html.DisplayNameFor(model => model.Event[0].EndDate)</th>
+                        <th>Location</th>
+                        <th>@Html.DisplayNameFor(model => model.Event[0].EventStatus)</th>
+                        @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                        {
+                            <th></th>
+                        }
+                    </tr>
+                </thead>
+                @{
                     int sn = 0;
                 }
-    <tbody>
-@foreach (var item in Model.Event) {
-        <tr>
+                <tbody>
+                    @foreach (var item in Model.Event)
+                    {
+                        <tr>
                             <td>
-                                @{
-                                    sn++;
-                                }
+                                @{ sn++; }
                                 @sn
                             </td>
-            <td>
-                <a asp-page="./Details" asp-route-id="@item.Id">
+                            <td>
+                                <a asp-page="./Details" asp-route-id="@item.Id">
                                     @Html.DisplayFor(modelItem => item.Title)
                                 </a>
-            </td>
-          <td>                <a asp-page="./Details" asp-route-id="@item.Id">
-@Html.DisplayFor(modelItem => item.Toipc)
-</a></td>
-            <td>
-                @item.StartDate.ToString("ddd dd MMM, yyyy")
-            </td>
-            <td>
-                                @item.EndDate.ToString("ddd dd MMM, yyyy")
-            </td>
-
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Location)
                             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EventStatus)
-            </td>
+                            <td>
+                                <a asp-page="./Details" asp-route-id="@item.Id">
+                                    @Html.DisplayFor(modelItem => item.Toipc)
+                                </a>
+                            </td>
+                            <td>@item.StartDate.ToString("ddd, dd MMM yyyy")</td>
+                            <td>@item.EndDate.ToString("ddd, dd MMM yyyy")</td>
+                            <td>@Html.DisplayFor(modelItem => item.Location)</td>
+                            <td>@Html.DisplayFor(modelItem => item.EventStatus)</td>
                             @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
                             {
                                 <td>
                                     <div class="btn-group">
-                                        <button type="button" class="btn btn-success">Action</button>
-
-                                        <div class="btn-group">
-                                            <button type="button" class="btn btn-success dropdown-toggle dropdown-icon" data-toggle="dropdown" aria-expanded="false">
-                                            </button>
-                                            <div class="dropdown-menu" style="">
-
-                                                <a class="dropdown-item" asp-page="./Edit" asp-route-id="@item.Id">Edit</a>
-
-                                            </div>
-                                        </div>
+                                        <a class="btn btn-xs btn-primary" asp-page="./Edit" asp-route-id="@item.Id">Edit</a>
                                     </div>
-
                                 </td>
                             }
                         </tr>
@@ -93,3 +89,15 @@
         </div>
     </div>
 </div>
+
+@section Scripts {
+    <script>
+        $(function () {
+            // Script for the new year filter dropdown
+            $('#yearFilter').on('change', function () {
+                var selectedYearId = $(this).val();
+                window.location.href = '/Main/EventPage/EventManager?OperationYearId=' + selectedYearId;
+            });
+        });
+    </script>
+}

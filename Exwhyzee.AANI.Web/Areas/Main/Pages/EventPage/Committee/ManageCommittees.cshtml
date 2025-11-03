@@ -1,0 +1,99 @@
+﻿@page
+@model Exwhyzee.AANI.Web.Areas.Main.Pages.EventPage.Committee.ManageCommitteesModel
+
+@{
+    ViewData["Title"] = "Event Committees";
+}
+
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title mb-0">COMMITTEES - @Model.CurrentOperationYear?.Name</h3>
+        <div style="float: right;">
+            <div class="d-flex align-items-center">
+                <!-- Year Filter Dropdown -->
+                <form class="form-inline mr-3">
+                    <div class="form-group">
+                        <label for="yearFilter" class="mr-2" style="font-weight:normal;">Filter by Year</label>
+                        <select id="yearFilter" class="form-control form-control-sm" asp-for="OperationYearId" asp-items="Model.OperationYearsSL"></select>
+                    </div>
+                </form>
+
+                <!-- With Committee / All Events Filter -->
+                <div class="btn-group btn-group-sm">
+                    <a asp-page="./ManageCommittees" asp-route-OperationYearId="@Model.OperationYearId" asp-route-filter="with_committee"
+                       class="btn @(Model.CurrentFilter == "with_committee" ? "btn-primary" : "btn-outline-primary")">
+                        With Committee
+                    </a>
+                    <a asp-page="./ManageCommittees" asp-route-OperationYearId="@Model.OperationYearId" asp-route-filter="all"
+                       class="btn @(Model.CurrentFilter == "all" ? "btn-primary" : "btn-outline-primary")">
+                        Show All
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Event Date</th>
+                        <th class="text-center">Committee Members</th>
+                        <th style="width: 200px;"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.EventCommittees)
+                    {
+                        <tr>
+                            <td>
+                                <strong>@item.EventName</strong>
+                            </td>
+                            <td>
+                                @item.EventDate.ToString("dd MMM, yyyy")
+                            </td>
+                            <td class="text-center">
+                                @if (item.MemberCount > 0)
+                                {
+                                    <span class="badge badge-success" style="font-size: 1rem;">@item.MemberCount</span>
+                                }
+                                else
+                                {
+                                    <span class="badge badge-secondary" style="font-size: 1rem;">@item.MemberCount</span>
+                                }
+                            </td>
+                            <td class="text-right">
+                                <a asp-page="./Details" asp-route-eventId="@item.EventId" class="btn btn-info btn-sm">
+                                    <i class="fas fa-users-cog mr-1"></i> Manage Committee
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                    @if (!Model.EventCommittees.Any())
+                    {
+                        <tr>
+                            <td colspan="4" class="text-center py-4">
+                                <p>No events found for the selected filters.</p>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(function () {
+            // Script for the year filter dropdown
+            $('#yearFilter').on('change', function () {
+                var selectedYearId = $(this).val();
+                // Get the current committee filter to preserve it
+                var currentFilter = '@Model.CurrentFilter';
+                window.location.href = '/Main/EventPage/Committee/ManageCommittees?OperationYearId=' + selectedYearId + '&filter=' + currentFilter;
+            });
+        });
+    </script>
+}

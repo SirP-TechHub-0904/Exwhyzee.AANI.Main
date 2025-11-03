@@ -1,0 +1,284 @@
+﻿@page
+@model Exwhyzee.AANI.Web.Areas.Datapage.Pages.OfficeManage.IndexModel
+@{
+    ViewData["Title"] = "Office & Office Category Manager";
+}
+<style>
+    .btn-xs {
+        padding: .15rem .4rem;
+        font-size: .75rem;
+        line-height: 1.5;
+        border-radius: .2rem;
+    }
+</style>
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">Office Category and Office Management</h3>
+        <button class="btn btn-primary btn-xs float-right" data-toggle="modal" data-target="#addCategoryModal">Add Office Category</button>
+    </div>
+    <div class="card-body">
+        @if (Model.OfficeCategories.Count == 0)
+        {
+            <p>No office categories found.</p>
+        }
+        else
+        {
+    <div class="accordion" id="categoryAccordion">
+        @for (var i = 0; i < Model.OfficeCategories.Count; i++)
+        {
+            var cat = Model.OfficeCategories[i];
+            var collapseId = $"collapse{cat.Id}";
+            var headingId = $"heading{cat.Id}";
+            var expanded = i == 0 ? "true" : "false";
+            var showCollapse = i == 0 ? "show" : "";
+            <div class="card mb-2">
+                <div class="card-header d-flex align-items-center" id="@headingId">
+                    <span class="font-weight-bold">@cat.Name</span>
+                    <div class="btn-group btn-group-xs ml-auto" role="group" style="float:right;">
+                        <button class="btn btn-success btn-xs" data-toggle="modal" data-target="#addOfficeModal" data-category="@cat.Id">Add Office</button>
+                        <button class="btn btn-warning btn-xs" data-toggle="modal" data-target="#editCategoryModal" data-category="@cat.Id" data-name="@cat.Name">Edit</button>
+                        <button class="btn btn-danger btn-xs" data-toggle="modal" data-target="#deleteCategoryModal" data-category="@cat.Id" data-name="@cat.Name">Delete</button>
+                        <button class="btn btn-light btn-xs" type="button" data-toggle="collapse" data-target="#@collapseId" aria-expanded="@expanded" aria-controls="@collapseId">
+                            Offices <span class="fa fa-chevron-down"></span>
+                        </button>
+                    </div>
+                </div>
+                <div id="@collapseId" class="collapse @showCollapse" aria-labelledby="@headingId" data-parent="#categoryAccordion">
+                    <div class="card-body">
+                        @if (cat.Offices == null || cat.Offices.Count == 0)
+                        {
+                            <p>No offices in this category.</p>
+                        }
+                        else
+                        {
+                            <table class="table table-bordered table-sm mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th style="width:100px;"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var office in cat.Offices.OrderBy(o => o.Name))
+                                    {
+                                        <tr>
+                                            <td>@office.Name</td>
+                                            <td>
+                                                <div class="btn-group btn-group-xs" role="group">
+                                                    <button class="btn btn-warning btn-xs" data-toggle="modal" data-target="#editOfficeModal"
+                                                            data-office="@office.Id" data-name="@office.Name">
+                                                        Edit
+                                                    </button>
+                                                    <button class="btn btn-danger btn-xs" data-toggle="modal" data-target="#deleteOfficeModal"
+                                                            data-office="@office.Id" data-name="@office.Name">
+                                                        Delete
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+        }
+    </div>
+</div>
+
+<!-- Add Category Modal -->
+<div class="modal fade" id="addCategoryModal" tabindex="-1" role="dialog" aria-labelledby="addCategoryLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <form method="post" asp-page-handler="AddCategory">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addCategoryLabel">Add Office Category</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span>&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input asp-for="OfficeCategoryModel.Name" class="form-control" placeholder="Category Name" required />
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary btn-xs">Add</button>
+                    <button type="button" class="btn btn-secondary btn-xs" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Edit Category Modal -->
+<div class="modal fade" id="editCategoryModal" tabindex="-1" role="dialog" aria-labelledby="editCategoryLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <form method="post" asp-page-handler="EditCategory">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editCategoryLabel">Edit Office Category</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span>&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" asp-for="EditCategoryId" id="editCategoryId" />
+                    <input asp-for="OfficeCategoryModel.Name" id="editCategoryName" class="form-control" placeholder="Category Name" required />
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-warning btn-xs">Update</button>
+                    <button type="button" class="btn btn-secondary btn-xs" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Delete Category Modal -->
+<div class="modal fade" id="deleteCategoryModal" tabindex="-1" role="dialog" aria-labelledby="deleteCategoryLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <form method="post" asp-page-handler="DeleteCategory">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteCategoryLabel">Delete Office Category</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span>&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" name="deleteCategoryId" id="deleteCategoryId" />
+                    <p>Are you sure you want to delete <span id="deleteCategoryName" class="font-weight-bold"></span> and all its offices?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-danger btn-xs">Delete</button>
+                    <button type="button" class="btn btn-secondary btn-xs" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Add Office Modal -->
+<div class="modal fade" id="addOfficeModal" tabindex="-1" role="dialog" aria-labelledby="addOfficeLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <form method="post" asp-page-handler="AddOffice">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addOfficeLabel">Add Office</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span>&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input asp-for="OfficeModel.Name" class="form-control" placeholder="Office Name" required />
+                    <select asp-for="SelectedCategoryId" class="form-control mt-2" required>
+                        <option value="">-- Select Category --</option>
+                        @foreach (var cat in Model.OfficeCategories)
+                        {
+                            <option value="@cat.Id">@cat.Name</option>
+                        }
+                    </select>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary btn-xs">Add</button>
+                    <button type="button" class="btn btn-secondary btn-xs" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Edit Office Modal -->
+<div class="modal fade" id="editOfficeModal" tabindex="-1" role="dialog" aria-labelledby="editOfficeLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <form method="post" asp-page-handler="EditOffice">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editOfficeLabel">Edit Office</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span>&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" asp-for="EditOfficeId" id="editOfficeId" />
+                    <input asp-for="OfficeModel.Name" id="editOfficeName" class="form-control" placeholder="Office Name" required />
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-warning btn-xs">Update</button>
+                    <button type="button" class="btn btn-secondary btn-xs" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Delete Office Modal -->
+<div class="modal fade" id="deleteOfficeModal" tabindex="-1" role="dialog" aria-labelledby="deleteOfficeLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <form method="post" asp-page-handler="DeleteOffice">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteOfficeLabel">Delete Office</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span>&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" name="deleteOfficeId" id="deleteOfficeId" />
+                    <p>Are you sure you want to delete <span id="deleteOfficeName" class="font-weight-bold"></span>?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-danger btn-xs">Delete</button>
+                    <button type="button" class="btn btn-secondary btn-xs" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // For editing/deleting category
+        $('#editCategoryModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+            var id = button.data('category');
+            var name = button.data('name');
+            $('#editCategoryId').val(id);
+            $('#editCategoryName').val(name);
+        });
+        $('#deleteCategoryModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+            var id = button.data('category');
+            var name = button.data('name');
+            $('#deleteCategoryId').val(id);
+            $('#deleteCategoryName').text(name);
+        });
+        // For editing/deleting office
+        $('#editOfficeModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+            var id = button.data('office');
+            var name = button.data('name');
+            $('#editOfficeId').val(id);
+            $('#editOfficeName').val(name);
+        });
+        $('#deleteOfficeModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+            var id = button.data('office');
+            var name = button.data('name');
+            $('#deleteOfficeId').val(id);
+            $('#deleteOfficeName').text(name);
+        });
+        // For add office: pre-select category if triggered from inside category
+        $('#addOfficeModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+            var catId = button.data('category');
+            if (catId) {
+                $('#SelectedCategoryId').val(catId);
+            } else {
+                $('#SelectedCategoryId').val('');
+            }
+        });
+    </script>
+}

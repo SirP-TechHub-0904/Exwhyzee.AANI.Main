@@ -20,5 +20,9 @@ namespace Exwhyzee.AANI.Domain.Models
 
         public long FundCategoryId { get; set; } = default!;
         public FundCategory FundCategory { get; set; } = default!;
+
+        // --- NEW: Link to OperationYear ---
+        public long? OperationYearId { get; set; }
+        public OperationYear? OperationYear { get; set; }
     }
 }

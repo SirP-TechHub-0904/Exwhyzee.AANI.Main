@@ -1,0 +1,58 @@
+﻿@page
+@model Exwhyzee.AANI.Web.Areas.Datapage.Pages.Account.CampaignYearsModel
+@{
+    ViewData["Title"] = "Election Campaigns by Year";
+}
+
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">@ViewData["Title"]</h3>
+        @if (User.IsInRole("Admin"))
+        {
+            // Link to the page where Admins manage OperationYear entities
+            <a asp-page="/OperationalYear/Index" asp-area="Datapage" class="btn btn-success btn-xs float-right" style="float:right;">
+                <i class="fas fa-cogs"></i> Manage Years
+            </a>
+        }
+    </div>
+    <div class="card-body">
+        <p class="text-muted">Select a year of office to view the campaign and candidates for that year.</p>
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Year of Office</th>
+                        <th>Year Period</th>
+                        <th style="width: 150px;"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.OperationYears)
+                    {
+                        <tr>
+                            <td>
+                                <strong>@item.Name</strong>
+                                @if (item.IsActive)
+                                {
+                                    <span class="badge badge-success ml-2">Active</span>
+                                }
+                            </td>
+                            <td>
+                                @item.StartDate.ToString("dd MMM, yyyy") - @item.EndDate.ToString("dd MMM, yyyy")
+                            </td>
+                            <td>
+                                <a asp-page="./CampainPage" asp-route-yearId="@item.Id" class="btn btn-primary btn-xs">
+                                    View Campaign
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

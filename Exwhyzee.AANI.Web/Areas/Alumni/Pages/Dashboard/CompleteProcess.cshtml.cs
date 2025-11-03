@@ -6,8 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using System.ComponentModel.DataAnnotations;
-using System.Data.Entity;
+using System.ComponentModel.DataAnnotations; 
 using System.Globalization;
 
 namespace Exwhyzee.AANI.Web.Areas.Alumni.Pages.Dashboard

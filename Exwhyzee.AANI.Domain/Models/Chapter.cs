@@ -13,5 +13,7 @@ namespace Exwhyzee.AANI.Domain.Models
         public string Chairperson { get; set; }
         public string? PhoneNumber { get; set; }
         public string? Email { get; set; }
+
+        public ICollection<ChapterExecutive> ChapterExecutives { get; set; } = default!;
     }
 }

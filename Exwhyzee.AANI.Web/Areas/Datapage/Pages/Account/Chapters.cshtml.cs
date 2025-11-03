@@ -21,11 +21,13 @@ namespace Exwhyzee.AANI.Web.Areas.Datapage.Pages.Account
             _context = context;
         }
 
-        public IList<Chapter> Chapter { get;set; }
+        public IList<Chapter> Chapter { get; set; }
 
         public async Task OnGetAsync()
         {
-            Chapter = await _context.Chapters.ToListAsync();
+            Chapter = await _context.Chapters
+                .Include(x => x.ChapterExecutives)
+                .ToListAsync();
         }
     }
 }

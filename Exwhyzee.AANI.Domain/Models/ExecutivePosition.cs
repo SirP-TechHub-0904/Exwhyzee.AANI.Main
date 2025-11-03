@@ -10,7 +10,7 @@ namespace Exwhyzee.AANI.Domain.Models
     {
         public long Id { get; set; }
         public string Position { get; set; }
-
+        public int SortOrder { get; set; }
         public ICollection<Campain> Campains { get; set; }
     }
 }

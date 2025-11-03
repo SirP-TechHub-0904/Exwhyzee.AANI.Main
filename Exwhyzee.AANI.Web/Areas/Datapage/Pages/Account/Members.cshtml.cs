@@ -29,31 +29,39 @@ namespace Exwhyzee.AANI.Web.Areas.Datapage.Pages.Account
         public int Dead { get; set; }
         public int Active { get; set; }
         public int GenderQuery { get; set; }
+        public List<ChapterExecutive> ChapterExecutives { get; set; } = default!;
+        public bool IsChapter { get; set; } = false;
         public async Task<IActionResult> OnGetAsync(AliveStatus aliveStatus = 0, GenderStatus genderStatus = 0, ActiveStatus activeStatus = 0, long chapterid = 0, long secid = 0)
         {
-            Participants = _userManager.Users.Include(x => x.SEC).Where(x => x.MniStatus == Domain.Enums.MniStatus.MNI).OrderBy(x=>x.Surname).AsQueryable();
+            Participants = _userManager.Users.Include(x => x.SEC).Where(x => x.MniStatus == Domain.Enums.MniStatus.MNI).OrderBy(x => x.Surname)
+                .Include(x => x.Chapter)
+                .Include(x => x.SEC)
+                .AsQueryable();
             var DataParticipants = _userManager.Users.Include(x => x.SEC).Where(x => x.MniStatus == Domain.Enums.MniStatus.MNI).AsQueryable();
-            
+
 
             if (activeStatus == ActiveStatus.Active)
             {
                 Participants = Participants.Where(x => x.ActiveStatus == ActiveStatus.Active).AsQueryable();
 
                 TempData["data"] = "ACTIVE MEMBERS";
-                 
-            }else  if (aliveStatus== AliveStatus.Alive)
+
+            }
+            else if (aliveStatus == AliveStatus.Alive)
             {
                 Participants = Participants.Where(x => x.AliveStatus == AliveStatus.Alive).AsQueryable();
 
                 TempData["data"] = "MEMBERS ALIVE";
-                 
-            }else if (aliveStatus == AliveStatus.Dead)
+
+            }
+            else if (aliveStatus == AliveStatus.Dead)
             {
                 Participants = Participants.Where(x => x.AliveStatus == AliveStatus.Dead).AsQueryable();
 
                 TempData["data"] = "MEMBERS DEAD";
-                
-            }else if (genderStatus == GenderStatus.Male)
+
+            }
+            else if (genderStatus == GenderStatus.Male)
             {
                 Participants = Participants.Where(x => x.GenderStatus == GenderStatus.Male).AsQueryable();
 
@@ -70,15 +78,18 @@ namespace Exwhyzee.AANI.Web.Areas.Datapage.Pages.Account
             else if (chapterid > 0)
             {
                 Participants = Participants.Where(x => x.ChapterId == chapterid).AsQueryable();
-                var chapter = await _context.Chapters.FirstOrDefaultAsync(x => x.Id == chapterid);
-                if(chapter == null)
+                var chapter = await _context.Chapters
+                    .Include(x => x.ChapterExecutives).ThenInclude(x => x.Participant)
+                    .FirstOrDefaultAsync(x => x.Id == chapterid);
+                if (chapter == null)
                 {
                     return RedirectToPage("./Members");
                 }
-                TempData["data"] = "MEMBERS OF " + chapter.State.ToUpper() +" CHAPTER";
-
-                
-            }else if (secid > 0)
+                TempData["data"] = "MEMBERS OF " + chapter.State.ToUpper() + " CHAPTER";
+                ChapterExecutives = chapter.ChapterExecutives.OrderBy(x => x.Position).ToList();
+                IsChapter = true;
+            }
+            else if (secid > 0)
             {
                 Participants = Participants.Where(x => x.SECId == secid).AsQueryable();
                 var secs = await _context.SECs.FirstOrDefaultAsync(x => x.Id == secid);
@@ -86,16 +97,16 @@ namespace Exwhyzee.AANI.Web.Areas.Datapage.Pages.Account
                 {
                     return RedirectToPage("./Members");
                 }
-                TempData["data"] = secs.Number.ToUpper() + " ("+secs.Year+") "+ Participants.Count() + " MEMBERS";
+                TempData["data"] = secs.Number.ToUpper() + " (" + secs.Year + ") " + Participants.Count() + " MEMBERS";
 
-                return Page();
+               // return Page();
             }
             else
             {
                 TempData["data"] = "ALL MEMBERS";
             }
             //await Task.Run();
-            
+
             AllAlumni = await Participants.CountAsync();
             Active = await Participants.Where(x => x.ActiveStatus == Domain.Enums.ActiveStatus.Active).CountAsync();
             Alive = await Participants.Where(x => x.AliveStatus == Domain.Enums.AliveStatus.Alive).CountAsync();

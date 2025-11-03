@@ -1,0 +1,37 @@
+﻿@page
+@model Exwhyzee.AANI.Web.Areas.Datapage.Pages.OperationalYear.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>OperationYear</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.OperationYear.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.OperationYear.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.OperationYear.StartDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.OperationYear.StartDate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.OperationYear.EndDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.OperationYear.EndDate)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.OperationYear.Id">Edit</a> |
+    <a asp-page="./Index">Back to List</a>
+</div>

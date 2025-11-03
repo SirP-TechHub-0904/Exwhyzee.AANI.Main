@@ -40,6 +40,7 @@ namespace Exwhyzee.AANI.Web.Areas.Main.Pages.ExecutivePage.MemberCampain
             }
 
             Campain = await _context.Campains
+                .Include(c => c.OperationYear)
                 .Include(c => c.ExecutivePosition)
                 .Include(c => c.Participant).FirstOrDefaultAsync(m => m.Id == id);
 
@@ -119,7 +120,17 @@ namespace Exwhyzee.AANI.Web.Areas.Main.Pages.ExecutivePage.MemberCampain
                 }
             }
 
-            return RedirectToPage("/Account/Contestants", new {area="Datapage", id = Campain.Id});
+            //return RedirectToPage("/Account/Contestants", new {area="Datapage", id = Campain.Id});
+
+            return RedirectToPage(
+    "/Account/Contestants", // 1. The path to the page within the area
+    new
+    {
+        area = "Datapage", // 2. The name of the area
+        yearId = Campain.OperationYearId, // 3. The required 'yearId' parameter
+        positionId = Campain.ExecutivePositionId // 4. The required 'positionId' parameter
+    }
+);
         }
 
         private bool CampainExists(long id)

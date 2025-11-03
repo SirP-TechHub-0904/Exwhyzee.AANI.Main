@@ -369,7 +369,8 @@
                             </div>
 
                             <p class="why-choose-one__text">
-                                @item.Description
+                                @Html.Raw(item.Description)
+
                             </p>
                             @if (item.PageSectionLists?.Count > 0)
                             {
@@ -661,7 +662,8 @@
                             </div>
 
                             <p class="why-choose-one__text">
-                                @item.Description
+                                @Html.Raw(item.Description)
+
                             </p>
                             @if (item.PageSectionLists?.Count > 0)
                             {
@@ -1231,7 +1233,8 @@
                         @item.Title
                     </h2>
                     <p>
-                        @item.Description
+                        @Html.Raw(item.Description)
+
                     </p>
                 </div>
 
@@ -1436,7 +1439,8 @@
                             <div class="testimonial-one__satisfied-clients">
 
                                 <p class="testimonial-one__satisfied-clients-text">
-                                    @item.Description
+                                    @Html.Raw(item.Description)
+
                                 </p>
                             </div>
                              
@@ -1785,7 +1789,8 @@
 
 
                     <p class="video-one__text">
-                        @item.Description
+                        @Html.Raw(item.Description)
+
                     </p>
 
                     <div class="video-one__video-link">

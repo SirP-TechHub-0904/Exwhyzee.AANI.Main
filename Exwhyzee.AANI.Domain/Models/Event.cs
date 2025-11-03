@@ -29,5 +29,9 @@ namespace Exwhyzee.AANI.Domain.Models
         public ICollection<EventBudget> EventBudgets { get; set; }
         public virtual FundCategory FundCategory { get; set; }
 
+        // --- NEW: Link to OperationYear ---
+        public long? OperationYearId { get; set; }
+        public OperationYear? OperationYear { get; set; }
+
     }
 }

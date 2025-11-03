@@ -7,65 +7,52 @@
         <p>Dashboard</p>
     </a>
 </li>
-<li class="nav-item">
-    <a asp-page="/Account/Chapters" asp-area="Datapage" class="nav-link">
-        <i class="nav-icon fa fa-sitemap"></i>
-        <p>Chapters</p>
-    </a>
-</li>
-<li class="nav-item">
-    <a asp-page="/Account/SecPage" asp-area="Datapage" class="nav-link">
-        <i class="nav-icon fa fa-shield"></i>
-        <p>SEC</p>
-    </a>
-</li>
-<li class="nav-item">
-    <a asp-page="/Account/Members" asp-area="Datapage" class="nav-link">
-        <i class="nav-icon fa fa-users"></i>
-        <p>Members</p>
-    </a>
-</li>
-<li class="nav-item">
-    <a asp-page="/Account/CampainPage" asp-area="Datapage" class="nav-link">
-        <i class="nav-icon fa fa-bullhorn"></i>
-        <p>Campaign</p>
-    </a>
-</li>
+
 <li class="nav-item">
     <a href="#" class="nav-link">
-        <i class="nav-icon fa fa-tree"></i>
+        <i class="nav-icon fa fa-users"></i>
         <p>
-            Event Manager
+            Members
             <i class="fa fa-angle-left right"></i>
         </p>
     </a>
     <ul class="nav nav-treeview">
         <li class="nav-item">
-            <a asp-page="/EventPage/EventManager/Index" asp-area="Main" class="nav-link">
+            <a asp-page="/Account/SecPage" asp-area="Datapage" class="nav-link">
                 <i class="fa fa-circle nav-icon"></i>
-                <p>Events</p>
+                <p>SEC</p>
             </a>
         </li>
         <li class="nav-item">
-            <a asp-page="/EventPage/Committee/Index" asp-area="Main" class="nav-link">
+            <a asp-page="/Account/Chapters" asp-area="Datapage" class="nav-link">
                 <i class="fa fa-circle nav-icon"></i>
-                <p>Committee</p>
+                <p>Chapters</p>
             </a>
         </li>
         <li class="nav-item">
-            <a asp-page="/EventPage/Attendance/Index" asp-area="Main" class="nav-link">
+            <a asp-page="/Account/Members" asp-area="Datapage" class="nav-link">
                 <i class="fa fa-circle nav-icon"></i>
-                <p>Attendance</p>
+                <p>Members</p>
             </a>
         </li>
-        <li class="nav-item">
-            <a asp-page="/EventPage/Comments/Index" asp-area="Main" class="nav-link">
-                <i class="fa fa-circle nav-icon"></i>
-                <p>Eveluations/Comments</p>
-            </a>
-        </li>
+
     </ul>
 </li>
+
+
+<li class="nav-item">
+    <a asp-page="/Account/CampaignYears" asp-area="Datapage" class="nav-link">
+        <i class="nav-icon fa fa-bullhorn"></i>
+        <p>Campaign</p>
+    </a>
+</li>
+<li class="nav-item">
+    <a asp-page="/EventPage/EventManager/Index" asp-area="Main" class="nav-link">
+        <i class="nav-icon fa fa-globe"></i>
+        <p>Events</p>
+    </a>
+</li>
+
 <li class="nav-item">
     <a href="#" class="nav-link">
         <i class="nav-icon fa fa-briefcase"></i>
@@ -76,13 +63,13 @@
     </a>
     <ul class="nav nav-treeview">
         <li class="nav-item">
-            <a asp-page="/" asp-area="Main" class="nav-link">
+            <a asp-page="/ExecutivePage/ActiveExecutive/Index" asp-area="Main" class="nav-link">
                 <i class="fa fa-user-secret nav-icon"></i>
                 <p>Executives</p>
             </a>
         </li>
         <li class="nav-item">
-            <a asp-page="/" asp-area="Main" class="nav-link">
+            <a asp-page="/EventPage/Committee/ManageCommittees" asp-area="Main" class="nav-link">
                 <i class="fa fa-users nav-icon"></i>
                 <p>Committees</p>
             </a>
@@ -258,27 +245,47 @@
         <p>Gallery Page</p>
     </a>
 </li>
+
 <li class="nav-item">
-    <a asp-page="/IPages/Main/Index" asp-area="Main" class="nav-link">
-        <i class="nav-icon fa fa-paint-brush"></i>
-        <p>Website Design</p>
+    <a href="#" class="nav-link">
+        <i class="nav-icon fa fa-gear"></i>
+        <p>
+            Manage Platform
+            <i class="fa fa-angle-left right"></i>
+        </p>
     </a>
-</li>
-<li class="nav-item">
-    <a asp-page="/SettingsPage/Index" asp-area="Main" class="nav-link">
-        <i class="nav-icon fa fa-cogs"></i>
-        <p>Contact Settings</p>
-    </a>
-</li>
-<li class="nav-item">
-    <a asp-page="/SettingsPage/OtherSettings" asp-area="Main" class="nav-link">
-        <i class="nav-icon fa fa-gears"></i>
-        <p>Other Settings</p>
-    </a>
-</li>
-<li class="nav-item">
-    <a asp-page="/ConfigPage/Index" asp-area="Main" class="nav-link">
-        <i class="nav-icon fa fa-cog"></i>
-        <p>Config Page</p>
-    </a>
+    <ul class="nav nav-treeview">
+        <li class="nav-item">
+            <a asp-page="/IPages/Main/Index" asp-area="Main" class="nav-link">
+                <i class="fa fa-circle nav-icon"></i>
+                <p>Website Design</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a asp-page="/SettingsPage/Index" asp-area="Main" class="nav-link">
+                <i class="fa fa-circle nav-icon"></i>
+                <p>Contact Settings</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a asp-page="/OfficeManage/Index" asp-area="Datapage" class="nav-link">
+                <i class="fa fa-circle nav-icon"></i>
+                <p>Offices/Sub Offices</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a asp-page="/SettingsPage/OtherSettings" asp-area="Main" class="nav-link">
+                <i class="fa fa-circle nav-icon"></i>
+                <p>Other Settings</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a asp-page="/ConfigPage/Index" asp-area="Main" class="nav-link">
+                <i class="fa fa-circle nav-icon"></i>
+                <p>Config Page</p>
+            </a>
+        </li>
+
+
+    </ul>
 </li>

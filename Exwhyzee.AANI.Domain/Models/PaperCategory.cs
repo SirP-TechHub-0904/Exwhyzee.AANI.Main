@@ -10,7 +10,8 @@
         public string? Title { get; set; }
         public string? Description { get; set; }
         public DateTime Date { get; set; }
-
+        public string? CoverUrl { get; set; }
+        public string? CoverKey { get; set; }
         public ICollection<Paper> Papers { get; set; } = default!;
     }
 }

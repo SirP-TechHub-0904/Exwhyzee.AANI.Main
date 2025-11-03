@@ -20,5 +20,8 @@
 
         public long PaperCategoryId { get; set; } = default!;
         public PaperCategory PaperCategory { get; set; } = default!;
+
+        public string? CoverUrl { get; set; }
+        public string? CoverKey { get; set; }
     }
 }

@@ -3,152 +3,503 @@
 @{
 }
 
+<!-- Search Bar for Papers -->
+<form method="get" asp-page="./PaperList" class="bookshelf-search-bar">
+    <input type="hidden" name="id" value="@Model.PaperCategory.Id" />
+    <div class="input-group bookshelf-search-group">
+        <input type="text" class="form-control bookshelf-search-input" name="searchString"
+               placeholder="Search papers..."
+               value="@Model.CurrentFilter" />
+        <button class="btn btn-primary" style=" background-color: #30614b; border-color: #30614b;" type="submit">
+            <i class="fa fa-search"></i>
+        </button>
+    </div>
+</form>
+@if (!string.IsNullOrWhiteSpace(Model.CurrentFilter))
+{
+    <div class="bookshelf-search-note">
+        @($"{Model.Papers.TotalPages} books found on \"{Model.CurrentFilter}\"")
+    </div>
+}
+<div class="bookshelf-3d-main">
 
-
-<div class="">
-    <section class="content" style="margin-top:10px;">
-        <div class="container-fluid card">
-            <div class="content-header" style="padding:1px 0;">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-sm-12" style="padding-left:0;">
-                            <h5 class="m-0" style="font-weight:900;">MY PAPERS FOR @Model.PaperCategory.Title</h5>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="container">
- 
-                    <div class="row">
-                        @if (Model.MyPapers.Count() > 0)
+    <!-- Bookshelf Outer -->
+    <div class="bookshelf-3d-outer">
+        <!-- Bookshelf Top -->
+        <div class="bookshelf-3d-top">
+            <h5 class="m-0" style="font-weight: 900; text-align: center; padding: 5px; color: white;">MY PAPERS FOR @Model.PaperCategory.Title</h5>
+        </div>
+        <!-- Rows/Shelves -->
+        <div class="bookshelf-3d-shelves">
+            <!-- Shelf Row 1 -->
+            @{
+                var papersPerRow = 3;
+                var totalRows = (int)Math.Ceiling((double)Model.Papers.Count() / papersPerRow);
+                for (int row = 0; row < totalRows; row++)
+                {
+                    <div class="bookshelf-3d-row shelf-bench">
+                        @foreach (var paper in Model.Papers.Skip(row * papersPerRow).Take(papersPerRow))
                         {
-                            foreach (var x in Model.MyPapers)
+                            <div class="book-3d-col">
+                                <div class="book-3d">
+                                    <img src="@(string.IsNullOrWhiteSpace(paper.CoverUrl) ? "/Book-cover-AANI.jpg" : paper.CoverUrl)"
+                                         class="book-3d-cover"
+                                         alt="Brochure"
+                                         data-gif="" />
+                                </div>
+                                <div class="book-3d-info">
+                                    <div class="book-3d-title">@paper.Title</div>
+                                    <div class="book-3d-author"><span style="font-weight:600;">Author:</span> @paper.Participant?.Fullname</div>
+                                </div>
+                            </div>
+                        }
+
+                    </div>
+                }
+            }
+
+        </div>
+        <!-- Bookshelf Bottom -->
+        <div class="bookshelf-3d-bottom">
+            @if (Model.Papers.TotalPages > 1)
+            {
+                <nav class="bookshelf-pagination mt-4">
+                    <ul class="pagination pagination-controls justify-content-center" style="padding-top:1px;">
+                        <!-- First page «« -->
+                        <li class="page-item @(Model.Papers.PageIndex == 1 ? "disabled" : "")">
+                            <a class="page-link" asp-page="./PaperList"
+                               asp-route-pageIndex="1"
+                               asp-route-currentFilter="@Model.CurrentFilter"
+                               asp-route-id="@Model.PaperCategory.Id">&laquo;&laquo;</a>
+                        </li>
+                        <!-- Previous page « -->
+                        <li class="page-item @(Model.Papers.PageIndex == 1 ? "disabled" : "")">
+                            <a class="page-link" asp-page="./PaperList"
+                               asp-route-pageIndex="@(Model.Papers.PageIndex - 1)"
+                               asp-route-currentFilter="@Model.CurrentFilter"
+                               asp-route-id="@Model.PaperCategory.Id">&laquo;</a>
+                        </li>
+                        <!-- First 3 pages -->
+                        @for (int i = 1; i <= Math.Min(3, Model.Papers.TotalPages); i++)
+                        {
+                            <li class="page-item @(i == Model.Papers.PageIndex ? "active" : "")">
+                                <a class="page-link" asp-page="./PaperList"
+                                   asp-route-pageIndex="@i"
+                                   asp-route-currentFilter="@Model.CurrentFilter"
+                                   asp-route-id="@Model.PaperCategory.Id">@i</a>
+                            </li>
+                        }
+                        <!-- Ellipsis if more than 6 pages -->
+                        @if (Model.Papers.TotalPages > 6)
+                        {
+                            <li class="page-item disabled"><span class="page-link">...</span></li>
+                        }
+                        <!-- Last 3 pages -->
+                        @for (int i = Model.Papers.TotalPages - 2; i <= Model.Papers.TotalPages; i++)
+                        {
+                            if (i > 3)
                             {
-                                <div class="col-md-6 col-sm-12 col-12">
-
-                                    <div class="small-box" style="margin-bottom: 7.5px; margin-top: 7.5px; border: 1px solid #3532324d;">
-                                        <div class="inner">
-                                            <h4>Topic:</h4>
-                                            <h5 style="height: 70px; font-size: .950rem; line-height: 1.13; ">@x.Title</h5>
-                                            <div class="section-heading-line-left"></div>
-                                            <h4 style="font-size: 0.9rem; font-weight: 900;">
-                                                @x.Participant.Fullname (SEC @x.Participant.SEC.Number - @x.Participant.SEC.Year)
-
-                                            </h4>
-                                            <a asp-page="/" class="btn btn-primary">Upload</a>
-                                            <a asp-page="/" class="btn btn-primary">Download</a>
-                                            <a asp-page="/" class="btn btn-primary">Open</a>
-                                        </div>
-
-                                    </div>
-
-                                </div>
-
+                                <li class="page-item @(i == Model.Papers.PageIndex ? "active" : "")">
+                                    <a class="page-link" asp-page="./PaperList"
+                                       asp-route-pageIndex="@i"
+                                       asp-route-currentFilter="@Model.CurrentFilter"
+                                       asp-route-id="@Model.PaperCategory.Id">@i</a>
+                                </li>
                             }
-
-
-
                         }
-                        else
-                        {
-                            <div class="col-md-6 col-sm-12 col-12">
-                                <h4>NO DOCUMENT YET</h4>
-                                </div>
-                                }
-                            </div>
-
-                        </div>
-            </div>
+                        <!-- Next page » -->
+                        <li class="page-item @(Model.Papers.PageIndex == Model.Papers.TotalPages ? "disabled" : "")">
+                            <a class="page-link" asp-page="./PaperList"
+                               asp-route-pageIndex="@(Model.Papers.PageIndex + 1)"
+                               asp-route-currentFilter="@Model.CurrentFilter"
+                               asp-route-id="@Model.PaperCategory.Id">&raquo;</a>
+                        </li>
+                        <!-- Last page »» -->
+                        <li class="page-item @(Model.Papers.PageIndex == Model.Papers.TotalPages ? "disabled" : "")">
+                            <a class="page-link" asp-page="./PaperList"
+                               asp-route-pageIndex="@(Model.Papers.TotalPages)"
+                               asp-route-currentFilter="@Model.CurrentFilter"
+                               asp-route-id="@Model.PaperCategory.Id">&raquo;&raquo;</a>
+                        </li>
+                    </ul>
+                    @*<span style="margin-left:10px;">
+                            <i>Page Number (@Model.Papers.PageIndex of @Model.Papers.TotalPages)</i>
+                        </span>*@
+                </nav>
+            }
         </div>
-    </section>
-    <section class="content" style="margin-top:10px;">
-        <div class="container-fluid card">
-            <div class="content-header" style="padding:1px 0;">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-sm-12" style="padding-left:0;">
-                            <h5 class="m-0" style="font-weight:900;">PAPERS FOR @Model.PaperCategory.Title</h5>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="container">
-
-                    <div class="row">
-
-                        <div class="col-md-4 col-sm-12 col-12">
-                        </div>
-                        <div class="col-md-4 col-sm-12 col-12">
-
-                            <form asp-page="./PaperList" method="get">
-                                <input hidden="hidden" name="id" value="@Model.PaperCategory.Id" />
-                                <div class="input-group">
-                                    <input type="text" class="form-control" name="searchString" placeholder="@Model.CurrentFilter" style="border: 2px solid black;">
-                                    <div class="input-group-btn">
-                                        <button class="btn btn-default btnn" type="submit">
-                                            <i class="fa fa-search"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </form>
-
-                            <p style="text-align:center;">
-                                <i>Page Number (@Model.PageIndex of @Model.TotalPage)</i>
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        @foreach (var x in Model.Papers)
-                        {
-                            <div class="col-md-6 col-sm-12 col-12">
-
-                                <div class="small-box" style="margin-bottom: 7.5px; margin-top: 7.5px; border: 1px solid #3532324d;">
-                                    <div class="inner">
-                                        <h4>Topic:</h4>
-                                        <h5 style="height: 70px; font-size: .950rem; line-height: 1.13; ">@x.Title</h5>
-                                        <div class="section-heading-line-left"></div>
-                                        <h4 style="font-size: 0.9rem; font-weight: 900;">
-                                            @x.Participant.Fullname (SEC @x.Participant.SEC.Number - @x.Participant.SEC.Year)
-
-                                        </h4>
-
-                                    </div>
-
-                                </div>
-
-                            </div>
-
-                        }
-                    </div>
-                    @{
-                        var prevDisabled = !Model.Papers.HasPreviousPage ? "disabled" : "";
-                        var nextDisabled = !Model.Papers.HasNextPage ? "disabled" : "";
-                    }
-
-                    <a asp-page="./PaperList"
-                       asp-route-pageIndex="@(Model.Papers.PageIndex - 1)"
-                       asp-route-currentFilter="@Model.CurrentFilter"
-                       asp-route-id="@Model.PaperCategory.Id"
-                       class="btn btn-primary button-sm mb-15-xs @prevDisabled">
-                        Previous
-                    </a>
-                    <a asp-page="./PaperList"
-                       asp-route-pageIndex="@(Model.Papers.PageIndex + 1)"
-                       asp-route-currentFilter="@Model.CurrentFilter"
-                       asp-route-id="@Model.PaperCategory.Id"
-                       class="btn btn-primary button-sm mb-15-xs @nextDisabled">
-                        Next
-                    </a>
-                    <i>Page Number (@Model.PageIndex of @Model.TotalPage)</i>
-                </div>
-            </div>
-        </div>
-    </section>
+    </div>
 </div>
+<style>
+    .bookshelf-3d-main {
+        position: relative;
+        min-height: 600px;
+    }
+
+    .bookshelf-lamp {
+        position: absolute;
+        left: -90px;
+        top: 0;
+        width: 70px;
+        height: 250px;
+        z-index: 10;
+    }
+
+        .bookshelf-lamp img {
+            width: 100%;
+            height: auto;
+        }
+
+    .bookshelf-plant {
+        position: absolute;
+        right: -92px;
+        bottom: 0;
+        width: 86px;
+        height: 160px;
+        z-index: 10;
+    }
+
+        .bookshelf-plant img {
+            width: 100%;
+            height: auto;
+        }
+
+    .bookshelf-3d-outer {
+        background: #ffffff;
+        border-radius: 24px;
+        box-shadow: 0 12px 34px rgba(0,0,0,0.13);
+        overflow: hidden;
+        padding-bottom: 0;
+    }
+
+    .bookshelf-3d-top {
+        height: 38px;
+        background: linear-gradient(180deg, #30614b 80%, #28614c 100%);
+        border-top-left-radius: 26px;
+        border-top-right-radius: 26px;
+        box-shadow: 0 10px 16px rgba(0,0,0,0.10);
+    }
+
+    .bookshelf-3d-bottom {
+        height: 40px;
+        background: linear-gradient(180deg, #30614b 80%, #28614c 100%);
+        border-bottom-left-radius: 26px;
+        border-bottom-right-radius: 26px;
+        box-shadow: 0 -7px 12px rgba(0,0,0,0.09);
+    }
+
+    .bookshelf-3d-shelves {
+        padding: 24px 36px 24px 36px;
+        background: url('../../bg-book-category.png') repeat;
+    }
+
+    .bookshelf-3d-row {
+        display: flex;
+        flex-wrap: nowrap;
+        justify-content: space-between;
+        align-items: flex-end;
+        margin-bottom: 0;
+        position: relative;
+        min-height: 220px;
+    }
+
+    .shelf-bench {
+        border-bottom: 16px solid #30614b;
+        /*box-shadow: 0 4px 20px rgb(71 115 94 / 83%), 0 1.2px 0 #406c57 inset;*/
+        border-radius: 0 0 20px 20px;
+        margin-bottom: 32px;
+        /*background: linear-gradient(180deg, #98afa1 90%, #30614b 100%);*/
+        position: relative;
+    }
+
+        .shelf-bench:after {
+            content: "";
+            display: block;
+            position: absolute;
+            left: 0;
+            bottom: -16px;
+            width: 100%;
+            height: 18px;
+            border-bottom: 10px solid #292d2b00;
+            border-radius: 0 0 14px 14px;
+            opacity: 0.5;
+            box-shadow: 0 4px 16px rgba(146,120,82,0.12);
+        }
+
+    .book-3d-col {
+        width: 32.2%;
+        min-width: 180px;
+        max-width: 260px;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 10px;
+        /*jhhhhhhhh*/
+
+        border: 2px solid #3e7a5f;
+        margin: 10px;
+        border-radius: 10px;
+        background-color: #9fb4a9;
+    }
+
+    .book-3d {
+        width: 70%;
+        height: 170px;
+        /*background: #ece4d9;*/
+        border-radius: 10px;
+        /*box-shadow: 7px 0 18px rgba(0,0,0,0.06),0 2px 19px rgba(0,0,0,0.11);*/
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        perspective: 800px;
+        margin-bottom: 12px;
+        position: relative;
+        transition: box-shadow 0.2s;
+    }
+
+    .book-3d-cover {
+        width: 70%;
+        height: 154px;
+        object-fit: cover;
+        border-radius: 5px;
+        box-shadow: 1px 2px 8px rgba(0,0,0,0.14);
+        transition: transform 0.4s;
+        background: #fff;
+        transform: rotateY(-9deg) scale(1.03);
+    }
+
+    .book-3d:hover .book-3d-cover {
+        transform: rotateY(0deg) scale(1.07);
+    }
+
+    .book-3d-info {
+        text-align: center;
+        /*margin-top: 8px;*/
+    }
+
+    .book-3d-title {
+        font-size: 1.07rem;
+        font-weight: 600;
+        color: #44372d;
+        /*margin-bottom: 3px;*/
+        word-break: break-word;
+    }
+
+    .book-3d-author {
+        font-size: 0.97rem;
+        color: #7b6f5e;
+        font-weight: 400;
+        /*margin-bottom: 3px;*/
+        word-break: break-word;
+    }
+
+    .book-3d-info {
+        text-align: center;
+        margin-top: 8px;
+        min-height: 66px; /* Ensures consistent height for info block */
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+    }
+
+    /* Book Title: 3 lines max, ellipsis, consistent height */
+    .book-3d-title {
+        font-size: 0.92rem;
+        font-weight: 500;
+        color: #000000;
+        line-height: 1.2em;
+        height: 3.6em; /* 3 lines */
+        max-height: 3.6em;
+        min-height: 3.6em;
+        text-align: center;
+        word-break: break-word;
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        white-space: normal;
+        margin-bottom: 2px;
+    }
+
+    /* Book Author: 1 line, italic, bold, ellipsis */
+    .book-3d-author {
+        font-size: 0.78rem;
+        font-style: italic;
+        font-weight: 600;
+        color: #211f1c;
+        height: 1.3em;
+        max-height: 1.3em;
+        min-height: 1.3em;
+        overflow: hidden;
+        text-align: center;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        display: block;
+    }
+    /* Responsive */
+    @@media (max-width: 1000px) {
+        .bookshelf-3d-main {
+            max-width: 96vw;
+        }
+
+        .bookshelf-3d-shelves {
+            padding: 16px 4vw;
+        }
+
+        .bookshelf-3d-row {
+            min-height: 170px;
+        }
+
+        .book-3d-col {
+            min-width: 120px;
+        }
+
+        .book-3d {
+            width: 74px;
+            height: 130px;
+        }
+
+        .book-3d-cover {
+            width: 58px;
+            height: 104px;
+        }
+    }
+
+    @@media (max-width: 700px) {
+        .bookshelf-lamp {
+            left: -60px;
+            width: 40px;
+            height: 120px;
+        }
+
+        .bookshelf-plant {
+            right: -60px;
+            width: 54px;
+            height: 100px;
+        }
+
+        .bookshelf-3d-main {
+            min-height: 360px;
+        }
+
+        .bookshelf-3d-outer {
+            border-radius: 12px;
+        }
+
+        .bookshelf-3d-top, .bookshelf-3d-bottom {
+            height: 20px;
+            border-radius: 14px;
+        }
+
+        .bookshelf-3d-shelves {
+            padding: 8px 2vw;
+        }
+
+        .bookshelf-3d-row {
+            min-height: 110px;
+        }
+
+        .book-3d-col {
+            min-width: 80px;
+        }
+
+        .book-3d {
+            width: 44px;
+            height: 80px;
+        }
+
+        .book-3d-cover {
+            width: 35px;
+            height: 62px;
+        }
+    }
+
+    .page-item.active .page-link {
+        z-index: 3;
+        color: #fff;
+        background-color: #30614b;
+        border-color: #30614b;
+    }
+
+    .page-link {
+        color: #30614b;
+        background-color: #fff;
+        border: 1px solid #30614b;
+    }
+
+    .bookshelf-search-bar {
+        max-width: 400px;
+        margin: 0 auto 18px auto;
+        display: flex;
+        justify-content: center;
+    }
+
+    .bookshelf-search-group {
+        width: 100%;
+        display: flex;
+    }
+
+    .bookshelf-search-input {
+        border: 2px solid #32654D;
+        border-right: none;
+        border-radius: 16px 0 0 16px;
+        font-size: 1rem;
+        padding: 7px 14px;
+        outline: none;
+    }
+
+    .bookshelf-search-btn {
+        border-radius: 0 16px 16px 0;
+        border: 2px solid #32654D;
+        border-left: none;
+        padding: 7px 18px;
+        background: #32654D;
+        color: #fff;
+        font-weight: 600;
+        font-size: 1.07rem;
+        transition: background 0.2s;
+    }
+
+        .bookshelf-search-btn:hover, .bookshelf-search-btn:focus {
+            background: #275239;
+            color: #fff;
+        }
+
+    @@media (max-width: 600px) {
+        .bookshelf-search-bar {
+            max-width: 98vw;
+        }
+
+        .bookshelf-search-input {
+            font-size: 0.94rem;
+            padding: 6px 8px;
+        }
+
+        .bookshelf-search-btn {
+            font-size: 1rem;
+            padding: 6px 10px;
+        }
+    }
+    .bookshelf-search-note {
+        text-align: center;
+        font-size: 1.08rem;
+        font-weight: 500;
+        color: #32654D;
+        margin-bottom: 10px;
+        margin-top: -4px;
+    }
+</style>
+<script>
+    // Swap cover to GIF on hover, restore on mouseout
+    document.querySelectorAll('.book-3d-cover').forEach(function (img) {
+        const staticSrc = img.src;
+        const gifSrc = img.getAttribute('data-gif');
+        img.addEventListener('mouseenter', function () { img.src = gifSrc; });
+        img.addEventListener('mouseleave', function () { img.src = staticSrc; });
+    });
+</script>
 
 
 
-               
+

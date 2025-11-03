@@ -49,7 +49,16 @@ namespace Exwhyzee.AANI.Web.Areas.Main.Pages.ExecutivePage.ActiveExecutive
         // For more details, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
-           
+            var isPositionTaken = await _context.Executives.AnyAsync(e =>
+                e.OperationYearId == Executive.OperationYearId &&
+                e.ExecutivePositionId == Executive.ExecutivePositionId);
+
+            if (isPositionTaken)
+            {
+                ModelState.AddModelError("Executive.ExecutivePositionId", "This position has already been filled for this year.");
+                await OnGetAsync(Executive.OperationYearId);
+                return Page();
+            }
 
             _context.Attach(Executive).State = EntityState.Modified;
 

@@ -5,160 +5,121 @@
     ViewData["Title"] = "Index";
 }
 
- 
 <div class="">
     @if (TempData["checkifexist"] != null)
     {
+        <section class="content" style="margin-top:10px;">
+            <div class="container-fluid card">
+                <div class="content-header" style="padding:1px 0;">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-sm-12" style="padding-left:0;">
+                                <h5 class="m-0" style="font-weight:900;">TODAYS BIRTHDAY</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="marquee">
+                            <div>
+                                @Html.Raw(Model.DateofBirthList)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    }
+
     <section class="content" style="margin-top:10px;">
         <div class="container-fluid card">
-
             <div class="content-header" style="padding:1px 0;">
                 <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-sm-12" style="padding-left:0;">
-                            <h5 class="m-0" style="font-weight:900;">TODAYS BIRTHDAY</h5>
+                    <div class="row align-items-center">
+                        <div class="col-sm-8" style="padding-left:0;">
+                            <h5 class="m-0" style="font-weight:900;">MEMBERS STATISTICS</h5>
+                        </div>
+                        <div class="col-sm-4 text-right">
+                            <label class="mb-0 font-weight-bold mr-2">Year:</label>
+                            <select asp-for="DefaultChartYear" asp-items="Model.OperationYearsSelectList" id="yearSelect" class="form-control d-inline-block" style="width:120px;"></select>
                         </div>
                     </div>
                 </div>
             </div>
+
             <div class="row">
-                <div class="col-md-12">
-                     
-                    <div class="marquee">
-                        <div>
-                        @Html.Raw(Model.DateofBirthList)
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div><!-- /.container-fluid -->
-    </section>
-
-    }
-    <section class="content" style="margin-top:10px;">
-        <div class="container-fluid card"> 
-            <div class="content-header" style="padding:1px 0;">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-sm-12" style="padding-left:0;">
-                            <h5 class="m-0" style="font-weight:900;">MEMBERS STATISTIC</h5>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row"> 
-                <div class="col-lg-4 col-6"> 
+                <div class="col-lg-4 col-6">
                     <a asp-page="./Members" class="small-box-footer">
                         <div class="small-box bg-primary" style="margin-bottom: 7.5px;margin-top: 7.5px;">
                             <div class="inner">
-                                <h3 style="white-space: normal;text-align: center;margin:auto;">
-                                    TOTAL MEMBERS
-                                </h3> 
+                                <h3 style="white-space: normal;text-align: center;margin:auto;">TOTAL MEMBERS</h3>
                                 <p style="text-align: center;font-weight: 900;font-size: 2.0em;margin: 0;">@Model.AllAlumni</p>
-
                             </div>
-
                         </div>
                     </a>
                 </div>
-                <div class="col-lg-4 col-6">
 
-                    <!-- small box -->
+                <div class="col-lg-4 col-6">
                     <a asp-page="./Members" asp-route-aliveStatus="@Exwhyzee.AANI.Domain.Enums.AliveStatus.Alive" class="small-box-footer">
                         <div class="small-box bg-success" style="margin-bottom: 7.5px;margin-top: 7.5px;">
                             <div class="inner">
-                                <h3 style="white-space: normal;text-align: center;margin:auto;">
-                                    TOTAL ALIVE
-                                </h3>
-
+                                <h3 style="white-space: normal;text-align: center;margin:auto;">TOTAL ALIVE</h3>
                                 <p style="text-align: center;font-weight: 900;font-size: 2.0em;margin: 0;">@Model.Alive</p>
-
                             </div>
-
                         </div>
                     </a>
                 </div>
-                <div class="col-lg-4 col-6">
 
+                <div class="col-lg-4 col-6">
                     <a asp-page="./Members" asp-route-aliveStatus="@Exwhyzee.AANI.Domain.Enums.AliveStatus.Dead" class="small-box-footer">
                         <div class="small-box bg-danger" style="margin-bottom: 7.5px;margin-top: 7.5px;">
                             <div class="inner">
-                                <h3 style="white-space: normal;text-align: center;margin:auto;">
-                                    TOTAL DEAD
-                                </h3>
-
+                                <h3 style="white-space: normal;text-align: center;margin:auto;">TOTAL DEAD</h3>
                                 <p style="text-align: center;font-weight: 900;font-size: 2.0em;margin: 0;">@Model.Dead</p>
-
                             </div>
-
-
                         </div>
                     </a>
                 </div>
-                <!-- ./col -->
-
 
                 <div class="col-lg-4 col-6">
-
-                    <!-- small box -->
                     <a asp-page="./Members" asp-route-genderStatus="@Exwhyzee.AANI.Domain.Enums.GenderStatus.Male" class="small-box-footer">
                         <div class="small-box bg-gray" style="margin-bottom: 7.5px;margin-top: 7.5px;">
                             <div class="inner">
-                                <h3 style="white-space: normal;text-align: center;margin:auto;">
-                                    TOTAL MALE
-                                </h3>
-
+                                <h3 style="white-space: normal;text-align: center;margin:auto;">TOTAL MALE</h3>
                                 <p style="text-align: center;font-weight: 900;font-size: 2.0em;margin: 0;">@Model.Male</p>
-
                             </div>
-
                         </div>
                     </a>
                 </div>
-                <div class="col-lg-4 col-6">
 
-                    <!-- small box -->
+                <div class="col-lg-4 col-6">
                     <a asp-page="./Members" asp-route-genderStatus="@Exwhyzee.AANI.Domain.Enums.GenderStatus.Female" class="small-box-footer">
                         <div class="small-box bg-pink" style="margin-bottom: 7.5px;margin-top: 7.5px;">
                             <div class="inner">
-                                <h3 style="white-space: normal;text-align: center;margin:auto;">
-                                    TOTAL FEMALE
-                                </h3>
-
+                                <h3 style="white-space: normal;text-align: center;margin:auto;">TOTAL FEMALE</h3>
                                 <p style="text-align: center;font-weight: 900;font-size: 2.0em;margin: 0;">@Model.Female</p>
-
                             </div>
-
                         </div>
                     </a>
                 </div>
-                <div class="col-lg-4 col-6">
 
+                <div class="col-lg-4 col-6">
                     <a asp-page="./Members" asp-route-activeStatus="@Exwhyzee.AANI.Domain.Enums.ActiveStatus.Active" class="small-box-footer">
                         <div class="small-box bg-warning" style="margin-bottom: 7.5px;margin-top: 7.5px;">
                             <div class="inner">
-                                <h3 style="white-space: normal;text-align: center;margin:auto;">
-                                    TOTAL ACTIVE
-                                </h3>
-
+                                <h3 style="white-space: normal;text-align: center;margin:auto;">TOTAL ACTIVE</h3>
                                 <p style="text-align: center;font-weight: 900;font-size: 2.0em;margin: 0;">@Model.Active</p>
-
                             </div>
-
                         </div>
                     </a>
                 </div>
-                <!-- ./col -->
-
-
             </div>
-        </div><!-- /.container-fluid -->
+        </div>
     </section>
-    <!-- /.content -->
+
     <section class="content" style="margin-top:10px;">
         <div class="container-fluid card">
-
-
             <div class="content-header" style="padding:1px 0;">
                 <div class="container-fluid">
                     <div class="row">
@@ -169,205 +130,238 @@
                 </div>
             </div>
             <div class="row">
-
-                <div class="col-lg-3 col-6">
-
-                    <!-- small box -->
-                    <a asp-page="" asp-route-id="" class="small-box-footer">
-                        <div class="small-box bg-primary" style="margin-bottom: 7.5px;margin-top: 7.5px;">
-                            <div class="inner">
-                                <h3 style="white-space: normal;text-align: center;margin:auto;">
-                                    MY YEARLY DUES (paid)
-                                </h3>
-
-                                <p style="text-align: center;font-weight: 900;font-size: 2.0em;margin: 0;">00000</p>
-
-                            </div>
-
-                        </div>
-                    </a>
-                </div>
-                <div class="col-lg-3 col-6">
-
-                    <!-- small box -->
-                    <a asp-page="" asp-route-id="" class="small-box-footer">
+                @foreach (var summary in Model.MyFundSummaries)
+                {
+                    <div class="col-lg-4 col-6">
                         <div class="small-box bg-success" style="margin-bottom: 7.5px;margin-top: 7.5px;">
                             <div class="inner">
                                 <h3 style="white-space: normal;text-align: center;margin:auto;">
-                                    MY YEARLY DUES (pending)
+                                    @summary.CategoryTitle (paid)
                                 </h3>
-
-                                <p style="text-align: center;font-weight: 900;font-size: 2.0em;margin: 0;">0000</p>
-
+                                <span style="text-align: center;font-weight: 900;font-size: 2.0em;margin: 0;display:block;">
+                                    ₦@summary.Paid:N0
+                                </span>
                             </div>
-
                         </div>
-                    </a>
-                </div>
-                <div class="col-lg-3 col-6">
-
-                    <a asp-page="" asp-route-id="" class="small-box-footer">
                         <div class="small-box bg-danger" style="margin-bottom: 7.5px;margin-top: 7.5px;">
                             <div class="inner">
                                 <h3 style="white-space: normal;text-align: center;margin:auto;">
-                                    MY CONTRIBUTIONS (paid)
+                                    @summary.CategoryTitle (pending)
                                 </h3>
-
-                                <p style="text-align: center;font-weight: 900;font-size: 2.0em;margin: 0;">00000</p>
-
+                                <span style="text-align: center;font-weight: 900;font-size: 2.0em;margin: 0;display:block;">
+                                    ₦@summary.Pending:N0
+                                </span>
                             </div>
-
-
-                        </div>
-                    </a>
-                </div>
-                <!-- ./col -->
-
-
-                <div class="col-lg-3 col-6">
-
-                    <!-- small box -->
-                    <a asp-page="" asp-route-id="" class="small-box-footer">
-                        <div class="small-box bg-gray" style="margin-bottom: 7.5px;margin-top: 7.5px;">
-                            <div class="inner">
-                                <h3 style="white-space: normal;text-align: center;margin:auto;">
-                                    MY CONTRIBUTIONS (pending)
-                                </h3>
-
-                                <p style="text-align: center;font-weight: 900;font-size: 2.0em;margin: 0;">00000</p>
-
-                            </div>
-
-                        </div>
-                    </a>
-                </div>
-
-            </div>
-        </div><!-- /.container-fluid -->
-    </section>
-    @{
-        string[] colors = {
-        "bg-primary", "bg-secondary", "bg-success", "bg-danger", "bg-warning", "bg-info",
-        "bg-dark", "bg-light", "bg-info", "bg-danger", "bg-primary", "bg-warning",
-        "bg-success", "bg-info", "bg-dark", "bg-primary", "bg-secondary", "bg-success",
-        "bg-danger", "bg-warning", "bg-info", "bg-dark", "bg-light", "bg-primary",
-        "bg-secondary", "bg-success", "bg-danger", "bg-warning", "bg-info", "bg-dark",
-        "bg-light", "bg-primary", "bg-secondary", "bg-success", "bg-danger", "bg-warning",
-        "bg-info", "bg-dark", "bg-light"
-    };
-        Random random = new Random();
-    }
-    <section class="content" style="margin-top:10px;">
-        <div class="container-fluid card">
-
-            <div class="content-header" style="padding:1px 0;">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-sm-12" style="padding-left:0;">
-                            <h5 class="m-0" style="font-weight:900;">CHAPTERS</h5>
                         </div>
                     </div>
-                </div>
+                }
             </div>
-            <div class="row">
-
-                <div class="col-lg-12">
-                    <div class="row">
-
-                        @foreach (var item in Model.Chapters.Take(11))
-                        {
-                            <div class="col-md-3 col-sm-6 col-xs-6">
-                                <a asp-page="./Members" asp-route-chapterid="@item.Id" class="small-box-footer">
-                                    <div class="small-box @colors[random.Next(colors.Length)]" style="margin-bottom: 7.5px;margin-top: 7.5px;">
-                                        <div class="inner">
-                                            <h3 style="white-space: normal; text-align: center; font-size: 1.2rem; margin: auto;">
-                                                @item.State
-                                            </h3>
-
-                                        </div>
-
-                                    </div>
-                                </a>
-                            </div>
-                        }
-                        <div class="col-md-3 col-sm-6 col-xs-6">
-                            <a asp-page="./Chapters" class="small-box-footer">
-                                <div class="small-box bg-default" style="margin-bottom: 7.5px;margin-top: 7.5px;">
-                                    <div class="inner">
-                                        <h3 style="white-space: normal; text-align: center; font-size: 1.2rem; margin: auto;">
-                                            MORE >>>
-                                        </h3>
-
-                                    </div>
-
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
-        </div><!-- /.container-fluid -->
+             
+        </div>
     </section>
 
-    <section class="content" style="margin-top:10px;">
-        <div class="container-fluid card">
-
-            <div class="content-header" style="padding:1px 0;">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-sm-12" style="padding-left:0;">
-                            <h5 class="m-0" style="font-weight:900;">SEC</h5>
-                        </div>
-                    </div>
+    <!-- Charts row 1 -->
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header font-weight-bold">
+                    <i class="fa fa-calendar-check mr-1"></i> Monthly Event Attendance
+                    <small class="text-muted float-right" id="attendanceSubtitle"></small>
+                </div>
+                <div class="card-body">
+                    <canvas id="attendanceChart" aria-label="Event attendance per month" role="img" height="180"></canvas>
+                </div>
+                <div class="card-footer">
+                    <button class="btn btn-xs btn-outline-primary" id="downloadAttendance">Download PNG</button>
                 </div>
             </div>
-            <div class="row">
+        </div>
 
-                <div class="col-lg-12">
-                    <div class="row">
-
-                        @foreach (var item in Model.SECs.OrderByDescending(x => x.Year).Take(11))
-                        {
-                            <div class="col-md-3 col-sm-6 col-xs-6">
-                                <a asp-page="./Members" asp-route-secid="@item.Id" class="small-box-footer">
-                                    <div class="small-box @colors[random.Next(colors.Length)]" style="margin-bottom: 7.5px;margin-top: 7.5px;">
-                                        <div class="inner">
-                                            <h3 style="white-space: normal; text-align: center; font-size: 1.2rem; margin: auto;">
-                                                @item.Number (@item.Year)
-                                            </h3>
-
-                                        </div>
-
-                                    </div>
-                                </a>
-                            </div>
-                        }
-                        <div class="col-md-3 col-sm-6 col-xs-6">
-                            <a asp-page="./SecPage" class="small-box-footer">
-                                <div class="small-box bg-default" style="margin-bottom: 7.5px;margin-top: 7.5px;">
-                                    <div class="inner">
-                                        <h3 style="white-space: normal; text-align: center; font-size: 1.2rem; margin: auto;">
-                                            MORE >>>
-                                        </h3>
-
-                                    </div>
-
-                                </div>
-                            </a>
-                        </div>
-                    </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header font-weight-bold">
+                    ₦ Monthly Revenue Generation
+                    <small class="text-muted float-right" id="revenueSubtitle"></small>
                 </div>
-
+                <div class="card-body">
+                    <canvas id="revenueChart" aria-label="Revenue per month" role="img" height="180"></canvas>
+                </div>
+                <div class="card-footer">
+                    <button class="btn btn-xs btn-outline-primary" id="downloadRevenue">Download PNG</button>
+                </div>
             </div>
+        </div>
+    </div>
 
-        </div><!-- /.container-fluid -->
-    </section>
+    <!-- Charts row 2 -->
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header font-weight-bold">
+                    <i class="fa fa-chart-line mr-1"></i> Monthly Login Growth (unique users)
+                    <small class="text-muted float-right" id="loginSubtitle"></small>
+                </div>
+                <div class="card-body">
+                    <canvas id="loginChart" aria-label="Monthly logins" role="img" height="180"></canvas>
+                </div>
+                <div class="card-footer">
+                    <button class="btn btn-xs btn-outline-primary" id="downloadLogins">Download PNG</button>
+                </div>
+            </div>
+        </div>
 
-
+        <!-- Upcoming Events card -->
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header font-weight-bold">
+                    <i class="fa fa-calendar-alt mr-1"></i> Upcoming Events
+                    <small class="text-muted float-right">Next 5</small>
+                </div>
+                <div class="card-body">
+                    @if (Model.UpcomingEvents != null && Model.UpcomingEvents.Any())
+                    {
+                        <ul class="list-group list-group-flush">
+                            @foreach (var ev in Model.UpcomingEvents)
+                            {
+                                <li class="list-group-item d-flex justify-content-between align-items-start">
+                                    <div>
+                                        <div class="font-weight-bold">@ev.Title</div>
+                                        <div class="text-muted small"><i class="fa fa-calendar mr-1"></i> @ev.StartDate.ToString("dd MMM yyyy") @if (!string.IsNullOrWhiteSpace(ev.Location))
+                                        {<span> • @ev.Location</span>}</div>
+                                    </div>
+                                    <div>
+                                        <a asp-page="/Events/Details" asp-route-id="@ev.Id" class="btn btn-xs btn-outline-secondary">Details</a>
+                                    </div>
+                                </li>
+                            }
+                        </ul>
+                    }
+                    else
+                    {
+                        <div class="text-center text-muted">No upcoming events.</div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
 @section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        // Parse server-supplied chart payload (injected from the PageModel)
+        // ChartPayload is a JSON object literal serialized server-side.
+        const chartSource = @Html.Raw(Model.ChartPayload ?? "null");
+
+        // Demo fallback (keeps charts working if DB produced no payload)
+        const demoData = {
+            "2023": { labels:["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"], attendance:[120,100,140,90,110,130,150,145,160,170,155,130], revenue:[5000,4200,6100,4800,5300,5900,7000,6800,7200,7600,7300,6800], logins:[300,280,320,290,310,330,350,340,360,380,370,360] },
+            "2024": { labels:["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"], attendance:[150,130,160,120,140,170,180,175,190,200,185,160], revenue:[6000,5200,7100,5800,6300,6900,8000,7800,8200,8600,8300,7800], logins:[350,330,360,340,360,380,400,390,410,430,420,410] }
+        };
+
+        const source = (chartSource && typeof chartSource === 'object') ? chartSource : demoData;
+
+        // Chart instances
+        let attendanceChart, revenueChart, loginChart;
+
+        // Format currency in Naira
+        const currencyFormatter = value => new Intl.NumberFormat('en-NG', { style: 'currency', currency: 'NGN', maximumFractionDigits: 0 }).format(value);
+
+        function initOrUpdateCharts(year) {
+            const payloadForYear = source[year] || demoData[year] || demoData["2024"];
+            const labels = payloadForYear.labels;
+            const attendance = payloadForYear.attendance;
+            const revenue = payloadForYear.revenue;
+            const logins = payloadForYear.logins;
+
+            document.getElementById('attendanceSubtitle').textContent = `Year ${year}`;
+            document.getElementById('revenueSubtitle').textContent = `Year ${year}`;
+            document.getElementById('loginSubtitle').textContent = `Year ${year}`;
+
+            // Attendance chart
+            if (!attendanceChart) {
+                attendanceChart = new Chart(document.getElementById('attendanceChart').getContext('2d'), {
+                    type: 'bar',
+                    data: { labels, datasets: [{ label: 'Total attendance', data: attendance, backgroundColor: '#17a2b8' }] },
+                    options: {
+                        responsive: true,
+                        plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => ` ${ctx.dataset.label}: ${ctx.parsed.y}` } } },
+                        scales: { y: { beginAtZero: true, title: { display: true, text: 'Attendees' } } }
+                    }
+                });
+            } else {
+                attendanceChart.data.labels = labels;
+                attendanceChart.data.datasets[0].data = attendance;
+                attendanceChart.update();
+            }
+
+            // Revenue chart
+            if (!revenueChart) {
+                revenueChart = new Chart(document.getElementById('revenueChart').getContext('2d'), {
+                    type: 'bar',
+                    data: { labels, datasets: [{ label: 'Revenue', data: revenue, backgroundColor: '#28a745' }] },
+                    options: {
+                        responsive: true,
+                        plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => ` ${ctx.dataset.label}: ${currencyFormatter(ctx.parsed.y)}` } } },
+                        scales: { y: { beginAtZero: true, ticks: { callback: v => currencyFormatter(v) }, title: { display: true, text: 'Revenue (NGN)' } } }
+                    }
+                });
+            } else {
+                revenueChart.data.labels = labels;
+                revenueChart.data.datasets[0].data = revenue;
+                revenueChart.update();
+            }
+
+            // Logins chart
+            if (!loginChart) {
+                loginChart = new Chart(document.getElementById('loginChart').getContext('2d'), {
+                    type: 'line',
+                    data: { labels, datasets: [{ label: 'Unique logins', data: logins, borderColor: '#007bff', backgroundColor: 'rgba(0,123,255,0.08)', fill: true, tension: 0.3, pointRadius: 4 }] },
+                    options: {
+                        responsive: true,
+                        plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => ` ${ctx.dataset.label}: ${ctx.parsed.y}` } } },
+                        scales: { y: { beginAtZero: true, title: { display: true, text: 'Unique users' } } }
+                    }
+                });
+            } else {
+                loginChart.data.labels = labels;
+                loginChart.data.datasets[0].data = logins;
+                loginChart.update();
+            }
+        }
+
+        // download helpers
+        function downloadChartPNG(chartInstance, filename) {
+            if (!chartInstance) return;
+            const a = document.createElement('a');
+            a.href = chartInstance.toBase64Image();
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        }
+
+        document.getElementById('downloadAttendance')?.addEventListener('click', () => {
+            downloadChartPNG(attendanceChart, `attendance_${document.getElementById('yearSelect')?.value || 'year'}.png`);
+        });
+        document.getElementById('downloadRevenue')?.addEventListener('click', () => {
+            downloadChartPNG(revenueChart, `revenue_${document.getElementById('yearSelect')?.value || 'year'}.png`);
+        });
+        document.getElementById('downloadLogins')?.addEventListener('click', () => {
+            downloadChartPNG(loginChart, `logins_${document.getElementById('yearSelect')?.value || 'year'}.png`);
+        });
+
+        document.getElementById('yearSelect')?.addEventListener('change', function () {
+            initOrUpdateCharts(this.value);
+        });
+
+        // initial render
+        (function () {
+            const defaultYear = document.getElementById('yearSelect')?.value || '@Model.DefaultChartYear';
+            initOrUpdateCharts(defaultYear);
+        })();
+    </script>
+
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-   
 }

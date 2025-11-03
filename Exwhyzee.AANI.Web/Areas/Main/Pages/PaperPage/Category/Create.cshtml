@@ -14,18 +14,22 @@
     </div>
     <!-- /.card-header -->
     <div class="card-body">
-        <form method="post">
+        <form method="post" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="PaperCategory.Title" class="control-label"></label>
                 <input asp-for="PaperCategory.Title" class="form-control" />
                 <span asp-validation-for="PaperCategory.Title" class="text-danger"></span>
             </div>
-          
-             <div class="form-group">
+
+            <div class="form-group">
                 <label asp-for="PaperCategory.Description" class="control-label"></label>
-                <textarea asp-for="PaperCategory.Description" class="form-control" ></textarea>
+                <textarea asp-for="PaperCategory.Description" class="form-control"></textarea>
                 <span asp-validation-for="PaperCategory.Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Cover Image</label>
+                <input type="file" asp-for="imagefile" class="form-control">
             </div>
 
 

@@ -31,12 +31,12 @@ namespace Exwhyzee.AANI.Domain.Models
         public AliveStatus AliveStatus { get; set; }
         public ActiveStatus ActiveStatus { get; set; }
         public VerificationStatus VerificationStatus { get; set; }
-        
+
         public DateTime DOB { get; set; }
         public DateTime Date { get; set; }
         public DateTime DateUpdated { get; set; }
-        public long SECId { get; set; }
-        public SEC SEC { get; set; } = default!;
+        public long? SECId { get; set; }
+        public SEC? SEC { get; set; } = default!;
 
         public long? ChapterId { get; set; }
         public Chapter Chapter { get; set; } = default!;
@@ -62,5 +62,13 @@ namespace Exwhyzee.AANI.Domain.Models
         public string? PictureUrl { get; set; }
         public string? PictureKey { get; set; }
         public string? IdDigit { get; set; }
-    }
+
+
+        public DateTime LastLogin { get; set; } = default!;
+
+        public string? Role { get; set; }
+
+        public long? OfficeId { get; set; }
+        public Office? Office { get; set; }
+        }
 }

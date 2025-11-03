@@ -7,12 +7,12 @@ namespace Exwhyzee.AANI.Domain.Enums
     {
         [Description("NONE")]
         NONE = 0,
-        [Description("Active")]
-        Active = 2,
-        [Description("Changed")]
-        Changed = 3,
-        [Description("Remove")]
-        Remove = 4
+        [Description("Paid")]
+        Paid = 2,
+        [Description("Not Paid")]
+        NotPaid = 3,
+        [Description("Canceled")]
+        Canceled = 4
 
     }
 }

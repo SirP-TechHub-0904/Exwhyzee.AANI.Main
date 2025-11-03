@@ -2,52 +2,55 @@
 @model Exwhyzee.AANI.Web.Areas.Main.Pages.EventPage.Attendance.CreateModel
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Bulk Check-in";
 }
+
 <div class="card card-default">
     <div class="card-header">
-        <h3 class="card-title">ADD A NEW ATTENDANCE</h3>
-
-
+        <h3 class="card-title">ATTENDANCE FOR: @Model.Event.Toipc</h3>
     </div>
     <!-- /.card-header -->
     <div class="card-body">
-        <div class="row">
-            <div class="col-md-12">
-                <form method="post">
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <input type="hidden" asp-for="EventAttendance.EventId" value="@Model.Event.Id" />
-
-                    <div class="form-group">
-                        <label asp-for="EventAttendance.ParticipantId" class="control-label"></label>
-                        <select asp-for="EventAttendance.ParticipantId" class="form-control select2 select2-primary js-example-basic-single" data-dropdown-css-class="select2-primary" asp-items="ViewBag.ParticipantId"></select>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="EventAttendance.DatetimeArrival" class="control-label"></label>
-                        <input asp-for="EventAttendance.DatetimeArrival" class="form-control" />
-                        <span asp-validation-for="EventAttendance.DatetimeArrival" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="EventAttendance.DatetimeDeparture" class="control-label"></label>
-                        <input asp-for="EventAttendance.DatetimeDeparture" class="form-control" />
-                        <span asp-validation-for="EventAttendance.DatetimeDeparture" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="EventAttendance.Tag" class="control-label">Tag (E.g DAY 1)</label>
-                        <input asp-for="EventAttendance.Tag" class="form-control" />
-                        <span asp-validation-for="EventAttendance.Tag" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <input type="submit" value="Submit" class="btn btn-primary" />
-                        <a asp-page="./Index" class="btn bg-gradient-warning btn-sm" style="float:right;">Back</a>
-
-                    </div>
-                </form>
+        <form method="post" asp-route-id="@Model.Event.Id">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th style="width: 50px;">
+                                <input type="checkbox" id="selectAll" />
+                            </th>
+                            <th>Participant</th>
+                            <th>Details</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (var i = 0; i < Model.Checklist.Count; i++)
+                        {
+                            <tr>
+                                <td>
+                                    <input type="checkbox" name="SelectedParticipantIds" value="@Model.Checklist[i].ParticipantId" class="participant-checkbox" />
+                                </td>
+                                <td>@Model.Checklist[i].FullName</td>
+                                <td>@Model.Checklist[i].Details</td>
+                            </tr>
+                        }
+                        @if (!Model.Checklist.Any())
+                        {
+                            <tr>
+                                <td colspan="3" class="text-center">All members have been checked in.</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
             </div>
-        </div>
 
+            <hr />
 
-        <!-- /.row -->
+            <div class="form-group mt-3">
+                <input type="submit" value="Check-in Selected Members" class="btn btn-success" />
+                <a asp-page="/EventPage/EventManager/AttendancePage" asp-route-id="@Model.Event.Id" class="btn btn-secondary" style="float:right;">Back to Attendance List</a>
+            </div>
+        </form>
     </div>
     <!-- /.card-body -->
     <div class="card-footer">
@@ -55,7 +58,12 @@
 </div>
 
 @section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
-    }
+    <script>
+        // Simple script to handle the "Select All" checkbox
+        $(function () {
+            $("#selectAll").click(function () {
+                $(".participant-checkbox").prop('checked', $(this).prop('checked'));
+            });
+        });
+    </script>
+}

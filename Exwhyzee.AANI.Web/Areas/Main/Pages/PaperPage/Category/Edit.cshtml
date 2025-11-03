@@ -16,24 +16,31 @@
     <div class="card-body">
         <div class="row">
             <div class="col-md-12">
-        <form method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="PaperCategory.Id" />
-            <div class="form-group">
-                <label asp-for="PaperCategory.Title" class="control-label"></label>
-                <input asp-for="PaperCategory.Title" class="form-control" />
-                <span asp-validation-for="PaperCategory.Title" class="text-danger"></span>
-            </div>
+                <form method="post" enctype="multipart/form-data">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="PaperCategory.Id" />
+                    <input type="hidden" asp-for="PaperCategory.CoverUrl" />
+                    <input type="hidden" asp-for="PaperCategory.CoverKey" />
+                    <div class="form-group">
+                        <label asp-for="PaperCategory.Title" class="control-label"></label>
+                        <input asp-for="PaperCategory.Title" class="form-control" />
+                        <span asp-validation-for="PaperCategory.Title" class="text-danger"></span>
+                    </div>
                     <div class="form-group">
                         <label asp-for="PaperCategory.Description" class="control-label"></label>
                         <textarea asp-for="PaperCategory.Description" class="form-control"></textarea>
                         <span asp-validation-for="PaperCategory.Description" class="text-danger"></span>
                     </div>
-            <div class="form-group">
-                <label asp-for="PaperCategory.Date" class="control-label"></label>
-                <input asp-for="PaperCategory.Date" class="form-control" />
-                <span asp-validation-for="PaperCategory.Date" class="text-danger"></span>
-            </div>
+                    <div class="form-group">
+                        <label asp-for="PaperCategory.Date" class="control-label"></label>
+                        <input asp-for="PaperCategory.Date" class="form-control" />
+                        <span asp-validation-for="PaperCategory.Date" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Cover Image</label>
+                        <input type="file" asp-for="imagefile" class="form-control">
+                    </div>
+
                     <div class="form-group">
                         <input type="submit" value="Update" class="btn btn-primary" />
                         <a asp-page="./Index" class="btn bg-gradient-warning btn-sm" style="float:right;">Back</a>

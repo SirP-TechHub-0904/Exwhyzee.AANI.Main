@@ -66,6 +66,81 @@
 
     </div>
     <!-- /.card-header -->
+    @if (Model.IsChapter)
+    {
+        <div class="card direct-chat direct-chat-primary">
+            <div class="card-header ui-sortable-handle" style="cursor: move;">
+                <h3 class="card-title">Chapter Executive</h3>
+                <div class="card-tools">
+
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                </div>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+                <table id="" class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>S/N</th>
+                            <th>Fullname</th>
+                            <th>Position</th>
+                            <th>Current Office</th>
+                            <th>SEC</th>
+                            <th>Last Login</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{ int snx = 0;}
+
+
+                        @foreach (var list in Model.ChapterExecutives)
+                        {
+                            <tr>
+                                <td>
+                                    @{snx++;}
+                                    @snx
+                                </td>
+                                <td>
+                                    <a asp-page="./MemberDetails" asp-route-id="@list.ParticipantId" class="uppercase-text">
+
+                                        @Html.DisplayFor(modelItem => list.Participant.Surname)
+                                        @Html.DisplayFor(modelItem => list.Participant.FirstName)
+                                        @Html.DisplayFor(modelItem => list.Participant.OtherName)
+                                    </a>
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => list.Position)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => list.Participant.CurrentOffice)
+                                </td>
+
+                                <td>
+                                    @Html.DisplayFor(modelItem => list.Participant.SEC.Title)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => list.Participant.LastLogin)
+                                </td>
+                                <td>
+                                    <form method="post" asp-page="./UpdateChapterAccount" asp-page-handler="Edit" asp-route-chapterId="@list.ChapterId" style="display:inline;">
+                                        <button type="submit" class="btn btn-primary btn-xs">Update Position</button>
+                                    </form>
+                                    <form method="post" asp-page="./UpdateChapterAccount" asp-page-handler="Delete" asp-route-chapterId="@list.ChapterId" style="display:inline;">
+                                        <button type="submit" class="btn btn-danger btn-xs">Remove</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    }
+
     <div class="card-body">
         <div class="table-responsive">
             <table id="example1" class="table table-bordered table-striped">
@@ -81,11 +156,14 @@
 
 
                         <th>SEC YEAR</th>
+                        <th>CHAPTER</th>
+                        <th>LAST PAYMENT/DUES</th>
+                        <th>LAST LOGIN</th>
                         @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
                         {
                             <th></th>
                         }
-                        </tr>
+                    </tr>
                 </thead>
                 @{int sn = 0;}
                 <tbody>
@@ -112,7 +190,15 @@
                             <td>
                                 SEC @Html.DisplayFor(modelItem => item.SEC.Number) (@Html.DisplayFor(modelItem => item.SEC.Year))
                             </td>
-
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Chapter.State)
+                            </td>
+                            <td>
+                                -----------
+                            </td>
+                            <td>
+                                -----------
+                            </td>
                             @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
                             {
                                 <td>
@@ -125,7 +211,11 @@
                                             <div class="dropdown-menu" style="">
 
                                                 <a class="dropdown-item" asp-page="./UpdateAccount" asp-route-id="@item.Id">Update Account</a>
+                                                @if (Model.IsChapter)
+                                                {
+                                                    <a class="dropdown-item" asp-page="./UpdateChapterAccount" asp-route-chapterId="@item.ChapterId">Update Chapter Position</a>
 
+                                                }
                                             </div>
                                         </div>
                                     </div>

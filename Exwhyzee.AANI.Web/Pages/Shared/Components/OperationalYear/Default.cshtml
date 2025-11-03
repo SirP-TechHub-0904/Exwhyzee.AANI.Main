@@ -1,0 +1,29 @@
+﻿@model Exwhyzee.AANI.Domain.Models.OperationYear
+@*<br />*@
+<div class="clearfix"></div>
+<div class="card">
+
+    <div class="card-header" style="float: right; padding: 4px;">
+        <div style="float: right;">
+
+            @if (Model != null)
+            {
+
+                <span class="text-muted d-md-inline mr-2">Active Year:</span>
+                <strong class="text-primary">@Model.Name</strong>
+
+            }
+            else
+            {
+                <span class="text-danger">No Active Term Set</span>
+            }
+
+            @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+            {
+                <a asp-page="/OperationalYear/Index" asp-area="Datapage" class="btn btn-primary btn-xs" style="border-radius:5px;">
+                    update
+                </a>
+            }
+        </div>
+    </div>
+</div>

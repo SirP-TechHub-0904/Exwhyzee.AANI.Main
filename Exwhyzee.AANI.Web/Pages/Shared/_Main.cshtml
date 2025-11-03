@@ -54,7 +54,7 @@
 
     <link rel="stylesheet" href="~/assets/plugins/summernote/summernote-bs4.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
- 
+
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css" />
 
@@ -129,13 +129,16 @@
         }
 
         .marquee {
-            font-size: 3vw;
+            font-size: 1.5vw;
             color: #fff;
             font-family: 'Courier New', Courier, monospace;
-            height: 4.5vw;
+            height: 2vw;
             overflow: hidden;
-            background-color: #000;
+            background-color: #007bff;
             position: relative;
+            font-weight: 800;
+            margin-bottom: 5px;
+            border-radius: 4px;
         }
             /* nested div inside the container */
             .marquee div {
@@ -168,10 +171,20 @@
         .card {
             margin-top: 10px;
         }
+        @@media (min-width: 992px) {
+    .small-box h3 {
+        font-size: 1.2vw;
+    }
+
+}
+        .small-box p { 
+            font-size: 1.4em !important;
+            margin: 0;
+        }
     </style>
 </head>
 <body class="hold-transition sidebar-mini layout-fixed" onload="displayModal()">
-    <div class="wrapper">
+    <div class="wrapper" style=" background-color: #f4f6f9;">
 
         <!-- Preloader -->
         <div class="preloader flex-column justify-content-center align-items-center">
@@ -245,9 +258,9 @@
                             <partial name="_MniMenu" />
                         }
                         @*@if (User.Identity.IsAuthenticated && User.IsInRole("mSuperAdmin"))
-                        {
-                            <partial name="_MajorMenu" />
-                        }*@
+                            {
+                                <partial name="_MajorMenu" />
+                            }*@
                         @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
                         {
                             <partial name="_AdminMenu" />
@@ -256,7 +269,7 @@
                             <a href="javascript:document.getElementById('logoutForm').submit()" class="nav-link">
                                 <i class="nav-icon fa fa-sign-out"></i>
                                 <p>
-                                    LOGOUT
+                                    Logout
                                 </p>
                             </a>
                         </li>
@@ -277,6 +290,9 @@
 
             <section class="content">
                 <div class="container-fluid">
+                    @await Component.InvokeAsync("OperationalYear")
+
+
                     @RenderBody()
 
                 </div><!-- /.container-fluid -->

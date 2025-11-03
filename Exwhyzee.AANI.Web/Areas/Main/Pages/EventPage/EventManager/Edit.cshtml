@@ -18,6 +18,7 @@
                 <form method="post">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <input type="hidden" asp-for="Event.Id" />
+                    <input type="hidden" asp-for="Event.OperationYearId" />
                     <div class="form-group">
                         <label asp-for="Event.Title" class="control-label"></label>
                         <input asp-for="Event.Title" class="form-control" />

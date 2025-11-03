@@ -9,7 +9,7 @@ using Exwhyzee.AANI.Domain.Models;
 using Exwhyzee.AANI.Web.Data;
 using Exwhyzee.AANI.Domain.Dtos;
 using Microsoft.AspNetCore.Identity;
-using System.Data.Entity;
+using Microsoft.EntityFrameworkCore;
 
 namespace Exwhyzee.AANI.Web.Areas.Main.Pages.Board.Member
 {

@@ -69,5 +69,15 @@ namespace Exwhyzee.AANI.Web.Data
 
 
         public DbSet<StylingConfig> StylingConfigs { get; set; }
+
+        public DbSet<ChapterExecutive> ChapterExecutives { get; set; } = default!;
+
+        public DbSet<CampainYear> CampainYears { get; set; } = default!;
+
+        public DbSet<OperationYear> OperationYears { get; set; } = default!;
+
+        public DbSet<OfficeCategory> OfficeCategories { get; set; } = default!;
+        public DbSet<Office> Offices { get; set; } = default!;
+        public DbSet<LoginHistory> LoginHistories { get; set; } = default!;
     }
 }

@@ -1,392 +1,10 @@
 ﻿@page
 @model Exwhyzee.AANI.Web.Areas.Admin.Pages.Dashboard.IndexModel
- 
+
 @{
     ViewData["Title"] = "Dashboard";
 }
-
-<!-- Top Statistics Grid -->
-<div class="row">
-    <div class="col-lg-3 col-6">
-        <div class="small-box bg-primary">
-            <div class="inner">
-                <h3>
-                    <i class="fa fa-users"></i>
-                    245
-                </h3>
-                <p>Total Active Members</p>
-            </div>
-        </div>
-    </div>
-    <div class="col-lg-3 col-6">
-        <div class="small-box bg-info">
-            <div class="inner">
-                <h3>
-                    <i class="fa fa-sitemap"></i>
-                    18
-                </h3>
-                <p>Total Chapters</p>
-            </div>
-        </div>
-    </div>
-    <div class="col-lg-3 col-6">
-        <div class="small-box bg-success">
-            <div class="inner">
-                <h3>
-                    <i class="fa fa-shield"></i>
-                    41
-                </h3>
-                <p>Total SEC Members</p>
-            </div>
-        </div>
-    </div>
-    <div class="col-lg-3 col-6">
-        <div class="small-box bg-warning">
-            <div class="inner">
-                <h3>
-                    <i class="fa fa-money"></i>
-                    $21,500
-                </h3>
-                <p>Total Revenue</p>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Date Filter -->
-<div class="row mb-4">
-    <div class="col-md-3 col-sm-6">
-        <label for="yearSelect" class="font-weight-bold">Year:</label>
-        <select class="form-control" id="yearSelect">
-            <option value="2023">2023</option>
-            <option value="2024" selected>2024</option>
-            <option value="2025">2025</option>
-        </select>
-    </div>
-</div>
-
-<!-- Quick Insights Section -->
-<div class="row">
-    <div class="col-md-3 col-sm-6 mb-3">
-        <div class="card">
-            <div class="card-body">
-                <span class="fa fa-user-plus fa-2x text-info mr-2"></span>
-                <span>
-                    <div class="font-weight-bold">New Members</div>
-                    <div id="newMembersValue">12 (Oct)</div>
-                </span>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-3 col-sm-6 mb-3">
-        <div class="card">
-            <div class="card-body">
-                <span class="fa fa-calendar fa-2x text-success mr-2"></span>
-                <span>
-                    <div class="font-weight-bold">Upcoming Events</div>
-                    <ul class="mb-0 pl-3" id="upcomingEventsList">
-                        <li>AANI Leadership Summit – 2024-10-25, Abuja</li>
-                        <li>Alumni Dinner – 2024-11-12, Lagos</li>
-                        <li>Chapter Elections – 2024-11-20, Jos</li>
-                    </ul>
-                </span>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-3 col-sm-6 mb-3">
-        <div class="card">
-            <div class="card-body">
-                <span class="fa fa-credit-card fa-2x text-primary mr-2"></span>
-                <span>
-                    <div class="font-weight-bold">Recent Payments</div>
-                    <table class="table table-sm table-borderless mb-0" id="recentPaymentsTable">
-                        <tr><td>John Doe</td><td>$150</td><td class="text-success">Paid</td></tr>
-                        <tr><td>Jane Smith</td><td>$300</td><td class="text-success">Paid</td></tr>
-                        <tr><td>Ahmed Musa</td><td>$100</td><td class="text-warning">Pending</td></tr>
-                        <tr><td>Lisa Okoye</td><td>$700</td><td class="text-success">Paid</td></tr>
-                        <tr><td>Emeka Obi</td><td>$200</td><td class="text-danger">Failed</td></tr>
-                    </table>
-                </span>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-3 col-sm-6 mb-3">
-        <div class="card">
-            <div class="card-body">
-                <span class="fa fa-birthday-cake fa-2x text-warning mr-2"></span>
-                <span>
-                    <div class="font-weight-bold">Birthday Celebrants</div>
-                    <ul class="mb-0 pl-3" id="birthdayList">
-                        <li>John Doe (Today)</li>
-                        <li>Jane Smith (2024-10-15)</li>
-                        <li>Ahmed Musa (2024-10-16)</li>
-                    </ul>
-                </span>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Charts Section -->
-<div class="row mt-4">
-    <div class="col-md-4 mb-4">
-        <div class="card">
-            <div class="card-header font-weight-bold">
-                <span class="fa fa-line-chart"></span> Membership Growth
-            </div>
-            <div class="card-body">
-                <canvas id="membersChart" height="120"></canvas>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-4 mb-4">
-        <div class="card">
-            <div class="card-header font-weight-bold">
-                <span class="fa fa-pie-chart"></span> Revenue Breakdown
-            </div>
-            <div class="card-body">
-                <canvas id="revenueChart" height="120"></canvas>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-4 mb-4">
-        <div class="card">
-            <div class="card-header font-weight-bold">
-                <span class="fa fa-bar-chart"></span> Event Participation
-            </div>
-            <div class="card-body">
-                <canvas id="eventChart" height="120"></canvas>
-            </div>
-        </div>
-    </div>
-</div>
-
-@section Scripts {
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script>
-    // Hardcoded dashboard data by year
-    const dashboardData = {
-        "2023": {
-            activeMembers: 180,
-            chapters: 17,
-            secMembers: 33,
-            revenue: 14200,
-            newMembers: "9 (Year)",
-            upcomingEvents: [
-                "AANI Annual Conference – 2023-10-25, Abuja",
-                "Leadership Workshop – 2023-11-10, Lagos"
-            ],
-            recentPayments: [
-                {name: "John Doe", amount: "$120", status: "Paid"},
-                {name: "Jane Smith", amount: "$200", status: "Paid"},
-                {name: "Ahmed Musa", amount: "$100", status: "Pending"},
-                {name: "Lisa Okoye", amount: "$700", status: "Paid"},
-                {name: "Emeka Obi", amount: "$200", status: "Failed"},
-            ],
-            birthdayList: [
-                "John Doe (Today)",
-                "Jane Smith (2023-10-15)",
-            ],
-            memberGrowth: [12, 14, 18, 16, 22, 25, 30, 28, 29, 31, 27, 19],
-            revenueBreakdown: [7000, 5000, 2200],
-            eventLabels: ["Conference", "Workshop", "Dinner"],
-            eventParticipation: [50, 34, 27]
-        },
-        "2024": {
-            activeMembers: 245,
-            chapters: 18,
-            secMembers: 41,
-            revenue: 21500,
-            newMembers: "12 (Oct)",
-            upcomingEvents: [
-                "AANI Leadership Summit – 2024-10-25, Abuja",
-                "Alumni Dinner – 2024-11-12, Lagos",
-                "Chapter Elections – 2024-11-20, Jos"
-            ],
-            recentPayments: [
-                {name: "John Doe", amount: "$150", status: "Paid"},
-                {name: "Jane Smith", amount: "$300", status: "Paid"},
-                {name: "Ahmed Musa", amount: "$100", status: "Pending"},
-                {name: "Lisa Okoye", amount: "$700", status: "Paid"},
-                {name: "Emeka Obi", amount: "$200", status: "Failed"},
-            ],
-            birthdayList: [
-                "John Doe (Today)",
-                "Jane Smith (2024-10-15)",
-                "Ahmed Musa (2024-10-16)",
-            ],
-            memberGrowth: [15, 17, 20, 23, 24, 28, 31, 32, 34, 36, 35, 30],
-            revenueBreakdown: [11000, 7000, 3500],
-            eventLabels: ["Leadership Summit", "Dinner", "Elections"],
-            eventParticipation: [60, 40, 35]
-        },
-        "2025": {
-            activeMembers: 270,
-            chapters: 19,
-            secMembers: 45,
-            revenue: 25800,
-            newMembers: "8 (Year)",
-            upcomingEvents: [
-                "Board Meeting – 2025-10-28, Abuja",
-                "AANI Gala – 2025-11-15, Lagos"
-            ],
-            recentPayments: [
-                {name: "John Doe", amount: "$200", status: "Paid"},
-                {name: "Jane Smith", amount: "$400", status: "Paid"},
-                {name: "Ahmed Musa", amount: "$100", status: "Pending"},
-                {name: "Lisa Okoye", amount: "$800", status: "Paid"},
-                {name: "Emeka Obi", amount: "$250", status: "Failed"},
-            ],
-            birthdayList: [
-                "John Doe (Today)",
-                "Jane Smith (2025-10-15)",
-            ],
-            memberGrowth: [18, 20, 22, 24, 23, 28, 30, 35, 36, 37, 32, 29],
-            revenueBreakdown: [14000, 8000, 3800],
-            eventLabels: ["Board Meeting", "Gala"],
-            eventParticipation: [22, 60]
-        }
-    };
-
-    // Helper to update dashboard values
-    function updateDashboard(year) {
-        const data = dashboardData[year];
-
-        // Top grid
-        document.querySelector('.small-box.bg-primary h3').innerHTML = `<i class="fa fa-users"></i> ${data.activeMembers}`;
-        document.querySelector('.small-box.bg-info h3').innerHTML = `<i class="fa fa-sitemap"></i> ${data.chapters}`;
-        document.querySelector('.small-box.bg-success h3').innerHTML = `<i class="fa fa-shield"></i> ${data.secMembers}`;
-        document.querySelector('.small-box.bg-warning h3').innerHTML = `<i class="fa fa-money"></i> $${data.revenue.toLocaleString()}`;
-
-        // Quick Insights
-        document.getElementById('newMembersValue').textContent = data.newMembers;
-        // Upcoming Events
-        const eventsList = document.getElementById('upcomingEventsList');
-        eventsList.innerHTML = "";
-        data.upcomingEvents.forEach(e => {
-            const li = document.createElement('li');
-            li.textContent = e;
-            eventsList.appendChild(li);
-        });
-        // Recent Payments
-        const paymentsTable = document.getElementById('recentPaymentsTable');
-        paymentsTable.innerHTML = "";
-        data.recentPayments.forEach(p => {
-            let colorClass = p.status === "Paid" ? "text-success" : p.status === "Pending" ? "text-warning" : "text-danger";
-            paymentsTable.innerHTML += `<tr><td>${p.name}</td><td>${p.amount}</td><td class="${colorClass}">${p.status}</td></tr>`;
-        });
-        // Birthday List
-        const birthdayList = document.getElementById('birthdayList');
-        birthdayList.innerHTML = "";
-        data.birthdayList.forEach(b => {
-            const li = document.createElement('li');
-            li.textContent = b;
-            birthdayList.appendChild(li);
-        });
-
-        updateCharts(year, data);
-    }
-
-    // Chart initialization
-    let membersChart, revenueChart, eventChart;
-    function updateCharts(year, data) {
-        // Membership Growth
-        const months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
-        if (!membersChart) {
-            membersChart = new Chart(document.getElementById('membersChart').getContext('2d'), {
-                type: 'line',
-                data: {
-                    labels: months,
-                    datasets: [{
-                        label: 'Registrations',
-                        data: data.memberGrowth,
-                        borderColor: '#007bff',
-                        backgroundColor: 'rgba(0,123,255,0.08)',
-                        fill: true,
-                        pointRadius: 3,
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    plugins: {legend: {display: false}}
-                }
-            });
-        } else {
-            membersChart.data.datasets[0].data = data.memberGrowth;
-            membersChart.update();
-        }
-        // Revenue Breakdown
-        if (!revenueChart) {
-            revenueChart = new Chart(document.getElementById('revenueChart').getContext('2d'), {
-                type: 'pie',
-                data: {
-                    labels: ["Dues", "Donations", "Events"],
-                    datasets: [{
-                        data: data.revenueBreakdown,
-                        backgroundColor: ['#28a745','#17a2b8','#ffc107'],
-                    }]
-                },
-                options: {
-                    plugins: {legend: {position: 'bottom'}}
-                }
-            });
-        } else {
-            revenueChart.data.datasets[0].data = data.revenueBreakdown;
-            revenueChart.update();
-        }
-        // Event Participation
-        if (!eventChart) {
-            eventChart = new Chart(document.getElementById('eventChart').getContext('2d'), {
-                type: 'bar',
-                data: {
-                    labels: data.eventLabels,
-                    datasets: [{
-                        label: 'Attendance',
-                        data: data.eventParticipation,
-                        backgroundColor: '#007bff',
-                    }]
-                },
-                options: {
-                    plugins: {legend: {display: false}},
-                    scales: {y: {beginAtZero:true}}
-                }
-            });
-        } else {
-            eventChart.data.labels = data.eventLabels;
-            eventChart.data.datasets[0].data = data.eventParticipation;
-            eventChart.update();
-        }
-    }
-
-    // Date filter handler
-    document.getElementById('yearSelect').addEventListener('change', function() {
-        updateDashboard(this.value);
-    });
-
-    // Initial load
-    updateDashboard(document.getElementById('yearSelect').value);
-    </script>
-}
-
-
-
-
-
-
-
-
-
-
-
-
-@*@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-
-}*@
-
-
-
-@*<div class="">
+<div class="">
     @if (TempData["checkifexist"] != null)
     {
         <section class="content" style="margin-top:10px;">
@@ -411,7 +29,7 @@
                         </div>
                     </div>
                 </div>
-            </div> /.container-fluid
+            </div>  
         </section>
 
     }
@@ -430,8 +48,7 @@
             <div class="row">
 
                 <div class="col-lg-4 col-6">
-
-                    small box
+                     
                     <a asp-page="./Members" class="small-box-footer">
                         <div class="small-box bg-primary" style="margin-bottom: 7.5px;margin-top: 7.5px;">
                             <div class="inner">
@@ -447,8 +64,7 @@
                     </a>
                 </div>
                 <div class="col-lg-4 col-6">
-
-                    small box
+                     
                     <a asp-page="./Members" asp-route-aliveStatus="@Exwhyzee.AANI.Domain.Enums.AliveStatus.Alive" class="small-box-footer">
                         <div class="small-box bg-success" style="margin-bottom: 7.5px;margin-top: 7.5px;">
                             <div class="inner">
@@ -479,13 +95,11 @@
 
                         </div>
                     </a>
-                </div>
-                ./col
+                </div> 
 
 
                 <div class="col-lg-4 col-6">
-
-                    small box
+                     
                     <a asp-page="./Members" asp-route-genderStatus="@Exwhyzee.AANI.Domain.Enums.GenderStatus.Male" class="small-box-footer">
                         <div class="small-box bg-gray" style="margin-bottom: 7.5px;margin-top: 7.5px;">
                             <div class="inner">
@@ -501,8 +115,7 @@
                     </a>
                 </div>
                 <div class="col-lg-4 col-6">
-
-                    small box
+                     
                     <a asp-page="./Members" asp-route-genderStatus="@Exwhyzee.AANI.Domain.Enums.GenderStatus.Female" class="small-box-footer">
                         <div class="small-box bg-pink" style="margin-bottom: 7.5px;margin-top: 7.5px;">
                             <div class="inner">
@@ -532,14 +145,12 @@
 
                         </div>
                     </a>
-                </div>
-                ./col
+                </div> 
 
 
             </div>
-        </div> /.container-fluid
-    </section>
-    /.content
+        </div> 
+    </section> 
     <section class="content" style="margin-top:10px;">
         <div class="container-fluid card">
 
@@ -556,8 +167,7 @@
             <div class="row">
 
                 <div class="col-lg-3 col-6">
-
-                    small box
+                     
                     <a asp-page="" asp-route-id="" class="small-box-footer">
                         <div class="small-box bg-primary" style="margin-bottom: 7.5px;margin-top: 7.5px;">
                             <div class="inner">
@@ -573,8 +183,7 @@
                     </a>
                 </div>
                 <div class="col-lg-3 col-6">
-
-                    small box
+                     
                     <a asp-page="" asp-route-id="" class="small-box-footer">
                         <div class="small-box bg-success" style="margin-bottom: 7.5px;margin-top: 7.5px;">
                             <div class="inner">
@@ -606,12 +215,9 @@
                         </div>
                     </a>
                 </div>
-                ./col
 
 
                 <div class="col-lg-3 col-6">
-
-                    small box
                     <a asp-page="" asp-route-id="" class="small-box-footer">
                         <div class="small-box bg-gray" style="margin-bottom: 7.5px;margin-top: 7.5px;">
                             <div class="inner">
@@ -628,7 +234,7 @@
                 </div>
 
             </div>
-        </div> /.container-fluid
+        </div>
     </section>
     @{
         string[] colors = {
@@ -693,7 +299,7 @@
 
             </div>
 
-        </div> /.container-fluid
+        </div>
     </section>
 
     <section class="content" style="margin-top:10px;">
@@ -747,8 +353,24 @@
 
             </div>
 
-        </div> /.container-fluid
+        </div>
     </section>
 
 
-</div>*@
+</div>
+
+
+
+
+
+
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+}
+
+
+

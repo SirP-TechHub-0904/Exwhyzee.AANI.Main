@@ -9,78 +9,42 @@
         <h3 class="card-title">@TempData["data"]</h3>
         @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
         {
-
             <a asp-page="./Add" class="btn bg-gradient-warning btn-sm" style="float:right;">Add New Alumni</a>
         }
     </div>
     <!-- /.card-header -->
     <div class="card-body">
         <div class="row">
-
             <div class="col-lg-12">
 
-                <!-- small box -->
-                <a asp-page="./Members" class="btn btn-primary">
-                    TOTAL MEMBERS (@Model.AllAlumni)
+                <!-- === NEW: Simplified Filter Buttons === -->
+                @*<a asp-page="./Index" class="btn btn-primary">
+                    TOTAL USERS (@Model.TotalUsers)
                 </a>
 
-                <a asp-page="./Members" asp-route-aliveStatus="@Exwhyzee.AANI.Domain.Enums.AliveStatus.Alive" class="btn btn-warning">
-                    TOTAL ALIVE (@Model.Alive)
+                <a asp-page="./Index" asp-route-filter="active" class="btn btn-success">
+                    ACTIVE USERS (@Model.ActiveUsers)
                 </a>
 
-                <a asp-page="./Members" asp-route-aliveStatus="@Exwhyzee.AANI.Domain.Enums.AliveStatus.Dead" class="btn btn-danger">
-                    TOTAL DEAD (@Model.Dead)
-                </a>
+                <a asp-page="./Index" asp-route-filter="last_seen" class="btn btn-info">
+                    LAST SEEN 1 MONTH AGO (@Model.LastSeen1Month)
+                </a>*@
 
-                <a asp-page="./Members" asp-route-genderStatus="@Exwhyzee.AANI.Domain.Enums.GenderStatus.Male" class="btn btn-success">
-                    TOTAL MALE (@Model.Male)
-                </a>
-
-                <a asp-page="./Members" asp-route-genderStatus="@Exwhyzee.AANI.Domain.Enums.GenderStatus.Female" class="btn btn-info">
-                    TOTAL FEMALE (@Model.Female)
-                </a>
-
-                <a asp-page="./Members" asp-route-activeStatus="@Exwhyzee.AANI.Domain.Enums.ActiveStatus.Active" class="btn btn-warning">
-                    TOTAL ACTIVE (@Model.Active)
-                </a>
-
-                <a asp-page="./Members" asp-route-verificationStatus="@Exwhyzee.AANI.Domain.Enums.VerificationStatus.Awaiting" class="btn btn-danger">
-                    TOTAL AWAITING VERIFICATION (@Model.Awaiting)
-                </a>
-
-                <a asp-page="./Members" asp-route-verificationStatus="@Exwhyzee.AANI.Domain.Enums.VerificationStatus.Verified" class="btn btn-primary">
-                    TOTAL VERIFIED (@Model.Verified)
-                </a>
             </div>
         </div>
-        <!-- ./col -->
-
-
     </div>
     <div class="card-body">
         <div class="table-responsive">
             <table id="example1" class="table table-bordered table-striped">
-                <thead>
+                 <thead>
                     <tr>
                         <th>S/N</th>
-                        <th>
-                            FULLNAME
-                        </th>
-                        <th>
-                            SPONSOR
-                        </th>
-                        <th>
-                            PHONE
-                        </th>
-                        <th>
-                            Gender
-                        </th>
-                        <th>DOB</th>
-                        <th>
-                            EMAIL
-                        </th>
-                        <th>MNI Status</th>
-                        <th>SEC YEAR</th>
+                        <th>FULLNAME</th>
+                        <th>PHONE</th>
+                        <th>Gender</th>
+                        <th>EMAIL</th>
+                        <th>STATUS</th>
+                        <th>ROLE</th>
                         @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
                         {
                             <th></th>
@@ -98,29 +62,14 @@
                             </td>
                             <td>
                                 <a asp-page="./Details" asp-route-id="@item.Id">
-                                    @Html.DisplayFor(modelItem => item.Surname)
-                                    @Html.DisplayFor(modelItem => item.FirstName)
-                                    @Html.DisplayFor(modelItem => item.OtherName)
+                                    @item.Fullname
                                 </a>
                             </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Sponsor)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.PhoneNumber)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.GenderStatus)
-                            </td>
-                            <td>
-                                @item.DOB.ToString("dd MMMM, yyyy")
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Email)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.MniStatus)
-                            </td>
+                            <td>@Html.DisplayFor(modelItem => item.PhoneNumber)</td>
+                            <td>@Html.DisplayFor(modelItem => item.GenderStatus)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Email)</td>
+                            <td>@Html.DisplayFor(modelItem => item.UserStatus)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Role)</td>
                             <td>
                                 SEC @Html.DisplayFor(modelItem => item.SEC.Number) (@Html.DisplayFor(modelItem => item.SEC.Year))
                             </td>
@@ -128,23 +77,17 @@
                             {
                                 <td>
                                     <div class="btn-group">
-                                        <button type="button" class="btn btn-success">Action</button>
-
-                                        <div class="btn-group">
-                                            <button type="button" class="btn btn-success dropdown-toggle dropdown-icon" data-toggle="dropdown" aria-expanded="false">
-                                            </button>
-                                            <div class="dropdown-menu" style="">
-
-                                                <a class="dropdown-item" asp-page="./Edit" asp-route-id="@item.Id">Edit</a>
-                                                <a class="dropdown-item" asp-page="./UpdateIDCard" asp-route-id="@item.Id">Update ID Card</a>
-                                                <a class="dropdown-item" asp-page="./IDCardQrCode" asp-route-id="@item.Id">View ID Data</a>
-                                                <a class="dropdown-item" asp-page="./ResetPassword" asp-route-id="@item.Id">Reset Password</a>
-                                                <a class="dropdown-item" asp-page="./UpdateMNI" asp-route-id="@item.Id">Update MNI</a>
-                                                @*<a class="dropdown-item" asp-page="./Delete" asp-route-id="@item.Id">Delete</a>*@
-                                            </div>
+                                        <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
+                                            Action
+                                        </button>
+                                        <div class="dropdown-menu">
+                                            <a class="dropdown-item" asp-page="./Edit" asp-route-id="@item.Id">Edit</a>
+                                            <a class="dropdown-item" asp-page="./UpdateIDCard" asp-route-id="@item.Id">Update ID Card</a>
+                                            <a class="dropdown-item" asp-page="./IDCardQrCode" asp-route-id="@item.Id">View ID Data</a>
+                                            <a class="dropdown-item" asp-page="./ResetPassword" asp-route-id="@item.Id">Reset Password</a>
+                                            <a class="dropdown-item" asp-page="./UpdateMNI" asp-route-id="@item.Id">Update MNI</a>
                                         </div>
                                     </div>
-
                                 </td>
                             }
                         </tr>
@@ -154,4 +97,3 @@
         </div>
     </div>
 </div>
-

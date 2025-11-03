@@ -36,6 +36,8 @@ namespace Exwhyzee.AANI.Web.Areas.Main.Pages.ParticipantPage
         public int Verified { get; set; }
         public async Task<IActionResult> OnGetAsync(AliveStatus aliveStatus = 0, GenderStatus genderStatus = 0, ActiveStatus activeStatus = 0, VerificationStatus verificationStatus = 0, long chapterid = 0, long secid = 0)
         {
+
+            
             Participants = _userManager.Users.Include(x => x.SEC).Where(x => x.Email != "jinmcever@gmail.com").AsQueryable();
             var DataParticipants = _userManager.Users.Include(x => x.SEC).Where(x => x.Email != "jinmcever@gmail.com").AsQueryable();
             AllAlumni = await DataParticipants.CountAsync();
@@ -124,6 +126,26 @@ namespace Exwhyzee.AANI.Web.Areas.Main.Pages.ParticipantPage
 
             return Page();
         }
+        /// <summary>
+        /// A self-contained method to process all users in the database. For each user,
+        /// it retrieves all their assigned roles and populates the 'Role' display property
+        /// with a comma-separated string of those roles.
+        /// </summary>
+        //private async Task PopulateAllUserRoles()
+        //{
+        //    // Get a list of every user from the database.
+        //    var allUsers = await _userManager.Users.ToListAsync();
 
+        //    // Loop through each user in the list.
+        //    foreach (var user in allUsers)
+        //    {
+        //        // Get the list of role names for this specific user from the database.
+        //        var roles = await _userManager.GetRolesAsync(user);
+
+        //        // Join the list of roles into a single string (e.g., "Admin, MNI") 
+        //        // and assign it to the 'Role' property for display.
+        //        user.Role = string.Join(", ", roles);
+        //    }
+        //}
     }
 }

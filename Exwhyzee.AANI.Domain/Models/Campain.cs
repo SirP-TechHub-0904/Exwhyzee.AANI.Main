@@ -22,5 +22,8 @@ namespace Exwhyzee.AANI.Domain.Models
         public string? ImageKey { get; set; }
 
         public ICollection<CampainPost> CampainPosts { get; set; }
+
+        public long? OperationYearId { get; set; }
+        public OperationYear? OperationYear { get; set; }
     }
 }
