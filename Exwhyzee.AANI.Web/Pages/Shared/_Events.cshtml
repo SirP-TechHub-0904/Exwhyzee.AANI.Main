@@ -1,0 +1,71 @@
+﻿@using Exwhyzee.AANI.Web.Helper.BaseHelper;
+@using Exwhyzee.AANI.Domain.Models;
+@inject IBaseModel BaseModel;
+@using System.Text.RegularExpressions;
+@{
+
+    List<Event> GetEvents = await BaseModel.GetEvents();
+    ContactSettingsModel Settings = await BaseModel.GetSettings();
+}
+
+
+ 
+<section class="testimonial-one event-01">
+    <div class="testimonial-one__bg float-bob-y" style="background-image: url();"></div>
+    <div class="container">
+        <div class="row">
+
+            <!-- Left Column -->
+            <div class="col-xl-5 col-lg-5">
+                <div class="testimonial-one__left">
+                    <div class="section-title text-left sec-title-animation animation-style2">
+                        <div class="section-title__tagline-box">
+                            <span class="section-title__tagline">@Settings.EventSubtitle</span>
+                            <div class="section-title__tagline-shape"></div>
+                        </div>
+                        <h2 class="section-title__title">@Settings.EventTitle</h2>
+                    </div>
+                    <div class="testimonial-one__satisfied-clients">
+
+                        <p class="testimonial-one__satisfied-clients-text">
+                            @Html.Raw(Settings.EventDescription)
+
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Right Column -->
+            <div class="col-xl-7 col-lg-7">
+                <div class="testimonial-one__right">
+                    <div class="testimonial-one__carousel owl-carousel owl-theme">
+                        @foreach (var ps in GetEvents)
+                        {
+                            
+                            <!-- Item 1 -->
+                            <div class="testimonial-one__single">
+                                <div class="testimonial-one__quote"><span class="icon-quote"></span></div>
+
+                                <div class="testimonial-one__client-info">
+                                    <div class="testimonial-one__client-content">
+                                        <img src="@ps.ImageUrl" alt="@ps.Title">
+                                        <h4 class="testimonial-one__client-name"><a asp-page="/EventInfo" asp-route-id="@ps.Id" asp-route-title="@(System.Text.RegularExpressions.Regex.Replace(ps.Title?.Trim() ?? "", @"\s+", "-"))">@ps.Title</a></h4>
+                                        <p class="testimonial-one__client-sub-title">@ps.Toipc</p>
+                                    </div>
+
+                                </div>
+                                <p class="testimonial-one__text">
+                                     @Html.Raw(ps.Description)
+                                </p>
+                            </div>
+
+                        }
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+ 

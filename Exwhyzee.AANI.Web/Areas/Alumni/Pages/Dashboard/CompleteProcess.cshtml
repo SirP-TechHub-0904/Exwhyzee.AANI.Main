@@ -93,9 +93,16 @@
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label asp-for="Participant.CurrentOffice" class="control-label">Your Organization</label>
-                        <input asp-for="Participant.CurrentOffice" class="form-control uppercase-text" />
-                        <span asp-validation-for="Participant.CurrentOffice" class="text-danger"></span>
+                        <label asp-for="Participant.CurrentOccupation" class="control-label">Occupation</label>
+                        <input asp-for="Participant.CurrentOccupation" class="form-control uppercase-text" />
+                        <span asp-validation-for="Participant.CurrentOccupation" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Participant.CurrentWorkPlace" class="control-label">WorkPlace</label>
+                        <input asp-for="Participant.CurrentWorkPlace" class="form-control uppercase-text" />
+                        <span asp-validation-for="Participant.CurrentWorkPlace" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="col-md-6">

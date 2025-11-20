@@ -20,6 +20,7 @@ namespace Exwhyzee.AANI.Web.Pages.Media
         }
 
         public Blog Blog { get; set; }
+        public ContactSettingsModel ContactSettings { get; set; }
 
         public async Task<IActionResult> OnGetAsync(long? id, string? title)
         {
@@ -34,6 +35,8 @@ namespace Exwhyzee.AANI.Web.Pages.Media
             {
                 return NotFound();
             }
+            ContactSettings = await _context.ContactSettings
+              .FirstOrDefaultAsync();
             return Page();
         }
 

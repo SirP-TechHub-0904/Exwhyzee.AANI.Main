@@ -168,8 +168,9 @@ namespace Exwhyzee.AANI.Web.Areas.Main.Pages.ParticipantPage
                 updateparticipant.SECId = Participant.SECId;
                 updateparticipant.Bio = Participant.Bio;
                 updateparticipant.ChapterId = Participant.ChapterId;
-                updateparticipant.CurrentOffice = Participant.CurrentOffice;
-
+                updateparticipant.CurrentOccupation = Participant.CurrentOccupation;
+                updateparticipant.CurrentWorkPlace = Participant.CurrentWorkPlace;
+                updateparticipant.CurrentPosition = Participant.CurrentPosition;
                 updateparticipant.EmergencyContactEmail = Participant.EmergencyContactEmail;
                 updateparticipant.EmergencyContactPhone = Participant.EmergencyContactPhone;
                 updateparticipant.EmergencyContactName = Participant.EmergencyContactName;
@@ -178,23 +179,76 @@ namespace Exwhyzee.AANI.Web.Areas.Main.Pages.ParticipantPage
                     var email = await _userManager.GetEmailAsync(updateparticipant);
                     if (Participant.Email != email)
                     {
-                        var userId = await _userManager.GetUserIdAsync(updateparticipant);
-                        var code = await _userManager.GenerateChangeEmailTokenAsync(updateparticipant, Participant.Email);
-                        //code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
 
-                        //var xcode = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(code));
-                        var result = await _userManager.ChangeEmailAsync(updateparticipant, Participant.Email, code);
-                        if (!result.Succeeded)
+
+                        var currentEmail = await _userManager.GetEmailAsync(updateparticipant);
+                        var currentUserName = await _userManager.GetUserNameAsync(updateparticipant);
+
+                        if (string.IsNullOrWhiteSpace(email))
                         {
-                            TempData["aaerror1"] = "Error changing email.";
-                             
+                            TempData["aaerror"] = "New email cannot be empty.";
                         }
-                        TempData["aasuccess"] = "Email Updated successfully";
-                         
+
+
+                        if (email == currentEmail && email == currentUserName)
+                        {
+                            TempData["aaerror"] = "Email/username is unchanged.";
+                        }
+
+                        // Ensure the new email is not used by another account
+                        var existingByEmail = await _userManager.FindByEmailAsync(email);
+                        if (existingByEmail != null && existingByEmail.Id != updateparticipant.Id)
+                        {
+                            TempData["aaerror"] = "Email is already used by another account.";
+                        }
+
+                        // Ensure the new username (we want username == email) is not used by another account
+                        var existingByName = await _userManager.FindByNameAsync(email);
+                        if (existingByName != null && existingByName.Id != updateparticipant.Id)
+                        {
+                            TempData["aaerror"] = "Username is already used by another account.";
+                        }
+
+                        // Generate token and change email
+                        var emailToken = await _userManager.GenerateChangeEmailTokenAsync(updateparticipant, email);
+                        var emailResult = await _userManager.ChangeEmailAsync(updateparticipant, email, emailToken);
+                        if (!emailResult.Succeeded)
+                        {
+                            TempData["aaerror"] = "Error changing email: " + string.Join("; ", emailResult.Errors.Select(e => e.Description));
+                        }
+
+                        // Now update username to match email
+                        var setUserNameResult = await _userManager.SetUserNameAsync(updateparticipant, email);
+                        if (!setUserNameResult.Succeeded)
+                        {
+                            // Attempt to revert the email change back to the original to avoid partial state
+                            var revertErrors = "";
+                            try
+                            {
+                                var revertToken = await _userManager.GenerateChangeEmailTokenAsync(updateparticipant, currentEmail);
+                                var revertResult = await _userManager.ChangeEmailAsync(updateparticipant, currentEmail, revertToken);
+                                if (!revertResult.Succeeded)
+                                {
+                                    revertErrors = " Reverting email failed: " + string.Join("; ", revertResult.Errors.Select(e => e.Description));
+                                }
+                            }
+                            catch
+                            {
+                                // ignore revert exceptions, but capture that revert may have failed
+                                revertErrors = " Reverting email failed due to an unexpected error.";
+                            }
+
+                            TempData["aaerror"] = "Error changing username: " + string.Join("; ", setUserNameResult.Errors.Select(e => e.Description)) + revertErrors;
+                        }
+                        else
+                        {
+
+                            TempData["aasuccess"] = "Email Updated successfully";
+                        }
                     }
 
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
 
                 }

@@ -11,7 +11,7 @@ namespace Exwhyzee.AANI.Domain.Models
         
         public long Id { get; set; }
         public string Title { get; set; }
-        
+        public bool Show { get;set;}
         public ICollection<Blog> Blog { get; set; }
     }
 }

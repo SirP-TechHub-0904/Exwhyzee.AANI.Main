@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Exwhyzee.AANI.Web", "Exwhyz
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Exwhyzee.AANI.Domain", "Exwhyzee.AANI.Domain\Exwhyzee.AANI.Domain.csproj", "{A49D5887-1AEC-46CF-89D3-D2D77EC2C914}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PostmarkEmailService", "PostmarkEmailService\PostmarkEmailService.csproj", "{1B8801BE-AF16-486B-9E74-F40292EEE670}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{A49D5887-1AEC-46CF-89D3-D2D77EC2C914}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A49D5887-1AEC-46CF-89D3-D2D77EC2C914}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A49D5887-1AEC-46CF-89D3-D2D77EC2C914}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1B8801BE-AF16-486B-9E74-F40292EEE670}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B8801BE-AF16-486B-9E74-F40292EEE670}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1B8801BE-AF16-486B-9E74-F40292EEE670}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1B8801BE-AF16-486B-9E74-F40292EEE670}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

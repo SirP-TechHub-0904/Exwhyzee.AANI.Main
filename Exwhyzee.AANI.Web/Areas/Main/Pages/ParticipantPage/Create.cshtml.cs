@@ -112,8 +112,7 @@ namespace Exwhyzee.AANI.Web.Areas.Main.Pages.ParticipantPage
                 MniStatus = MniStatus.MNI,
                 AliveStatus = AliveStatus.Alive,
                 VerificationStatus = VerificationStatus.NONE,
-                ActiveStatus = ActiveStatus.NONE,
-                UserStatus = UserStatus.MNI
+                UserStatus = UserStatus.NONE
             };
             Guid pass = Guid.NewGuid();
             var result = await _userManager.CreateAsync(user, pass.ToString().Replace("-", ".") + "XY");

@@ -13,6 +13,10 @@ namespace Exwhyzee.AANI.Domain.Models
         public string? Toipc { get; set; }
         public string? InvitImage { get; set; }
         public string? Location { get; set; }
+
+        public string? ImageUrl { get; set; }
+        public string? ImageKey { get; set; }
+
         public string? Description { get; set; }
         public DateTime Date { get; set; }
         public DateTime StartDate { get; set; }

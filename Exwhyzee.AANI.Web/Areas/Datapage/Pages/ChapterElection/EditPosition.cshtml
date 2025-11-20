@@ -1,0 +1,56 @@
+﻿@page "{positionId:long}/{electionId:long}/{chapterId:long}"
+@model Exwhyzee.AANI.Web.Areas.Datapage.Pages.ChapterElection.EditPositionModel
+@{
+    ViewData["Title"] = "Edit Position";
+}
+
+<div class="card">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h3 class="card-title mb-0">Edit Position</h3>
+        <div>
+            <a asp-area="Datapage" asp-page="/ChapterElection/Candidates" asp-route-electionId="@Model.ElectionId" asp-route-chapterId="@Model.ChapterId" class="btn btn-sm btn-outline-secondary">Back</a>
+        </div>
+    </div>
+
+    <div class="card-body">
+        <form method="post">
+            <input type="hidden" asp-for="PositionEdit.PositionId" />
+            <input type="hidden" asp-for="ElectionId" />
+            <input type="hidden" asp-for="ChapterId" />
+
+            <div class="mb-3">
+                <label class="form-label">Name</label>
+                <input asp-for="PositionEdit.Name" class="form-control" />
+                <span asp-validation-for="PositionEdit.Name" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Description</label>
+                <textarea asp-for="PositionEdit.Description" class="form-control" rows="3"></textarea>
+                <span asp-validation-for="PositionEdit.Description" class="text-danger"></span>
+            </div>
+
+            <div class="row">
+                
+                <div class="col-md-3 mb-3">
+                    <label class="form-label">Ballot Order</label>
+                    <input asp-for="PositionEdit.BallotOrder" class="form-control" type="number" />
+                </div>
+                <div class="col-md-3 mb-3">
+                    <label class="form-label">Active</label>
+                    <select asp-for="PositionEdit.IsActive" class="form-control">
+                        <option value="true">Yes</option>
+                        <option value="false">No</option>
+                    </select>
+                </div>
+            </div>
+
+            <button class="btn btn-primary" type="submit">Save</button>
+            <a asp-area="Datapage" asp-page="/ChapterElection/Candidates" asp-route-electionId="@Model.ElectionId" asp-route-chapterId="@Model.ChapterId" class="btn btn-outline-secondary ms-2">Cancel</a>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

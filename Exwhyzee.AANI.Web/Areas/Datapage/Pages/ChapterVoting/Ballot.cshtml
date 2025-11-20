@@ -1,0 +1,292 @@
+﻿@page "{electionId:long}"
+@model Exwhyzee.AANI.Web.Areas.Datapage.Pages.ChapterVoting.BallotModel
+@{
+    ViewData["Title"] = "Ballot";
+}
+
+<style>
+    /* Table layout: 3 columns (S/N | candidate (image above name) | mark) */
+    .ballot-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 0;
+    }
+
+        .ballot-table thead {
+            display: none;
+        }
+        /* we use position title rows instead */
+        .ballot-table tr.position-row td {
+            background: #f8f9fa;
+            padding: 10px;
+            border: 1px solid #e9ecef;
+            font-weight: 600;
+            border-radius: 6px;
+        }
+
+        .ballot-table td {
+            vertical-align: middle;
+            padding: 12px 8px;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+    /* column widths */
+    .col-sn {
+        width: 48px;
+        text-align: center;
+        font-weight: 700;
+        color: #333;
+    }
+
+    .col-candidate {
+        width: auto;
+    }
+
+    .col-mark {
+        width: 80px;
+        text-align: center;
+    }
+
+    /* center cell stacks image above name */
+    .candidate-stack {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start; /* left-align on wide screens */
+        gap: 8px;
+        min-width: 0;
+    }
+
+    .candidate-img {
+        width: 64px;
+        height: 64px;
+        object-fit: cover;
+        border-radius: 6px;
+        border: 1px solid #e9ecef;
+        background: #f1f3f5;
+        flex: 0 0 64px;
+    }
+
+    .candidate-name {
+        font-weight: 600;
+        font-size: 1rem;
+        line-height: 1.05;
+        color: #222;
+    }
+
+    .candidate-meta {
+        font-size: 0.85rem;
+        color: #6c757d;
+    }
+
+    /* mark control large touch target */
+    .mark-box {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 64px;
+        height: 64px;
+        border: 2px solid #dee2e6;
+        border-radius: 8px;
+        background: #fff;
+        cursor: pointer;
+        position: relative;
+    }
+
+        .mark-box input[type="radio"] {
+            position: absolute;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            left: 0;
+            top: 0;
+            margin: 0;
+        }
+
+        .mark-box .checkmark {
+            opacity: 0;
+            transition: opacity .12s ease-in-out;
+        }
+
+        .mark-box input:checked + .checkmark {
+            opacity: 1;
+        }
+
+        .mark-box:focus-within {
+            box-shadow: 0 0 0 4px rgba(13,110,253,0.12);
+            border-color: #0d6efd;
+        }
+
+    /* small-screen adjustments: shrink image, name and control and center candidate content */
+    @@media (max-width: 520px) {
+        .col-sn {
+            width: 40px;
+        }
+
+        .mark-box {
+            width: 52px;
+            height: 52px;
+        }
+
+        .candidate-img {
+            width: 52px;
+            height: 52px;
+            flex: 0 0 52px;
+        }
+
+        .candidate-name {
+            font-size: .95rem;
+            text-align: center;
+        }
+
+        .candidate-stack {
+            align-items: center;
+        }
+        /* center on mobile */
+        .col-mark {
+            width: 64px;
+        }
+
+        td {
+            padding: 10px 6px;
+        }
+    }
+
+    @@media (max-width: 380px) {
+        .col-sn {
+            width: 34px;
+        }
+
+        .mark-box {
+            width: 44px;
+            height: 44px;
+        }
+
+        .candidate-img {
+            width: 44px;
+            height: 44px;
+            flex: 0 0 44px;
+        }
+
+        .candidate-name {
+            font-size: .88rem;
+        }
+    }
+
+    /* keep the alert & other page styles */
+    .position-title {
+        margin-top: 12px;
+    }
+</style>
+
+<div class="card">
+    <div class="card-header">
+        <h4 class="mb-0">Ballot - @Model.Election?.Title</h4>
+    </div>
+
+    <div class="card-body">
+        @await Html.PartialAsync("_Encryption")
+
+        @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+        {
+            <div class="alert alert-danger">@Model.ErrorMessage</div>
+        }
+
+        <form method="post" novalidate>
+            <input type="hidden" name="electionId" value="@Model.ElectionId" />
+
+            <table class="ballot-table table table-bordered" role="presentation">
+                <tbody>
+                    @foreach (var pos in Model.Positions)
+                    {
+                        <!-- position title row -->
+                        <tr class="position-row">
+                            <td colspan="3" class="position-title">@pos.Name</td>
+                        </tr>
+
+                        {
+                            var sn = 1;
+
+                            @foreach (var c in pos.Candidates.OrderBy(c => c.BallotOrder))
+                            {
+                                var inputId = $"pos_{pos.Id}_cand_{c.Id}";
+                                <tr class="candidate-row" role="group" aria-labelledby="posLabel_@pos.Id">
+                                    <td class="col-sn" aria-hidden="true">@sn</td>
+
+                                    <td class="col-candidate">
+                                        <div class="candidate-stack">
+                                            @if (!string.IsNullOrEmpty(c.CandidateParticipant?.PictureUrl))
+                                            {
+                                                <img src="@c.CandidateParticipant.PictureUrl" alt="@c.CandidateParticipant?.ToString()" class="candidate-img" />
+                                            }
+                                            else
+                                            {
+                                                <img src="~/default-avatar.png" alt="" class="candidate-img" />
+                                            }
+
+                                            <div class="candidate-name">
+                                                @c.CandidateParticipant.Fullname
+
+                                            </div>
+                                    </td>
+
+                                    <td class="col-mark">
+                                        <label class="mark-box" for="@inputId" title="Select @(c.CandidateParticipant?.ToString() ?? c.CandidateParticipantId)">
+                                            <input type="radio" id="@inputId" name="pos_@pos.Id" value="@c.Id" aria-labelledby="posLabel_@pos.Id" />
+                                            <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                                                <rect x="1" y="1" width="22" height="22" rx="4" fill="white" stroke="#adb5bd" stroke-width="1.5"></rect>
+                                                <path d="M6 12l3 3 8-8" stroke="#0d6efd" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path>
+                                            </svg>
+                                        </label>
+                                    </td>
+                                </tr>
+                                sn++;
+                            }
+                        }
+                    }
+                </tbody>
+            </table>
+
+            <div class="mt-4 d-flex gap-2">
+                <button type="submit" class="btn btn-primary">Submit Vote</button>
+                <a asp-page="./Index" class="btn btn-link">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    // visual update for checked radios (progressive enhancement)
+    document.addEventListener('change', function (e) {
+        if (!e.target.matches('input[type="radio"]')) return;
+        const name = e.target.name;
+        document.querySelectorAll(`input[name="${name}"]`).forEach(inp => {
+            const label = inp.closest('label') || document.querySelector(`label[for="${inp.id}"]`);
+            if (!label) return;
+            const svg = label.querySelector('.checkmark');
+            if (!svg) return;
+            if (inp.checked) {
+                svg.style.opacity = '1';
+                svg.querySelector('rect').setAttribute('stroke', '#0d6efd');
+            } else {
+                svg.style.opacity = '0';
+                svg.querySelector('rect').setAttribute('stroke', '#adb5bd');
+            }
+        });
+    });
+
+    // initialize visuals for pre-checked inputs
+    document.addEventListener('DOMContentLoaded', function () {
+        document.querySelectorAll('input[type="radio"]:checked').forEach(function (inp) {
+            const evt = new Event('change', { bubbles: true });
+            inp.dispatchEvent(evt);
+        });
+    });
+
+    // intercept common reload shortcuts (UX-level deterrent only)
+    window.addEventListener('keydown', function (e) {
+        if (e.key === 'F5' || ((e.ctrlKey || e.metaKey) && e.key === 'r')) {
+            e.preventDefault();
+            alert('Refreshing is disabled while voting. Please finish your selection and submit.');
+        }
+    });
+</script>

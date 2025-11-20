@@ -63,11 +63,11 @@ namespace Exwhyzee.AANI.Web.Areas.Alumni.Pages.Dashboard
                 .AsQueryable();
 
             AllAlumni = await alumni.CountAsync();
-            Male = await alumni.Where(x => x.GenderStatus == Domain.Enums.GenderStatus.Male).CountAsync();
-            Female = await alumni.Where(x => x.GenderStatus == Domain.Enums.GenderStatus.Female).CountAsync();
+            Male = await alumni.Where(x => x.GenderStatus == Domain.Enums.GenderStatus.Male && x.AliveStatus == AliveStatus.Alive).CountAsync();
+            Female = await alumni.Where(x => x.GenderStatus == Domain.Enums.GenderStatus.Female && x.AliveStatus == AliveStatus.Alive).CountAsync();
             Alive = await alumni.Where(x => x.AliveStatus == Domain.Enums.AliveStatus.Alive).CountAsync();
             Dead = await alumni.Where(x => x.AliveStatus == Domain.Enums.AliveStatus.Dead).CountAsync();
-            Active = await alumni.Where(x => x.ActiveStatus == Domain.Enums.ActiveStatus.Active).CountAsync();
+            Active = await alumni.Where(x => x.UserStatus == Domain.Enums.UserStatus.Active).CountAsync();
          
             
             OperationYears = await _context.OperationYears
@@ -92,6 +92,7 @@ namespace Exwhyzee.AANI.Web.Areas.Alumni.Pages.Dashboard
             // birthdays for today
             var listdob = await _userManager.Users
                 .Include(x => x.SEC)
+                .Where(x=>x.AliveStatus == AliveStatus.Alive)
                 .Where(x => x.MniStatus == Domain.Enums.MniStatus.MNI && x.DOB.Day == DateTime.UtcNow.Day && x.DOB.Month == DateTime.UtcNow.Month)
                 .OrderByDescending(x => x.DOB)
                 .ToListAsync();
@@ -193,7 +194,7 @@ namespace Exwhyzee.AANI.Web.Areas.Alumni.Pages.Dashboard
 
             // Upcoming events (future)
             UpcomingEvents = await _context.Events
-                .Where(e => e.StartDate >= DateTime.UtcNow)
+                .Where(e => e.OperationYearId == activeOperationYearId)
                 .OrderBy(e => e.StartDate)
                 .Select(e => new EventViewModel
                 {

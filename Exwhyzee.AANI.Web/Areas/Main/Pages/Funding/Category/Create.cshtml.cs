@@ -21,7 +21,7 @@ namespace Exwhyzee.AANI.Web.Areas.Main.Pages.Funding.Category
 
         public IActionResult OnGet()
         {
-        ViewData["EventId"] = new SelectList(_context.Events, "Id", "Id");
+        ViewData["EventId"] = new SelectList(_context.Events, "Id", "Title");
             return Page();
         }
 
@@ -31,10 +31,7 @@ namespace Exwhyzee.AANI.Web.Areas.Main.Pages.Funding.Category
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
+            
 
             _context.FundCategories.Add(FundCategory);
             await _context.SaveChangesAsync();

@@ -8,6 +8,7 @@
     <div class="card-header">
         <h3 class="card-title">Update @Model.Participant.Title @Model.Participant.Surname @Model.Participant.FirstName @Model.Participant.OtherName</h3>
     </div>
+    @await Html.PartialAsync("_MessageNotice")
     <div class="card-body">
         <form method="post" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -50,6 +51,7 @@
                                 <option value="AVM">AVM</option>
                                 <option value="Gp Capt.">Gp Capt.</option>
                                 <option value="Dr">Dr</option>
+                                <option value="Dr Mrs">Dr Mrs</option>
                                 <option value="Engr.">Engr.</option>
                                 <option value="Pharm.">Pharm.</option>
                                 <option value="CP">CP</option>
@@ -67,6 +69,8 @@
                                 <option value="Hon.">Hon.</option>
                                 <option value="Hon. Justice">Hon. Justice</option>
                                 <option value="HRH">HRH</option>
+                                <option value="Rear Admiral">Rear Admiral</option>
+                                <option value="ACG">ACG</option>
                             </select>
                             <span asp-validation-for="Participant.Title" class="text-danger"></span>
                         </div>
@@ -74,7 +78,7 @@
                     <div class="form-group row">
                         <div class="col-md-4">
                             <label asp-for="Participant.Surname"></label>
-                            <input asp-for="Participant.Surname" class="form-control" />   
+                            <input asp-for="Participant.Surname" class="form-control" />
                             <span asp-validation-for="Participant.Surname" class="text-danger"></span>
 
                         </div>
@@ -167,9 +171,9 @@
                             <span asp-validation-for="Participant.SECId" class="text-danger"></span>
                         </div>
                         <div class="col-md-6">
-                            <label asp-for="Participant.Sponsor"></label>
-                            <input asp-for="Participant.Sponsor" class="form-control" />
-                            <span asp-validation-for="Participant.Sponsor" class="text-danger"></span>
+                            <label asp-for="Participant.ContactAddress">Current Address</label>
+                            <input asp-for="Participant.ContactAddress" class="form-control" />
+                            <span asp-validation-for="Participant.ContactAddress" class="text-danger"></span>
                         </div>
 
                     </div>
@@ -192,29 +196,27 @@
                             </div>
                         </div>
                     </div>
+                   
                     <button type="submit" class="btn btn-primary">Save & Next</button>
+
                 </div>
                 <!-- Phase 2: Office/Position -->
                 <div class="tab-pane fade @(Model.Phase == 2 ? "show active" : "")" id="officeInfo" role="tabpanel">
 
                     <div class="form-group">
-                        <label asp-for="SelectedOfficeCategoryId"><b>Office Category</b></label>
-                        <select asp-for="SelectedOfficeCategoryId" id="officeCategorySelect" asp-items="Model.OfficeCategoryList" class="form-control">
-                            <option value="">-- Select Category --</option>
-                        </select>
-                        <span asp-validation-for="SelectedOfficeCategoryId" class="text-danger"></span>
+                        <label asp-for="Participant.CurrentOccupation">Occupation</label>
+                        <input asp-for="Participant.CurrentOccupation" class="form-control" />
+                        <span asp-validation-for="Participant.CurrentOccupation" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label for="officeSelect"><b>Office</b></label>
-                        <select asp-for="OfficeId" asp-items="Model.OfficeList" id="officeSelect" class="form-control"></select>
-
-                        <span asp-validation-for="OfficeId" class="text-danger"></span>
+                        <label asp-for="Participant.CurrentWorkPlace">Work Place</label>
+                        <input asp-for="Participant.CurrentWorkPlace" class="form-control" />
+                        <span asp-validation-for="Participant.CurrentWorkPlace" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label>Current Position/Role</label>
-                        <input name="OfficerRole" value="@Model.OfficerRole" id="officeSelect" class="form-control" />
-
-                        <span asp-validation-for="OfficerRole" class="text-danger"></span>
+                        <label asp-for="Participant.CurrentPosition">Current Position/Role</label>
+                        <input asp-for="Participant.CurrentPosition" class="form-control" />
+                        <span asp-validation-for="Participant.CurrentPosition" class="text-danger"></span>
                     </div>
                     <button type="submit" class="btn btn-primary">Save & Next</button>
                 </div>
@@ -230,6 +232,75 @@
             </div>
         </form>
     </div>
+
+    @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+    {
+
+        <div class="card-body">
+            <hr />
+            <div class="row">
+                <div class="col-md-12">
+                    <form method="post" asp-page-handler="UpdateStatus">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <input type="hidden" asp-for="Participant.Id" />
+
+                        <div class="form-group">
+                            <label class="control-label" style="font-weight:900;">UPDATE STATUS</label>
+
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="Participant.UserStatus" class="control-label">User Status</label>
+                            @Html.DropDownListFor(model => model.Participant.UserStatus, new SelectList(Enum.GetValues(typeof(Exwhyzee.AANI.Domain.Enums.UserStatus))), new { @class = "form-control" })
+                            <span asp-validation-for="Participant.UserStatus" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Participant.AliveStatus" class="control-label">Alive Status</label>
+                            @Html.DropDownListFor(model => model.Participant.AliveStatus, new SelectList(Enum.GetValues(typeof(Exwhyzee.AANI.Domain.Enums.AliveStatus))), new { @class = "form-control" })
+                            <span asp-validation-for="Participant.AliveStatus" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="submit" value="Update Status" class="btn btn-primary" />
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <hr />
+            <div class="row">
+                <div class="col-md-12">
+                    <form method="post" asp-page-handler="Email">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <input type="hidden" asp-for="Participant.Id" />
+                        <div class="form-group">
+                            <label class="control-label" style="font-weight:900;">UPDATE EMAIL</label>
+
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" style="font-weight:900;">@Model.Participant.Email</label>
+
+                        </div>
+
+
+                        <div class="form-group">
+                            <label asp-for="NewEmail" class="control-label">New Email</label>
+                            <input asp-for="NewEmail" class="form-control" />
+                            <span asp-validation-for="NewEmail" class="text-danger"></span>
+                        </div>
+
+
+                        <div class="form-group">
+                            <input type="submit" value="Update Email" class="btn btn-primary" />
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+          
+            <!-- /.row -->
+        </div>
+    }
     <div class="card-footer">
         <a asp-page="./Members" class="btn bg-gradient-warning btn-sm" style="float:right;">Back</a>
     </div>

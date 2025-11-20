@@ -156,9 +156,8 @@ namespace Exwhyzee.AANI.Web.Areas.Main.Pages.ParticipantPage
                 GenderStatus = Input.GenderStatus,
                 MniStatus = MniStatus.MNI,
                 AliveStatus = AliveStatus.Alive,
-                VerificationStatus = VerificationStatus.NONE,
-                ActiveStatus = ActiveStatus.NONE,
-                UserStatus = UserStatus.MNI,
+                VerificationStatus = VerificationStatus.NONE, 
+                UserStatus = UserStatus.Active,
                 PictureKey = imgKey,
                 PictureUrl = imgUrl,
             };

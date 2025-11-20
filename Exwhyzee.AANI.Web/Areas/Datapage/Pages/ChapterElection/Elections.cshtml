@@ -1,0 +1,57 @@
+﻿@page "{chapterId:long}"
+@model Exwhyzee.AANI.Web.Areas.Datapage.Pages.ChapterElection.ElectionsModel
+@{
+    ViewData["Title"] = "Chapter Elections";
+}
+
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">
+            CHAPTER ELECTIONS — @Model.Chapter?.State
+        </h3>
+        <div class="hidden-sm hidden-xs">
+            <a asp-area="Datapage" asp-page="/ChapterElection/Create" asp-route-chapterId="@Model.ChapterId" class="btn bg-gradient-success btn-xs" style="float: right; font-size: .775rem;">Create Election</a>
+            <a href="javascript:history.back()" class="btn bg-gradient-warning btn-xs" style="float: right; margin-right:6px; font-size: .775rem;">Back</a>
+        </div>
+    </div>
+
+    <div class="card-body">
+        @if (!Model.Elections.Any())
+        {
+            <div class="alert alert-info">No elections yet for this chapter. Click "Create Election" to add one.</div>
+        }
+        else
+        {
+            <div class="row">
+                @foreach (var e in Model.Elections)
+                {
+                    <div class="col-md-12 mb-3">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between">
+                                    <h5 class="card-title mb-1">@e.Title</h5>
+                                </div>
+                                <p class="mb-1 text-muted small">
+                                    @e.StartAt.ToLocalTime().ToString("yyyy-MM-dd HH:mm") — @e.EndAt.ToLocalTime().ToString("yyyy-MM-dd HH:mm") <span class="btn btn-xs bg-primary">@Html.DisplayFor(modelItem => e.Status)</span>
+                                </p>
+                                <p class="mb-1 small">
+                                    <strong>@e.CandidatesCount</strong> candidates &nbsp; • &nbsp;
+                                    <strong>@e.TokensCount</strong> tokens issued &nbsp; • &nbsp;
+                                    <strong>@e.VotesCount</strong> votes cast
+                                </p>
+
+                                <div class="mt-2">
+                                    <a asp-area="Datapage" asp-page="/ChapterElection/Create" asp-route-electionId="@e.Id" asp-route-chapterId="@Model.ChapterId" class="btn btn-xs btn-success me-1">Update</a>
+                                    <a asp-area="Datapage" asp-page="/ChapterElection/Candidates" asp-route-chapterId="@Model.ChapterId" asp-route-electionId="@e.Id" class="btn btn-xs btn-outline-primary me-1">Manage Candidates</a>
+                                    <a asp-area="Datapage" asp-page="/ChapterElection/Members" asp-route-chapterId="@Model.ChapterId" asp-route-electionId="@e.Id" class="btn btn-xs btn-outline-secondary me-1">Manage Members/Voters</a>
+                                    <a asp-area="Datapage" asp-page="/ChapterElection/Tokens" asp-route-electionId="@e.Id" asp-route-chapterId="@Model.ChapterId" class="btn btn-xs btn-outline-warning me-1">Tokens</a>
+                                    <a asp-area="Datapage" asp-page="/ChapterElection/Results" asp-route-electionId="@e.Id" asp-route-chapterId="@Model.ChapterId" class="btn btn-xs btn-outline-success">Results</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+    </div>
+</div>

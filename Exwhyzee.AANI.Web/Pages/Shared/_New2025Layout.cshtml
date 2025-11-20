@@ -110,7 +110,7 @@
 
     <link href="~/css/majorstyle.css" rel="stylesheet" />
 
-
+    <link href="~/css/contact.css" rel="stylesheet" />
     <style type="text/css" id="jarallax-clip-0">
         #jarallax-container-0 {
             clip: rect(0 1790.4000244140625px 530px 0);
@@ -166,10 +166,9 @@
         .section-title__title {
             font-size: 30px;
         }
+
         .owl-carousel .owl-nav button.owl-next, .owl-carousel .owl-nav button.owl-prev, .owl-carousel button.owl-dot {
-            
             color: #dfdfdf !important;
-            
             background-color: #265430 !important;
         }
 
@@ -179,6 +178,7 @@
             height: 200px;
             object-fit: cover;
         }
+
         .custom-blog-01 .blog-one__title {
             font-size: 19px;
             line-height: 1.24em;
@@ -187,6 +187,7 @@
             margin-bottom: 14px;
             font-weight: 700;
         }
+
         .custom-blog-01 .blog-one__title {
             font-size: 1.4rem;
             font-weight: bold;
@@ -214,31 +215,35 @@
             max-height: calc(5 * 1.45em); /* 5 lines */
             margin-bottom: 0;
         }
+
         .custom-blog-01 .blog-one__title {
             height: 85px;
         }
+
         .custom-blog-01 .blog-one__text {
             height: 118px;
         }
+
         .custom-blog-01 .blog-one__date span {
             background-color: var(--judges-base);
-            color:white;
+            color: white;
         }
+
         .sliding-text-one__title {
-             
             text-transform: unset;
         }
+
         .main-menu .main-menu__list > li > ul > li > a::before, .main-menu .main-menu__list > li > ul > li > ul > li > a::before, .stricky-header .main-menu__list > li > ul > li > a::before, .stricky-header .main-menu__list > li > ul > li > ul > li > a::before {
-            
             color: transparent;
-            
         }
+
         .main-menu .main-menu__list > li > a::before, .stricky-header .main-menu__list > li > a::before {
-            
             background-color: transparent;
-          
         }
     </style>
+
+    <link href="~/css/msite.css" rel="stylesheet" />
+
     <style>
         @Html.Raw(dataConfig.CSSStyle)
     </style>
@@ -379,9 +384,59 @@
                 });
             });
         </script>
-
+        <script>
+            $(document).ready(function () {
+                $('.testimonial-one__carousel').owlCarousel({
+                    items: 1,                // one slide visible at a time
+                    loop: false,              // IMPORTANT: allow seamless looping
+                    rewind: false,           // ensure no forced rewind/jump
+                    margin: 20,              // spacing between slides
+                    autoplay: true,
+                    autoplayTimeout: 3500,   // time between auto slides (ms)
+                    autoplayHoverPause: true,
+                    smartSpeed: 600,         // transition duration (ms) for smooth move
+                    nav: true,
+                    dots: true,
+                    stagePadding: 0,         // no partial slides shown
+                    animateOut: true,       // remove any 'fadeOut' or similar
+                    animateIn: true,
+                    responsive: {
+                        0: { items: 1 },
+                        768: { items: 1 },
+                        992: { items: 1 }
+                    }
+                });
+            });
+        </script>
+        <script>
+            $(document).ready(function () {
+                $('.testimonial-one__carousel_team1').owlCarousel({
+                    items: 1,                // one slide visible at a time
+                    loop: false,              // IMPORTANT: allow seamless looping
+                    rewind: false,           // ensure no forced rewind/jump
+                    margin: 20,              // spacing between slides
+                    autoplay: true,
+                    autoplayTimeout: 3500,   // time between auto slides (ms)
+                    autoplayHoverPause: true,
+                    smartSpeed: 600,         // transition duration (ms) for smooth move
+                    nav: true,
+                    dots: true,
+                    stagePadding: 0,         // no partial slides shown
+                    animateOut: true,       // remove any 'fadeOut' or similar
+                    animateIn: true,
+                    responsive: {
+                        0: { items: 1 },
+                        768: { items: 1 },
+                        992: { items: 1 }
+                    }
+                });
+            });
+        </script>
+         
 
     </div>
+     
+
 </body>
- 
+
 </html>

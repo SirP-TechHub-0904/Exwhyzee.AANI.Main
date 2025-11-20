@@ -1,0 +1,144 @@
+﻿@page "{chapterId:long}"
+@model Exwhyzee.AANI.Web.Areas.Datapage.Pages.ChapterElection.MembersModel
+@{
+    ViewData["Title"] = "Manage Election - Accredited Members";
+}
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">
+            Manage Election — Accredited Members for @Model.Chapter?.State
+            <br />@Model.ChapterElection.Title
+        </h3> 
+        <div>
+            <a asp-page="/ChapterElection/Elections" asp-route-chapterId="@Model.ChapterId" class="btn bg-gradient-warning btn-xs" style="float: right; font-size: .775rem;">Back</a>
+
+        </div>
+    </div>
+
+    <div class="card-header">
+        <h5 class="">
+            Add Participant to Accreditation Pool
+        </h5>
+        <a asp-area="Datapage"
+           asp-page="/ChapterElection/SelectMembers"
+           asp-route-chapterId="@Model.ChapterId" asp-route-electionId="@Model.ElectionId"
+           class="btn btn-success btn-xs">
+            Click to Add Many Members Once
+        </a>
+
+    </div>
+    <div class="card-body">
+
+
+        @if (TempData["Message"] != null)
+        {
+            <div class="alert alert-success">@TempData["Message"]</div>
+        }
+        @if (TempData["Error"] != null)
+        {
+            <div class="alert alert-danger">@TempData["Error"]</div>
+        }
+        @if (TempData["TokenMessage"] != null)
+        {
+            <div class="alert alert-info">@TempData["TokenMessage"]</div>
+        }
+
+        <div class="mb-3">
+
+            <form method="post" asp-page-handler="AddAccredited" class="mt-2">
+                <input type="hidden" name="chapterId" value="@Model.ChapterId" />
+                <input type="hidden" name="electionId" value="@Model.ElectionId" />
+                <select name="participantId" class="form-control select2 select2-primary js-example-basic-single" data-dropdown-css-class="select2-primary" required>
+                    <option value="">-- select participant --</option>
+                    @foreach (var p in Model.Participants)
+                    {
+                        <option value="@p.Id">@p.Fullname (@p.Email)</option>
+                    }
+                </select>
+                <button class="btn btn-primary btn-sm mt-2">Add</button>
+            </form>
+        </div>
+
+        <div class="mb-4">
+            <h5>Accredited Voters</h5>
+           
+
+            <form method="post">
+                <input type="hidden" name="chapterId" value="@Model.ChapterId" />
+                <input type="hidden" name="electionId" value="@Model.ElectionId" />
+
+                <table id="example1" class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Participant</th>
+                            <th>Email</th>
+                            <th>Token status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var a in Model.Accredited)
+                        {
+                        <tr>
+                            <td>
+                                <input type="checkbox" name="accreditedIds" value="@a.Id" />
+                            </td>
+                            <td>@a.Participant?.Fullname</td>
+                            <td>@a.Participant?.Email</td>
+                            <td>
+                                @if (a.Voted)
+                                {
+                                <span class="badge bg-success">Voted</span>
+                                }
+                                else if (!string.IsNullOrEmpty(a.VoteTokenHash))
+                                {
+                                <span class="badge bg-info">Token created</span>
+                                @if (a.TokenSentAt != null)
+                                {
+                                <span class="ms-1 text-muted small">(sent)</span>
+                                }
+                                }
+                                else
+                                {
+                                <span class="badge bg-secondary">No token</span>
+                                }
+                            </td>
+                            <td>
+                                <!-- Generate single token: override form action to the GenerateToken handler.
+                             The accreditedId is sent via the button's name/value -->
+                                <button class="btn btn-sm btn-outline-primary"
+                                        type="submit"
+                                        formmethod="post"
+                                        formaction="?handler=GenerateToken"
+                                        name="accreditedId"
+                                        value="@a.Id">
+                                    Generate & Send
+                                </button>
+
+                                <!-- Remove single accredited (confirm): override form action -->
+                                <button class="btn btn-sm btn-outline-danger"
+                                        type="submit"
+                                        formmethod="post"
+                                        formaction="?handler=RemoveAccredited"
+                                        name="accreditedId"
+                                        value="@a.Id"
+                                        @(a.Voted ? "disabled" : "" )
+                                        onclick="return confirm('Are you sure you want to remove this participant from accreditation?');"
+                                        title="Remove from accreditation">
+                                    Remove
+                                </button>
+                            </td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+
+                <!-- Bulk generate for selected checkboxes -->
+                <button class="btn btn-sm btn-warning" type="submit" formaction="?handler=BulkGenerate">Generate tokens for selected</button>
+            </form>
+        </div>
+
+        <p class="text-muted small">Notes: The generated code is 7 digits. By design the system stores only a HASH of the code. If you send via email, the code will be included in the message. For bulk sends, consider exporting tokens to a CSV and using a background sender instead of sending from the request thread.</p>
+    </div>
+</div>

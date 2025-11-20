@@ -21,6 +21,7 @@ namespace Exwhyzee.AANI.Web.Pages
         }
 
         public Event Event { get; set; }
+        public ContactSettingsModel ContactSettings { get; set; }
 
         public async Task<IActionResult> OnGetAsync(long? id)
         {
@@ -40,6 +41,8 @@ namespace Exwhyzee.AANI.Web.Pages
             {
                 return NotFound();
             }
+            ContactSettings = await _context.ContactSettings
+              .FirstOrDefaultAsync();
             return Page();
         }
 

@@ -27,12 +27,10 @@
                             </div>
 
                             <h3 class="profile-username text-center">
-                                @Html.DisplayFor(modelItem => Model.Participant.Surname)
-                                @Html.DisplayFor(modelItem => Model.Participant.FirstName)
-                                @Html.DisplayFor(modelItem => Model.Participant.OtherName)
+                                @Html.DisplayFor(modelItem => Model.Participant.Fullname)
                             </h3>
 
-                            <p class="text-muted text-center" style="margin-bottom: 0.1rem;">@Model.Participant.CurrentOffice</p>
+                            <p class="text-muted text-center" style="margin-bottom: 0.1rem;">@Model.Participant.CurrentOccupation</p>
                             <p class="text-muted text-center" style="margin-bottom: 0.1rem;">@Model.Participant.CurrentPosition</p>
                             <a asp-page="./UpdateMyData" class="float-right btn btn-primary btn-xs">Update My Profile</a>
                             <div class="clearfix"></div>

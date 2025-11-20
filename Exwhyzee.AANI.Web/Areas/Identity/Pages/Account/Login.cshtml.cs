@@ -117,10 +117,12 @@ namespace Exwhyzee.AANI.Host.Areas.Identity.Pages.Account
 
                     var passcheck = await _userManager.CheckPasswordAsync(user, Input.Password);
                     if (passcheck == true)
-                    {
-
-
+                    { 
                         await _signInManager.SignInAsync(user, isPersistent: false);
+                        //
+                        user.LastLogin = DateTime.UtcNow.AddHours(1);
+                        user.UserStatus = Domain.Enums.UserStatus.Active;
+                        await _userManager.UpdateAsync(user);
 
                         var xAdmin = await _userManager.IsInRoleAsync(user, "Admin");
                         var mni = await _userManager.IsInRoleAsync(user, "MNI");
@@ -129,6 +131,17 @@ namespace Exwhyzee.AANI.Host.Areas.Identity.Pages.Account
                         if (returnUrl != null)
                         {
                             return Redirect(returnUrl);
+                        }
+                        //asp-page="/Dashboard/Index" asp-area="Admin" 
+                        else if (xSuper.Equals(true))
+                        {
+                            return RedirectToPage("/Dashboard/Index", new { area = "Admin" });
+
+                        }
+                        else if (xAdmin.Equals(true))
+                        {
+                            return RedirectToPage("/Dashboard/Index", new { area = "Admin" });
+
                         }
                         else if (mni.Equals(true))
                         {

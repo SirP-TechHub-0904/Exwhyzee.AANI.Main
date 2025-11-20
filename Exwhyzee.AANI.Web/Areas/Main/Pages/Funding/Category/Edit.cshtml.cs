@@ -37,7 +37,7 @@ namespace Exwhyzee.AANI.Web.Areas.Main.Pages.Funding.Category
             {
                 return NotFound();
             }
-           ViewData["EventId"] = new SelectList(_context.Events, "Id", "Id");
+           ViewData["EventId"] = new SelectList(_context.Events, "Id", "Title");
             return Page();
         }
 
@@ -45,10 +45,7 @@ namespace Exwhyzee.AANI.Web.Areas.Main.Pages.Funding.Category
         // For more details, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
+             
 
             _context.Attach(FundCategory).State = EntityState.Modified;
 

@@ -1,0 +1,49 @@
+﻿@page
+@model Exwhyzee.AANI.Web.Areas.Main.Pages.SettingsPage.DirectUrlModel
+@{
+}
+<div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title">Direct URL</h3>
+    </div>
+    <div class="card-body">
+
+        <table class="table table-bordered">
+            <tr>
+                <th>Title</th>
+                <th>Url</th>
+            </tr>
+            <tr>
+                <td>Contact Us</td>
+                <td>
+                    @Url.Page("/contact", null, new { }, Request.Scheme, Request.Host.Value)
+                </td>
+            </tr>
+            <tr>
+                <td>Executives</td>
+                <td>
+                    @Url.Page("/ExecutivePage", null, new { }, Request.Scheme, Request.Host.Value)
+                </td>
+            </tr>
+            <tr>
+                <td>Library</td>
+                <td>
+                    @Url.Page("/PapersCategory", null, new { }, Request.Scheme, Request.Host.Value)
+                </td>
+            </tr>
+            <tr>
+                <td>Category Blog</td>
+                <td>
+                    @Url.Page("/Media/Category", null, new { }, Request.Scheme, Request.Host.Value)
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    @Url.Page("/Blog/Details", null, new { }, Request.Scheme, Request.Host.Value)
+                </td>
+            </tr>
+        </table>
+
+    </div>
+</div>

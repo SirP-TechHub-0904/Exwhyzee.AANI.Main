@@ -5,126 +5,178 @@
     ViewData["Title"] = "EventInfo";
 }
 
-<!-- Page Title START -->
-<div class="page-title-section" style="background-image: url('../img/bred.jpg');">
-    <div class="container">
-        <h1>@Model.Event.Title</h1>
-        <ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="#">@Model.Event.Title</a></li>
-        </ul>
+
+
+<section class="page-header">
+    <div class="page-header__bg"
+         style='background-image: url("@(string.IsNullOrEmpty(Model.ContactSettings?.BreadcrumImageUrl) ? "default-image.jpg" : Model.ContactSettings.BreadcrumImageUrl)")'>
     </div>
-</div>
+
+    <div class="container">
+        <div class="page-header__inner">
+            <h2>@Model.Event.Title</h2>
+            <div class="thm-breadcrumb__box">
+                <ul class="thm-breadcrumb list-unstyled">
+                    <li><a href="/"><i class="fas fa-home"></i>Home</a></li>
+                    <li><span class="icon-right-arrow-1"></span></li>
+                    <li class="active">@Model.Event.Title</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
 
 
-<div class="section-block">
+
+
+
+
+
+<section class="service-details">
     <div class="container">
         <div class="row">
-            <!-- Left Side START -->
-            <div class="col-md-9 col-sm-8 col-12">
-                <!-- Post Start -->
 
-                <div class="clearfix"></div>
+            <div class="col-xl-8 col-lg-7">
+                <div class="service-details__left">
+                    <h3 class="service-details__title-1">@Model.Event.Title</h3>
 
-                <div class="blog-list-left" style="box-shadow: 2px 2px 2px 2px #706b6b;padding: 20px;">
-                    @if (!String.IsNullOrEmpty(Model.Event.InvitImage))
-                    {
-                        <div style="margin:0 auto;text-align:center">
-                            <img src="@Model.Event.InvitImage" alt="img" style="margin:0 auto;text-align:center">
-                        </div>
-                    }
-                    else
-                    {
-                        <div style="margin:0 auto;text-align:center;height:65px;">
-                            .
-                        </div>
-                    }
-                    <div class="data-box">
-                        <h4>@Model.Event.StartDate.ToString("dd")</h4>
-                        <strong>@Model.Event.StartDate.ToString("MMM")</strong>
-                    </div>
-                    <div class="blog-title-box">
-                        <h2>@Model.Event.Toipc</h2>
-                        <h5>@Model.Event.Title</h5>
-                        <span><i class="fa fa-calendar"></i>@Model.Event.StartDate.ToString("dd MMM, yyyy hh:mm tt") - @Model.Event.EndDate.ToString("dd MMM, yyyy hh:mm tt")</span>
-                        <span><i class="fa fa-globe"></i>	@Model.Event.Location</span>
-                        <span><i class="fa fa-toggle-on"></i>	@Html.DisplayFor(modelItem => Model.Event.EventStatus)</span>
-                        <span><i class="fa fa-comments"></i>	@Model.Event.EventComments.Count() Reviews/Comments</span>
+                    <div class="service-details__img">
+                        <img src="@Model.Event.ImageUrl" alt="">
                     </div>
 
-                    <div class="blog-post-content">
-                        <div class="">
-                            @Html.Raw(Model.Event.Description)
-                        </div>
+                    <div style="margin:12px auto;">
+                        <div style="display:flex;gap:14px;background:#fff;border:1px solid #eee;border-radius:10px;padding:12px;box-shadow:0 6px 18px rgba(0,0,0,0.06);align-items:center;">
 
-                        <hr />
-                        <h4>Note:</h4>
-                        <p>@Model.Event.Note</p>
-                        <hr />
-                        <h4>Report:</h4>
-                        <p>@Model.Event.Report</p>
-                    </div>
+                            <!-- Date badge -->
+                            <!-- Content -->
+                            <div style="flex:1;min-width:0;">
+                                <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;">
+                                    <div style="overflow:hidden;">
+                                        <div style="font-size:16px;font-weight:700;color:#111;margin-bottom:4px;white-space:nowrap;text-overflow:ellipsis;overflow:hidden;">
+                                            @Model.Event.Toipc
+                                        </div>
 
+                                    </div>
 
-                </div>
-                <div class="blog-comments mt-50">
-                    <h3 class="mt-0">All Reviews/Comments:</h3>
-                    @foreach (var x in Model.Event.EventComments)
-                    {
-                        <div class="blog-comment-user">
-                            <div class="row mt-20">
+                                    <div style="font-size:12px;color:#777;white-space:nowrap;">
+                                        <i class="fa fa-comments" style="margin-right:6px;"></i>
+                                        @Model.Event.EventComments.Count()
+                                    </div>
+                                </div>
 
-                                <div class="col-md-11 col-12">
-                                    <div class="comment-block">
-                                        <h6>
-                                            @if (String.IsNullOrEmpty(x.ParticipantId))
-                                            {
-                                                @x.Fullname
-                                            }else{
-                                            @x.Participant.Fullname
-                                            }
-                                        </h6><strong>@x.Date.ToString("dd.MM.yyyy")</strong>
-                                        <p>
-                                            @x.Comment
-                                        </p>
+                                <div style="margin-top:8px;display:flex;flex-wrap:wrap;gap:8px;font-size:13px;color:#444;">
+                                    <div style="display:flex;align-items:center;gap:6px;background:#f7f9ff;padding:6px 8px;border-radius:8px;">
+                                        <i class="fa fa-calendar" style="color:#6b7cff;"></i>
+                                        <span>@Model.Event.StartDate.ToString("dd MMM, yyyy")</span>
+                                    </div>
+
+                                    <div style="display:flex;align-items:center;gap:6px;background:#fafafa;padding:6px 8px;border-radius:8px;">
+                                        <i class="fa fa-globe" style="color:#7b7b7b;"></i>
+                                        <span>@Model.Event.Location</span>
+                                    </div>
+
+                                    <div style="display:flex;align-items:center;gap:6px;background:#fafafa;padding:6px 8px;border-radius:8px;">
+                                        <i class="fa fa-toggle-on" style="color:#36b37e;"></i>
+                                        <span>@Html.DisplayFor(modelItem => Model.Event.EventStatus)</span>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    }
+                    </div>
 
-                    <h3 class="mt-30">Your Comment:</h3>
-                    <form class="comment-form" method="post" autocomplete="off">
-                        <input type="hidden" asp-for="EventComment.EventId" value="@Model.Event.Id"/>
+                    @Html.Raw(Model.Event.Description)
+                    <hr />
+                    <h4>Note:</h4>
+                    <p>@Model.Event.Note</p>
+                    <hr />
+                    <h4>Report:</h4>
+                    <p>@Html.Raw(Model.Event.Report)</p>
 
-                        <div class="row">
+                    <div style="max-width:760px;margin:20px auto;font-family:Segoe UI, Tahoma, Arial, sans-serif;color:#0f172a;">
+                        <!-- Comments list -->
+                        <h3 style="margin:0 0 10px 0;font-size:18px;">All Reviews / Comments</h3>
 
-                            <div class="col-6">
-                                <input asp-for="EventComment.Fullname" placeholder="Your Name">
+                        @if (Model.Event?.EventComments != null && Model.Event.EventComments.Any())
+                        {
+                            @foreach (var x in Model.Event.EventComments)
+                            {
+                                {
+                                    var name = String.IsNullOrEmpty(x.ParticipantId) ? x.Fullname : x.Participant.Fullname;
+                                    var initials = string.IsNullOrWhiteSpace(name)
+                                        ? "?"
+                                        : string.Join("", name.Split(' ').Where(s => s.Length > 0).Select(s => s[0]).Take(2)).ToUpper();
+
+                                    <div style="display:flex;gap:12px;padding:12px;border-radius:8px;border:1px solid #e6eef6;background:#ffffff;margin-top:12px;align-items:flex-start;">
+                                        <!-- avatar / initials -->
+                                        <div style="flex:0 0 48px;width:48px;height:48px;border-radius:50%;background:#eef6ff;color:#0b5fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;">
+                                            @initials
+                                        </div>
+
+                                        <!-- content -->
+                                        <div style="flex:1;min-width:0;">
+                                            <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;">
+                                                <h6 style="margin:0;font-size:14px;font-weight:700;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">
+                                                    @name
+                                                </h6>
+                                                <strong style="font-size:12px;color:#64748b;flex:0 0 auto;">
+                                                    @x.Date.ToString("dd.MM.yyyy")
+                                                </strong>
+                                            </div>
+
+                                            <p style="margin:8px 0 0 0;color:#334155;line-height:1.45;font-size:14px;word-break:break-word;">
+                                                @x.Comment
+                                            </p>
+                                        </div>
+                                    </div>
+                                }
+                            }
+                        }
+                        else
+                        {
+                            <p style="color:#64748b;margin-top:8px;">No comments yet — be the first to leave a review.</p>
+                        }
+
+                        <!-- Comment form -->
+                        <h3 style="margin:20px 0 10px 0;font-size:18px;">Your Comment</h3>
+                        <form method="post" autocomplete="off" style="background:#fbfdff;border:1px solid #eef6ff;padding:14px;border-radius:8px;">
+                            <input type="hidden" asp-for="EventComment.EventId" value="@Model.Event.Id" />
+
+                            <div style="display:flex;gap:10px;flex-wrap:wrap;">
+                                <label style="flex:1 1 220px;min-width:180px;display:block;">
+                                    <span style="display:block;font-size:13px;color:#334155;margin-bottom:6px;">Your name</span>
+                                    <input asp-for="EventComment.Fullname" placeholder="Your name" style="width:100%;padding:10px 12px;border:1px solid #dbeafe;border-radius:6px;outline:none;font-size:14px;background:#fff;color:#0f172a;" />
+                                </label>
+
+                                <label style="flex:1 1 220px;min-width:180px;display:block;">
+                                    <span style="display:block;font-size:13px;color:#334155;margin-bottom:6px;">E‑mail</span>
+                                    <input asp-for="EventComment.Email" placeholder="you@example.com" type="email" style="width:100%;padding:10px 12px;border:1px solid #dbeafe;border-radius:6px;outline:none;font-size:14px;background:#fff;color:#0f172a;" />
+                                </label>
+
+                                <label style="flex:1 1 100%;display:block;">
+                                    <span style="display:block;font-size:13px;color:#334155;margin-bottom:6px;">Message</span>
+                                    <textarea asp-for="EventComment.Comment" placeholder="Write your comment..." rows="5" style="width:100%;padding:10px 12px;border:1px solid #dbeafe;border-radius:6px;outline:none;font-size:14px;background:#fff;color:#0f172a;resize:vertical;"></textarea>
+                                </label>
                             </div>
-                            <div class="col-6">
-                                <input asp-for="EventComment.Email" placeholder="E-mail adress" type="email">
+
+                            <div style="margin-top:12px;display:flex;align-items:center;gap:10px;">
+                                <button type="submit" class="primary-button button-md" style="background:#0b5fff;color:#fff;border:none;padding:10px 16px;border-radius:8px;font-weight:700;cursor:pointer;box-shadow:0 6px 14px rgba(11,95,255,0.12);">
+                                    Send Message
+                                </button>
+
+                                <small style="color:#64748b;font-size:13px;">We respect your privacy — email won't be published.</small>
                             </div>
-                            <div class="col-12">
-                                <textarea asp-for="EventComment.Comment" placeholder="Your Message"></textarea>
-                            </div>
-                        </div>
-
-
-                        <div class="mt-10 left-holder">
-                            <button type="submit" class="primary-button button-md">Send Message</button>
-
-                        </div>
-                    </form>
+                        </form>
+                    </div>
                 </div>
-                <!-- Post End -->
-
             </div>
-            <!-- Left Side END -->
-            <!-- Right Side START -->
-            <div class="col-md-3 col-sm-4 col-12">
-            </div>
-            <!-- Right Side END -->
         </div>
     </div>
-</div>
+</section>
+
+
+
+
+
+
+
+ 

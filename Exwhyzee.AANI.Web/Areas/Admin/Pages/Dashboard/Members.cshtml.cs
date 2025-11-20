@@ -28,21 +28,21 @@ namespace Exwhyzee.AANI.Web.Areas.Admin.Pages.Dashboard
         public int Alive { get; set; }
         public int Dead { get; set; }
         public int Active { get; set; }
-        public async Task<IActionResult> OnGetAsync(AliveStatus aliveStatus = 0, GenderStatus genderStatus = 0, ActiveStatus activeStatus = 0, long chapterid = 0, long secid = 0)
+        public async Task<IActionResult> OnGetAsync(AliveStatus aliveStatus = 0, GenderStatus genderStatus = 0, UserStatus userStatus = 0, long chapterid = 0, long secid = 0)
         {
             Participants = _userManager.Users.Include(x => x.SEC).Where(x => x.MniStatus == Domain.Enums.MniStatus.MNI).AsQueryable();
             var DataParticipants = _userManager.Users.Include(x => x.SEC).Where(x => x.MniStatus == Domain.Enums.MniStatus.MNI).AsQueryable();
             AllAlumni = await DataParticipants.CountAsync();
-            Active = await DataParticipants.Where(x => x.ActiveStatus == Domain.Enums.ActiveStatus.Active).CountAsync();
+            Active = await DataParticipants.Where(x => x.UserStatus == Domain.Enums.UserStatus.Active).CountAsync();
             Alive = await DataParticipants.Where(x => x.AliveStatus == Domain.Enums.AliveStatus.Alive).CountAsync();
             Dead = await DataParticipants.Where(x => x.AliveStatus == Domain.Enums.AliveStatus.Dead).CountAsync();
             Male = await DataParticipants.Where(x => x.GenderStatus == Domain.Enums.GenderStatus.Male).CountAsync();
             Female = await DataParticipants.Where(x => x.GenderStatus == Domain.Enums.GenderStatus.Female).CountAsync();
 
 
-            if (activeStatus == ActiveStatus.Active)
+            if (userStatus == UserStatus.Active)
             {
-                Participants = Participants.Where(x => x.ActiveStatus == ActiveStatus.Active).AsQueryable();
+                Participants = Participants.Where(x => x.UserStatus == UserStatus.Active).AsQueryable();
 
                 TempData["data"] = "ACTIVE MEMBERS";
                 return Page();

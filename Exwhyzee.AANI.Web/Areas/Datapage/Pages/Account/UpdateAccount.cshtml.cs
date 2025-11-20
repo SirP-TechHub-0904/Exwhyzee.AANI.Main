@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using SkiaSharp;
 using System.ComponentModel.DataAnnotations;
 using System.Text.RegularExpressions;
 
@@ -42,7 +43,6 @@ namespace Exwhyzee.AANI.Web.Areas.Datapage.Pages.Account
         [BindProperty] public long? SelectedOfficeCategoryId { get; set; }
         [BindProperty] public string LGA { get; set; }
         [BindProperty] public string State { get; set; }
-        [BindProperty] public string ContactAddress { get; set; }
         [BindProperty] public string HomeAddress { get; set; }
         [BindProperty] public string PhoneNumber { get; set; }
         [BindProperty] public string? AltPhoneNumber { get; set; }
@@ -62,6 +62,8 @@ namespace Exwhyzee.AANI.Web.Areas.Datapage.Pages.Account
         [BindProperty]
         public IFormFile? imagefile { get; set; }
 
+        [BindProperty]
+        public string NewEmail { get; set; }
         //public long? OfficeId { get; set; }
         public async Task<IActionResult> OnGetAsync(string id, int phase = 1)
         {
@@ -111,9 +113,9 @@ namespace Exwhyzee.AANI.Web.Areas.Datapage.Pages.Account
                         ModelState.AddModelError(nameof(State), "State is required.");
                     if (string.IsNullOrWhiteSpace(LGA))
                         ModelState.AddModelError(nameof(LGA), "LGA is required.");
-                
-                    if (string.IsNullOrWhiteSpace(Participant.Sponsor))
-                        ModelState.AddModelError(nameof(Participant.Sponsor), "Sponsor is required.");
+
+                    if (string.IsNullOrWhiteSpace(Participant.ContactAddress))
+                        ModelState.AddModelError(nameof(Participant.ContactAddress), "Current Address is required.");
                     if (!Participant.SECId.HasValue || Participant.SECId.Value <= 0)
                         ModelState.AddModelError(nameof(Participant.SECId), "SEC selection is required.");
                     if (!Participant.ChapterId.HasValue || Participant.ChapterId.Value <= 0)
@@ -145,22 +147,39 @@ namespace Exwhyzee.AANI.Web.Areas.Datapage.Pages.Account
     nameof(Participant.ReligionStatus),
     nameof(State),
     nameof(LGA),
-    nameof(Participant.Sponsor),
+    nameof(Participant.ContactAddress),
     nameof(Participant.SECId),
     nameof(Participant.ChapterId),
     nameof(PhoneNumber),
     nameof(Participant.PictureUrl)
 };
 
-                    bool Phase1HasErrors = phase1Fields.Any(key =>
-                        ModelState.TryGetValue(key, out var entry) && entry?.Errors?.Count > 0);
+                    //var phase1ErrorFields = phase1Fields.Any(key =>
+                    //    ModelState.TryGetValue(key, out var entry) && entry?.Errors?.Count > 0);
 
-                    // If any Phase 1 field failed, prepare page data and return
+                    var phase1ErrorFields = phase1Fields
+    .Where(key => ModelState.TryGetValue(key, out var entry) && entry?.Errors?.Count > 0)
+    .ToList();
+
+                    bool Phase1HasErrors = phase1ErrorFields.Any();
                     if (Phase1HasErrors)
                     {
+                        // Example: log them or pass to TempData or ViewData
+                        Console.WriteLine("Phase 1 errors found in fields: " + string.Join(", ", phase1ErrorFields));
+
+                        // Optional: Add to TempData for display
+                        string erx = string.Join(", ", phase1ErrorFields);
+
                         await PreparePageAsync(updateparticipant);
                         return Page();
                     }
+
+                    // If any Phase 1 field failed, prepare page data and return
+                    //if (Phase1HasErrors)
+                    //{
+                    //    await PreparePageAsync(updateparticipant);
+                    //    return Page();
+                    //}
 
                     // Update all phase 1 fields
                     updateparticipant.Surname = Participant.Surname;
@@ -174,9 +193,8 @@ namespace Exwhyzee.AANI.Web.Areas.Datapage.Pages.Account
                     updateparticipant.AltPhoneNumber = AltPhoneNumber;
                     updateparticipant.State = State;
                     updateparticipant.LGA = LGA;
-                    updateparticipant.ContactAddress = ContactAddress;
                     updateparticipant.HomeAddress = HomeAddress;
-                    updateparticipant.Sponsor = Participant.Sponsor;
+                    updateparticipant.ContactAddress = Participant.ContactAddress;
                     updateparticipant.SECId = Participant.SECId;
                     updateparticipant.ChapterId = Participant.ChapterId;
                     if (imagefile != null)
@@ -222,9 +240,26 @@ namespace Exwhyzee.AANI.Web.Areas.Datapage.Pages.Account
 
                         }
                     }
+                    if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                    {
+                        updateparticipant.UserStatus = Participant.UserStatus;
+                        updateparticipant.AliveStatus = Participant.AliveStatus;
 
-                    await _userManager.UpdateAsync(updateparticipant);
+                    }
+                    //await _userManager.UpdateAsync(updateparticipant);
+                    string errorx = "";
+                    var updateResult = await _userManager.UpdateAsync(updateparticipant);
 
+                    if (!updateResult.Succeeded)
+                    {
+
+                        foreach (var err in updateResult.Errors)
+                        {
+                            errorx = $"UpdateAsync error: {err.Code} - {err.Description}";
+                        }
+                    }
+                    //
+                    TempData["error"] = errorx;
                     var token = await _userManager.GenerateChangePhoneNumberTokenAsync(updateparticipant, PhoneNumber);
                     await _userManager.ChangePhoneNumberAsync(updateparticipant, PhoneNumber, token);
 
@@ -235,32 +270,36 @@ namespace Exwhyzee.AANI.Web.Areas.Datapage.Pages.Account
                     break;
 
                 case 2:
+                    if (string.IsNullOrWhiteSpace(Participant.CurrentOccupation))
+                        ModelState.AddModelError(nameof(Participant.CurrentOccupation), "Occupation is required.");
+                    if (string.IsNullOrWhiteSpace(Participant.CurrentWorkPlace))
+                        ModelState.AddModelError(nameof(Participant.CurrentWorkPlace), "WorkPlace is required.");
+                    if (string.IsNullOrWhiteSpace(Participant.CurrentPosition))
+                        ModelState.AddModelError(nameof(Participant.CurrentPosition), "Current Position is required.");
 
-                    // Phase 2 is compulsory: both OfficeId and OfficerRole required.
-                    if (!OfficeId.HasValue || OfficeId.Value <= 0)
-                        ModelState.AddModelError(nameof(OfficeId), "Office selection is required for Phase 2.");
-                    if (string.IsNullOrWhiteSpace(OfficerRole))
-                        ModelState.AddModelError(nameof(OfficerRole), "Current position / officer role is required for Phase 2.");
 
-                    // Check only the Phase-2 fields for errors
-                    var phase2Keys = new[] { nameof(OfficeId), nameof(OfficerRole) };
+                    // Check only the relevant fields
+                    var phase2Fields = new[]
+                    {
+    nameof(Participant.CurrentOccupation),
+    nameof(Participant.CurrentWorkPlace),
+    nameof(Participant.CurrentPosition)
+};
 
-                    bool Phase2HasErrors = phase2Keys.Any(key =>
+                    bool Phase2HasErrors = phase2Fields.Any(key =>
                         ModelState.TryGetValue(key, out var entry) && entry?.Errors?.Count > 0);
 
+                    // If any Phase 1 field failed, prepare page data and return
                     if (Phase2HasErrors)
                     {
-                        // Optional: remove unrelated modelstate errors so only Phase-2 errors are shown on the page
-                        var otherKeys = ModelState.Keys.Except(phase2Keys).ToList();
-                        foreach (var k in otherKeys) ModelState.Remove(k);
-
                         await PreparePageAsync(updateparticipant);
                         return Page();
                     }
 
 
-                    updateparticipant.OfficeId = OfficeId;
-                    updateparticipant.CurrentPosition = OfficerRole;
+                    updateparticipant.CurrentOccupation = Participant.CurrentOccupation;
+                    updateparticipant.CurrentWorkPlace = Participant.CurrentWorkPlace;
+                    updateparticipant.CurrentPosition = Participant.CurrentPosition;
                     await _userManager.UpdateAsync(updateparticipant);
                     Phase = 3;
                     break;
@@ -279,13 +318,13 @@ namespace Exwhyzee.AANI.Web.Areas.Datapage.Pages.Account
                     await _userManager.UpdateAsync(updateparticipant);
                     TempData["aasuccess"] = "Profile updated successfully!";
 
-                    var getOperationalYear = await _context.OperationYears.FirstOrDefaultAsync(x=>x.IsActive);
-                    return RedirectToPage("./MemberDetails", new {id = updateparticipant.Id, operationYearId  = getOperationalYear.Id});
+                    var getOperationalYear = await _context.OperationYears.FirstOrDefaultAsync(x => x.IsActive);
+                    return RedirectToPage("./MemberDetails", new { id = updateparticipant.Id, operationYearId = getOperationalYear.Id });
             }
 
             // Repopulate for tab UI
             SelectedOfficeCategoryId = updateparticipant.Office?.CategoryId;
-          
+
             await PopulateDropdowns(SelectedOfficeCategoryId);
             await PopulateLGA();
 
@@ -293,7 +332,6 @@ namespace Exwhyzee.AANI.Web.Areas.Datapage.Pages.Account
             Participant = updateparticipant;
             LGA = Participant.LGA;
             State = Participant.State;
-            ContactAddress = Participant.ContactAddress;
             HomeAddress = Participant.HomeAddress;
             AltPhoneNumber = Participant.AltPhoneNumber;
             DOB = Participant.DOB;
@@ -304,6 +342,107 @@ namespace Exwhyzee.AANI.Web.Areas.Datapage.Pages.Account
 
             return Page();
         }
+        public async Task<IActionResult> OnPostUpdateStatusAsync()
+        {
+            var updateparticipant = await _userManager.FindByIdAsync(Participant.Id);
+            var getOperationalYear = await _context.OperationYears.FirstOrDefaultAsync(x => x.IsActive);
+            updateparticipant.UserStatus = Participant.UserStatus;
+            updateparticipant.AliveStatus = Participant.AliveStatus;
+            // Now update username to match email
+            var updatez = await _userManager.UpdateAsync(updateparticipant);
+            if (!updatez.Succeeded)
+            {
+
+
+                TempData["error"] = "Error changing status";
+                return RedirectToPage("./MemberDetails", new { id = updateparticipant.Id, operationYearId = getOperationalYear?.Id });
+            }
+
+            TempData["success"] = "status updated successfully";
+            return RedirectToPage("./MemberDetails", new { id = updateparticipant.Id, operationYearId = getOperationalYear?.Id });
+        }
+
+
+
+        public async Task<IActionResult> OnPostEmailAsync()
+        {
+            var updateparticipant = await _userManager.FindByIdAsync(Participant.Id);
+            var getOperationalYear = await _context.OperationYears.FirstOrDefaultAsync(x => x.IsActive);
+
+            if (updateparticipant == null)
+            {
+                TempData["aaerror"] = "Participant not found.";
+                return RedirectToPage("./MemberDetails", new { id = Participant.Id, operationYearId = getOperationalYear?.Id });
+            }
+
+            var currentEmail = await _userManager.GetEmailAsync(updateparticipant);
+            var currentUserName = await _userManager.GetUserNameAsync(updateparticipant);
+
+            if (string.IsNullOrWhiteSpace(NewEmail))
+            {
+                TempData["aaerror"] = "New email cannot be empty.";
+                return RedirectToPage("./MemberDetails", new { id = updateparticipant.Id, operationYearId = getOperationalYear?.Id });
+            }
+
+            if (NewEmail == currentEmail && NewEmail == currentUserName)
+            {
+                TempData["aaerror"] = "Email/username is unchanged.";
+                return RedirectToPage("./MemberDetails", new { id = updateparticipant.Id, operationYearId = getOperationalYear?.Id });
+            }
+
+            // Ensure the new email is not used by another account
+            var existingByEmail = await _userManager.FindByEmailAsync(NewEmail);
+            if (existingByEmail != null && existingByEmail.Id != updateparticipant.Id)
+            {
+                TempData["aaerror"] = "Email is already used by another account.";
+                return RedirectToPage("./MemberDetails", new { id = updateparticipant.Id, operationYearId = getOperationalYear?.Id });
+            }
+
+            // Ensure the new username (we want username == email) is not used by another account
+            var existingByName = await _userManager.FindByNameAsync(NewEmail);
+            if (existingByName != null && existingByName.Id != updateparticipant.Id)
+            {
+                TempData["aaerror"] = "Username is already used by another account.";
+                return RedirectToPage("./MemberDetails", new { id = updateparticipant.Id, operationYearId = getOperationalYear?.Id });
+            }
+
+            // Generate token and change email
+            var emailToken = await _userManager.GenerateChangeEmailTokenAsync(updateparticipant, NewEmail);
+            var emailResult = await _userManager.ChangeEmailAsync(updateparticipant, NewEmail, emailToken);
+            if (!emailResult.Succeeded)
+            {
+                TempData["aaerror"] = "Error changing email: " + string.Join("; ", emailResult.Errors.Select(e => e.Description));
+                return RedirectToPage("./MemberDetails", new { id = updateparticipant.Id, operationYearId = getOperationalYear?.Id });
+            }
+
+            // Now update username to match email
+            var setUserNameResult = await _userManager.SetUserNameAsync(updateparticipant, NewEmail);
+            if (!setUserNameResult.Succeeded)
+            {
+                // Attempt to revert the email change back to the original to avoid partial state
+                var revertErrors = "";
+                try
+                {
+                    var revertToken = await _userManager.GenerateChangeEmailTokenAsync(updateparticipant, currentEmail);
+                    var revertResult = await _userManager.ChangeEmailAsync(updateparticipant, currentEmail, revertToken);
+                    if (!revertResult.Succeeded)
+                    {
+                        revertErrors = " Reverting email failed: " + string.Join("; ", revertResult.Errors.Select(e => e.Description));
+                    }
+                }
+                catch
+                {
+                    // ignore revert exceptions, but capture that revert may have failed
+                    revertErrors = " Reverting email failed due to an unexpected error.";
+                }
+
+                TempData["aaerror"] = "Error changing username: " + string.Join("; ", setUserNameResult.Errors.Select(e => e.Description)) + revertErrors;
+                return RedirectToPage("./MemberDetails", new { id = updateparticipant.Id, operationYearId = getOperationalYear?.Id });
+            }
+
+            TempData["aasuccess"] = "Email and username updated successfully";
+            return RedirectToPage("./MemberDetails", new { id = updateparticipant.Id, operationYearId = getOperationalYear?.Id });
+        }
         // Helper that centralizes the OnGet logic so it can be reused by OnPost before returning Page()
         private async Task PreparePageAsync(Participant participant)
         {
@@ -312,7 +451,6 @@ namespace Exwhyzee.AANI.Web.Areas.Datapage.Pages.Account
             // Assign for easier binding (Phase 1)
             LGA = participant.LGA;
             State = participant.State;
-            ContactAddress = participant.ContactAddress;
             HomeAddress = participant.HomeAddress;
             PhoneNumber = participant.PhoneNumber;
             AltPhoneNumber = participant.AltPhoneNumber;

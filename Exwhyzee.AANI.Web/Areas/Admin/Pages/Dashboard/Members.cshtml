@@ -36,7 +36,7 @@
                               TOTAL FEMALE (@Model.Female)
                           </a>
 
-                          <a asp-page="./Members" asp-route-activeStatus="@Exwhyzee.AANI.Domain.Enums.ActiveStatus.Active" class="btn btn-warning">
+                          <a asp-page="./Members" asp-route-userStatus="@Exwhyzee.AANI.Domain.Enums.UserStatus.Active" class="btn btn-warning">
                               TOTAL ACTIVE (@Model.Active)
                           </a>
                       </div>
@@ -71,7 +71,7 @@
                     </thead>
                     @{int sn = 0;}
                     <tbody>
-                        @foreach (var item in Model.Participants)
+                        @foreach (var item in Model.Participants.OrderBy(v => v.Title))
                         {
                             <tr>
                                 <td>

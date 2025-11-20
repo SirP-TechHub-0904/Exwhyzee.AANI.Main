@@ -19,6 +19,7 @@ namespace Exwhyzee.AANI.Domain.Models
         public int SortOrder { get; set; }
 
         public bool Show { get; set; }
+        public bool DisableBlurBackground { get; set; }
 
         [Display(Name = "Title")]
         public string? Title { get; set; }

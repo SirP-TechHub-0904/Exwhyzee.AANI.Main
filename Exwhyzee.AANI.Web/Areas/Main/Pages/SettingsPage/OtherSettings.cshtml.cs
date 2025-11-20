@@ -21,7 +21,7 @@ namespace Exwhyzee.AANI.Web.Areas.Main.Pages.SettingsPage
             _config = config;
             _storageService = storageService;
         }
-
+        [BindProperty]
         public ContactSettingsModel ContactSettingsModel { get; set; }
         [BindProperty]
         public IFormFile? imagefile { get; set; }
@@ -90,6 +90,16 @@ namespace Exwhyzee.AANI.Web.Areas.Main.Pages.SettingsPage
 
                 }
             }
+
+            updateSetting.EventTitle = ContactSettingsModel.EventTitle;
+            updateSetting.EventSubtitle = ContactSettingsModel.EventSubtitle;
+            updateSetting.EventDescription = ContactSettingsModel.EventDescription;
+            updateSetting.ExecutiveTitle = ContactSettingsModel.ExecutiveTitle;
+            updateSetting.ExecutiveSubtitle = ContactSettingsModel.ExecutiveSubtitle;
+            updateSetting.ExecutiveDescription = ContactSettingsModel.ExecutiveDescription;
+            updateSetting.BlogTitle = ContactSettingsModel.BlogTitle;
+            updateSetting.BlogSubtitle = ContactSettingsModel.BlogSubtitle;
+            updateSetting.BlogDescription = ContactSettingsModel.BlogDescription;
 
             _context.ContactSettings.Update(updateSetting); 
             await _context.SaveChangesAsync();

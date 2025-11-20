@@ -1,0 +1,35 @@
+﻿@page "{voteId:long}"
+@model Exwhyzee.AANI.Web.Areas.Datapage.Pages.ChapterVoting.ReceiptModel
+@{
+    ViewData["Title"] = "Vote Receipt";
+}
+<div class="card">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h4 class="mb-0">Vote Confirmation</h4>
+    </div>
+
+    <div class="card-body">
+        @if (Model.Vote == null)
+        {
+            <div class="alert alert-warning">Vote not found.</div>
+        }
+        else
+        {
+            <div class="mb-3">
+                <strong>Election:</strong> @Model.ElectionTitle
+            </div>
+
+            <div class="mb-3">
+                <strong>Cast at:</strong> @Model.CastAt?.ToString("yyyy-MM-dd HH:mm:ss")
+            </div>
+
+            <div class="alert alert-info small" role="status" aria-live="polite">
+                Thank you — your vote has been recorded. The Official results will be emailed to all voters after the voting period ends.
+            </div>
+
+            <div class="d-flex gap-2">
+                <a class="btn btn-primary" asp-page="/Dashboard/Index" asp-area="Alumni">Back to Dashboard</a>
+            </div>
+        }
+    </div>
+</div>

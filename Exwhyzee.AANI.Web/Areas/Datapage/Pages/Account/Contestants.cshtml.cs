@@ -77,7 +77,7 @@ namespace Exwhyzee.AANI.Web.Areas.Datapage.Pages.Account
             QualifiedParticipants = qualifiedUsers.Select(u =>
             {
                 // Use the CurrentOffice property, with a fallback for when it's empty
-                var office = !string.IsNullOrWhiteSpace(u.CurrentOffice) ? u.CurrentOffice : "N/A";
+                var office = !string.IsNullOrWhiteSpace(u.CurrentOccupation) ? u.CurrentOccupation : "N/A";
 
                 var secInfo = u.SEC != null ? $"Sec {u.SEC.Year}" : "N/A";
 

@@ -21,15 +21,17 @@ namespace Exwhyzee.AANI.Domain.Models
         public string? AltPhoneNumber { get; set; }
         public string? Sponsor { get; set; }
         public string? Bio { get; set; }
-        public string? CurrentOffice { get; set; }
+
+        public string? CurrentWorkPlace { get; set; }
+        public string? CurrentOccupation { get; set; }
         public string? CurrentPosition { get; set; }
+
         public GenderStatus GenderStatus { get; set; }
         public MaritalStatus MaritalStatus { get; set; }
         public ReligionStatus ReligionStatus { get; set; }
         public UserStatus UserStatus { get; set; }
         public MniStatus MniStatus { get; set; }
-        public AliveStatus AliveStatus { get; set; }
-        public ActiveStatus ActiveStatus { get; set; }
+        public AliveStatus AliveStatus { get; set; } 
         public VerificationStatus VerificationStatus { get; set; }
 
         public DateTime DOB { get; set; }
@@ -47,6 +49,8 @@ namespace Exwhyzee.AANI.Domain.Models
 
         public ICollection<OfficialRole> OfficialRoles { get; set; } = default!;
 
+
+
         public string? EmergencyContactName { get; set; }
         public string? EmergencyContactPhone { get; set; }
         public string? EmergencyContactEmail { get; set; }
@@ -56,7 +60,7 @@ namespace Exwhyzee.AANI.Domain.Models
         {
             get
             {
-                return Surname + " " + FirstName + " " + OtherName;
+                return Title + " " + Surname + " " + FirstName + " " + OtherName;
             }
         }
         public string? PictureUrl { get; set; }
@@ -70,5 +74,9 @@ namespace Exwhyzee.AANI.Domain.Models
 
         public long? OfficeId { get; set; }
         public Office? Office { get; set; }
+
+        public bool SendResetAccount { get; set; }
+        public DateTime DateAccountResetSent { get; set; }
+
         }
 }

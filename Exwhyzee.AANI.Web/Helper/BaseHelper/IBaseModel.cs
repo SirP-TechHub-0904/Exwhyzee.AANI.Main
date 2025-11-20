@@ -7,6 +7,9 @@ namespace Exwhyzee.AANI.Web.Helper.BaseHelper
         Task<List<PageSection>> GetPageSections(string? position, string? pageset, long? id, long? secid);
         Task<MenuDataDto> GetMenuData();
         Task<FooterMenuDataDto> GetFooterMenuDataAsync();
-        Task<ConfigDto> GetConfigAsync();
+        Task<ConfigDto> GetConfigAsync(); 
+        Task<ContactSettingsModel> GetSettings();
+        Task<List<Event>> GetEvents();
+        Task<List<Executive>> GetExecutives();
     }
 }

@@ -10,13 +10,21 @@
         <h3 class="card-title" style="text-transform:uppercase;">
             @Model.Event.Title
         </h3>
-        
+
     </div>
     <div class="card-header">
-        
+
         <h6 class="card-title" style="text-transform:uppercase;">
             <span style=""><i>TOPIC:</i></span> @Model.Event.Toipc
         </h6>
+    </div>
+    <div class="card-body">
+        @if (Model.Event.ImageUrl != null)
+        {
+            <img src="@Model.Event.ImageUrl" class="img-fluid mb-3" style="width: auto; height: 200px; object-fit: cover;" />
+        }
+        
+
     </div>
     <div class="card-body">
 

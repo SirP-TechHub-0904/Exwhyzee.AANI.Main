@@ -124,7 +124,7 @@
 
 
                         <!-- Single pages at TOP position -->
-                        @foreach (var item in menuData.SinglePages.Where(x => x.ShowInMainMenu == true))
+                        @foreach (var item in menuData.SinglePages.Where(x => x.ShowInMainMenu == true && x.HomeSortFrom == HomeSortFrom.Top))
                         {
                             if (item.EnableDirectUrl == true)
                             {
@@ -154,7 +154,7 @@
                                         if (xitem.EnableDirectUrl == true)
                                         {
                                             <li>
-                                                <a target="_blank" href="@xitem.DirectUrl">@xitem.Title</a>
+                                                <a href="@xitem.DirectUrl">@xitem.Title</a>
                                             </li>
                                         }
                                         else
@@ -184,7 +184,7 @@
                                         if (xitem.EnableDirectUrl == true)
                                         {
                                             <li>
-                                                <a target="_blank" href="@xitem.DirectUrl">@xitem.Title</a>
+                                                <a href="@xitem.DirectUrl">@xitem.Title</a>
                                             </li>
                                         }
                                         else
@@ -199,7 +199,7 @@
                         }
 
                         <!-- Single pages at BOTTOM position -->
-                        @foreach (var item in menuData.SinglePages.Where(x => x.ShowInMainMenu == true))
+                        @foreach (var item in menuData.SinglePages.Where(x => x.ShowInMainMenu == true && x.HomeSortFrom == HomeSortFrom.Bottom))
                         {
                             if (item.EnableDirectUrl == true)
                             {
@@ -215,12 +215,12 @@
                             }
                         }
 
-                        @foreach (var item in menuData.DropdownExternalLinks)
+                        @*@foreach (var item in menuData.DropdownExternalLinks)
                         {
                             <li>
                                 <a href="@item.DirectUrl">@item.Title</a>
                             </li>
-                        }
+                        }*@
 
 
                     </ul>
@@ -319,7 +319,7 @@
                                         if (xitem.EnableDirectUrl == true)
                                         {
                                             <li>
-                                                <a target="_blank" href="@xitem.DirectUrl">@xitem.Title</a>
+                                                <a href="@xitem.DirectUrl">@xitem.Title</a>
                                             </li>
                                         }
                                         else
@@ -349,7 +349,7 @@
                                         if (xitem.EnableDirectUrl == true)
                                         {
                                             <li>
-                                                <a target="_blank" href="@xitem.DirectUrl">@xitem.Title</a>
+                                                <a href="@xitem.DirectUrl">@xitem.Title</a>
                                             </li>
                                         }
                                         else

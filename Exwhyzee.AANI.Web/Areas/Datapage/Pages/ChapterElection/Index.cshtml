@@ -1,0 +1,72 @@
+﻿@page
+@model Exwhyzee.AANI.Web.Areas.Datapage.Pages.ChapterElection.IndexModel
+@{
+}
+
+<div class="">
+
+
+    <!-- /.content -->
+
+    @{
+        string[] colors = {
+        "bg-primary", "bg-secondary", "bg-success", "bg-danger", "bg-warning", "bg-info",
+        "bg-dark", "bg-light", "bg-info", "bg-danger", "bg-primary", "bg-warning",
+        "bg-success", "bg-info", "bg-dark", "bg-primary", "bg-secondary", "bg-success",
+        "bg-danger", "bg-warning", "bg-info", "bg-dark", "bg-light", "bg-primary",
+        "bg-secondary", "bg-success", "bg-danger", "bg-warning", "bg-info", "bg-dark",
+        "bg-light", "bg-primary", "bg-secondary", "bg-success", "bg-danger", "bg-warning",
+        "bg-info", "bg-dark", "bg-light"
+    };
+        Random random = new Random();
+    }
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">
+                CHAPTER ELECTION
+            </h3>
+            <div class="hidden-sm hidden-xs">
+                <a href="javascript:history.back()" class="btn bg-gradient-warning btn-xs" style="float: right; font-size: .775rem;">Back</a>
+
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row">
+
+                <div class="col-lg-12">
+                    <div class="row">
+
+                        @foreach (var item in Model.Chapter.OrderBy(x=>x.State))
+                        {
+                            <div class="col-md-3 col-sm-6 col-xs-6">
+                                <div class="small-box @colors[random.Next(colors.Length)]" style="margin-bottom: 7.5px;margin-top: 7.5px;">
+                                    <div class="inner text-center">
+                                        <!-- added text-center -->
+                                        <h3 style="white-space: normal; text-align: center; font-size: 1.2rem; margin: auto;">
+                                            @item.State
+                                        </h3>
+
+                                        <!-- bootstrap 3: center-block centers a block element -->
+                                        <a asp-page="./Elections"
+                                           asp-route-chapterid="@item.Id"
+                                           class="btn btn-default btn-xs center-block"
+                                           style="margin:5px auto;">
+                                            Manage Election
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div><!-- /.container-fluid -->
+    </div>
+
+
+
+
+</div>

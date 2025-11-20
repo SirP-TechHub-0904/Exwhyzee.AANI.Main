@@ -4,147 +4,166 @@
 @{
     ViewData["Title"] = "Contact";
 }
-<div class="section-block">
+@using Exwhyzee.AANI.Web.Helper.BaseHelper;
+@using Exwhyzee.AANI.Domain.Models;
+@inject IBaseModel BaseModel;
+@using System.Text.RegularExpressions;
+
+@{
+    FooterMenuDataDto menuData = await BaseModel.GetFooterMenuDataAsync();
+    Regex regex = new Regex("[^a-zA-Z0-9]");
+}
+
+
+<section class="page-header">
+    <div class="page-header__bg"
+         style='background-image: url("@(string.IsNullOrEmpty(Model.ContactSettings?.BreadcrumImageUrl) ? "default-image.jpg" : Model.ContactSettings.BreadcrumImageUrl)")'>
+    </div>
+
     <div class="container">
-        <div class="section-heading center-holder">
-            <span>Get in Touch</span>
-            <h3>Let's Talk about AANI</h3>
-            <div class="section-heading-line"></div>
+        <div class="page-header__inner">
+            <h2>Contact Us</h2>
+            <div class="thm-breadcrumb__box">
+                <ul class="thm-breadcrumb list-unstyled">
+                    <li><a href="/"><i class="fas fa-home"></i>Home</a></li>
+                    <li><span class="icon-right-arrow-1"></span></li>
+                    <li class="active">Contact Us</li>
+                </ul>
+            </div>
         </div>
-        <div class="row mt-50">
-            <div class="col-md-6 col-sm-6 col-12">
-                <!-- Map START -->
-                <div id="map" class="mb-20 mt-10">
-                    <div class="mapouter">
-                        <div class="gmap_canvas">
-                           
-                            <iframe width="100%" height="100%" id="gmap_canvas" src="https://maps.google.com/maps?q=AANI%20House,%20Plot%20417,%20Tigris%20Crecent,%20Opposite%20FCT%20High%20Court,%20Maitama,%20Abuja,%20Nigeria&t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe><a href="https://123movies-to.org"></a><br><style>
-                                                                                                                                                                                                                                                                                                                                                                                              .mapouter {
-                                                                                                                                                                                                                                                                                                                                                                                                  position: relative;
-                                                                                                                                                                                                                                                                                                                                                                                                  text-align: right;
-                                                                                                                                                                                                                                                                                                                                                                                                  height: 100%;
-                                                                                                                                                                                                                                                                                                                                                                                                  width: 100%;
-                                                                                                                                                                                                                                                                                                                                                                                              }</style><a href="https://www.embedgooglemap.net">google maps for web site</a><style>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                .gmap_canvas {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    overflow: hidden;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    background: none !important;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    height: 500px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    width: 600px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                }</style>
-                        </div>
+    </div>
+</section>
+
+
+<section class="contact-info">
+    <div class="container">
+        <div class="row">
+            <!--Contact Two Single Start-->
+            <div class="col-xl-4 col-lg-4">
+                <div class="contact-info__single">
+                    <div class="contact-info__icon">
+                        <span class="icon-call"></span>
                     </div>
-                </div>
-                <!-- Map START -->
-                <style>
-                    .gmap_canvas {
-                        overflow: hidden;
-                        background: none !important;
-                        height: 100% !important;
-                        width: 100% !important;
+                    <p>Contact Us</p>
+
+                    @if (menuData.Settings?.PhoneNumbers != null)
+                    {
+                        @foreach (var phone in menuData.Settings.PhoneNumbers.Where(p => !string.IsNullOrEmpty(p.Number)))
+                        {
+
+                            <h3><a href="tel:@phone.Number"> @phone.Number</a></h3>
+                        }
                     }
-                </style>
+
+
+
+                </div>
             </div>
-
-            <div class="col-md-6 col-sm-6 col-12">
-                <!-- Form Start -->
-                <p>
-                    We respect your privacy and do not to tolerate spam and will never sell, rent, lease or give away your information.<br />We are here to answer any questions you may have.
-
-
-
-                </p>
-                <form class="contact-form">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <input type="text" name="subject" placeholder="Subject">
-                        </div>
-
-                        <div class="col-md-6 col-sm-6 col-12">
-                            <input type="text" name="name" placeholder="Name">
-                        </div>
-                        <div class="col-md-6 col-sm-6 col-12">
-                            <input type="email" name="email" placeholder="E-mail">
-                        </div>
-
-                        <div class="col-md-12">
-                            <textarea name="message" placeholder="Message"></textarea>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="center-holder">
-                                <button type="submit">Send Message</button>
-                            </div>
-                        </div>
+            <!--Contact Two Single End-->
+            <!--Contact Two Single Start-->
+            <div class="col-xl-4 col-lg-4">
+                <div class="contact-info__single">
+                    <div class="contact-info__icon">
+                        <span class="icon-email"></span>
                     </div>
-                </form>
-                <!-- Form End -->
+                    <p>Mail Us</p>
+                    @if (menuData.Settings?.Emails != null)
+                    {
+                        @foreach (var email in menuData.Settings.Emails.Where(e => !string.IsNullOrEmpty(e.Email)))
+                        {
+
+                            <h3><a href="mailto:@email.Email">@email.Email</a></h3>
+                        }
+                    }
+
+                </div>
             </div>
+            <!--Contact Two Single End-->
+            <!--Contact Two Single Start-->
+            <div class="col-xl-4 col-lg-4">
+                <div class="contact-info__single">
+                    <div class="contact-info__icon">
+                        <span class="icon-pin"></span>
+                    </div>
+                    <p>Our Office Location</p>
+                    @if (menuData.Settings?.Addresses != null && menuData.Settings.Addresses.Any())
+                    {
+                        <h3>
+                            @menuData.Settings.Addresses.FirstOrDefault()?.Address
+                        </h3>
+                    }
+                </div>
+            </div>
+            <!--Contact Two Single End-->
         </div>
+    </div>
+</section>
 
-        <div class="row mt-50">
-            <div class="col-md-12 col-sm-12 col-12" style="box-shadow: 2px 2px 2px 2px #c1c1c1;padding: 20px 0;margin-top: 30px;">
-                <div class="contact-data-box">
-                    <div class="row">
-                        <div class="col-md-3 col-sm-3 col-12">
-                            <div class="contact-data-box-icon">
-                                <i class="fa fa-phone"></i>
-                            </div>
-                        </div>
-                        <div class="col-md-8 col-sm-8 col-12">
-                            <div class="contact-data-box-text">
-                                <h4>Phone</h4>
-                                <h6>+234-706-791-2387</h6>
-                                <h6>811-111-3995</h6>
-                            </div>
-                        </div>
+
+
+
+<section class="contact-page">
+    <div class="container">
+        <div class="contact-page__inner">
+            <div class="row">
+                <div class="col-xl-6">
+                    <div class="contact-page__left">
+                        <iframe src="https://maps.google.com/maps?q=AANI%20House,%20Plot%20417,%20Tigris%20Crecent,%20Opposite%20FCT%20High%20Court,%20Maitama,%20Abuja,%20Nigeria&t=&z=13&ie=UTF8&iwloc=&output=embed" class="google-map__one" allowfullscreen=""></iframe>
                     </div>
                 </div>
-            </div>
-
-            <div class="col-md-12 col-sm-12 col-12" style="box-shadow: 2px 2px 2px 2px #c1c1c1;padding: 20px 0;margin-top: 30px;">
-                <div class="contact-data-box">
-                    <div class="row">
-                        <div class="col-md-3 col-sm-3 col-12">
-                            <div class="contact-data-box-icon">
-                                <i class="fa fa-envelope-open"></i>
+                <div class="col-xl-6">
+                    <div class="contact-page__right">
+                        <h3 class="contact-page__form-title">Get A Free Quote</h3>
+                        <form class="contact-form-validated contact-page__form" method="POST">
+                            <div class="row">
+                                <div class="col-xl-6 col-lg-6 col-md-6">
+                                    <div class="contact-page__input-box">
+                                        <input type="text" asp-for="Name" placeholder="Your name" required="" aria-required="true">
+                                    </div>
+                                </div>
+                                <div class="col-xl-6 col-lg-6 col-md-6">
+                                    <div class="contact-page__input-box">
+                                        <input type="email" asp-for="Email" placeholder="Your Email" required="" aria-required="true">
+                                    </div>
+                                </div>
+                                <div class="col-xl-6 col-lg-6 col-md-6">
+                                    <div class="contact-page__input-box">
+                                        <input type="text" placeholder="Phone" asp-for="Phone" required="" aria-required="true">
+                                    </div>
+                                </div>
+                                <div class="col-xl-6 col-lg-6 col-md-6">
+                                    <div class="contact-page__input-box">
+                                        <input type="text" placeholder="Subject" asp-for="Subject">
+                                    </div>
+                                </div>
+                                <div class="col-xl-12">
+                                    <div class="contact-page__input-box text-message-box">
+                                        <textarea asp-for="MessageBody" placeholder="Messege"></textarea>
+                                    </div>
+                                    <div class="contact-page__btn-box">
+                                        <button type="submit" class="thm-btn contact-page__btn" data-loading-text="Please wait...">
+                                            <span class="thm-btn-text">Send A Message</span>
+                                            <span class="thm-btn-icon-box"><i class="fas fa-arrow-right"></i></span>
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-md-8 col-sm-8 col-12">
-                            <div class="contact-data-box-text">
-                                <h4>Director</h4>
-                                <h6>director.admin@aani.ng</h6>
-                                <h4>For Inquiry</h4>
-                                <h6>contact@aani.ng</h6>
-                                <h4>Admin</h4>
-                                <h6>aanimni@gmail.com , aanimni@aol.com, aanimni@yahoo.com</h6>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-12 col-sm-12 col-12" style="box-shadow: 2px 2px 2px 2px #c1c1c1;padding: 20px 0;margin-top: 30px;">
-                <div class="contact-data-box">
-                    <div class="row">
-                        <div class="col-md-3 col-sm-3 col-12">
-                            <div class="contact-data-box-icon">
-                                <i class="fa fa-globe"></i>
-                            </div>
-                        </div>
-                        <div class="col-md-8 col-sm-8 col-12">
-                            <div class="contact-data-box-text">
-                                <h4>OFFICE DETAILS</h4>
-                                <h6>
-                                    AANI National Secretariat<br />
-                                    AANI House, Plot 417, Tigris Crecent, <br />Opposite FCT High Court, Maitama, Abuja, Nigeria
-                                </h6>
-                            </div>
-                        </div>
+                            <div class="result"></div>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+</section>
+
+
+
+
+
+
+
+
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

@@ -1,0 +1,72 @@
+/* Multiline clamp utilities */
+.fixed-title,
+.fixed-description {
+    display: -webkit-box; /* required for -webkit-line-clamp */
+    -webkit-box-orient: vertical; /* required */
+    overflow: hidden; /* hide excess text */
+    text-overflow: ellipsis; /* fallback for single-line */
+    word-break: break-word; /* avoid overflow from long words */
+}
+
+/* Title: maximum 2 lines */
+.fixed-title {
+    -webkit-line-clamp: 2; /* clamp to 2 lines on supported browsers */
+    line-height: 1.2; /* adjust as needed */
+    max-height: calc(1.2em * 2); /* fallback height */
+}
+
+/* Description: maximum 4 lines */
+.fixed-description {
+    -webkit-line-clamp: 4; /* clamp to 4 lines on supported browsers */
+    line-height: 1.4; /* adjust as needed */
+    max-height: calc(1.4em * 4); /* fallback height */
+}
+
+/* Make anchor behave like a block inside the heading so it uses whole area */
+.fixed-title a {
+    display: inline-block;
+    width: 100%;
+    color: inherit;
+    text-decoration: none;
+}
+
+    /* Optional: show full text on hover with pointer cursor */
+    .fixed-title a:hover,
+    .fixed-description:hover {
+        cursor: help;
+    }
+.blog-page__single-content-inner h3 {
+    font-size: 24px;
+    
+}
+
+
+
+/* two-line clamp with font-size control */
+.clamp-2 {
+    display: -webkit-box; /* needed for -webkit-line-clamp */
+    -webkit-box-orient: vertical; /* needed for -webkit-line-clamp */
+    -webkit-line-clamp: 2; /* limit to 2 lines */
+    overflow: hidden; /* hide overflow */
+    text-overflow: ellipsis; /* show ... when supported */
+    word-break: break-word; /* break long words */
+    line-height: 1.2; /* tune line height */
+    max-height: calc(1.2em * 2); /* backup to prevent growth */
+    white-space: normal; /* ensure wrapping */
+}
+
+/* control the font size for the title/link */
+.namemajor {
+    margin: 0;
+    font-size: 19px; /* change this to taste (e.g. 18px, 14px) */
+    font-weight: 600;
+    height:45px;
+}
+
+    /* make the anchor fill the heading and inherit text styles */
+    .namemajor a {
+        display: inline-block;
+        width: 100%;
+        color: inherit;
+        text-decoration: none;
+    }

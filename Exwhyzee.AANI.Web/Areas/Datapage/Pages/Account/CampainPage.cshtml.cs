@@ -21,13 +21,13 @@ namespace Exwhyzee.AANI.Web.Areas.Datapage.Pages.Account
         }
 
         public IList<ExecutivePosition> ExecutivePosition { get; set; }
-        public CampainYear CurrentCampainYear { get; set; }
+        public OperationYear CurrentCampainYear { get; set; }
         public long CurrentYearId { get; set; }
 
         public async Task<IActionResult> OnGetAsync(long yearId)
         {
             CurrentYearId = yearId;
-            CurrentCampainYear = await _context.CampainYears.FindAsync(yearId);
+            CurrentCampainYear = await _context.OperationYears.FindAsync(yearId);
 
             if (CurrentCampainYear == null)
             {

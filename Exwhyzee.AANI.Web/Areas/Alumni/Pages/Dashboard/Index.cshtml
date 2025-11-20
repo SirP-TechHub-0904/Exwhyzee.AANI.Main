@@ -50,7 +50,7 @@
 
             <div class="row">
                 <div class="col-lg-4 col-6">
-                    <a asp-page="./Members" class="small-box-footer">
+                    <a asp-page="/Account/Members" asp-area="Datapage" class="small-box-footer">
                         <div class="small-box bg-primary" style="margin-bottom: 7.5px;margin-top: 7.5px;">
                             <div class="inner">
                                 <h3 style="white-space: normal;text-align: center;margin:auto;">TOTAL MEMBERS</h3>
@@ -61,7 +61,7 @@
                 </div>
 
                 <div class="col-lg-4 col-6">
-                    <a asp-page="./Members" asp-route-aliveStatus="@Exwhyzee.AANI.Domain.Enums.AliveStatus.Alive" class="small-box-footer">
+                    <a asp-page="/Account/Members" asp-area="Datapage" asp-route-aliveStatus="@Exwhyzee.AANI.Domain.Enums.AliveStatus.Alive" class="small-box-footer">
                         <div class="small-box bg-success" style="margin-bottom: 7.5px;margin-top: 7.5px;">
                             <div class="inner">
                                 <h3 style="white-space: normal;text-align: center;margin:auto;">TOTAL ALIVE</h3>
@@ -72,10 +72,10 @@
                 </div>
 
                 <div class="col-lg-4 col-6">
-                    <a asp-page="./Members" asp-route-aliveStatus="@Exwhyzee.AANI.Domain.Enums.AliveStatus.Dead" class="small-box-footer">
+                    <a asp-page="/Account/Members" asp-area="Datapage" asp-route-aliveStatus="@Exwhyzee.AANI.Domain.Enums.AliveStatus.Dead" class="small-box-footer">
                         <div class="small-box bg-danger" style="margin-bottom: 7.5px;margin-top: 7.5px;">
                             <div class="inner">
-                                <h3 style="white-space: normal;text-align: center;margin:auto;">TOTAL DEAD</h3>
+                                <h3 style="white-space: normal;text-align: center;margin:auto;">DEPARTED FAITHFULS</h3>
                                 <p style="text-align: center;font-weight: 900;font-size: 2.0em;margin: 0;">@Model.Dead</p>
                             </div>
                         </div>
@@ -83,7 +83,7 @@
                 </div>
 
                 <div class="col-lg-4 col-6">
-                    <a asp-page="./Members" asp-route-genderStatus="@Exwhyzee.AANI.Domain.Enums.GenderStatus.Male" class="small-box-footer">
+                    <a asp-page="/Account/Members" asp-area="Datapage" asp-route-genderStatus="@Exwhyzee.AANI.Domain.Enums.GenderStatus.Male" class="small-box-footer">
                         <div class="small-box bg-gray" style="margin-bottom: 7.5px;margin-top: 7.5px;">
                             <div class="inner">
                                 <h3 style="white-space: normal;text-align: center;margin:auto;">TOTAL MALE</h3>
@@ -94,7 +94,7 @@
                 </div>
 
                 <div class="col-lg-4 col-6">
-                    <a asp-page="./Members" asp-route-genderStatus="@Exwhyzee.AANI.Domain.Enums.GenderStatus.Female" class="small-box-footer">
+                    <a asp-page="/Account/Members" asp-area="Datapage" asp-route-genderStatus="@Exwhyzee.AANI.Domain.Enums.GenderStatus.Female" class="small-box-footer">
                         <div class="small-box bg-pink" style="margin-bottom: 7.5px;margin-top: 7.5px;">
                             <div class="inner">
                                 <h3 style="white-space: normal;text-align: center;margin:auto;">TOTAL FEMALE</h3>
@@ -105,7 +105,7 @@
                 </div>
 
                 <div class="col-lg-4 col-6">
-                    <a asp-page="./Members" asp-route-activeStatus="@Exwhyzee.AANI.Domain.Enums.ActiveStatus.Active" class="small-box-footer">
+                    <a asp-page="/Account/Members" asp-area="Datapage" asp-route-activeStatus="@Exwhyzee.AANI.Domain.Enums.UserStatus.Active" class="small-box-footer">
                         <div class="small-box bg-warning" style="margin-bottom: 7.5px;margin-top: 7.5px;">
                             <div class="inner">
                                 <h3 style="white-space: normal;text-align: center;margin:auto;">TOTAL ACTIVE</h3>
@@ -156,7 +156,7 @@
                     </div>
                 }
             </div>
-             
+
         </div>
     </section>
 
@@ -226,8 +226,10 @@
                                 <li class="list-group-item d-flex justify-content-between align-items-start">
                                     <div>
                                         <div class="font-weight-bold">@ev.Title</div>
-                                        <div class="text-muted small"><i class="fa fa-calendar mr-1"></i> @ev.StartDate.ToString("dd MMM yyyy") @if (!string.IsNullOrWhiteSpace(ev.Location))
-                                        {<span> • @ev.Location</span>}</div>
+                                        <div class="text-muted small">
+                                            <i class="fa fa-calendar mr-1"></i> @ev.StartDate.ToString("dd MMM yyyy") @if (!string.IsNullOrWhiteSpace(ev.Location))
+                                            {<span> • @ev.Location</span>}
+                                        </div>
                                     </div>
                                     <div>
                                         <a asp-page="/Events/Details" asp-route-id="@ev.Id" class="btn btn-xs btn-outline-secondary">Details</a>

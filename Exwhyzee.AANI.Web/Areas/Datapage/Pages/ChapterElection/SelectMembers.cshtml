@@ -1,0 +1,144 @@
+﻿@page "{chapterId:long}"
+@model Exwhyzee.AANI.Web.Areas.Datapage.Pages.ChapterElection.SelectMembersModel
+@{
+    ViewData["Title"] = "Select Participants — Accreditation";
+}
+
+
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">
+            Chapter: @Model.Chapter?.State — Select Participants
+        </h3>
+        <div class="hidden-sm hidden-xs">
+            <a asp-page="/ChapterElection/Members" class="btn bg-gradient-warning btn-xs" style="float: right; font-size: .775rem;">Back to Details</a>
+
+        </div>
+    </div>
+    <div class="card-body">
+
+
+        @if (TempData["Message"] != null)
+        {
+            <div class="alert alert-success">@TempData["Message"]</div>
+        }
+        @if (TempData["Error"] != null)
+        {
+            <div class="alert alert-danger">@TempData["Error"]</div>
+        }
+
+    <form method="post" id="participantsForm">
+        <input type="hidden" asp-for="ChapterId" />
+        <input type="hidden" asp-for="ElectionId" />
+
+        <div class="mb-2">
+            <label for="actionType">Action</label>
+            <select asp-for="ActionType" id="actionType" class="form-select" style="width:auto;display:inline-block;margin-left:8px;">
+                <option value="Add">Add to Accreditation</option>
+                <option value="Remove">Remove from Accreditation</option>
+            </select>
+
+            <button type="submit" class="btn btn-primary btn-sm btn-xs ms-2">Submit</button>
+            <span class="ms-3 text-muted small">When removing, participants who already voted will be skipped and reported.</span>
+        </div>
+        <div class="table-responsive">
+
+
+            <table class="table table-sm table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th style="width:30px">
+                            <input type="checkbox" id="selectAll" title="Select all on page" />
+                        </th>
+                        <th>S/N</th>
+                        <th>Participant</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Status</th>
+                        <th>Token</th>
+                    </tr>
+                </thead>
+                @{ int sn = 0;}
+
+                <tbody>
+                    @foreach (var r in Model.Rows)
+                    {
+                        <tr>
+                            <td>
+                                <input type="checkbox" name="SelectedParticipantIds" value="@r.Id" class="rowCheckbox" />
+                            </td>
+                            <td>
+                                @{sn++;}
+                                @sn
+                            </td>
+                            <td>@r.DisplayName</td>
+                            <td>@r.Email</td>
+                            <td>@r.Phone</td>
+                            <td>
+                                @if (r.IsAccredited)
+                                {
+                                    if (r.Voted)
+                                    {
+                                        <span class="badge bg-success">Accredited — Voted</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-info">Accredited</span>
+                                    }
+                                }
+                                else
+                                {
+                                    <span class="badge bg-secondary">Not accredited</span>
+                                }
+                            </td>
+                            <td>
+                                @if (r.IsAccredited)
+                                {
+                                    @if (r.TokenCreatedAt != null)
+                                    {
+                                        <small>created @r.TokenCreatedAt.Value.ToString("yyyy-MM-dd")</small>
+                                        @if (r.TokenSentAt != null)
+                                        {
+                                            <small class="text-muted"> (sent)</small>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <small class="text-muted">no token</small>
+                                    }
+                                }
+                                else
+                                {
+                                    <small class="text-muted">—</small>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </form>
+    </div>
+</div>
+@section Scripts {
+    <script>
+        (function () {
+            const selectAll = document.getElementById('selectAll');
+            const checkboxes = document.querySelectorAll('.rowCheckbox');
+
+            selectAll?.addEventListener('change', function () {
+                checkboxes.forEach(cb => cb.checked = selectAll.checked);
+            });
+
+            // If any checkbox is unchecked, uncheck selectAll
+            checkboxes.forEach(cb => cb.addEventListener('change', function () {
+                if (!cb.checked) selectAll.checked = false;
+                else {
+                    // if all checked, set selectAll checked
+                    const all = Array.from(checkboxes).every(x => x.checked);
+                    selectAll.checked = all;
+                }
+            }));
+        })();
+    </script>
+}

@@ -5,6 +5,7 @@
     <div class="container-fluid">
         <div class="row" style="margin-top:20px;">
             <div class="col-md-3">
+                @await Html.PartialAsync("_MessageNotice")
 
                 <!-- Profile Image -->
                 <div class="card card-primary card-outline">
@@ -28,22 +29,11 @@
                         <p class="text-muted" style="text-align: left; margin-bottom: 0;"><i class="fas fa-phone" style="font-weight:900;"></i> @Model.Participant.PhoneNumber</p>
                         <p class="text-muted" style="text-align: left; margin-bottom: 0;">
                             <i class="fas fa-map" style="font-weight:900;"></i>
-                            @{
-                                if (Model.Participant?.Office != null)
-                                {
-                                    var cat = Model.Participant.Office.Category?.Name ?? "N/A";
-                                    var officeName = Model.Participant.Office.Name ?? "N/A";
-                                    @($"{cat} / {officeName}")
-                                }
-                                else
-                                {
-                                    @("N/A")
-                                }
-                            }
+                            @Model.Participant.CurrentOccupation
                         </p>
                         <p class="text-muted" style="text-align: left; margin-bottom: 0;">
                             <i class="fas fa-globe" style="font-weight:900;"></i>
-                            @($"{Model.Participant.CurrentOffice} / {Model.Participant.CurrentPosition}")
+                            @($"{Model.Participant.CurrentWorkPlace} / {Model.Participant.CurrentPosition}")
                         </p>
 
                         <!-- Operation Year selector / Display -->
@@ -66,7 +56,7 @@
                             }
                         </div>
 
-                        <ul class="list-group list-group-unbordered mb-3">
+                        @*<ul class="list-group list-group-unbordered mb-3">
                             <li class="list-group-item">
                                 <b>Total Attendance in Events/Meetings</b> <a class="float-right">@Model.TotalAttendance</a>
                             </li>
@@ -76,10 +66,16 @@
                             <li class="list-group-item">
                                 <b>Total Login</b> <a class="float-right">@Model.TotalLogins</a>
                             </li>
-                        </ul>
-                        <a asp-page="./UpdateAccount" asp-route-id="@Model.Participant.Id" class="float-right btn btn-primary btn-xs">Update My Profile</a>
-                        <a asp-page="./UpdateImage" asp-route-id="@Model.Participant.Id" class="float-right btn btn-primary btn-xs" style="margin-right:5px;">Change Photo</a>
-
+                        </ul>*@
+                        @{
+                            bool isOwner = Model.CurrentUserId == Model.Participant.Id;
+                            bool isAdmin = User.IsInRole("Admin");
+                        }
+                        @if (isOwner || isAdmin)
+                        {
+                            <a asp-page="./UpdateAccount" asp-route-id="@Model.Participant.Id" class="float-right btn btn-primary btn-xs">Update My Profile</a>
+                            <a asp-page="./UpdateImage" asp-route-id="@Model.Participant.Id" class="float-right btn btn-primary btn-xs" style="margin-right:5px;">Change Photo</a>
+                        }
                     </div>
                     <!-- /.card-body -->
                 </div>
@@ -144,9 +140,13 @@
                     <div class="card-header p-2">
                         <ul class="nav nav-pills">
                             <li class="nav-item"><a class="nav-link active" href="#activity" data-toggle="tab">Biography</a></li>
-                            <li class="nav-item"><a class="nav-link" href="#timeline" data-toggle="tab">Financial Record</a></li>
-                            <li class="nav-item"><a class="nav-link" href="#settings" data-toggle="tab">Events Attended</a></li>
-                            <li class="nav-item"><a class="nav-link" href="#idcard" data-toggle="tab">ID Card Info</a></li>
+                            @if (isOwner || isAdmin)
+                            {
+                                <li class="nav-item"><a class="nav-link" href="#timeline" data-toggle="tab">Financial Record</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#settings" data-toggle="tab">Events Attended</a></li>
+
+                                <li class="nav-item"><a class="nav-link" href="#idcard" data-toggle="tab">ID Card Info</a></li>
+                            }
                         </ul>
                     </div><!-- /.card-header -->
                     <div class="card-body">
@@ -168,93 +168,102 @@
                             <!-- /.tab-pane -->
 
                             <div class="tab-pane" id="timeline">
-                                <h4>Financial Record</h4>
-                                @if (Model.FinancialRecords != null && Model.FinancialRecords.Any())
+                                @if (isOwner || isAdmin)
                                 {
-                                    <div class="table-responsive">
-                                        <table class="table table-sm table-striped">
-                                            <thead>
-                                                <tr>
-                                                    <th>Date</th>
-                                                    <th>Category</th>
-                                                    <th>Event</th>
-                                                    <th class="text-right">Amount</th>
-                                                    <th>Status</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach (var f in Model.FinancialRecords)
-                                                {
-                                                    <tr>
-                                                        <td>@f.DatePaid.ToString("dd MMM yyyy")</td>
-                                                        <td>@f.Category</td>
-                                                        <td>@f.EventTitle</td>
-                                                        <td class="text-right">@f.Amount.ToString("C0")</td>
-                                                        <td>@f.Status</td>
-                                                    </tr>
-                                                }
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                }
-                                else
-                                {
-                                    <div class="text-muted">No financial records for the selected operation year.</div>
-                                }
-                            </div>
-
-                            <div class="tab-pane" id="settings">
-                                <h4>Events Attended</h4>
-                                @if (Model.EventsAttended != null && Model.EventsAttended.Any())
-                                {
-                                    <ul class="timeline timeline-inverse">
-                                        @foreach (var e in Model.EventsAttended)
-                                        {
-                                            <li>
-                                                <div class="timeline-item">
-                                                    <span class="time"><i class="fas fa-clock"></i> @e.StartDate.ToString("dd MMM yyyy")</span>
-                                                    <h3 class="timeline-header"><a href="@Url.Page("/Events/Details", new { id = e.EventId })">@e.Title</a></h3>
-                                                    <div class="timeline-body">
-                                                        <strong>Location:</strong> @e.Location
-                                                    </div>
-                                                    <div class="timeline-footer">
-                                                        <small class="text-muted">Arrival: @e.Arrival.ToString("dd MMM yyyy HH:mm")</small>
-                                                        &nbsp;|&nbsp;
-                                                        <small class="text-muted">Departure: @e.Departure.ToString("dd MMM yyyy HH:mm")</small>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                        }
-                                    </ul>
-                                }
-                                else
-                                {
-                                    <div class="text-muted">No events attended for the selected operation year.</div>
-                                }
-                            </div>
-                            <!-- /.tab-pane -->
-                            <div class="tab-pane" id="idcard">
-                                <!-- Responsive ID preview -->
-                                <div class="idcard-preview">
-                                    @if (!string.IsNullOrEmpty(Model.IdCardSvg))
+                                    <h4>Financial Record</h4>
+                                    @if (Model.FinancialRecords != null && Model.FinancialRecords.Any())
                                     {
-                                        <div class="idcard-frame" data-filename="@Model.UserFullname" aria-label="ID card preview">
-                                            @* Insert the raw SVG, but wrapped so CSS can target it. If your SVG string contains width/height attributes, they will be overridden by CSS. *@
-                                            @Html.Raw(Model.IdCardSvg)
-                                        </div>
-
-                                        <div class="idcard-actions mt-2">
-                                            <a asp-page-handler="DownloadSvg" asp-route-id="@Model.Participant.Id" class="btn btn-xs btn-secondary" title="Download SVG">
-                                                Download SVG
-                                            </a>
-                                            
-                                            <button id="downloadPngBtn" class="btn btn-xs btn-primary">Download PNG</button>
-
+                                        <div class="table-responsive">
+                                            <table class="table table-sm table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Date</th>
+                                                        <th>Category</th>
+                                                        <th>Event</th>
+                                                        <th class="text-right">Amount</th>
+                                                        <th>Status</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach (var f in Model.FinancialRecords)
+                                                    {
+                                                        <tr>
+                                                            <td>@f.DatePaid.ToString("dd MMM yyyy")</td>
+                                                            <td>@f.Category</td>
+                                                            <td>@f.EventTitle</td>
+                                                            <td class="text-right">@f.Amount.ToString("C0")</td>
+                                                            <td>@f.Status</td>
+                                                        </tr>
+                                                    }
+                                                </tbody>
+                                            </table>
                                         </div>
                                     }
                                     else
                                     {
-                                        <div class="text-muted p-3">ID preview not available</div>
+                                        <div class="text-muted">No financial records for the selected operation year.</div>
+                                    }
+                                }
+                                </div>
+
+                            <div class="tab-pane" id="settings">
+                                @if (isOwner || isAdmin)
+                                {
+                                    <h4>Events Attended</h4>
+                                    @if (Model.EventsAttended != null && Model.EventsAttended.Any())
+                                    {
+                                        <ul class="timeline timeline-inverse">
+                                            @foreach (var e in Model.EventsAttended)
+                                            {
+                                                <li>
+                                                    <div class="timeline-item">
+                                                        <span class="time"><i class="fas fa-clock"></i> @e.StartDate.ToString("dd MMM yyyy")</span>
+                                                        <h3 class="timeline-header"><a href="@Url.Page("/Events/Details", new { id = e.EventId })">@e.Title</a></h3>
+                                                        <div class="timeline-body">
+                                                            <strong>Location:</strong> @e.Location
+                                                        </div>
+                                                        <div class="timeline-footer">
+                                                            <small class="text-muted">Arrival: @e.Arrival.ToString("dd MMM yyyy HH:mm")</small>
+                                                            &nbsp;|&nbsp;
+                                                            <small class="text-muted">Departure: @e.Departure.ToString("dd MMM yyyy HH:mm")</small>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            }
+                                        </ul>
+                                    }
+                                    else
+                                    {
+                                        <div class="text-muted">No events attended for the selected operation year.</div>
+                                    }
+                                }
+                                </div>
+                            <!-- /.tab-pane -->
+                            <div class="tab-pane" id="idcard">
+                                <!-- Responsive ID preview -->
+                                <div class="idcard-preview">
+                                    @if (isOwner || isAdmin)
+                                    {
+                                        @if (!string.IsNullOrEmpty(Model.IdCardSvg))
+                                        {
+                                            <div class="idcard-frame" data-filename="@Model.UserFullname" aria-label="ID card preview">
+                                                @* Insert the raw SVG, but wrapped so CSS can target it. If your SVG string contains width/height attributes, they will be overridden by CSS. *@
+                                                @Html.Raw(Model.IdCardSvg)
+                                            </div>
+
+                                            <div class="idcard-actions mt-2">
+                                                <a asp-page-handler="DownloadSvg" asp-route-id="@Model.Participant.Id" class="btn btn-xs btn-secondary" title="Download SVG">
+                                                    Download SVG
+                                                </a>
+
+                                                <button id="downloadPngBtn" class="btn btn-xs btn-primary">Download PNG</button>
+
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="text-muted p-3">ID preview not available</div>
+                                        }
                                     }
                                 </div>
 

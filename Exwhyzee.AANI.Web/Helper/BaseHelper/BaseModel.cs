@@ -149,6 +149,36 @@ namespace Exwhyzee.AANI.Web.Helper.BaseHelper
                CSSStyle = settings.CSSStyle,
             };
         }
+
+        public async Task<List<Executive>> GetExecutives()
+        {
+            var getYear = await _context.OperationYears.FirstOrDefaultAsync(oy => oy.IsActive);
+            var Executive = await _context.Executives
+                   .Include(e => e.ExecutivePosition)
+                   .Include(e => e.Participant).ThenInclude(p => p.SEC)
+                   .Where(e => e.OperationYearId == getYear.Id)
+                   .OrderBy(e => e.ExecutivePosition.SortOrder)
+                   .ToListAsync();
+
+           return Executive;
+        }
+        public async Task<List<Event>> GetEvents()
+        {
+            var getYear = await _context.OperationYears.FirstOrDefaultAsync(oy => oy.IsActive);
+            var Event = await _context.Events
+                 .Where(e => e.OperationYearId == getYear.Id)
+                 .Where(e => e.EventStatus != Domain.Enums.EventStatus.NONE)
+                 .OrderByDescending(e => e.StartDate)
+                 .ToListAsync();
+
+            return Event;
+        }
+
+        public async Task<ContactSettingsModel> GetSettings()
+        {
+           return await _context.ContactSettings 
+                .FirstOrDefaultAsync();
+        }
     }
 
     // DTO to hold all menu-related data

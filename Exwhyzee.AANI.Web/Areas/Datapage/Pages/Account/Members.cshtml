@@ -8,7 +8,7 @@
 <div class="card">
     <div class="card-header">
         <h3 class="card-title">
-            @TempData["data"]
+            @TempData["datax"] @TempData["data"]
 
 
         </h3>
@@ -23,40 +23,40 @@
             <div class="col-lg-12">
 
                 <!-- small box -->
-                <a asp-page="./Members" class="btn btn-primary">
+                <a asp-page="./Members" asp-route-secid="@Model.SecId" asp-route-chapterid="@Model.ChapterId" class="btn btn-primary">
                     TOTAL MEMBERS (@Model.AllAlumni)
                 </a>
 
-                <a asp-page="./Members" asp-route-aliveStatus="@Exwhyzee.AANI.Domain.Enums.AliveStatus.Alive" class="btn btn-warning">
+                <a asp-page="./Members" asp-route-aliveStatus="@Exwhyzee.AANI.Domain.Enums.AliveStatus.Alive" asp-route-secid="@Model.SecId" asp-route-chapterid="@Model.ChapterId" class="btn btn-warning">
                     TOTAL ALIVE (@Model.Alive)
                 </a>
 
-                <a asp-page="./Members" asp-route-aliveStatus="@Exwhyzee.AANI.Domain.Enums.AliveStatus.Dead" class="btn btn-danger">
+                <a asp-page="./Members" asp-route-aliveStatus="@Exwhyzee.AANI.Domain.Enums.AliveStatus.Dead" asp-route-secid="@Model.SecId" asp-route-chapterid="@Model.ChapterId" class="btn btn-danger">
                     TOTAL DEAD (@Model.Dead)
                 </a>
                 @if (Model.GenderQuery == 1)
                 {
-                    <a asp-page="./Members" asp-route-genderStatus="@Exwhyzee.AANI.Domain.Enums.GenderStatus.Male" class="btn btn-success">
+                    <a asp-page="./Members" asp-route-genderStatus="@Exwhyzee.AANI.Domain.Enums.GenderStatus.Male" asp-route-secid="@Model.SecId" asp-route-chapterid="@Model.ChapterId" class="btn btn-success">
                         TOTAL MALE (@Model.Male)
                     </a>
                 }
                 else if (Model.GenderQuery == 2)
                 {
-                    <a asp-page="./Members" asp-route-genderStatus="@Exwhyzee.AANI.Domain.Enums.GenderStatus.Female" class="btn btn-info">
+                    <a asp-page="./Members" asp-route-genderStatus="@Exwhyzee.AANI.Domain.Enums.GenderStatus.Female" asp-route-secid="@Model.SecId" asp-route-chapterid="@Model.ChapterId" class="btn btn-info">
                         TOTAL FEMALE (@Model.Female)
                     </a>
                 }
                 else
                 {
-                    <a asp-page="./Members" asp-route-genderStatus="@Exwhyzee.AANI.Domain.Enums.GenderStatus.Male" class="btn btn-success">
+                    <a asp-page="./Members" asp-route-genderStatus="@Exwhyzee.AANI.Domain.Enums.GenderStatus.Male" asp-route-secid="@Model.SecId" asp-route-chapterid="@Model.ChapterId" class="btn btn-success">
                         TOTAL MALE (@Model.Male)
                     </a>
-                    <a asp-page="./Members" asp-route-genderStatus="@Exwhyzee.AANI.Domain.Enums.GenderStatus.Female" class="btn btn-info">
+                    <a asp-page="./Members" asp-route-genderStatus="@Exwhyzee.AANI.Domain.Enums.GenderStatus.Female" asp-route-secid="@Model.SecId" asp-route-chapterid="@Model.ChapterId" class="btn btn-info">
                         TOTAL FEMALE (@Model.Female)
                     </a>
                 }
 
-                <a asp-page="./Members" asp-route-activeStatus="@Exwhyzee.AANI.Domain.Enums.ActiveStatus.Active" class="btn btn-warning">
+                <a asp-page="./Members" asp-route-userStatus="@Exwhyzee.AANI.Domain.Enums.UserStatus.Active" asp-route-secid="@Model.SecId" asp-route-chapterid="@Model.ChapterId" class="btn btn-warning">
                     TOTAL ACTIVE (@Model.Active)
                 </a>
             </div>
@@ -86,7 +86,8 @@
                             <th>S/N</th>
                             <th>Fullname</th>
                             <th>Position</th>
-                            <th>Current Office</th>
+                            <th>Work Place</th>
+                            <th>Position</th>
                             <th>SEC</th>
                             <th>Last Login</th>
                             <th></th>
@@ -106,16 +107,17 @@
                                 <td>
                                     <a asp-page="./MemberDetails" asp-route-id="@list.ParticipantId" class="uppercase-text">
 
-                                        @Html.DisplayFor(modelItem => list.Participant.Surname)
-                                        @Html.DisplayFor(modelItem => list.Participant.FirstName)
-                                        @Html.DisplayFor(modelItem => list.Participant.OtherName)
+                                        @Html.DisplayFor(modelItem => list.Participant.Fullname)
                                     </a>
                                 </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => list.Position)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => list.Participant.CurrentOffice)
+                                    @Html.DisplayFor(modelItem => list.Participant.CurrentWorkPlace)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => list.Participant.CurrentPosition)
                                 </td>
 
                                 <td>
@@ -151,23 +153,28 @@
                             FULLNAME
                         </th>
                         <th>
-                            OFFICE
+                            EMAIL
+                        </th>
+                        <th>SEC YEAR</th>
+                        <th>WORK PLACE</th>
+                        <th>
+                            POSITION
                         </th>
 
 
-                        <th>SEC YEAR</th>
+
                         <th>CHAPTER</th>
-                        <th>LAST PAYMENT/DUES</th>
                         <th>LAST LOGIN</th>
                         @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
                         {
+                            <th>Reset</th>
                             <th></th>
                         }
                     </tr>
                 </thead>
                 @{int sn = 0;}
                 <tbody>
-                    @foreach (var item in Model.Participants)
+                    @foreach (var item in Model.Participants.OrderBy(v=>v.Title))
                     {
                         <tr>
                             <td>
@@ -177,30 +184,62 @@
                             <td>
                                 <a asp-page="./MemberDetails" asp-route-id="@item.Id" class="uppercase-text">
 
-                                    @Html.DisplayFor(modelItem => item.Surname)
-                                    @Html.DisplayFor(modelItem => item.FirstName)
-                                    @Html.DisplayFor(modelItem => item.OtherName)
+                                    @Html.DisplayFor(modelItem => item.Fullname)
                                 </a>
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.Sponsor)
+                                @Html.DisplayFor(modelItem => item.Email)
                             </td>
-
 
                             <td>
                                 SEC @Html.DisplayFor(modelItem => item.SEC.Number) (@Html.DisplayFor(modelItem => item.SEC.Year))
                             </td>
                             <td>
+                                @Html.DisplayFor(modelItem => item.CurrentWorkPlace)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.CurrentPosition)
+                            </td>
+
+
+                            <td>
                                 @Html.DisplayFor(modelItem => item.Chapter.State)
                             </td>
+                           
                             <td>
-                                -----------
-                            </td>
-                            <td>
-                                -----------
+                                @{
+                                    DateTime? last = item.LastLogin; // DateTime?
+                                    var cutoff = DateTime.UtcNow.AddYears(-1);
+                                }
+                                @if (!last.HasValue || last.Value == DateTime.MinValue)
+                                {
+                                    <span>No record</span>
+                                }
+                                else if (last.Value < cutoff)
+                                {
+                                    <span>Last year</span>
+                                }
+                                else
+                                {
+                                    <!-- show formatted date (or use DisplayFor) -->
+                                    <span>@last.Value.ToString("yyyy-MM-dd")</span>
+                                }
+
                             </td>
                             @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
                             {
+                                <td>
+                                    @if (item.SendResetAccount)
+                                    {
+
+                                        <span class="btn btn-xs bg-success">Sent</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="btn btn-xs bg-primary">Not Sent</span>
+
+                                    }
+                                </td>
                                 <td>
                                     <div class="btn-group">
                                         <button type="button" class="btn btn-success">Action</button>
@@ -216,6 +255,8 @@
                                                     <a class="dropdown-item" asp-page="./UpdateChapterAccount" asp-route-chapterId="@item.ChapterId">Update Chapter Position</a>
 
                                                 }
+                                                <a class="dropdown-item" asp-page="/ParticipantPage/SendResetAccount" asp-area="Main" asp-route-id="@item.Id">Send Reset Account</a>
+
                                             </div>
                                         </div>
                                     </div>

@@ -35,7 +35,12 @@
                 <p>Members</p>
             </a>
         </li>
-
+        <li class="nav-item">
+            <a asp-page="/ParticipantPage/SendResetAccount" asp-area="Main" class="nav-link">
+                <i class="fa fa-circle nav-icon"></i>
+                <p>Send Reset Account</p>
+            </a>
+        </li>
     </ul>
 </li>
 
@@ -74,66 +79,44 @@
                 <p>Committees</p>
             </a>
         </li>
-        <li class="nav-item">
-            <a asp-page="/" asp-area="Main" class="nav-link">
-                <i class="fa fa-user nav-icon"></i>
-                <p>Staff</p>
-            </a>
-        </li>
+
     </ul>
+</li>
+<li class="nav-item">
+    <a asp-page="/ChapterElection/Index" asp-area="Datapage" class="nav-link">
+        <i class="nav-icon fa fa-bar-chart"></i>
+        <p>Chapter Election</p>
+    </a>
 </li>
 <li class="nav-item">
     <a href="#" class="nav-link">
         <i class="nav-icon fa fa-gavel"></i>
         <p>
-            Election
+            General Election
             <i class="fa fa-angle-left right"></i>
         </p>
     </a>
     <ul class="nav nav-treeview">
         <li class="nav-item">
-            <a asp-page="/" asp-area="Main" class="nav-link">
+            <a asp-page="/account/CampaignYears" asp-area="Datapage" class="nav-link">
                 <i class="fa fa-male nav-icon"></i>
                 <p>Candidates</p>
             </a>
         </li>
         <li class="nav-item">
-            <a asp-page="/" asp-area="Main" class="nav-link">
+            <a asp-page="/account/voting" asp-area="Datapage" class="nav-link">
                 <i class="fa fa-check-square-o nav-icon"></i>
                 <p>Votes</p>
             </a>
         </li>
         <li class="nav-item">
-            <a asp-page="/" asp-area="Main" class="nav-link">
+            <a asp-page="/account/results" asp-area="Datapage" class="nav-link">
                 <i class="fa fa-trophy nav-icon"></i>
                 <p>Result</p>
             </a>
         </li>
     </ul>
-</li>
-<li class="nav-item">
-    <a href="#" class="nav-link">
-        <i class="nav-icon fa fa-bank"></i>
-        <p>
-            Funds
-            <i class="fa fa-angle-left right"></i>
-        </p>
-    </a>
-    <ul class="nav nav-treeview">
-        <li class="nav-item">
-            <a asp-page="/" asp-area="Main" class="nav-link">
-                <i class="fa fa-list-alt nav-icon"></i>
-                <p>Category</p>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a asp-page="/" asp-area="Main" class="nav-link">
-                <i class="fa fa-exchange nav-icon"></i>
-                <p>Transaction</p>
-            </a>
-        </li>
-    </ul>
-</li>
+</li> 
 <li class="nav-item">
     <a href="#" class="nav-link">
         <i class="nav-icon fa fa-book"></i>
@@ -245,7 +228,12 @@
         <p>Gallery Page</p>
     </a>
 </li>
-
+<li class="nav-item">
+    <a asp-page="/ParticipantPage/Index" asp-area="Main" class="nav-link">
+        <i class="fa fa-user nav-icon"></i>
+        <p>Users</p>
+    </a>
+</li>
 <li class="nav-item">
     <a href="#" class="nav-link">
         <i class="nav-icon fa fa-gear"></i>
@@ -258,13 +246,19 @@
         <li class="nav-item">
             <a asp-page="/IPages/Main/Index" asp-area="Main" class="nav-link">
                 <i class="fa fa-circle nav-icon"></i>
-                <p>Website Design</p>
+                <p>Website Manager</p>
             </a>
         </li>
         <li class="nav-item">
             <a asp-page="/SettingsPage/Index" asp-area="Main" class="nav-link">
                 <i class="fa fa-circle nav-icon"></i>
                 <p>Contact Settings</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a asp-page="/BlogNews/Index" asp-area="Main" class="nav-link">
+                <i class="fa fa-circle nav-icon"></i>
+                <p>Blog Manager</p>
             </a>
         </li>
         <li class="nav-item">
@@ -277,6 +271,12 @@
             <a asp-page="/SettingsPage/OtherSettings" asp-area="Main" class="nav-link">
                 <i class="fa fa-circle nav-icon"></i>
                 <p>Other Settings</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a asp-page="/SettingsPage/DirectUrl" asp-area="Main" class="nav-link">
+                <i class="fa fa-circle nav-icon"></i>
+                <p>Direct Url</p>
             </a>
         </li>
         <li class="nav-item">

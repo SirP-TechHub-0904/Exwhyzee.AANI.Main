@@ -2,138 +2,185 @@
 @model Exwhyzee.AANI.Web.Pages.Media.ReadMoreModel
 
 @{
-   if (Model.Blog.BlogCategory != null)
+    if (Model.Blog.BlogCategory != null)
     {
         ViewData["Title"] = Model.Blog.Title;
 
-        }
-        ViewData["PageName"] = Model.Blog.Title;
-        ViewData["Description"] = Model.Blog.ShortDescription;
-        ViewData["Image"] = Model.Blog.ImageUrl;
     }
+    ViewData["PageName"] = Model.Blog.Title;
+    ViewData["Description"] = Model.Blog.ShortDescription;
+    ViewData["Image"] = Model.Blog.ImageUrl;
+}
 
 
-    <!-- Page Title START -->
-    <div class="page-title-section" style="background-image: url('../img/bred.jpg');">
-        <div class="container">
-            <h1>@Model.Blog.Title</h1>
-            <ul>
-                <li><a href="/">Home</a></li>
-                <li><a href="#">@Model.Blog.Title</a></li>
-            </ul>
-        </div>
+
+<section class="page-header">
+    <div class="page-header__bg"
+         style='background-image: url("@(string.IsNullOrEmpty(Model.ContactSettings?.BreadcrumImageUrl) ? "default-image.jpg" : Model.ContactSettings.BreadcrumImageUrl)")'>
     </div>
 
+    <div class="container">
+        <div class="page-header__inner">
+            <h2 style="font-size: 40px;">@Model.Blog.Title</h2>
 
-    <div class="section-block">
-        <div class="container">
-            <div class="row">
-                <!-- Left Side START -->
-                <div class="col-md-9 col-sm-8 col-12">
-                    <!-- Post Start -->
+        </div>
+    </div>
+</section>
 
-                    <div class="clearfix"></div>
+<div class="section-block">
+    <div class="container">
+        <div class="row">
+            <!-- Left Side START -->
+            <div class="col-md-9 col-sm-8 col-12">
 
-                    <div class="blog-list-left" style="box-shadow: 2px 2px 2px 2px #706b6b;padding: 20px;">
+                <div style="max-width:900px;margin:18px auto;color:#0f172a;padding:0 12px;">
+
+                    <!-- Post Card -->
+                    <div style="background:#fff;border-radius:10px;box-shadow:0 8px 22px rgba(15,23,42,0.06);overflow:hidden;border:1px solid rgba(15,23,42,0.04)">
+
+                        <!-- Hero image (if any) -->
                         @if (!String.IsNullOrEmpty(Model.Blog.ImageUrl))
                         {
-                            <div style="margin:0 auto;text-align:center">
-                                <img src="@Model.Blog.ImageUrl" alt="img" style="margin:0 auto;text-align:center">
+                            <div style="text-align:center;padding:18px 12px;background:linear-gradient(180deg,#fbfdff 0,#fff 100%);">
+                                <img src="@Model.Blog.ImageUrl" alt="Blog image" style="max-width:100%;height:auto;border-radius:6px;display:inline-block;box-shadow:0 6px 18px rgba(2,6,23,0.06);" />
                             </div>
                         }
-                        else
-                        {
-                            <div style="margin:0 auto;text-align:center;height:65px;">
-                                .
-                            </div>
-                        }
-                        <div class="data-box">
-                            <h4>@Model.Blog.Date.ToString("dd")</h4>
-                            <strong>@Model.Blog.Date.ToString("MMM")</strong>
-                        </div>
-                        <div class="blog-title-box">
-                            <h2>@Model.Blog.Title</h2>
-                            <span><i class="fa fa-calendar"></i>@Model.Blog.Date.ToString("dd MMM, yyyy hh:mm tt") </span>
-                            <span>
-                                <i class="fa fa-globe"></i>	 @if (Model.Blog.BlogCategory != null)
-                                {
-                                    @Model.Blog.BlogCategory.Title
-                                }
-                            </span>
-                            <span><i class="fa fa-comments"></i>	@Model.Blog.Comments.Count() Comments</span>
-                        </div>
 
-                        <div class="blog-post-content">
-                            <div class="" style="color: #0c0c0c;">
-                                @Html.Raw(Model.Blog.Content)
+                        <div style="display:flex;gap:18px;padding:18px;align-items:flex-start;">
+
+                            <!-- Date badge -->
+                            <div style="flex:0 0 74px;display:flex;align-items:flex-start;justify-content:center;">
+                                <div style="width:64px;background:#f0f6ff;border-radius:8px;padding:10px 8px;text-align:center;color:#0b5fff;font-weight:700;box-shadow:inset 0 -6px 12px rgba(11,95,255,0.03);">
+                                    <div style="font-size:22px;line-height:1;">@Model.Blog.Date.ToString("dd")</div>
+                                    <div style="font-size:11px;text-transform:uppercase;margin-top:4px;color:#1f3fe8;">@Model.Blog.Date.ToString("MMM")</div>
+                                </div>
                             </div>
 
-                            <hr />
+                            <!-- Main content -->
+                            <div style="flex:1;min-width:0;">
+                                <div style="display:flex;flex-direction:column;gap:8px;">
+                                    <h1 style="margin:0;font-size:22px;color:#0b1220;font-weight:700;line-height:1.15;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">
+                                        @Model.Blog.Title
+                                    </h1>
 
-                        </div>
+                                    <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center;font-size:13px;color:#475569;">
+                                        @*<div style="display:inline-flex;align-items:center;gap:8px;background:#f7f9ff;padding:6px 10px;border-radius:8px;">
+                                                <i class="fa fa-calendar" style="color:#5b6cff;"></i>
+                                                <span>@Model.Blog.Date.ToString("dd MMM yyyy")</span>
+                                            </div>*@
 
-
-                    </div>
-                    <div class="blog-comments mt-50">
-                        <h3 class="mt-0">All Comments:</h3>
-                        @foreach (var x in Model.Blog.Comments)
-                        {
-                            <div class="blog-comment-user">
-                                <div class="row mt-20">
-
-                                    <div class="col-md-11 col-12">
-                                        <div class="comment-block">
-                                            <h6>
-                                                @if (String.IsNullOrEmpty(x.ParticipantId))
+                                        <div style="display:inline-flex;align-items:center;gap:8px;background:#fafafa;padding:6px 10px;border-radius:8px;">
+                                            <i class="fa fa-globe" style="color:#7b7b7b;"></i>
+                                            <span>
+                                                @if (Model.Blog.BlogCategory != null)
                                                 {
-                                                    @x.Fullname
+                                                    @Model.Blog.BlogCategory.Title
                                                 }
                                                 else
                                                 {
-                                                    @x.Participant.Fullname
+                                                    <span style="color:#94a3b8">Uncategorized</span>
                                                 }
-                                            </h6><strong> @await Component.InvokeAsync("DateAgo", new { date = x.Date })</strong>
-                                            <p>
+                                            </span>
+                                        </div>
+
+                                        <div style="display:inline-flex;align-items:center;gap:8px;background:#fafafa;padding:6px 10px;border-radius:8px;">
+                                            <i class="fa fa-comments" style="color:#7b7b7b;"></i>
+                                            <span>@Model.Blog.Comments.Count() Comments</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Post content -->
+                                    <div class="blog-post-content" style="margin-top:12px;color:#0c0c0c;line-height:1.7;font-size:15px;">
+                                        @Html.Raw(Model.Blog.Content)
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- Comments -->
+                    <div style="margin-top:22px;">
+                        <h3 style="margin:0 0 12px 0;font-size:18px;color:#0b1220;">All Comments</h3>
+
+                        @if (Model.Blog?.Comments != null && Model.Blog.Comments.Any())
+                        {
+                            @foreach (var x in Model.Blog.Comments)
+                            {
+                                {
+                                    var name = String.IsNullOrEmpty(x.ParticipantId) ? x.Fullname : x.Participant?.Fullname ?? x.Fullname;
+                                    var initials = string.IsNullOrWhiteSpace(name)
+                                        ? "?"
+                                        : string.Join("", name.Split(' ').Where(s => s.Length > 0).Select(s => s[0]).Take(2)).ToUpper();
+
+                                    <div style="display:flex;gap:12px;padding:12px;border-radius:8px;border:1px solid #eef6ff;background:#fff;margin-top:12px;align-items:flex-start;">
+                                        <!-- avatar -->
+                                        <div style="flex:0 0 46px;">
+                                            <div style="width:46px;height:46px;border-radius:50%;background:#eef6ff;color:#0b5fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;">
+                                                @initials
+                                            </div>
+                                        </div>
+
+                                        <!-- comment -->
+                                        <div style="flex:1;min-width:0;">
+                                            <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;">
+                                                <strong style="font-size:14px;color:#0b1220;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">@name</strong>
+                                                <span style="font-size:12px;color:#64748b;flex:0 0 auto;">
+                                                    @await Component.InvokeAsync("DateAgo", new { date = x.Date })
+                                                </span>
+                                            </div>
+                                            <p style="margin:8px 0 0 0;color:#334155;font-size:14px;line-height:1.5;word-break:break-word;">
                                                 @x.Content
                                             </p>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
+                                }
+                            }
+                        }
+                        else
+                        {
+                            <p style="color:#64748b;margin-top:8px;">No comments yet — be the first to share your thoughts.</p>
                         }
 
-                        <h3 class="mt-30">Your Comment:</h3>
-                        <form class="comment-form" method="post" autocomplete="off">
+                        <!-- Comment form -->
+                        <h3 style="margin:20px 0 12px 0;font-size:18px;color:#0b1220;">Leave a Comment</h3>
+                        <form class="comment-form" method="post" autocomplete="off" style="background:#fbfdff;border:1px solid #eef6ff;padding:14px;border-radius:8px;">
                             <input type="hidden" asp-for="Comment.BlogId" value="@Model.Blog.Id" />
 
-                            <div class="row">
+                            <div style="display:flex;gap:10px;flex-wrap:wrap;">
+                                <label style="flex:1 1 220px;min-width:180px;display:block;">
+                                    <span style="display:block;font-size:13px;color:#334155;margin-bottom:6px;">Your name</span>
+                                    <input asp-for="Comment.Fullname" placeholder="Your name" style="width:100%;padding:10px 12px;border:1px solid #dbeafe;border-radius:6px;outline:none;font-size:14px;background:#fff;color:#0f172a;" />
+                                </label>
 
-                                <div class="col-6">
-                                    <input asp-for="Comment.Fullname" placeholder="Your Name">
-                                </div>
-                                <div class="col-6">
-                                    <input asp-for="Comment.Email" placeholder="E-mail adress" type="email">
-                                </div>
-                                <div class="col-12">
-                                    <textarea asp-for="Comment.Content" placeholder="Your Message"></textarea>
-                                </div>
+                                <label style="flex:1 1 220px;min-width:180px;display:block;">
+                                    <span style="display:block;font-size:13px;color:#334155;margin-bottom:6px;">E‑mail</span>
+                                    <input asp-for="Comment.Email" placeholder="you@example.com" type="email" style="width:100%;padding:10px 12px;border:1px solid #dbeafe;border-radius:6px;outline:none;font-size:14px;background:#fff;color:#0f172a;" />
+                                </label>
+
+                                <label style="flex:1 1 100%;display:block;">
+                                    <span style="display:block;font-size:13px;color:#334155;margin-bottom:6px;">Message</span>
+                                    <textarea asp-for="Comment.Content" placeholder="Write your comment..." rows="5" style="width:100%;padding:10px 12px;border:1px solid #dbeafe;border-radius:6px;outline:none;font-size:14px;background:#fff;color:#0f172a;resize:vertical;"></textarea>
+                                </label>
                             </div>
 
-
-                            <div class="mt-10 left-holder">
-                                <button type="submit" class="primary-button button-md">Send Message</button>
-
+                            <div style="margin-top:12px;display:flex;align-items:center;gap:10px;">
+                                <button type="submit" class="primary-button button-md" style="border:none;padding:10px 16px;border-radius:8px;font-weight:700;cursor:pointer;box-shadow:0 6px 14px rgba(11,95,255,0.12);">
+                                    Send Message
+                                </button>
+                                <small style="color:#64748b;font-size:13px;">We respect your privacy — email won't be published.</small>
                             </div>
                         </form>
                     </div>
-                    <!-- Post End -->
+                </div>
+                <div class="clearfix"></div>
 
-                </div>
-                <!-- Left Side END -->
-                <!-- Right Side START -->
-                <div class="col-md-3 col-sm-4 col-12">
-                </div>
-                <!-- Right Side END -->
             </div>
+            <!-- Left Side END -->
+            <!-- Right Side START -->
+            <div class="col-md-3 col-sm-4 col-12">
+            </div>
+            <!-- Right Side END -->
         </div>
     </div>
+</div>

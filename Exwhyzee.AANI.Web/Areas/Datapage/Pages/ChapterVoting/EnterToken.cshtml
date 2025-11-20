@@ -1,0 +1,38 @@
+﻿
+@page "{electionId:long}"
+@model Exwhyzee.AANI.Web.Areas.Datapage.Pages.ChapterVoting.EnterTokenModel
+@{
+    ViewData["Title"] = "Enter voting code";
+}
+
+<div class="card">
+    <div class="card-header">
+        <h4>Enter voting code</h4>
+    </div>
+
+    <div class="card-body">
+        @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+        {
+            <div class="alert alert-danger">@Model.ErrorMessage</div>
+        }
+
+        @if (Model.Election != null)
+        {
+            <p class="mb-2"><strong>@Model.Election.Title</strong></p>
+            <p class="text-muted small mb-3">@Model.Election.StartAt.ToString("yyyy-MM-dd") — @Model.Election.EndAt.ToString("yyyy-MM-dd")</p>
+        }
+
+        <form method="post">
+            <input type="hidden" name="electionId" value="@Model.ElectionId" />
+            <div class="mb-3">
+                <label class="form-label">7-digit code</label>
+                <input asp-for="Token" class="form-control" maxlength="7" autocomplete="one-time-code" />
+            </div>
+
+            <div class="d-flex gap-2">
+                <button class="btn btn-primary" type="submit">Continue</button>
+                <a class="btn btn-link" asp-page="/ChapterVoting/Index">Back</a>
+            </div>
+        </form>
+    </div>
+</div>

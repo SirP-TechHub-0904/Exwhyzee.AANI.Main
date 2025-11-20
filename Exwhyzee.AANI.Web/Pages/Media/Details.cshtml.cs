@@ -12,12 +12,12 @@ using Microsoft.AspNetCore.Identity;
 
 namespace Exwhyzee.AANI.Web.Pages.Media
 {
-    public class NewsModel : PageModel
+    public class DetailsModel : PageModel
     {
         private readonly UserManager<Participant> _userManager;
         private readonly Exwhyzee.AANI.Web.Data.AaniDbContext _context;
         private readonly IConfiguration Configuration;
-        public NewsModel(UserManager<Participant> userManager, Data.AaniDbContext context, IConfiguration configuration)
+        public DetailsModel(UserManager<Participant> userManager, Data.AaniDbContext context, IConfiguration configuration)
         {
             _userManager = userManager;
             _context = context;
@@ -30,8 +30,10 @@ namespace Exwhyzee.AANI.Web.Pages.Media
         public string CurrentFilter { get; set; }
         public int PageIndex { get; set; }
         public int TotalPage { get; set; }
+        public ContactSettingsModel ContactSettings { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(string currentFilter, string searchString, int? pageIndex)
+        public string CategoryName { get; set; }
+        public async Task<IActionResult> OnGetAsync(string currentFilter, string searchString, int? pageIndex, long? catId)
         {
 
             if (searchString != null)
@@ -48,11 +50,26 @@ namespace Exwhyzee.AANI.Web.Pages.Media
             {
                 CurrentFilter = "Search";
             }
+
+
+
             IQueryable<Blog> bloglist = from s in _context.Blogs
                                         .Include(x => x.BlogCategory)
                                         .Include(x => x.Comments)
                                                       .OrderByDescending(x => x.Date)
                                           select s;
+
+            if(catId != null && catId > 0)
+            {
+                bloglist = bloglist.Where(x => x.BlogCategoryId == catId);
+
+                //get the category details
+                var category = await _context.BlogCategories.FirstOrDefaultAsync(x => x.Id == catId);
+                if (category != null)
+                {
+                    CategoryName = category.Title;
+                }
+            }
 
             if (!String.IsNullOrEmpty(searchString))
             {
@@ -70,7 +87,8 @@ namespace Exwhyzee.AANI.Web.Pages.Media
                 bloglist.AsNoTracking(), pageIndex ?? 1, pageSize);
 
             PageIndex = pageIndex ?? 1;
-
+            ContactSettings = await _context.ContactSettings
+              .FirstOrDefaultAsync();
             return Page();
         }
 

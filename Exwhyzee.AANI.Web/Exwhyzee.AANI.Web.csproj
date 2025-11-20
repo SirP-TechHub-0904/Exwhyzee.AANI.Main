@@ -8,6 +8,16 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <Compile Remove="Areas\Admin\Pages\Dashboard\MemberDetails.cshtml.cs" />
+	  <Compile Remove="Areas\Admin\Pages\Dashboard\Members.cshtml.cs" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Content Remove="Areas\Admin\Pages\Dashboard\MemberDetails.cshtml" />
+	  <Content Remove="Areas\Admin\Pages\Dashboard\Members.cshtml" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<None Remove="web.configh" />
 	</ItemGroup>
 
@@ -44,9 +54,11 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\Exwhyzee.AANI.Domain\Exwhyzee.AANI.Domain.csproj" />
+		<ProjectReference Include="..\PostmarkEmailService\PostmarkEmailService.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
+		<Folder Include="Areas\Main\Pages\IElection\" />
 		<Folder Include="wwwroot\web\img\" />
 	</ItemGroup>
 
@@ -60,14 +72,6 @@
 
 	<ItemGroup>
 		<Content Update="Areas\Admin\Pages\Dashboard\Index.cshtml">
-			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-			<CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-		</Content>
-		<Content Update="Areas\Admin\Pages\Dashboard\MemberDetails.cshtml">
-			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-			<CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-		</Content>
-		<Content Update="Areas\Admin\Pages\Dashboard\Members.cshtml">
 			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
 			<CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
 		</Content>

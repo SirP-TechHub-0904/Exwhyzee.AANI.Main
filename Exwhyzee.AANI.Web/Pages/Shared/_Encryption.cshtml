@@ -1,0 +1,44 @@
+﻿@using System.Linq
+@{
+    // generate a new GUID-like verification code
+    var verificationCode = Guid.NewGuid().ToString();
+
+    // local inline mask helper (keeps separators like '-' intact)
+    string MaskVerificationCode(string input, int keepStart = 8, int keepEnd = 4, char maskChar = '*')
+    {
+        if (string.IsNullOrEmpty(input)) return string.Empty;
+
+        var chars = input.ToCharArray();
+        var alnumIndices = Enumerable.Range(0, chars.Length)
+                                     .Where(i => char.IsLetterOrDigit(chars[i]))
+                                     .ToArray();
+
+        if (alnumIndices.Length <= keepStart + keepEnd)
+            return input;
+
+        var keep = new HashSet<int>(
+            alnumIndices.Take(keepStart)
+                        .Concat(alnumIndices.Skip(alnumIndices.Length - keepEnd))
+        );
+
+        for (int i = 0; i < chars.Length; i++)
+        {
+            if (char.IsLetterOrDigit(chars[i]) && !keep.Contains(i))
+                chars[i] = maskChar;
+        }
+
+        return new string(chars);
+    }
+
+    var masked = MaskVerificationCode(verificationCode, keepStart: 8, keepEnd: 4);
+}
+
+<div class="alert alert-info d-flex justify-content-between align-items-center" style="padding: .0rem 1.25rem; background-color: #265430;">
+     <div class="small text-muted" style="color: #ffffff !important;">
+        Your ballot is encrypted end-to-end. <code style="font-size: 8px;">@masked</code>
+    </div>
+</div>
+
+<style>
+
+</style>

@@ -49,7 +49,7 @@
 
                 <div class="col-lg-4 col-6">
                      
-                    <a asp-page="./Members" class="small-box-footer">
+                    <a asp-page="/Account/Members" asp-area="Datapage" class="small-box-footer">
                         <div class="small-box bg-primary" style="margin-bottom: 7.5px;margin-top: 7.5px;">
                             <div class="inner">
                                 <h3 style="white-space: normal;text-align: center;margin:auto;">
@@ -65,7 +65,7 @@
                 </div>
                 <div class="col-lg-4 col-6">
                      
-                    <a asp-page="./Members" asp-route-aliveStatus="@Exwhyzee.AANI.Domain.Enums.AliveStatus.Alive" class="small-box-footer">
+                    <a asp-page="/Account/Members" asp-area="Datapage" asp-route-aliveStatus="@Exwhyzee.AANI.Domain.Enums.AliveStatus.Alive" class="small-box-footer">
                         <div class="small-box bg-success" style="margin-bottom: 7.5px;margin-top: 7.5px;">
                             <div class="inner">
                                 <h3 style="white-space: normal;text-align: center;margin:auto;">
@@ -81,11 +81,11 @@
                 </div>
                 <div class="col-lg-4 col-6">
 
-                    <a asp-page="./Members" asp-route-aliveStatus="@Exwhyzee.AANI.Domain.Enums.AliveStatus.Dead" class="small-box-footer">
+                    <a asp-page="/Account/Members" asp-area="Datapage" asp-route-aliveStatus="@Exwhyzee.AANI.Domain.Enums.AliveStatus.Dead" class="small-box-footer">
                         <div class="small-box bg-danger" style="margin-bottom: 7.5px;margin-top: 7.5px;">
                             <div class="inner">
                                 <h3 style="white-space: normal;text-align: center;margin:auto;">
-                                    TOTAL DEAD
+                                    DEPARTED FAITHFULS
                                 </h3>
 
                                 <p style="text-align: center;font-weight: 900;font-size: 2.0em;margin: 0;">@Model.Dead</p>
@@ -100,7 +100,7 @@
 
                 <div class="col-lg-4 col-6">
                      
-                    <a asp-page="./Members" asp-route-genderStatus="@Exwhyzee.AANI.Domain.Enums.GenderStatus.Male" class="small-box-footer">
+                    <a asp-page="/Account/Members" asp-area="Datapage" asp-route-genderStatus="@Exwhyzee.AANI.Domain.Enums.GenderStatus.Male" class="small-box-footer">
                         <div class="small-box bg-gray" style="margin-bottom: 7.5px;margin-top: 7.5px;">
                             <div class="inner">
                                 <h3 style="white-space: normal;text-align: center;margin:auto;">
@@ -116,7 +116,7 @@
                 </div>
                 <div class="col-lg-4 col-6">
                      
-                    <a asp-page="./Members" asp-route-genderStatus="@Exwhyzee.AANI.Domain.Enums.GenderStatus.Female" class="small-box-footer">
+                    <a asp-page="/Account/Members" asp-area="Datapage" asp-route-genderStatus="@Exwhyzee.AANI.Domain.Enums.GenderStatus.Female" class="small-box-footer">
                         <div class="small-box bg-pink" style="margin-bottom: 7.5px;margin-top: 7.5px;">
                             <div class="inner">
                                 <h3 style="white-space: normal;text-align: center;margin:auto;">
@@ -132,7 +132,7 @@
                 </div>
                 <div class="col-lg-4 col-6">
 
-                    <a asp-page="./Members" asp-route-activeStatus="@Exwhyzee.AANI.Domain.Enums.ActiveStatus.Active" class="small-box-footer">
+                    <a asp-page="/Account/Members" asp-area="Datapage" asp-route-activeStatus="@Exwhyzee.AANI.Domain.Enums.UserStatus.Active" class="small-box-footer">
                         <div class="small-box bg-warning" style="margin-bottom: 7.5px;margin-top: 7.5px;">
                             <div class="inner">
                                 <h3 style="white-space: normal;text-align: center;margin:auto;">
@@ -268,7 +268,7 @@
                         @foreach (var item in Model.Chapters.Take(11))
                         {
                             <div class="col-md-3 col-sm-6 col-xs-6">
-                                <a asp-page="./Members" asp-route-chapterid="@item.Id" class="small-box-footer">
+                                <a asp-page="/Account/Members" asp-area="Datapage" asp-route-chapterid="@item.Id" class="small-box-footer">
                                     <div class="small-box @colors[random.Next(colors.Length)]" style="margin-bottom: 7.5px;margin-top: 7.5px;">
                                         <div class="inner">
                                             <h3 style="white-space: normal; text-align: center; font-size: 1.2rem; margin: auto;">
@@ -322,7 +322,7 @@
                         @foreach (var item in Model.SECs.OrderByDescending(x => x.Year).Take(11))
                         {
                             <div class="col-md-3 col-sm-6 col-xs-6">
-                                <a asp-page="./Members" asp-route-secid="@item.Id" class="small-box-footer">
+                                <a asp-page="/Account/Members" asp-area="Datapage" asp-route-secid="@item.Id" class="small-box-footer">
                                     <div class="small-box @colors[random.Next(colors.Length)]" style="margin-bottom: 7.5px;margin-top: 7.5px;">
                                         <div class="inner">
                                             <h3 style="white-space: normal; text-align: center; font-size: 1.2rem; margin: auto;">

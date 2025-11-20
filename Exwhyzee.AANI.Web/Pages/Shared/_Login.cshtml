@@ -8,7 +8,7 @@
     <link type="text/css" rel="stylesheet" href="~/mainasset/bootstrap.min.css">
     <link type="text/css" rel="stylesheet" href="~/mainasset/font-awesome.min.css">
     <link type="text/css" rel="stylesheet" href="~/mainasset/flaticon.css">
-   
+
     <!-- Favicon icon -->
     <link rel="shortcut icon" href="~/img/icon.jpg" type="image/x-icon">
 
@@ -24,8 +24,8 @@
         .login-6 .info h1 span {
             color: #7bc263;
         }
+
         .login-6 .form-section {
-             
             border: solid 10px #7bc263;
         }
     </style>
@@ -105,8 +105,15 @@
             color: #0ECB81;
             margin-right: 0;
         }
+
         .login-6 .form-section {
             background: #000000;
+        }
+
+        @@media (max-width: 992px) {
+            .login-6 .form-section {
+                padding: 15px 0 !important;
+            }
         }
     </style>
 
@@ -143,7 +150,7 @@
                         @RenderBody()
 
                         <div class="clearfix"></div>
-                         
+
                     </div>
 
 
@@ -152,7 +159,7 @@
         </div>
     </div>
 
-     
+
     <!-- External JS libraries -->
     <script src="~/mainasset/jquery-2.2.0.min.js"></script>
     <script src="~/mainasset/popper.min.js"></script>

@@ -22,7 +22,7 @@ namespace Exwhyzee.AANI.Web.Areas.Main.Pages.ParticipantPage
 
         public IQueryable<Participant>? Participants { get; set; }
          
-        public async Task<IActionResult> OnGetAsync(AliveStatus aliveStatus = 0, GenderStatus genderStatus = 0, ActiveStatus activeStatus = 0, VerificationStatus verificationStatus = 0, long chapterid = 0, long secid = 0)
+        public async Task<IActionResult> OnGetAsync(AliveStatus aliveStatus = 0, GenderStatus genderStatus = 0, UserStatus userStatus = 0, VerificationStatus verificationStatus = 0, long chapterid = 0, long secid = 0)
         {
             Participants = _userManager.Users.Include(x => x.SEC).Where(x => x.Email != "jinmcever@gmail.com").AsQueryable();
             var DataParticipants = await _userManager.Users.AsNoTracking().Include(x => x.SEC).Where(x => x.Email.Contains("@aani") && x.EmergencyContactEmail != null).ToListAsync();

@@ -32,6 +32,11 @@
                             <input class="form-check-input" asp-for="Slider.Show" /> @Html.DisplayNameFor(model => model.Slider.Show)
                         </label>
                     </div>
+                    <div class="form-group form-check">
+                        <label class="form-check-label">
+                            <input class="form-check-input" asp-for="Slider.DisableBlurBackground" /> @Html.DisplayNameFor(model => model.Slider.DisableBlurBackground)
+                        </label>
+                    </div>
                     <div class="form-group">
                         <label asp-for="Slider.Title" class="control-label">Title (Note Add "&lt;br&gt;" if you want to enter next line)</label>
                         <input asp-for="Slider.Title" class="form-control" />

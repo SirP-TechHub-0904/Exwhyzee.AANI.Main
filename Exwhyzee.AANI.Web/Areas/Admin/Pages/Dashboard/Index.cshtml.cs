@@ -45,7 +45,7 @@ namespace Exwhyzee.AANI.Web.Areas.Admin.Pages.Dashboard
             Female = await alumni.Where(x => x.GenderStatus == Domain.Enums.GenderStatus.Female).CountAsync();
             Alive = await alumni.Where(x => x.AliveStatus == Domain.Enums.AliveStatus.Alive).CountAsync();
             Dead = await alumni.Where(x => x.AliveStatus == Domain.Enums.AliveStatus.Dead).CountAsync();
-            Active = await alumni.Where(x => x.ActiveStatus == Domain.Enums.ActiveStatus.Active).CountAsync();
+            Active = await alumni.Where(x => x.UserStatus == Domain.Enums.UserStatus.Active).CountAsync();
             var listdob = from s in _userManager.Users.Include(x => x.SEC).Where(x => x.MniStatus == Domain.Enums.MniStatus.MNI)
                    .OrderByDescending(x => x.DOB)
                                 .Where(ob => ob.DOB.Date == DateTime.UtcNow.Date)

@@ -57,6 +57,8 @@ namespace Exwhyzee.AANI.Web.Areas.Datapage.Pages.Account
         [BindProperty]
         public string? IdCardSvg { get; set; }
         // OnGet - accepts optional participant id and optional operationYearId
+
+        public string CurrentUserId { get; set; }
         public async Task<IActionResult> OnGetAsync(string? id, long? operationYearId)
         {
             // Determine participant id: if not provided, use current user
@@ -65,6 +67,7 @@ namespace Exwhyzee.AANI.Web.Areas.Datapage.Pages.Account
                 var current = await _userManager.GetUserAsync(User);
                 if (current == null) return Forbid();
                 id = current.Id;
+                CurrentUserId = current.Id;
                 TempData["profile"] = "MY PROFILE";
             }
             else
@@ -236,8 +239,9 @@ namespace Exwhyzee.AANI.Web.Areas.Datapage.Pages.Account
                 {
                     // If not found, update the UserDatas and exit the loop
                     //await _userManager.UpdateAsync(UserDatas);
-
-                    var result = await _userManager.UpdateAsync(Participant);
+                    var updateuser = await _userManager.Users.FirstOrDefaultAsync(x => x.Id == Participant.Id);
+                    updateuser.IdDigit = Participant.IdDigit;
+                    var result = await _userManager.UpdateAsync(updateuser);
 
                     if (!result.Succeeded)
                     {

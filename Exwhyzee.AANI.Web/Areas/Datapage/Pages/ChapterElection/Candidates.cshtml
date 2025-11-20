@@ -1,0 +1,324 @@
+﻿@page "{electionId:long}/{chapterId:long}"
+@model Exwhyzee.AANI.Web.Areas.Datapage.Pages.ChapterElection.CandidatesModel
+@using Exwhyzee.AANI.Domain.Models
+@using System.Net
+
+@inject Microsoft.AspNetCore.Mvc.Rendering.IHtmlHelper Html
+@{
+    ViewData["Title"] = "Manage Candidates";
+}
+
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">
+            CANDIDATES — @Model.Election?.Title
+        </h3>
+        <div class="hidden-sm hidden-xs">
+            <a asp-area="Datapage" asp-page="/ChapterElection/Elections" asp-route-chapterId="@Model.ChapterId" class="btn bg-gradient-secondary btn-xs" style="float: right; font-size: .775rem;">Back</a>
+        </div>
+    </div>
+
+    <div class="card-body">
+        @if (TempData["Message"] != null)
+        {
+            <div class="alert alert-success">@TempData["Message"]</div>
+        }
+        @if (TempData["Error"] != null)
+        {
+            <div class="alert alert-danger">@TempData["Error"]</div>
+        }
+
+        <div class="row mb-4">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5>Add Position</h5>
+                        <form method="post" asp-page-handler="AddPosition" class="mb-2">
+                            <input type="hidden" name="electionId" value="@Model.ElectionId" />
+                            <input type="hidden" name="chapterId" value="@Model.ChapterId" />
+
+                            <div class="mb-2">
+                                <label class="form-label">Name</label>
+                                <input asp-for="NewPosition.Name" class="form-control" />
+                            </div>
+                            <div class="mb-2">
+                                <label class="form-label">Description</label>
+                                <input asp-for="NewPosition.Description" class="form-control" />
+                            </div>
+
+                            <div class="mb-2">
+                                <label class="form-label">Ballot Order</label>
+                                <input asp-for="NewPosition.BallotOrder" class="form-control" type="number" />
+                            </div>
+
+                            <button class="btn btn-sm btn-primary mt-2" type="submit">Add Position</button>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5>Add Candidate</h5>
+                        <form method="post" asp-page-handler="AddCandidate" class="mb-2">
+                            <input type="hidden" name="electionId" value="@Model.ElectionId" />
+                            <input type="hidden" name="chapterId" value="@Model.ChapterId" />
+
+                            <div class="mb-2">
+                                <label class="form-label">Participant</label>
+                                <select asp-for="NewCandidate.CandidateParticipantId" class="form-control select2 select2-primary js-example-basic-single" data-dropdown-css-class="select2-primary" required>
+                                    <option value="">-- select participant --</option>
+                                    @foreach (var p in Model.AvailableParticipants.OrderBy(p => (p.Fullname ?? "").ToLowerInvariant()))
+                                    {
+                                        <option value="@p.Id">@p.Fullname (@p.Email)</option>
+                                    }
+                                </select>
+                            </div>
+
+                            <div class="mb-2">
+                                <label class="form-label">Position (optional)</label>
+                                <select asp-for="NewCandidate.PositionId" class="form-control">
+                                    <option value="">Choose Position</option>
+                                    @foreach (var pos in Model.Positions)
+                                    {
+                                        <option value="@pos.Id">@pos.Name</option>
+                                    }
+                                </select>
+                            </div>
+
+                            <div class="mb-2">
+                                <label class="form-label">Manifesto (optional)</label>
+                                <textarea asp-for="NewCandidate.Manifesto" class="form-control" rows="3"></textarea>
+                            </div>
+
+                            <div class="mb-2">
+                                <label class="form-label">Ballot order (optional)</label>
+                                <input asp-for="NewCandidate.BallotOrder" class="form-control" type="number" />
+                            </div>
+
+                            <button class="btn btn-sm btn-primary mt-2" type="submit">Add Candidate</button>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <hr />
+
+        <h5>Positions & Candidates</h5>
+
+        @if (!Model.Positions.Any())
+        {
+            <div class="alert alert-info">No positions defined yet for this election. Add a position on the left.</div>
+        }
+        else
+        {
+            @* Pure-CSS accordion with edit buttons that open Bootstrap modals *@
+
+            <style>
+                /* Simple, self-contained styling for a pure-CSS accordion that looks tidy */
+                .css-accordion {
+                    margin: 0;
+                    padding: 0;
+                }
+
+                    .css-accordion details {
+                        border: 1px solid #e3e6ea;
+                        border-radius: 6px;
+                        margin-bottom: 0.75rem;
+                        padding: 0;
+                        background: #fff;
+                        overflow: hidden;
+                    }
+
+                    .css-accordion summary {
+                        list-style: none;
+                        cursor: pointer;
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+                        padding: 0.75rem 1rem;
+                        font-weight: 600;
+                        background: linear-gradient(180deg, rgba(0,0,0,0.02), rgba(0,0,0,0.00));
+                    }
+
+                        .css-accordion summary::-webkit-details-marker {
+                            display: none;
+                        }
+
+                        .css-accordion summary::after {
+                            content: "\25B6";
+                            font-size: .85rem;
+                            transition: transform .18s ease;
+                            color: #6c757d;
+                        }
+
+                    .css-accordion details[open] summary::after {
+                        transform: rotate(90deg);
+                    }
+
+                    .css-accordion .position-body {
+                        padding: 0.75rem 1rem 1rem 1rem;
+                        border-top: 1px solid #eef0f2;
+                    }
+
+                    .css-accordion .small-muted {
+                        color: #6c757d;
+                        font-size: .9rem;
+                        margin-left: .5rem;
+                    }
+
+                    .css-accordion table.table {
+                        margin-bottom: 0;
+                    }
+
+                    .css-accordion .no-candidates {
+                        padding: .5rem .75rem;
+                        background: #f8f9fa;
+                        border-radius: 4px;
+                    }
+
+                @@media (max-width: 576px) {
+                    .css-accordion summary {
+                        font-size: .95rem;
+                    }
+                }
+            </style>
+
+            <div class="css-accordion" id="positionsAccordion">
+                @for (int i = 0; i < Model.Positions.Count; i++)
+                {
+                    var pos = Model.Positions[i];
+                    <details class="mb-2" id="pos_@pos.Id">
+                        <summary>
+                            <div>
+                                <strong>@pos.Name</strong>
+                                <span class="small-muted">(@(pos.Candidates?.Count() ?? 0) Candidates)</span>
+                            </div>
+
+                            <div class="d-flex gap-2">
+                                <a class="btn btn-xs btn-outline-primary"
+                                   asp-area="Datapage"
+                                   asp-page="/ChapterElection/EditPosition"
+                                   asp-route-positionId="@pos.Id"
+                                   asp-route-electionId="@Model.ElectionId"
+                                   asp-route-chapterId="@Model.ChapterId">
+                                    Edit Position
+                                </a>
+
+                                <form method="post" asp-page-handler="RemovePosition" style="display:inline" onsubmit="return confirm('Remove position? This is allowed only if it has no candidates.');">
+                                    <input type="hidden" name="positionId" value="@pos.Id" />
+                                    <input type="hidden" name="electionId" value="@Model.ElectionId" />
+                                    <input type="hidden" name="chapterId" value="@Model.ChapterId" />
+                                    <button class="btn btn-xs btn-outline-danger">Delete</button>
+                                </form>
+                            </div>
+                        </summary>
+
+                        <div class="position-body">
+                            <p class="small text-muted">@pos.Description</p>
+
+                            @if (pos.Candidates == null || !pos.Candidates.Any())
+                            {
+                                <div class="no-candidates alert-secondary">No candidates for this position.</div>
+                            }
+                            else
+                            {
+                                <table class="table table-sm">
+                                    <thead>
+                                        <tr>
+                                            <th>Candidate</th>
+                                            <th>Manifesto</th>
+                                            <th style="width:80px">Order</th>
+                                            <th style="width:120px"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var c in pos.Candidates.OrderBy(c => c.BallotOrder))
+                                        {
+                                            <tr>
+                                                <td>@c.CandidateParticipant?.Fullname</td>
+                                                <td class="small text-muted">@Html.Raw(WebUtility.HtmlEncode(c.Manifesto ?? ""))</td>
+                                                <td>@c.BallotOrder</td>
+                                                <td>
+                                                    <div class="d-flex gap-1 justify-content-end">
+                                                        <a class="btn btn-xs btn-outline-primary"
+                                                           asp-area="Datapage"
+                                                           asp-page="/ChapterElection/EditCandidate"
+                                                           asp-route-candidateId="@c.Id"
+                                                           asp-route-electionId="@Model.ElectionId"
+                                                           asp-route-chapterId="@Model.ChapterId">
+                                                            Edit
+                                                        </a>
+
+                                                        <form method="post" asp-page-handler="RemoveCandidate" style="display:inline" onsubmit="return confirm('Remove candidate?');">
+                                                            <input type="hidden" name="candidateId" value="@c.Id" />
+                                                            <input type="hidden" name="electionId" value="@Model.ElectionId" />
+                                                            <input type="hidden" name="chapterId" value="@Model.ChapterId" />
+                                                            <button class="btn btn-xs btn-outline-danger">Remove</button>
+                                                        </form>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            }
+                        </div>
+                    </details>
+                }
+            </div>
+        }
+        <hr />
+
+        <h5>Unassigned Candidates</h5>
+        @{
+            var unassigned = Model.Election?.Candidates?.Where(c => c.PositionId == null).OrderBy(c => c.BallotOrder).ToList() ?? new List<ElectionCandidate>();
+        }
+        @if (!unassigned.Any())
+        {
+            <div class="alert alert-secondary">No unassigned candidates.</div>
+        }
+        else
+        {
+            <table class="table table-sm">
+                <thead>
+                    <tr>
+                        <th>Candidate</th>
+                        <th>Manifesto</th>
+                        <th>Order</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var c in unassigned)
+                    {
+                        <tr>
+                            <td>@c.CandidateParticipant?.Fullname</td>
+                            <td class="small text-muted">@Html.Raw(System.Net.WebUtility.HtmlEncode(c.Manifesto ?? ""))</td>
+                            <td>@c.BallotOrder</td>
+                            <td>
+                                <form method="post" asp-page-handler="RemoveCandidate" style="display:inline" onsubmit="return confirm('Remove candidate?');">
+                                    <input type="hidden" name="candidateId" value="@c.Id" />
+                                    <input type="hidden" name="electionId" value="@Model.ElectionId" />
+                                    <input type="hidden" name="chapterId" value="@Model.ChapterId" />
+                                    <button class="btn btn-sm btn-outline-danger" type="submit">Remove</button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+
+    </div>
+</div>
+
+ 
+
+@section Scripts {
+  
+}

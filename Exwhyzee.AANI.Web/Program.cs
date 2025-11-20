@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using PostmarkEmailService;
 using System.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -26,7 +27,22 @@ builder.Services.AddAWSService<IAmazonS3>();
 builder.Services.AddTransient<IFileManagement, FileManagement>(); 
 builder.Services.AddTransient<IStorageService, StorageService>();
 builder.Services.AddTransient<IBaseModel, BaseModel>();
+// Register your TokenService and email sender
+builder.Services.AddScoped<TokenService>();                // or ITokenService if you add an interface
+builder.Services.AddScoped<Exwhyzee.AANI.Web.Helper.IEmailSender, EmailSender>(); // register the SMTP implementation
+                                                                                  // configure HttpClient for Kudi
+builder.Services.AddHttpClient("kudi", client =>
+{
+    client.BaseAddress = new Uri("https://my.kudisms.net/"); // EmailSender posts to api/sms (relative)
+    client.Timeout = TimeSpan.FromSeconds(30);
+});
 
+
+// Set token lifespan to 7 days
+builder.Services.Configure<DataProtectionTokenProviderOptions>(options =>
+{
+    options.TokenLifespan = TimeSpan.FromDays(7); // 1 week
+});
 builder.Services.Configure<IdentityOptions>(options =>
 {
     // Password settings.
@@ -70,6 +86,8 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.LogoutPath = $"/Identity/Account/Logout";
     options.AccessDeniedPath = $"/Identity/Account/AccessDenied";
 });
+builder.Services.AddTransient<PostmarkClient>(_ =>
+                          new PostmarkClient(builder.Configuration.GetSection("PostmarkSettings")["ServerToken"]));
 
 
 builder.Services.AddRazorPages();

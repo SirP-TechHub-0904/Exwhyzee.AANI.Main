@@ -271,6 +271,85 @@
     </div>
 </div>
 
+
+<!-- Main Table Modal -->
+<div class="modal fade" id="themeModal" tabindex="-1" aria-labelledby="themeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="themeModalLabel">Theme Templates</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" style="max-height:70vh; overflow-y:auto;">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Template Name</th>
+                            <th>Preview</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (int i = 1; i <= 22; i++)
+                        {
+                            var fileName = $"{i}.png";
+                            var imagePath = $"{fileName}";
+                            <tr>
+                                <td>@fileName</td>
+                                <td>
+                                    <img src="~/theme/@imagePath"
+                                         alt="@fileName"
+                                         style="max-width:120px;max-height:80px;cursor:pointer;border:1px solid #ccc;"
+                                         data-bs-toggle="modal"
+                                         data-bs-target="#fullImageModal"
+                                         onclick="showFullImage('/theme/@imagePath')" />
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Full Image Modal -->
+<div class="modal fade" id="fullImageModal" tabindex="-1" aria-labelledby="fullImageModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="fullImageModalLabel">Full Image Preview</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <img id="modalFullImage" src="" alt="Template Full Size" style="max-width:100%;max-height:80vh;" />
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Script to set image src dynamically -->
+
+@*<script>
+    function showFullImage(imageUrl) {
+        try {
+            var img = document.getElementById('modalFullImage');
+            if (!img) {
+                console.error('modalFullImage element not found');
+                return;
+            }
+            img.src = imageUrl;
+            console.log('Set full image src:', imageUrl);
+
+            // If using Bootstrap 5, show the modal programmatically (for robust opening)
+            var modal = new bootstrap.Modal(document.getElementById('fullImageModal'));
+            modal.show();
+            console.log('Full Image Modal opened');
+        } catch (err) {
+            console.error('Error showing full image:', err);
+        }
+    }
+</script>*@
+
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

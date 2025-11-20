@@ -11,7 +11,11 @@
             <!-- Slider 1 -->
             <div class="item">
                 <div class="main-slider__bg" style="background-image: url(@item.Url);"></div>
-                <div class="main-slider__overly"></div>
+                @if (item.DisableBlurBackground == false)
+                {
+                    <div class="main-slider__overly"></div>
+                }
+
                 <div class="main-slider__shape-1"></div>
 
 
@@ -45,6 +49,8 @@
     </div>
 </section>
 @await Html.PartialAsync("_PageSections", new { position = "top", pageset = "home", id = 0, secid = 0 })
+<partial name="_Executives" />
+<partial name="_Events" />
 
 <section class="blog-one custom-blog-01">
 

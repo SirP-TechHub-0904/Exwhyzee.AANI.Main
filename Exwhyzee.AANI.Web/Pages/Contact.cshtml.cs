@@ -1,12 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Exwhyzee.AANI.Domain.Models;
+using Exwhyzee.AANI.Web.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Exwhyzee.AANI.Domain.Models;
-using Exwhyzee.AANI.Web.Data;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Exwhyzee.AANI.Web.Pages
 {
@@ -19,13 +20,35 @@ namespace Exwhyzee.AANI.Web.Pages
             _context = context;
         }
 
-        public IActionResult OnGet()
+        public async Task<IActionResult> OnGet()
         {
+
+
+            ContactSettings = await _context.ContactSettings
+              .FirstOrDefaultAsync();
             return Page();
         }
 
         [BindProperty]
         public Message Message { get; set; }
+
+        [BindProperty]
+        public string? Name { get; set; }
+
+        [BindProperty]
+        public string? Email { get; set; }
+
+        [BindProperty]
+        public string? Phone { get; set; }
+
+        [BindProperty]
+        public string Subject { get; set; }
+
+        [BindProperty]
+        public string MessageBody { get; set; }
+
+
+        public ContactSettingsModel ContactSettings { get; set; }
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()

@@ -1,0 +1,102 @@
+﻿@page "{chapterId:long}"
+@model Exwhyzee.AANI.Web.Areas.Datapage.Pages.ChapterElection.TokensModel
+@{
+    ViewData["Title"] = "Accredited Voters — Tokens";
+}
+
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">Accredited Voters — Tokens for @Model.Chapter?.State</h3>
+        <a asp-page="/ChapterElection/Elections" asp-route-chapterId="@Model.ChapterId" class="btn bg-gradient-warning btn-xs" style="float: right; font-size: .775rem;">Back</a>
+    </div>
+
+    <div class="card-body">
+        @if (TempData["Message"] != null)
+        {<div class="alert alert-success">@TempData["Message"]</div>}
+        @if (TempData["Error"] != null)
+        {<div class="alert alert-danger">@TempData["Error"]</div>}
+
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th style="width:4rem">S/N</th>
+                        <th>Fullname</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Token</th>
+                        <th>Voted</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.Accredited?.Any() != true)
+                    {
+                        <tr><td colspan="6" class="text-muted text-center">No accredited voters found.</td></tr>
+                    }
+                    else
+                    {
+                        var sn = 1;
+                        foreach (var a in Model.Accredited)
+                        {
+                <tr>
+                    <td>@sn</td>
+                    <td>@a.Participant?.Fullname</td>
+                    <td>@a.Participant?.Email</td>
+                    <td>@a.Participant?.PhoneNumber</td>
+                    <td>
+                         
+
+                        @{
+                            // show plain token only if available in Model.PlainTokens (admin-only, only right after generation)
+                            if (Model.PlainTokens != null && Model.PlainTokens.TryGetValue(a.Id, out var plainToken))
+                            {
+                                <span class="text-monospace">@plainToken</span>
+                                if (a.TokenSentAt != null)
+                                {
+                                    <span class="ms-1 text-muted small">(sent)</span>
+ }
+                            }
+                            else
+                            {
+                                if (a.Voted)
+                                {
+                                    <span class="badge bg-success">Used</span>
+                                }
+                                else if (!string.IsNullOrEmpty(a.VoteTokenHash))
+                                {
+                                    <span class="badge bg-info">Created</span>
+                                    if (a.TokenSentAt != null)
+                                    {
+                                        <span class="ms-1 text-muted small">(sent)</span>
+ }
+                                }
+                                else
+                                {
+                                    <span class="badge bg-secondary">None</span>
+                                }
+                            }
+                        }
+                        </td>
+                        <td>
+                            @if (a.Voted)
+                            {
+                                <span class="badge bg-success">Yes</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-secondary">No</span>
+                            }
+                        </td>
+                    </tr>
+                            sn++;
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <p class="text-muted small mt-3">
+            Note: plain tokens are not stored in the database. Show plain tokens only immediately after generation/export; afterwards the system stores only a hash for verification.
+        </p>
+    </div>
+</div>

@@ -79,5 +79,19 @@ namespace Exwhyzee.AANI.Web.Data
         public DbSet<OfficeCategory> OfficeCategories { get; set; } = default!;
         public DbSet<Office> Offices { get; set; } = default!;
         public DbSet<LoginHistory> LoginHistories { get; set; } = default!;
+
+
+
+
+
+        public DbSet<ChapterAccreditedVoter> ChapterAccreditedVoters { get; set; } = default!;
+         public DbSet<ChapterElection> ChapterElections { get; set; } = default!;
+        public DbSet<ElectionCandidate> ElectionCandidates { get; set; } = default!;
+        public DbSet<Vote> Votes { get; set; } = default!;
+        public DbSet<VoteChoice> VoteChoices { get; set; } = default!;
+        public DbSet<VoteAudit> VoteAudits { get; set; } = default!;
+
+        public DbSet<ElectionPosition> ElectionPositions { get; set; } = default!;
+        public DbSet<VoteSession> VoteSessions { get; set; } = default!;
     }
 }

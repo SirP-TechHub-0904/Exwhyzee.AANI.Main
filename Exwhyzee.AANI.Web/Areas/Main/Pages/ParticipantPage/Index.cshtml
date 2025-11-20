@@ -37,23 +37,23 @@
         <div class="table-responsive">
             <table id="example1" class="table table-bordered table-striped">
                  <thead>
-                    <tr>
-                        <th>S/N</th>
-                        <th>FULLNAME</th>
-                        <th>PHONE</th>
-                        <th>Gender</th>
-                        <th>EMAIL</th>
-                        <th>STATUS</th>
-                        <th>ROLE</th>
-                        @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
-                        {
-                            <th></th>
-                        }
-                    </tr>
+                     <tr>
+                         <th>S/N</th>
+                         <th>FULLNAME</th>
+                         <th>PHONE</th>
+                         <th>GENDER</th>
+                         <th>EMAIL/USERNAME</th>
+                         <th>STATUS</th>
+                         <th>ROLE</th>
+
+                         <th>SEC</th>
+                         <th></th>
+
+                     </tr>
                 </thead>
                 @{int sn = 0;}
                 <tbody>
-                    @foreach (var item in Model.Participants)
+                    @foreach (var item in Model.Participants.OrderBy(x=>x.Title))
                     {
                         <tr>
                             <td>
@@ -67,7 +67,11 @@
                             </td>
                             <td>@Html.DisplayFor(modelItem => item.PhoneNumber)</td>
                             <td>@Html.DisplayFor(modelItem => item.GenderStatus)</td>
-                            <td>@Html.DisplayFor(modelItem => item.Email)</td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Email) /
+                                @Html.DisplayFor(modelItem => item.UserName)
+
+                            </td>
                             <td>@Html.DisplayFor(modelItem => item.UserStatus)</td>
                             <td>@Html.DisplayFor(modelItem => item.Role)</td>
                             <td>
@@ -86,6 +90,9 @@
                                             <a class="dropdown-item" asp-page="./IDCardQrCode" asp-route-id="@item.Id">View ID Data</a>
                                             <a class="dropdown-item" asp-page="./ResetPassword" asp-route-id="@item.Id">Reset Password</a>
                                             <a class="dropdown-item" asp-page="./UpdateMNI" asp-route-id="@item.Id">Update MNI</a>
+                                            <a class="dropdown-item" asp-page="./SendResetAccount" asp-route-id="@item.Id">Send Reset Account</a>
+
+                                            
                                         </div>
                                     </div>
                                 </td>

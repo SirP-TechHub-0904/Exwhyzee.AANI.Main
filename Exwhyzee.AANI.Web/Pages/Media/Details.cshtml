@@ -1,0 +1,143 @@
+﻿@page
+@model Exwhyzee.AANI.Web.Pages.Media.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+
+<section class="page-header">
+    <div class="page-header__bg"
+         style='background-image: url("@(string.IsNullOrEmpty(Model.ContactSettings?.BreadcrumImageUrl) ? "default-image.jpg" : Model.ContactSettings.BreadcrumImageUrl)")'>
+    </div>
+
+    <div class="container">
+        <div class="page-header__inner">
+            <h2>
+                AANI UPDATE @if (!String.IsNullOrEmpty(Model.CategoryName))
+                {<span>(@Model.CategoryName)</span>}
+            </h2>
+            <div class="thm-breadcrumb__box">
+                <ul class="thm-breadcrumb list-unstyled">
+                    <li><a href="/"><i class="fas fa-home"></i>Home</a></li>
+                    <li><span class="icon-right-arrow-1"></span></li>
+                    <li class="active">
+                        AANI UPDATE @if (!String.IsNullOrEmpty(Model.CategoryName))
+                        {<span>(@Model.CategoryName)</span>}
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+<div class="section-block">
+    <div class="container">
+        <div class="row" style="margin-top:10px;">
+
+            <div class="col-md-4 col-sm-12 col-6">
+            </div>
+            <div class="col-md-4 col-sm-12 col-6">
+
+                <form asp-page="/Media/Details" method="get">
+                    <div class="input-group">
+                        <input type="text" class="form-control" name="searchString" placeholder="@Model.CurrentFilter" style="">
+                        <div class="input-group-btn">
+                            <button class="btn btn-default btnn" type="submit" style="border: 1px solid #ced4da; ">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+
+                <p style="text-align:center;">
+                    <i>Page Number (@Model.PageIndex of @Model.TotalPage)</i>
+                </p>
+            </div>
+        </div>
+        <hr />
+        <div class="clearfix"></div>
+
+
+
+
+        <div class="row">
+            @foreach (var x in Model.Blog)
+            {
+                <div class="col-md-6">
+                    <div class="blog-page__single">
+                        <div class="blog-page__single-img">
+                            <img src="@x.ImageUrl" alt="@x.Title" style="width: 100%; height: 300px; object-fit: cover;">
+                        </div>
+
+                        <div class="blog-page__single-content">
+                            <div class="date-box">
+                                <h2>@x.Date.ToString("dd")</h2>
+                                <p>@x.Date.ToString("MMM")</p>
+
+                            </div>
+                            <div class="blog-page__single-content-inner">
+                                <ul class="meta-box list-unstyled">
+                                    <li>
+                                        <div class="icon">
+                                            <span class="icon-cabinet"></span>
+                                        </div>
+
+                                        <div class="text-box">
+                                            <p>
+                                                <a href="#">
+                                                    @if (x.BlogCategory != null)
+                                                    {
+                                                        @x.BlogCategory.Title.ToUpper()
+                                                    }
+                                                </a>
+                                            </p>
+                                        </div>
+                                    </li>
+
+
+                                </ul>
+
+                                <h3 class="fixed-title">
+                                    <a asp-page="./ReadMore" asp-route-id="@x.Id" asp-route-title="@x.Title.Replace(",", "-").Replace(".", "-").Replace("&", "-").Replace(" ", "-").Replace("@", "-")">
+                                        @x.Title
+                                    </a>
+                                </h3>
+                                <p class="fixed-description">
+                                    @Html.Raw(x.ShortDescription)
+                                </p>
+
+                                <div class="blog-page__btn-box">
+                                    <a asp-page="./ReadMore" asp-route-id="@x.Id" asp-route-title="@x.Title.Replace(",", "-").Replace(".", "-").Replace("&", "-").Replace(" ", "-").Replace("@", "-")" class="thm-btn">
+                                        <span class="thm-btn-text">Read More</span>
+                                        <span class="thm-btn-icon-box"><i class="fas fa-arrow-right"></i></span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+         
+         
+        @{
+            var prevDisabled = !Model.Blog.HasPreviousPage ? "disabled" : "";
+            var nextDisabled = !Model.Blog.HasNextPage ? "disabled" : "";
+        }
+        <hr />
+
+        <a asp-page="/Media/Details"
+           asp-route-pageIndex="@(Model.Blog.PageIndex - 1)"
+           asp-route-currentFilter="@Model.CurrentFilter"
+           class="primary-button button-sm mb-15-xs @prevDisabled">
+            Previous
+        </a>
+        <a asp-page="/Media/Details"
+           asp-route-pageIndex="@(Model.Blog.PageIndex + 1)"
+           asp-route-currentFilter="@Model.CurrentFilter"
+           class="primary-button button-sm mb-15-xs @nextDisabled">
+            Next
+        </a>
+        <i>Page Number (@Model.PageIndex of @Model.TotalPage)</i>
+    </div>
+</div>

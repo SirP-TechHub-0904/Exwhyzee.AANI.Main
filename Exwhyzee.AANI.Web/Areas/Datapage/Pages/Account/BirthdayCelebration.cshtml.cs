@@ -1,3 +1,4 @@
+using Exwhyzee.AANI.Domain.Enums;
 using Exwhyzee.AANI.Domain.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -43,7 +44,9 @@ namespace Exwhyzee.AANI.Web.Areas.Datapage.Pages.Account
 
             if (searchdate == null && alldate == null && month == null)
             {
-                Participants = from s in _userManager.Users.Include(x => x.SEC).Where(x => x.MniStatus == Domain.Enums.MniStatus.MNI)
+                Participants = from s in _userManager.Users.Include(x => x.SEC)
+                                               .Where(x => x.AliveStatus == AliveStatus.Alive)
+                               .Where(x => x.MniStatus == Domain.Enums.MniStatus.MNI)
                     .OrderByDescending(x => x.DOB.Month).ThenBy(x => x.DOB.Day) 
                                  .Where(u => u.DOB.Day == DateTime.UtcNow.Day && u.DOB.Month == DateTime.UtcNow.Month)
                                select s;
@@ -53,7 +56,8 @@ namespace Exwhyzee.AANI.Web.Areas.Datapage.Pages.Account
             }
             else if (alldate == "loadall")
             {
-                Participants = from s in _userManager.Users.Include(x => x.SEC).Where(x => x.MniStatus == Domain.Enums.MniStatus.MNI)
+                Participants = from s in _userManager.Users.Include(x => x.SEC).Where(x => x.AliveStatus == AliveStatus.Alive)
+.Where(x => x.MniStatus == Domain.Enums.MniStatus.MNI)
                    .OrderByDescending(x => x.DOB.Month).ThenBy(x => x.DOB.Day)
                                select s;
                 searchdate = "ALL MEMBERS AND THEIR BIRTHDAY (" + Participants.Count() + " BIRTHDAY" + (Participants.Count() > 1 ? "S)" : ")");
@@ -67,7 +71,8 @@ namespace Exwhyzee.AANI.Web.Areas.Datapage.Pages.Account
                 DateTime datec = DateTime.Parse($"{cmonth} {day}, {year}");
 
 
-                Participants = from s in _userManager.Users.Include(x => x.SEC).Where(x => x.MniStatus == Domain.Enums.MniStatus.MNI)
+                Participants = from s in _userManager.Users.Include(x => x.SEC).Where(x => x.AliveStatus == AliveStatus.Alive)
+.Where(x => x.MniStatus == Domain.Enums.MniStatus.MNI)
                    .OrderByDescending(x => x.DOB.Month).ThenBy(x => x.DOB.Day)
                    .Where(u => u.DOB.Month == datec.Month)
                                select s;
@@ -77,7 +82,8 @@ namespace Exwhyzee.AANI.Web.Areas.Datapage.Pages.Account
             {
                 querydate = DateTime.Parse(searchdate).Date;
 
-                Participants = from s in _userManager.Users.Include(x => x.SEC).Where(x => x.MniStatus == Domain.Enums.MniStatus.MNI)
+                Participants = from s in _userManager.Users.Include(x => x.SEC).Where(x => x.AliveStatus == AliveStatus.Alive)
+.Where(x => x.MniStatus == Domain.Enums.MniStatus.MNI)
                    .OrderByDescending(x => x.DOB.Month).ThenBy(x => x.DOB.Day) 
                                 .Where(u => u.DOB.Day == querydate.Day && u.DOB.Month == querydate.Month)
                                select s;

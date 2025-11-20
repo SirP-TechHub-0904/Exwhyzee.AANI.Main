@@ -24,6 +24,22 @@ namespace Exwhyzee.AANI.Domain.Models
         public string? AboutText { get; set; }
         public string? BreadcrumImageUrl { get; set; }
         public string? BreadcrumImageId { get; set; }
+
+
+        public string? EventTitle { get; set; }
+        public string? EventSubtitle { get; set; }
+        public string? EventDescription { get; set; }
+
+            public string? ExecutiveTitle { get; set; }
+            public string? ExecutiveSubtitle { get; set; }
+        public string? ExecutiveDescription { get; set; }
+
+        public string? BlogTitle { get; set; }
+        public string? BlogSubtitle { get; set; }
+        public string? BlogDescription { get; set; }
+
+
+
     }
     public class PhoneNumberInfo
     {

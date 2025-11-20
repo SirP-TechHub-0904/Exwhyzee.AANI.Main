@@ -1,0 +1,192 @@
+﻿@page "{electionId:long}/{chapterId:long}"
+@model Exwhyzee.AANI.Web.Areas.Datapage.Pages.ChapterElection.ResultsModel
+@{
+    ViewData["Title"] = "Election Results";
+}
+
+<div class="card">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <div>
+            <h3 class="card-title mb-0">@Model.ElectionTitle</h3>
+            <small class="text-muted">@Model.ElectionPeriod</small>
+        </div>
+        <a asp-page="/ChapterElection/Elections" asp-route-chapterId="@Model.ChapterId" class="btn bg-gradient-warning btn-xs ms-2">Back</a>
+
+    </div>
+    <div class="card-header d-flex justify-content-between align-items-center">
+
+        <div>
+            <form method="post" class="d-inline" asp-page-handler="EmailResults">
+                <input type="hidden" name="electionId" value="@Model.ElectionId" />
+                <input type="hidden" name="chapterId" value="@Model.ChapterId" />
+                <button type="submit" class="btn btn-sm btn-outline-primary">
+                    Email results to voters
+                </button>
+            </form>
+        </div>
+    </div>
+    <div class="card-body">
+        @if (TempData["Message"] != null)
+        {<div class="alert alert-success">@TempData["Message"]</div>}
+        @if (TempData["Error"] != null)
+        {<div class="alert alert-danger">@TempData["Error"]</div>}
+
+        <div class="row mb-3">
+            <div class="col-md-3">
+                <div class="p-2 border rounded">
+                    <div class="text-muted small">Accredited</div>
+                    <div class="h5">@Model.TotalAccredited</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="p-2 border rounded">
+                    <div class="text-muted small">Tokens Issued</div>
+                    <div class="h5">@Model.TokensIssued</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="p-2 border rounded">
+                    <div class="text-muted small">Votes Cast</div>
+                    <div class="h5">@Model.VotesCast</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="p-2 border rounded">
+                    <div class="text-muted small">Turnout</div>
+                    <div class="h5">@Model.TurnoutPercent.ToString("0.0")% </div>
+                </div>
+            </div>
+        </div>
+
+        <h5>Results by Position</h5>
+
+        @if (!Model.PositionResults.Any() && !Model.UnassignedCandidates.Any())
+        {
+            <div class="alert alert-info">No positions or candidates defined yet for this election.</div>
+        }
+        else
+        {
+            @foreach (var pr in Model.PositionResults)
+            {
+                <div class="mb-4">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h6 class="mb-0">@pr.PositionName <small class="text-muted">(@pr.Seats seats)</small></h6>
+                            <small class="text-muted">@pr.PositionDescription</small>
+                        </div>
+                        <div class="text-end">
+                            <small class="text-muted">Total votes: @pr.TotalVotesForPosition</small>
+                        </div>
+                    </div>
+
+                    @if (!pr.Candidates.Any())
+                    {
+                        <div class="alert alert-secondary mt-2">No candidates for this position.</div>
+                    }
+                    else
+                    {
+                        <div class="table-responsive mt-2">
+                            <table class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th style="width:4rem">#</th>
+                                        <th>Candidate</th>
+                                        <th style="width:8rem">Votes</th>
+                                        <th style="width:12rem">Share</th>
+                                        <th style="width:8rem">Winner</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var c in pr.Candidates)
+                                    {
+                                        <tr class="@(c.IsWinner ? "table-success" : "")">
+                                            <td>@c.Rank</td>
+                                            <td>@c.CandidateName</td>
+                                            <td>@c.Votes</td>
+                                            <td>
+                                                @if (pr.TotalVotesForPosition == 0)
+                                                {
+                                                    <span class="text-muted">—</span>
+                                                }
+                                                else
+                                                {
+                                                    <div class="progress" style="height:.9rem">
+                                                        <div class="progress-bar" role="progressbar" style="width:@(c.SharePercentOfPosition) + '%';" aria-valuenow="@c.SharePercentOfPosition" aria-valuemin="0" aria-valuemax="100">
+                                                            @c.SharePercentOfPosition.ToString("0.0")%
+                                                        </div>
+                                                    </div>
+                                                }
+                                            </td>
+                                            <td class="text-center">@((c.IsWinner) ? "✓" : "")</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+
+                        @if (pr.TotalVotesForPosition == 0)
+                        {
+                            <div class="alert alert-info mt-2">
+                                No votes cast for this position — winner not declared.
+                            </div>
+                        }
+                        else if (pr.HasTieAtCutoff)
+                        {
+                            <div class="alert alert-warning mt-2">
+                                Tie detected at the selection cutoff. Manual tie-break may be required.
+                            </div>
+                        }
+                    }
+                </div>
+            }
+
+            @if (Model.UnassignedCandidates.Any())
+            {
+                <div class="mb-4">
+                    <h6>Unassigned Candidates</h6>
+                    <div class="table-responsive mt-2">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th style="width:4rem">#</th>
+                                    <th>Candidate</th>
+                                    <th style="width:8rem">Votes</th>
+                                    <th style="width:12rem">Share</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                    var urank = 1;
+                                    var totalUn = Model.UnassignedCandidates.Sum(x => x.Votes);
+                                }
+                                @foreach (var uc in Model.UnassignedCandidates)
+                                {
+                                    <tr>
+                                        <td>@urank</td>
+                                        <td>@uc.CandidateName</td>
+                                        <td>@uc.Votes</td>
+                                        <td>
+                                            @if (totalUn == 0)
+                                            {
+                                                <span class="text-muted">—</span>
+                                            }
+                                            else
+                                            {
+                                                <span>@uc.SharePercentOfPosition.ToString("0.0")%</span>
+                                            }
+                                        </td>
+                                    </tr>
+                                    urank++;
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            }
+        }
+
+        <p class="text-muted small mt-3">
+            Use "Email results to voters" to send a summary email to all accredited voters who have an email address. Large electorates should use a background queue for sending to avoid timeouts.
+        </p>
+    </div>
+</div>

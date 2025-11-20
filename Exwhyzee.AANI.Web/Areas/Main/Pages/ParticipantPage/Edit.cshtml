@@ -14,7 +14,7 @@
     {
         @TempData["aaerror"]
 
-    } 
+    }
     @if (TempData["aaerror1"] != null)
     {
         @TempData["aaerror1"]
@@ -48,6 +48,8 @@
                                     <option value="AVM">AVM</option>
                                     <option value="Gp Capt.">Gp Capt.</option>
                                     <option value="Dr">Dr</option>
+                                    <option value="Dr Mrs">Dr Mrs</option>
+
                                     <option value="Engr.">Engr.</option>
                                     <option value="Pharm.">Pharm.</option>
                                     <option value="CP">CP</option>
@@ -66,7 +68,11 @@
                                     <option value="Hon.">Hon.</option>
                                     <option value="Hon. Justice">Hon. Justice</option>
                                     <option value="HRH">HRH</option>
-                                </select>                        <span asp-validation-for="Participant.Title" class="text-danger"></span>
+                                    <option value="Rear Admiral">Rear Admiral</option>
+                                    <option value="ACG">ACG</option>
+
+                                </select>
+                                <span asp-validation-for="Participant.Title" class="text-danger"></span>
                             </div>
                             <div class="col-md-6">
                                 <label asp-for="Participant.Surname" class="control-label"></label>
@@ -118,10 +124,21 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label asp-for="Participant.CurrentOffice" class="control-label"></label>
-                        <input asp-for="Participant.CurrentOffice" class="form-control" />
-                        <span asp-validation-for="Participant.CurrentOffice" class="text-danger"></span>
+                        <label asp-for="Participant.CurrentOccupation" class="control-label">Occupation</label>
+                        <input asp-for="Participant.CurrentOccupation" class="form-control uppercase-text" />
+                        <span asp-validation-for="Participant.CurrentOccupation" class="text-danger"></span>
                     </div>
+                    <div class="form-group">
+                        <label asp-for="Participant.CurrentWorkPlace" class="control-label">WorkPlace</label>
+                        <input asp-for="Participant.CurrentWorkPlace" class="form-control uppercase-text" />
+                        <span asp-validation-for="Participant.CurrentWorkPlace" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Participant.CurrentPosition" class="control-label">Current Position</label>
+                        <input asp-for="Participant.CurrentPosition" class="form-control uppercase-text" />
+                        <span asp-validation-for="Participant.CurrentPosition" class="text-danger"></span>
+                    </div>
+
                     <div class="form-group">
                         <label asp-for="Participant.Sponsor" class="control-label"></label>
                         <input asp-for="Participant.Sponsor" class="form-control" />

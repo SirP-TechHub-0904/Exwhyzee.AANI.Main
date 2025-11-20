@@ -1,0 +1,57 @@
+﻿@page
+@model Exwhyzee.AANI.Web.Pages.Media.CategoryModel
+@{
+}
+ 
+<section class="page-header">
+    <div class="page-header__bg"
+         style='background-image: url("@(string.IsNullOrEmpty(Model.ContactSettings?.BreadcrumImageUrl) ? "default-image.jpg" : Model.ContactSettings.BreadcrumImageUrl)")'>
+    </div>
+
+    <div class="container">
+        <div class="page-header__inner">
+            <h2> Blog Category</h2>
+            <div class="thm-breadcrumb__box">
+                <ul class="thm-breadcrumb list-unstyled">
+                    <li><a href="/"><i class="fas fa-home"></i>Home</a></li>
+                    <li><span class="icon-right-arrow-1"></span></li>
+                    <li class="active"> Blog Category</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="wishlist-page">
+    <div class="container">
+        <div class="table-responsive">
+            <table class="table wishlist-table">
+
+                <tbody>
+                    @foreach (var item in Model.BlogCategory)
+                    {
+                        <tr>
+                            <td>
+                                <div class="product-box">
+
+                                    <h3><a asp-page="./Details" asp-route-catId="@item.Id">@item.Title</a></h3>
+                                </div>
+                            </td>
+ 
+                            <td>
+                                <div class="product-select">
+                                    <a class="thm-btn wishlist-page__btn" asp-page="./Details" asp-route-catId="@item.Id" asp-route-title="@(System.Text.RegularExpressions.Regex.Replace(item.Title?.Trim() ?? "", @"\s+", "-"))">
+                                        <span class="thm-btn-text">View Update/Blog</span>
+                                        <span class="thm-btn-icon-box"><i class="fas fa-arrow-right"></i></span>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+        </div>
+
+
+    </div>
+</section>

@@ -2,7 +2,7 @@
 @model Exwhyzee.AANI.Web.Areas.Datapage.Pages.Account.CampainPageModel
 
 @{
-    ViewData["Title"] = $"Campaigns for {Model.CurrentCampainYear?.Year}";
+    ViewData["Title"] = $"Campaigns for {Model.CurrentCampainYear?.Name}";
 }
 
 @{
@@ -13,7 +13,7 @@
 <section class="content" style="margin-top:10px;">
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title">ELECTORAL POSITIONS FOR @Model.CurrentCampainYear.Year</h3>
+            <h3 class="card-title">ELECTORAL POSITIONS FOR @Model.CurrentCampainYear.Name</h3>
             @if (User.IsInRole("Admin"))
             {
                 <a asp-page="./CampaignYears" class="btn btn-xs btn-secondary mb-2 float-right"><i class="fas fa-arrow-left"></i> Back to Years</a>

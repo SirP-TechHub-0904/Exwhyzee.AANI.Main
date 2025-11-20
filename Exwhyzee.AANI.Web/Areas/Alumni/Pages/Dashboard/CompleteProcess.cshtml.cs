@@ -113,8 +113,9 @@ namespace Exwhyzee.AANI.Web.Areas.Alumni.Pages.Dashboard
                     updateparticipant.DOB = dateTime;
                     updateparticipant.GenderStatus = Participant.GenderStatus;
                     updateparticipant.State = Participant.State;
-                    updateparticipant.CurrentOffice = Participant.CurrentOffice.ToUpper();
-                    updateparticipant.CurrentPosition = Participant.CurrentPosition.ToUpper();
+                    updateparticipant.CurrentOccupation = Participant.CurrentOccupation;
+                    updateparticipant.CurrentWorkPlace = Participant.CurrentWorkPlace;
+                    updateparticipant.CurrentPosition = Participant.CurrentPosition;
                     updateparticipant.VerificationStatus = VerificationStatus.Awaiting;
                     updateparticipant.ChapterId = Participant.ChapterId;
 
