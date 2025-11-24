@@ -4,6 +4,7 @@ using Exwhyzee.AANI.Web.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Exwhyzee.AANI.Web.Migrations
 {
     [DbContext(typeof(AaniDbContext))]
-    partial class AaniDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251121130945_newsletter-4")]
+    partial class newsletter4
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1333,6 +1336,9 @@ namespace Exwhyzee.AANI.Web.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
+                    b.Property<long?>("ChapterId")
+                        .HasColumnType("bigint");
+
                     b.Property<string>("Content")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -1346,6 +1352,9 @@ namespace Exwhyzee.AANI.Web.Migrations
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("ErrorMessage")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("FullName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -1356,20 +1365,20 @@ namespace Exwhyzee.AANI.Web.Migrations
                     b.Property<int>("MessageType")
                         .HasColumnType("int");
 
+                    b.Property<DateTime>("NextAttemptAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("NotificationPath")
                         .HasColumnType("int");
 
                     b.Property<string>("Phone")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ResponseMessage")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("Retries")
                         .HasColumnType("int");
 
-                    b.Property<bool>("Sent")
-                        .HasColumnType("bit");
+                    b.Property<long?>("SecId")
+                        .HasColumnType("bigint");
 
                     b.Property<DateTime?>("SentAt")
                         .HasColumnType("datetime2");

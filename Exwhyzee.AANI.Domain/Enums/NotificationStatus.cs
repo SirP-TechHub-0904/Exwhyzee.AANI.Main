@@ -9,14 +9,16 @@ namespace Exwhyzee.AANI.Domain.Enums
 {
     public enum NotificationStatus
     {
-        [Description("NotDefind")]
-        NotDefind = 0,
-        [Description("Sent")]
-        Sent = 1,
-
-        [Description("NotSent")]
-        NotSent = 2,
-
-
+        Pending = 0,
+        Processing = 1,
+        Sent = 2,
+        Failed = 3
     }
+
+    public enum NotificationPath
+    {
+        All = 0,
+        Chapter = 1,
+        SEC = 2,
+     }
 }

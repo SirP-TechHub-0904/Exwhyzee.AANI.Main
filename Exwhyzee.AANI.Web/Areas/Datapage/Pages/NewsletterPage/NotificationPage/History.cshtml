@@ -1,0 +1,272 @@
+﻿@page
+@model Exwhyzee.AANI.Web.Areas.Datapage.Pages.NewsletterPage.NotificationPage.HistoryModel
+
+@{
+    ViewData["Title"] = "Notification History";
+}
+
+<div class="card card-default">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h3 class="card-title">Notification History</h3>
+         
+    </div>
+
+    @await Html.PartialAsync("_MessageNotice")
+
+    <div class="card-body">
+        <div class="row" style="margin-bottom:10px;">
+            <div class="col-md-4">
+                <label class="form-label">Sort:</label>
+                <select id="sortSelect" class="form-control mr-3" style="">
+                    <option value="createdDesc">Date submitted (newest)</option>
+                    <option value="createdAsc">Date submitted (oldest)</option>
+                    <option value="sentDesc">Date sent (newest)</option>
+                    <option value="sentAsc">Date sent (oldest)</option>
+                    <option value="nameAsc">Name A→Z</option>
+                    <option value="nameDesc">Name Z→A</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label class="form-label">Page size:</label>
+                <select id="pageSizeSelect" class="form-control" style="">
+                    <option value="10">10</option>
+                    <option value="20" selected>20</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                    <option value="0">All</option>
+                </select>
+
+            </div>
+            <div class="col-md-4">
+                <label class="form-label">Message Type:</label>
+                <select asp-for="SelectedMessageType" asp-items="Model.MessageTypeList" id="filterMessageType" class="form-control"></select>
+            </div>
+          
+
+           
+           
+
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-bordered table-sm" id="historyTable">
+                <thead>
+                    <tr>
+                        <th style="width:60px;">S/N</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Message Type</th>
+                        <th>Created</th>
+                        <th>Sent</th>
+                        <th>Status</th>
+                        <th>Retries</th>
+                        <th style="width:140px;"></th>
+                    </tr>
+                </thead>
+                <tbody id="historyBody">
+                    <tr><td colspan="9">Loading...</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <nav>
+            <ul class="pagination" id="pager"></ul>
+        </nav>
+    </div>
+</div>
+
+<!-- Details modal -->
+<div class="modal fade" id="detailsModal" tabindex="-1" role="dialog" aria-labelledby="detailsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"><span id="modalTitle">Notification details</span></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <div>Loading...</div>
+            </div>
+            <div class="modal-footer">
+                <button id="resendBtn" type="button" class="btn btn-primary">Resend</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        $(function () {
+            var currentPage = 1;
+            var lastPageSize = 20;
+            var totalPages = 1;
+
+            function loadList(page) {
+                page = page || 1;
+                currentPage = page;
+                var messageType = $('#filterMessageType').val();
+                var sort = $('#sortSelect').val();
+                var pageSizeRaw = $('#pageSizeSelect').val();
+                // pageSize == 0 means "All"
+                var pageSize = (pageSizeRaw === '0') ? 0 : parseInt(pageSizeRaw || '20');
+                lastPageSize = pageSize === 0 ? 0 : pageSize;
+
+                $('#historyBody').html('<tr><td colspan="9">Loading...</td></tr>');
+                $.get('@Url.Page("History", "List")', { messageType: messageType, sort: sort, page: page, pageSize: pageSize }, function (result) {
+                    renderTable(result.items);
+                    renderPager(result.total, page, pageSize);
+                }).fail(function () {
+                    $('#historyBody').html('<tr><td colspan="9">Error loading data</td></tr>');
+                });
+            }
+
+            function renderTable(items) {
+                if (!items || items.length === 0) {
+                    $('#historyBody').html('<tr><td colspan="9">No results</td></tr>');
+                    return;
+                }
+                var html = '';
+                // compute starting index for S/N
+                var startIndex = 0;
+                if (lastPageSize > 0) {
+                    startIndex = (currentPage - 1) * lastPageSize;
+                } else {
+                    startIndex = 0;
+                }
+
+                $.each(items, function (i, it) {
+                    var sn = startIndex + i + 1;
+                    html += '<tr>';
+                    html += '<td class="text-center">' + sn + '</td>';
+                    html += '<td>' + (it.fullName || '') + '</td>';
+                    html += '<td>' + (it.email || '') + '</td>';
+                    html += '<td>' + (it.phone || '') + '</td>';
+                    html += '<td>' + (it.messageType || '') + '</td>';
+                    html += '<td>' + (it.createdAt || '') + '</td>';
+                    html += '<td>' + (it.sentAt || '') + '</td>';
+                    html += '<td>' + (it.status || '') + '</td>';
+                    html += '<td>' + (it.retries || '') + '</td>';
+                    html += '<td><button class="btn btn-xs btn-info detailsBtn" data-id="' + it.id + '">Details</button> ';
+                    html += '<button class="btn btn-xs btn-warning resendBtn" data-id="' + it.id + '">Resend</button></td>';
+                    html += '</tr>';
+                });
+                $('#historyBody').html(html);
+            }
+
+            function renderPager(totalCount, page, pageSize) {
+                // If pageSize === 0 (All) we hide the pager
+                if (pageSize === 0) {
+                    $('#pager').html('');
+                    return;
+                }
+
+                totalPages = Math.max(1, Math.ceil(totalCount / pageSize));
+                var html = '';
+                if (page > 1) {
+                    html += '<li class="page-item"><a class="page-link" href="#" data-page="' + (page - 1) + '">Prev</a></li>';
+                } else {
+                    html += '<li class="page-item disabled"><span class="page-link">Prev</span></li>';
+                }
+
+                // show up to 7 page buttons
+                var start = Math.max(1, page - 3);
+                var end = Math.min(totalPages, start + 6);
+                for (var p = start; p <= end; p++) {
+                    if (p === page) {
+                        html += '<li class="page-item active"><span class="page-link">' + p + '</span></li>';
+                    } else {
+                        html += '<li class="page-item"><a class="page-link" href="#" data-page="' + p + '">' + p + '</a></li>';
+                    }
+                }
+
+                if (page < totalPages) {
+                    html += '<li class="page-item"><a class="page-link" href="#" data-page="' + (page + 1) + '">Next</a></li>';
+                } else {
+                    html += '<li class="page-item disabled"><span class="page-link">Next</span></li>';
+                }
+
+                $('#pager').html(html);
+            }
+
+            // interactions
+            $('#filterMessageType, #sortSelect, #pageSizeSelect').change(function () {
+                loadList(1);
+            });
+
+            $(document).on('click', '.page-link', function (e) {
+                e.preventDefault();
+                var p = $(this).data('page');
+                if (p) loadList(p);
+            });
+
+            $(document).on('click', '.detailsBtn', function () {
+                var id = $(this).data('id');
+                $('#modalBody').html('Loading...');
+                $('#resendBtn').data('id', id);
+                $('#detailsModal').modal('show');
+                $.get('@Url.Page("History", "Details")', { id: id }, function (res) {
+                    var html = '<dl class="row">';
+                    html += '<dt class="col-sm-3">ID</dt><dd class="col-sm-9">' + res.id + '</dd>';
+                    html += '<dt class="col-sm-3">FullName</dt><dd class="col-sm-9">' + (res.fullName || '') + '</dd>';
+                    html += '<dt class="col-sm-3">Email</dt><dd class="col-sm-9">' + (res.email || '') + '</dd>';
+                    html += '<dt class="col-sm-3">Phone</dt><dd class="col-sm-9">' + (res.phone || '') + '</dd>';
+                    html += '<dt class="col-sm-3">Type</dt><dd class="col-sm-9">' + (res.messageType || '') + '</dd>';
+                    html += '<dt class="col-sm-3">Status</dt><dd class="col-sm-9">' + (res.status || '') + '</dd>';
+                    html += '<dt class="col-sm-3">Created</dt><dd class="col-sm-9">' + (res.createdAt || '') + '</dd>';
+                    html += '<dt class="col-sm-3">Sent</dt><dd class="col-sm-9">' + (res.sentAt || '') + '</dd>';
+                    html += '<dt class="col-sm-3">Retries</dt><dd class="col-sm-9">' + (res.retries || '') + '</dd>';
+                  
+                    html += '<dt class="col-sm-3">Subject</dt><dd class="col-sm-9">' + (res.subject || '') + '</dd>';
+                    html += '<dt class="col-sm-3">Content</dt><dd class="col-sm-9"><pre>' + (res.content || '') + '</pre></dd>';
+                    html += '<dt class="col-sm-3">Response</dt><dd class="col-sm-9"><pre>' + (res.responseMessage || '') + '</pre></dd>';
+                    html += '</dl>';
+                    $('#modalBody').html(html);
+                }).fail(function () {
+                    $('#modalBody').html('Error loading details');
+                });
+            });
+
+            $('#resendBtn').click(function () {
+                var id = $(this).data('id');
+                if (!id) return;
+                $(this).prop('disabled', true);
+                $.post('@Url.Page("History", "Resend")', { id: id, __RequestVerificationToken: $('input[name="__RequestVerificationToken"]').val() }, function (res) {
+                    $('#resendBtn').prop('disabled', false);
+                    if (res.success) {
+                        $('#detailsModal').modal('hide');
+                        loadList(currentPage);
+                        $('<div class="alert alert-success">Queued for resend</div>').insertBefore('.card-body').delay(2000).fadeOut();
+                    } else {
+                        alert('Resend failed');
+                    }
+                }).fail(function () {
+                    $('#resendBtn').prop('disabled', false);
+                    alert('Error while resending');
+                });
+            });
+
+            $(document).on('click', '.resendBtn', function () {
+                var id = $(this).data('id');
+                if (!id) return;
+                if (!confirm('Resend this notification?')) return;
+                $.post('@Url.Page("History", "Resend")', { id: id, __RequestVerificationToken: $('input[name="__RequestVerificationToken"]').val() }, function (res) {
+                    if (res.success) {
+                        loadList(currentPage);
+                        $('<div class="alert alert-success">Queued for resend</div>').insertBefore('.card-body').delay(2000).fadeOut();
+                    } else {
+                        alert('Resend failed');
+                    }
+                }).fail(function () {
+                    alert('Error while resending');
+                });
+            });
+
+            // initial load
+            loadList(1);
+        });
+    </script>
+}

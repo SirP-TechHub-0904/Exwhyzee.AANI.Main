@@ -13,7 +13,7 @@ using System.Text;
 
 namespace Exwhyzee.AANI.Web.Areas.Main.Pages.ParticipantPage
 {
-    [Microsoft.AspNetCore.Authorization.Authorize(Roles = "Admin")]
+    [Microsoft.AspNetCore.Authorization.Authorize(Roles = "Admin,AANI")]
 
     public class SendResetAccountModel : PageModel
     {

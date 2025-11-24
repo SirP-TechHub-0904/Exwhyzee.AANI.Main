@@ -9,22 +9,26 @@ using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using Exwhyzee.AANI.Domain.Models;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.AspNetCore.Identity; 
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
+using Exwhyzee.AANI.Web.Data;
+using Exwhyzee.AANI.Web.Helper;
 
 namespace Exwhyzee.AANI.Host.Areas.Identity.Pages.Account
 {
     public class ForgotPasswordModel : PageModel
     {
         private readonly UserManager<Participant> _userManager;
- 
-        public ForgotPasswordModel(UserManager<Participant> userManager )
+        private readonly IEmailSender _emailSender;
+        private readonly IConfiguration _config;
+        public ForgotPasswordModel(UserManager<Participant> userManager, IEmailSender emailSender, IConfiguration config)
         {
             _userManager = userManager;
-         }
+            _emailSender = emailSender;
+            _config = config;
+        }
 
         /// <summary>
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
@@ -68,12 +72,19 @@ namespace Exwhyzee.AANI.Host.Areas.Identity.Pages.Account
                     pageHandler: null,
                     values: new { area = "Identity", code },
                     protocol: Request.Scheme);
-
                 //await _emailSender.SendEmailAsync(
                 //    Input.Email,
                 //    "Reset Password",
-                //    $"Please reset your password by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                string email =   $"Please reset your password by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.";
 
+                try
+                {
+                    await _emailSender.SendEmailAsync(Input.Email, "Reset Password", email);
+                }
+                catch (Exception ex)
+                {
+                    // Handle or log error
+                }
                 return RedirectToPage("./ForgotPasswordConfirmation");
             }
 

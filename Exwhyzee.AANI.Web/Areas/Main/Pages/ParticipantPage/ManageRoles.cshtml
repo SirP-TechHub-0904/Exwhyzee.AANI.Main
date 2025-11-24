@@ -1,0 +1,87 @@
+﻿@page
+@model Exwhyzee.AANI.Web.Areas.Main.Pages.ParticipantPage.ManageRolesModel
+@{
+    ViewData["Title"] = "Manage Roles";
+}
+<div class="card card-default">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h3 class="card-title">Manage Roles</h3>
+
+    </div>
+
+
+    @if (!string.IsNullOrEmpty(Model.StatusMessage))
+    {
+        <div style="color:green">@Model.StatusMessage</div>
+    }
+    @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+    {
+        <div style="color:red">@Model.ErrorMessage</div>
+    }
+
+    <div class="card-body">
+        <h4>Create new role</h4>
+        <form method="post" asp-page-handler="Create">
+            <div>
+                <input asp-for="CreateRoleName" placeholder="Role name" />
+                <button type="submit">Create</button>
+            </div>
+            <span asp-validation-for="CreateRoleName" style="color:red"></span>
+        </form>
+    </div>
+
+
+    <div class="card-body">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h3 class="card-title">Existing roles</h3>
+
+        </div>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Role Name</th>
+                    <th>Users</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var r in Model.Roles)
+                {
+                    <tr>
+                        <td>
+                            <form method="post" asp-page-handler="Edit" style="display:inline">
+                                <input type="hidden" name="RoleId" value="@r.Id" />
+                                <input name="NewRoleName" value="@r.Name" />
+                                <button type="submit">Save</button>
+                            </form>
+                        </td>
+                        <td>@r.UserCount</td>
+                        <td>
+                            <!-- Edit button is embedded in the inline form above (Save). -->
+                        </td>
+                        <td>
+                            <form method="post" asp-page-handler="Delete" onsubmit="return confirm('Delete role ');">
+                                <input type="hidden" name="RoleId" value="@r.Id" />
+                                <button type="submit">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <div class="card-body">
+
+        <h4>Reset to default roles</h4>
+        <form method="post" asp-page-handler="ResetDefaults" onsubmit="return confirm('This will ensure default roles exist and remove extraneous empty roles. Proceed?');">
+            <button type="submit">Reset to Default</button>
+        </form>
+    </div>
+</div>
+
+
+    @section Scripts {
+        <partial name="_ValidationScriptsPartial" />
+    }

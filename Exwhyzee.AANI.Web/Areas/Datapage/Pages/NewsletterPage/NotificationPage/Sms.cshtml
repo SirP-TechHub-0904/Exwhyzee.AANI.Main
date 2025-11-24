@@ -1,0 +1,236 @@
+﻿@page
+@model Exwhyzee.AANI.Web.Areas.Datapage.Pages.NewsletterPage.NotificationPage.SmsModel
+
+@{
+    ViewData["Title"] = "Send SMS Notification";
+}
+<div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title">Send SMS Notification</h3>
+        <a asp-page="./History" asp-route-messageType="SMS" class="btn bg-gradient-warning btn-sm" style="float:right;">History</a>
+
+    </div>
+
+    @await Html.PartialAsync("_MessageNotice")
+
+    <div class="card-body">
+        <form method="post" id="smsForm">
+            @Html.AntiForgeryToken()
+
+            <input type="hidden" name="SelectedParticipantIdsJson" id="SelectedParticipantIdsJson" />
+
+             <input class="form-control" type="hidden" value="SMS" />
+ 
+            <div id="templateSection">
+                <div class="form-group">
+                    <label>Template</label>
+                    <select asp-for="SelectedTemplateId" asp-items="Model.TemplateList" class="form-control" id="templateSelect">
+                        <option value="">-- Select Template --</option>
+                    </select>
+                </div>
+            </div>
+
+            <div id="editorSection">
+                <div class="form-group">
+                    <label>Message Body - <span>{{fullname}}</span> confirm the body has this placeholder if needed.</label>
+                    <textarea asp-for="Body" class="form-control" id="messageBody" rows="5"></textarea>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Manual Recipients (paste here) - format: phone OR fullname,phone or one per line</label>
+                <textarea asp-for="ManualRecipients" class="form-control" rows="5"></textarea>
+                <small class="form-text text-muted">Examples: +2348012345678 or John Doe,+2348012345678</small>
+            </div>
+
+            <hr />
+
+            <div class="form-group">
+                <label>Recipient Source</label>
+                <select asp-for="RecipientSource" class="form-control" id="recipientSource">
+                    <option value="">-- Select --</option>
+                    <option value="all">All</option>
+                    <option value="chapter">Chapter</option>
+                    <option value="sec">SEC</option>
+                </select>
+            </div>
+
+            <div class="form-row" id="chapterSelectRow" style="display:none;">
+                <div class="col-md-6">
+                    <label>Chapter</label>
+                    <select asp-for="SelectedChapterId" asp-items="Model.ChapterList" class="form-control" id="chapterSelect">
+                        <option value="">Choose Chapter</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-row" id="secSelectRow" style="display:none;">
+                <div class="col-md-6">
+                    <label>SEC</label>
+                    <select asp-for="SelectedSecId" asp-items="Model.SecList" class="form-control" id="secSelect">
+                        <option value="">Choose SEC</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Top selected count -->
+            <div id="selectedCountTop" class="mb-2" style="display:none;">
+                <strong>Selected participants:</strong> <span id="selectedCountTopValue">0</span>
+            </div>
+
+            <div id="participantsSection" style="display:none; margin-top:20px;">
+                <style>
+                    .selected-row {
+                        background: #f4fbff;
+                    }
+
+                    .sn-cell {
+                        width: 60px;
+                        text-align: center;
+                    }
+
+                    .checkbox-cell {
+                        width: 60px;
+                        text-align: center;
+                    }
+                </style>
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th class="sn-cell">S/N</th>
+                                <th class="checkbox-cell"><input type="checkbox" id="selectAll" /></th>
+                                <th>Full Name</th>
+                                <th>Phone</th>
+                                <th>SEC</th>
+                                <th>Chapter</th>
+                            </tr>
+                        </thead>
+                        <tbody id="participantsBody">
+                            <!-- rows loaded by AJAX -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Bottom selected count -->
+            <div id="selectedCountBottom" class="mt-2 mb-3" style="display:none;">
+                <strong>Total selected:</strong> <span id="selectedCountBottomValue">0</span>
+            </div>
+
+            <div class="form-group mt-3">
+                <button type="submit" class="btn btn-primary">Send SMS</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+    <script>
+        $(function () {
+            $('#templateSelect').change(function () {
+                var id = $(this).val();
+                if (!id) return;
+                $.get('@Url.Page("Sms", "TemplateLoad")', { id: id }, function (data) {
+                    $('textarea[name="Body"]').val(data.body);
+                });
+            });
+
+            $('#recipientSource').change(function () {
+                var v = $(this).val();
+                $('#participantsSection').hide();
+                $('#chapterSelectRow').hide();
+                $('#secSelectRow').hide();
+                $('#selectedCountTop').hide();
+                $('#selectedCountBottom').hide();
+
+                if (v === 'all') {
+                    $('#participantsSection').show();
+                    loadParticipants({ source: 'all', preview: true });
+                } else if (v === 'chapter') {
+                    $('#chapterSelectRow').show();
+                } else if (v === 'sec') {
+                    $('#secSelectRow').show();
+                }
+            });
+
+            $('#chapterSelect').change(function () {
+                var id = $(this).val();
+                if (!id) return;
+                loadParticipants({ source: 'chapter', chapterId: id });
+            });
+
+            $('#secSelect').change(function () {
+                var id = $(this).val();
+                if (!id) return;
+                loadParticipants({ source: 'sec', secId: id });
+            });
+
+            function refreshSnAndCounts() {
+                $('#participantsBody tr').each(function (index) {
+                    $(this).find('.sn-cell').text(index + 1);
+                });
+
+                var total = $('.selectItem:checked').length;
+                if ($('#participantsBody tr').length > 0) {
+                    $('#selectedCountTop').show();
+                    $('#selectedCountBottom').show();
+                } else {
+                    $('#selectedCountTop').hide();
+                    $('#selectedCountBottom').hide();
+                }
+                $('#selectedCountTopValue').text(total);
+                $('#selectedCountBottomValue').text(total);
+            }
+
+            function loadParticipants(query) {
+                $('#participantsSection').show();
+                $('#participantsBody').html('<tr><td colspan="6">Loading...</td></tr>');
+                $.get('@Url.Page("Sms", "Participants")', query, function (data) {
+                    var html = '';
+                    $.each(data, function (i, p) {
+                        html += '<tr class="participant-row selected-row">';
+                        html += '<td class="sn-cell">' + (i + 1) + '</td>';
+                        html += '<td class="checkbox-cell"><input type="checkbox" class="selectItem" value="' + p.id + '" checked /></td>';
+                        html += '<td>' + p.fullname + '</td>';
+                        html += '<td>' + (p.phone || '') + '</td>';
+                        html += '<td>' + (p.sec || '') + '</td>';
+                        html += '<td>' + (p.chapter || '') + '</td>';
+                        html += '</tr>';
+                    });
+                    $('#participantsBody').html(html);
+
+                    $('#selectAll').prop('checked', $('.selectItem').length && $('.selectItem:checked').length === $('.selectItem').length);
+                    $('.selectItem').each(function () {
+                        $(this).closest('tr').toggleClass('selected-row', $(this).is(':checked'));
+                    });
+                    refreshSnAndCounts();
+                });
+            }
+
+            // select all logic and coloring
+            $(document).on('change', '#selectAll', function () {
+                const checked = $(this).is(':checked');
+                $('.selectItem').prop('checked', checked).trigger('change');
+            });
+
+            $(document).on('change', '.selectItem', function () {
+                var $tr = $(this).closest('tr');
+                $tr.toggleClass('selected-row', $(this).is(':checked'));
+                $('#selectAll').prop('checked', $('.selectItem').length && $('.selectItem:checked').length === $('.selectItem').length);
+                refreshSnAndCounts();
+            });
+
+            // before submit, collect checked participant ids into hidden JSON field
+            $('#smsForm').on('submit', function () {
+                var ids = [];
+                $('.selectItem:checked').each(function () {
+                    ids.push($(this).val());
+                });
+                $('#SelectedParticipantIdsJson').val(JSON.stringify(ids));
+                // allow form to submit
+            });
+        });
+    </script>
+}

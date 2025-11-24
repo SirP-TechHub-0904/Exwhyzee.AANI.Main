@@ -14,9 +14,9 @@ namespace Exwhyzee.AANI.Web.Helper
 {
     public interface IEmailSender
     {
-        Task SendEmailAsync(string toEmail, string subject, string htmlMessage);
-        Task SendNotification(string toPhone, string message); 
-        Task SendWhatsappAsync(string toPhone, string parameters, string buttonParameters = null, string headerParameters = null);
+        Task<string> SendEmailAsync(string toEmail, string subject, string htmlMessage);
+        Task<string> SendNotification(string toPhone, string message); 
+        Task<string> SendWhatsappAsync(string toPhone, string parameters, string buttonParameters = null, string headerParameters = null);
 
     }
 
@@ -34,7 +34,7 @@ namespace Exwhyzee.AANI.Web.Helper
             _postmarkService = postmarkService;
         }
 
-        public async Task SendEmailAsync(string toEmail, string subject, string htmlMessage)
+        public async Task<string> SendEmailAsync(string toEmail, string subject, string htmlMessage)
         {
 
             EmailResponseDto response = new EmailResponseDto();
@@ -102,18 +102,12 @@ namespace Exwhyzee.AANI.Web.Helper
 
 
                 responsex = await _postmarkService.SendMessageAsync(message);
-
-                try
-                {
-
-
-                }
-                catch (Exception ex) { }
-
-
+                return responsex.MessageID + " - " + responsex.Message;
+                 
             }
             catch (Exception ex)
             {
+                return ex.Message;
             }
 
 
@@ -121,7 +115,7 @@ namespace Exwhyzee.AANI.Web.Helper
 
         }
 
-        public async Task SendNotification(string toPhone, string message)
+        public async Task<string> SendNotification(string toPhone, string message)
         {
             if (string.IsNullOrWhiteSpace(toPhone)) throw new ArgumentException("toPhone must be provided", nameof(toPhone));
             if (string.IsNullOrWhiteSpace(message)) throw new ArgumentException("message must be provided", nameof(message));
@@ -154,7 +148,7 @@ namespace Exwhyzee.AANI.Web.Helper
                 if (!response.IsSuccessStatusCode)
                 {
                     _logger.LogError("KudiSMS returned HTTP {StatusCode}: {Body}", response.StatusCode, body);
-                    throw new HttpRequestException($"KudiSMS request failed with status {response.StatusCode}");
+                    return $"KudiSMS request failed with status {response.StatusCode}";
                 }
 
                 var opts = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
@@ -163,25 +157,25 @@ namespace Exwhyzee.AANI.Web.Helper
                 if (kudiResp == null)
                 {
                     _logger.LogError("Failed to deserialize KudiSMS response: {Body}", body);
-                    throw new Exception("Invalid response from SMS gateway.");
+                    return "Invalid response from SMS gateway.";
                 }
 
                 if (!string.Equals(kudiResp.Status, "success", StringComparison.OrdinalIgnoreCase) || kudiResp.ErrorCode != "000")
                 {
                     _logger.LogError("KudiSMS returned error: {ErrorCode} - {Msg} - Body: {Body}", kudiResp.ErrorCode, kudiResp.Msg, body);
-                    throw new Exception($"SMS gateway returned error: {kudiResp.ErrorCode} - {kudiResp.Msg}");
+                    return $"SMS gateway returned error: {kudiResp.ErrorCode} - {kudiResp.Msg}";
                 }
 
-                _logger.LogInformation("SMS sent successfully. Cost={Cost} Balance={Balance} Data={Data}", kudiResp.Cost, kudiResp.Balance, string.Join(",", kudiResp.Data ?? Array.Empty<string>()));
+               return $"SMS sent successfully. Data={kudiResp.Data}";
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Failed to send SMS to {ToPhone}", toPhone);
-                throw;
+               return $"Failed to send SMS to {toPhone}";
+                 
             }
         }
 
-        public async Task SendWhatsappAsync(string toPhone, string parameters, string buttonParameters = null, string headerParameters = null)
+        public async Task<string> SendWhatsappAsync(string toPhone, string parameters, string buttonParameters = null, string headerParameters = null)
         {
             string rex = "";
             try
@@ -212,14 +206,14 @@ namespace Exwhyzee.AANI.Web.Helper
                 response.EnsureSuccessStatusCode();
 
                 var result = await response.Content.ReadAsStringAsync();
-                _logger.LogInformation("WhatsApp message sent! Response: {Result}", result);
-                rex = result;
+              return $"WhatsApp message sent! Response: {result}";
+                
                  
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error sending WhatsApp message to {toPhone} using template {templateCode}");
-               rex = ex.Message;
+              return ex.Message;
             }
 
            

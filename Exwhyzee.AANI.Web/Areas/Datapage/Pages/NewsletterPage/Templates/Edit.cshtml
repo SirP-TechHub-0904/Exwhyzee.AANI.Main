@@ -1,0 +1,133 @@
+﻿@page "{id:long}"
+@model Exwhyzee.AANI.Web.Areas.Datapage.Pages.NewsletterPage.Templates.EditModel
+@{
+    ViewData["Title"] = "Edit Template";
+}
+<div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title">Edit Template - @Model.MessageTemplate.Name</h3>
+    </div>
+
+    @await Html.PartialAsync("_MessageNotice")
+
+    <div class="card-body">
+        <form method="post">
+            <input type="hidden" asp-for="MessageTemplate.Id" />
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="MessageTemplate.Name"></label>
+                <input asp-for="MessageTemplate.Name" class="form-control" />
+                <span asp-validation-for="MessageTemplate.Name" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="MessageTemplate.MessageType"></label>
+                <select asp-for="MessageTemplate.MessageType" asp-items="Model.MessageTypeList" class="form-control" id="messageTypeSelect"></select>
+                <span asp-validation-for="MessageTemplate.MessageType" class="text-danger"></span>
+            </div>
+
+            
+            <div class="form-group">
+                <label asp-for="MessageTemplate.Body"></label>
+                <textarea asp-for="MessageTemplate.Body" class="form-control" id="templateBodyEditor" rows="8"></textarea>
+                <span asp-validation-for="MessageTemplate.Body" class="text-danger"></span>
+            </div>
+
+            
+
+            <div class="form-group">
+                <div class="form-check">
+                    <input asp-for="MessageTemplate.IsActive" class="form-check-input" />
+                    <label asp-for="MessageTemplate.IsActive" class="form-check-label">Is Active</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+               
+                <!-- Save and Delete actions -->
+                <button type="submit" class="btn btn-primary">Save</button>
+                <button type="submit" asp-page-handler="Delete" class="btn btn-danger" onclick="return confirm('Delete template?');">Delete</button>
+                <a asp-page="./Index" class="btn btn-secondary">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+    <!-- Summernote (used for Email body editing) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/summernote-bs4.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/summernote-bs4.min.css" />
+
+    <script>
+        $(function () {
+            // Helper to initialize/destroy summernote depending on message type
+            function updateEditorForType() {
+                var selectedType = $('#messageTypeSelect').val();
+                // message type values come from SelectListItem value (int-string), so check for 'Email' or numeric value '1'
+                var isEmail = (selectedType === 'Email' || selectedType === '1');
+
+                if (isEmail) {
+                    // show subject row and enable rich editor for the body
+                    $('#subjectRow').show();
+                    if (!$('#templateBodyEditor').data('summernote')) {
+                        $('#templateBodyEditor').summernote({ height: 250 });
+                        // if there is initial content in the textarea, load it into summernote
+                        var initial = $('textarea#templateBodyEditor').val();
+                        if (initial && initial.length > 0) {
+                            $('#templateBodyEditor').summernote('code', initial);
+                        }
+                    }
+                } else {
+                    // hide subject row and destroy summernote if active
+                    $('#subjectRow').hide();
+                    if ($('#templateBodyEditor').data('summernote')) {
+                        // copy content back to textarea before destroying
+                        var html = $('#templateBodyEditor').summernote('code') || '';
+                        $('textarea#templateBodyEditor').val(html);
+                        $('#templateBodyEditor').summernote('destroy');
+                    }
+                }
+            }
+
+            // Wire change event and init on load
+            $('#messageTypeSelect').change(updateEditorForType);
+            updateEditorForType();
+
+            // Preview button: send current subject/body to the Preview handler (Render) and show modal
+            $('#previewTemplateBtn').click(function (e) {
+                e.preventDefault();
+
+                var subject = $('input[name="MessageTemplate.Subject"]').val() || '';
+                var body = '';
+
+                // if summernote active, get its content; otherwise read textarea
+                if ($('#templateBodyEditor').data('summernote')) {
+                    body = $('#templateBodyEditor').summernote('code') || '';
+                } else {
+                    body = $('textarea[name="MessageTemplate.Body"]').val() || '';
+                }
+
+                $.ajax({
+                    url: '@Url.Page("./Preview", "Render")',
+                    method: 'POST',
+                    data: { subject: subject, body: body },
+                    success: function (data) {
+                        // Put rendered subject/body into the preview modal and show it
+                        $('#templatePreviewModal #previewSubject').text(data.subject || '');
+                        $('#templatePreviewModal #previewBody').html(data.body || '');
+                        $('#templatePreviewModal').modal('show');
+                    },
+                    error: function () {
+                        alert('Failed to render preview. Please try again.');
+                    }
+                });
+            });
+        });
+    </script>
+
+    @* include the reusable preview modal partial so the preview button can show rendered template *@
+    @await Html.PartialAsync("./_TemplatePreviewModal")
+}

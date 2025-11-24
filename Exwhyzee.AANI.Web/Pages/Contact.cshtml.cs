@@ -58,7 +58,7 @@ namespace Exwhyzee.AANI.Web.Pages
                 return Page();
             }
             Message.NotificationType = Domain.Enums.NotificationType.Email;
-            Message.NotificationStatus = Domain.Enums.NotificationStatus.NotSent;
+            Message.NotificationStatus = Domain.Enums.NotificationStatus.Pending;
             Message.Date = DateTime.UtcNow.AddHours(1);
             Message.Recipient = "director@aani.ng";
             Message.Title = "Contact Us";

@@ -93,5 +93,10 @@ namespace Exwhyzee.AANI.Web.Data
 
         public DbSet<ElectionPosition> ElectionPositions { get; set; } = default!;
         public DbSet<VoteSession> VoteSessions { get; set; } = default!;
+
+
+        public DbSet<MessageTemplate> MessageTemplates { get; set; } = default!;
+        public DbSet<Notification> Notifications { get; set; } = default!;
+
     }
 }
