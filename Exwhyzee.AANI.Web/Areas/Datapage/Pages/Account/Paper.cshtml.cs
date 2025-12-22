@@ -7,6 +7,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Exwhyzee.AANI.Web.Pages
 {
+    [Microsoft.AspNetCore.Authorization.Authorize(Roles = "Admin,MNI,Library")]
+
     public class PaperModel : PageModel
     {
         private readonly UserManager<Participant> _userManager;

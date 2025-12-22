@@ -7,10 +7,10 @@
 
 <div class="card">
     <div class="card-header">
-        <h3 class="card-title">PAPERS CATEGORY</h3>
+        <h3 class="card-title">LIBRARY</h3>
         @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
         {
-            <a asp-page="./Create" class="btn bg-gradient-warning btn-sm" style="float:right;">Create New</a>
+            <a asp-page="./Create" class="btn bg-gradient-warning btn-xs" style="float:right;">Create New</a>
         }
     </div>
     <!-- /.card-header -->
@@ -23,10 +23,7 @@
                         <th>
                             @Html.DisplayNameFor(model => model.PaperCategory[0].Title)
                         </th>
-                        <th>Description</th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.PaperCategory[0].Date)
-                        </th>
+                        <th>Description</th> 
                        @if (User.Identity.IsAuthenticated && User.IsInRole("Admin")){<th></th>}
                     </tr>
                 </thead>
@@ -50,16 +47,13 @@
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.Description)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Date)
-                            </td>
+                            </td> 
                             <td>
                                 <div class="btn-group">
-                                    <button type="button" class="btn btn-success">Action</button>
+                                    <button type="button" class="btn btn-success btn-xs">Action</button>
 
                                     <div class="btn-group">
-                                        <button type="button" class="btn btn-success dropdown-toggle dropdown-icon" data-toggle="dropdown" aria-expanded="false">
+                                        <button type="button" class="btn btn-success btn-xs dropdown-toggle dropdown-icon" data-toggle="dropdown" aria-expanded="false">
                                         </button>
                                         <div class="dropdown-menu" style="">
 

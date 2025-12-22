@@ -12,6 +12,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Exwhyzee.AANI.Web.Areas.Datapage.Pages.NewsletterPage.NotificationPage
 {
+    [Microsoft.AspNetCore.Authorization.Authorize(Roles = "Admin,Tools")]
+
     public class WhatsappModel : PageModel
     {
         private readonly AaniDbContext _context;

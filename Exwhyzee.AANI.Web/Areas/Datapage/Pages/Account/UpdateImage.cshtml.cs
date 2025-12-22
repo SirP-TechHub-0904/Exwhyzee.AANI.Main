@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Exwhyzee.AANI.Web.Areas.Datapage.Pages.Account
 {
-    [Microsoft.AspNetCore.Authorization.Authorize(Roles = "Admin,MNI")]
+    [Microsoft.AspNetCore.Authorization.Authorize(Roles = "Admin,MNI,Users,AANI")]
 
     public class UpdateImageModel : PageModel
     {

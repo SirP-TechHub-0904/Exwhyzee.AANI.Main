@@ -8,6 +8,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Exwhyzee.AANI.Web.Areas.Datapage.Pages.Account
 {
+    [Microsoft.AspNetCore.Authorization.Authorize(Roles = "Admin,MNI,Users,AANI")]
+
     public class UpdateChapterAccountModel : PageModel
     {
         private readonly Data.AaniDbContext _context;

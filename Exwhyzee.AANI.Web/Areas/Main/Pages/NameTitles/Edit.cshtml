@@ -1,0 +1,36 @@
+﻿@page
+@model Exwhyzee.AANI.Web.Areas.Main.Pages.NameTitles.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">EDIT TITLE</h3>
+
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="NameTitle.Id" />
+            <div class="form-group">
+                <label asp-for="NameTitle.Title" class="control-label"></label>
+                <input asp-for="NameTitle.Title" class="form-control" />
+                <span asp-validation-for="NameTitle.Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+  
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

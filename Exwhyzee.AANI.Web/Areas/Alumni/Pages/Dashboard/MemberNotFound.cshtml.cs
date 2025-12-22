@@ -18,11 +18,18 @@ namespace Exwhyzee.AANI.Web.Areas.Alumni.Pages.Dashboard
         {
             _context = context;
         }
-
+        public List<SelectListItem> TitleList { get; set; }
         public IActionResult OnGet()
         {
             ViewData["StateId"] = new SelectList(_context.States, "StateName", "StateName");
-
+            TitleList = _context.NameTitles
+        .OrderBy(x => x.Title)
+        .Select(x => new SelectListItem
+        {
+            Value = x.Title,
+            Text = x.Title
+        })
+        .ToList();
             return Page();
         }
         [BindProperty]

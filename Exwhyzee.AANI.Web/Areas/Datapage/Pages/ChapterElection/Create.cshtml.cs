@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Exwhyzee.AANI.Web.Areas.Datapage.Pages.ChapterElection
 {
-    [Microsoft.AspNetCore.Authorization.Authorize(Roles = "Admin,MNI")]
+    [Microsoft.AspNetCore.Authorization.Authorize(Roles = "Admin,MNI,ChapterElection")]
     public class CreateModel : PageModel
     {
         private readonly AaniDbContext _context;

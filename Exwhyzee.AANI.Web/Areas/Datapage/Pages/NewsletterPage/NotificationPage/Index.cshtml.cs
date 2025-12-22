@@ -11,6 +11,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Exwhyzee.AANI.Web.Areas.Datapage.Pages.NewsletterPage.NotificationPage
 {
+    [Microsoft.AspNetCore.Authorization.Authorize(Roles = "Admin,Tools")]
+
     public class IndexModel : PageModel
     {
         private readonly AaniDbContext _context;

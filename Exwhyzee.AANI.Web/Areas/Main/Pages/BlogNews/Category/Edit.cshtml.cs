@@ -11,7 +11,7 @@ using Exwhyzee.AANI.Web.Data;
 
 namespace Exwhyzee.AANI.Web.Areas.Main.Pages.BlogNews.Category
 {
-    [Microsoft.AspNetCore.Authorization.Authorize(Roles = "Admin")]
+    [Microsoft.AspNetCore.Authorization.Authorize(Roles = "Admin,Content")]
 
     public class EditModel : PageModel
     {

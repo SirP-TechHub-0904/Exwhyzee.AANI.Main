@@ -84,7 +84,7 @@ namespace Exwhyzee.AANI.Web.Areas.Datapage.Pages.Account
 
             if (userStatus == UserStatus.Active)
             {
-                Participants = Participants.Where(x => x.UserStatus == UserStatus.Active && x.AliveStatus == AliveStatus.Alive).AsQueryable();
+                Participants = Participants.Where(x => x.UserStatus == UserStatus.Active).AsQueryable();
 
                 TempData["data"] = "(ACTIVE MEMBERS)";
 

@@ -11,7 +11,7 @@ using System;
 
 namespace Exwhyzee.AANI.Web.Areas.Datapage.Pages.Account
 {
-    [Microsoft.AspNetCore.Authorization.Authorize(Roles = "Admin")]
+    [Microsoft.AspNetCore.Authorization.Authorize(Roles = "Admin,MNI,Users,AANI")]
 
     public class UpdateDobModel : PageModel
     {

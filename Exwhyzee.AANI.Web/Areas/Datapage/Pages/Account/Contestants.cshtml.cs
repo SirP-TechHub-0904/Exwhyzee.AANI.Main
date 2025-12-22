@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace Exwhyzee.AANI.Web.Areas.Datapage.Pages.Account
 {
-    [Microsoft.AspNetCore.Authorization.Authorize(Roles = "Admin,MNI")]
+    [Microsoft.AspNetCore.Authorization.Authorize(Roles = "Admin,MNI,GeneralElection")]
     public class ContestantsModel : PageModel
     {
         private readonly AaniDbContext _context;

@@ -1,0 +1,176 @@
+﻿@page
+@model Exwhyzee.AANI.Web.Areas.Datapage.Pages.Committee.CreateModel
+@{
+    ViewData["Title"] = "Create Committee";
+}
+<div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title">Create Committee</h3>
+    </div>
+
+    @await Html.PartialAsync("_MessageNotice")
+
+    <div class="card-body">
+        <form method="post" id="createCommitteeForm">
+            @Html.AntiForgeryToken()
+            <input type="hidden" name="SelectedParticipantIdsJson" id="SelectedParticipantIdsJson" />
+
+            <div class="form-group">
+                <label asp-for="Committee.Name"></label>
+                <input asp-for="Committee.Name" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Committee.Description"></label>
+                <textarea asp-for="Committee.Description" class="form-control" rows="4"></textarea>
+            </div>
+
+            <div class="form-row">
+                <div class="col-md-4">
+                    <label asp-for="Committee.StartAt"></label>
+                    <input asp-for="Committee.StartAt" class="form-control" type="date" />
+                </div>
+                <div class="col-md-4">
+                    <label asp-for="Committee.EndAt"></label>
+                    <input asp-for="Committee.EndAt" class="form-control" type="date" />
+                </div>
+                <div class="col-md-4">
+                    <label>&nbsp;</label>
+                    <div class="form-check">
+                        <input asp-for="Committee.IsActive" class="form-check-input" />
+                        <label asp-for="Committee.IsActive" class="form-check-label">Is Active</label>
+                    </div>
+                </div>
+            </div>
+
+            <hr />
+
+            <div class="form-group">
+                <label>Members (select from participants)</label>
+
+                <!-- Search box -->
+                <div class="mb-2">
+                    <input type="search" id="participantSearch" class="form-control" placeholder="Search participants by name, email or phone..." />
+                </div>
+
+                <div class="table-responsive" style="max-height:320px; overflow:auto;">
+                    <table class="table table-sm table-hover">
+                        <thead>
+                            <tr>
+                                <th style="width:60px;">S/N</th>
+                                <th style="width:40px;"><input type="checkbox" id="selectAllMembers" /></th>
+                                <th>Full Name</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                            </tr>
+                        </thead>
+                        <tbody id="participantsForCommittee">
+                            @* loaded by JS *@
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <button class="btn btn-primary" type="submit">Create Committee</button>
+                <a asp-page="./Index" class="btn btn-secondary">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(function () {
+            // debounce helper
+            function debounce(func, wait) {
+                var timeout;
+                return function () {
+                    var context = this, args = arguments;
+                    clearTimeout(timeout);
+                    timeout = setTimeout(function () { func.apply(context, args); }, wait);
+                };
+            }
+
+            // load participants for selection: small preview (first 500)
+            $.get('@Url.Page("/NewsletterPage/NotificationPage/Index", "Participants")', { source: 'all', preview: true }, function (data) {
+                var html = '';
+                $.each(data, function (i, p) {
+                    // put searchable values into data attributes for fast filtering
+                    html += '<tr data-name="' + (p.fullname || '').toString().toLowerCase().replace(/"/g, '&quot;') + '" data-email="' + (p.email || '').toString().toLowerCase().replace(/"/g, '&quot;') + '" data-phone="' + (p.phone || '').toString().toLowerCase().replace(/"/g, '&quot;') + '">';
+                    html += '<td class="sn-cell">' + (i + 1) + '</td>';
+                    html += '<td><input type="checkbox" class="memberCheckbox" value="' + p.id + '" /></td>';
+                    html += '<td class="name-cell">' + p.fullname + '</td>';
+                    html += '<td class="email-cell">' + (p.email || '') + '</td>';
+                    html += '<td class="phone-cell">' + (p.phone || '') + '</td>';
+                    html += '</tr>';
+                });
+                $('#participantsForCommittee').html(html);
+                refreshSnAndSelectAllState();
+            });
+
+            // refresh S/N numbering and select-all state
+            function refreshSnAndSelectAllState() {
+                var idx = 1;
+                $('#participantsForCommittee tr:visible').each(function () {
+                    $(this).find('.sn-cell').text(idx++);
+                });
+                updateSelectAllCheckbox();
+            }
+
+            function updateSelectAllCheckbox() {
+                var visible = $('#participantsForCommittee tr:visible .memberCheckbox');
+                if (visible.length === 0) {
+                    $('#selectAllMembers').prop('checked', false).prop('indeterminate', false);
+                    return;
+                }
+                var checkedVisible = $('#participantsForCommittee tr:visible .memberCheckbox:checked').length;
+                if (checkedVisible === 0) {
+                    $('#selectAllMembers').prop('checked', false).prop('indeterminate', false);
+                } else if (checkedVisible === visible.length) {
+                    $('#selectAllMembers').prop('checked', true).prop('indeterminate', false);
+                } else {
+                    $('#selectAllMembers').prop('checked', false).prop('indeterminate', true);
+                }
+            }
+
+            // search/filter handler (client-side)
+            $('#participantSearch').on('input', debounce(function () {
+                var q = $(this).val() ? $(this).val().toString().toLowerCase().trim() : '';
+                if (!q) {
+                    // show all
+                    $('#participantsForCommittee tr').show();
+                } else {
+                    $('#participantsForCommittee tr').each(function () {
+                        var name = ($(this).data('name') || '').toString();
+                        var email = ($(this).data('email') || '').toString();
+                        var phone = ($(this).data('phone') || '').toString();
+                        var match = name.indexOf(q) !== -1 || email.indexOf(q) !== -1 || phone.indexOf(q) !== -1;
+                        $(this).toggle(match);
+                    });
+                }
+                refreshSnAndSelectAllState();
+            }, 200));
+
+            // select all visible rows only
+            $(document).on('change', '#selectAllMembers', function () {
+                var checked = $(this).is(':checked');
+                $('#participantsForCommittee tr:visible .memberCheckbox').prop('checked', checked).trigger('change');
+                updateSelectAllCheckbox();
+            });
+
+            // update select-all when individual changes
+            $(document).on('change', '.memberCheckbox', function () {
+                updateSelectAllCheckbox();
+            });
+
+            // before submit collect selected participant ids (only checked ones)
+            $('#createCommitteeForm').on('submit', function () {
+                var ids = [];
+                $('.memberCheckbox:checked').each(function () { ids.push($(this).val()); });
+                $('#SelectedParticipantIdsJson').val(JSON.stringify(ids));
+                // allow form to submit
+            });
+        });
+    </script>
+}

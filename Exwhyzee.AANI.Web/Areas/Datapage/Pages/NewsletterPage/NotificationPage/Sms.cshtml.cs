@@ -12,6 +12,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Exwhyzee.AANI.Web.Areas.Datapage.Pages.NewsletterPage.NotificationPage
 {
+    [Microsoft.AspNetCore.Authorization.Authorize(Roles = "Admin,Tools")]
+
     public class SmsModel : PageModel
     {
         private readonly AaniDbContext _context;
@@ -258,7 +260,7 @@ namespace Exwhyzee.AANI.Web.Areas.Datapage.Pages.NewsletterPage.NotificationPage
 
             await _context.SaveChangesAsync();
 
-            TempData["success"] = $"Send {createdCount} SMS notifications. Skipped: {skipped.Count}";
+            TempData["success"] = $"Message Sent Successful. {createdCount} Total. Skipped: {skipped.Count}";
             if (skipped.Any())
             {
                 TempData["warning"] = string.Join("; ", skipped);

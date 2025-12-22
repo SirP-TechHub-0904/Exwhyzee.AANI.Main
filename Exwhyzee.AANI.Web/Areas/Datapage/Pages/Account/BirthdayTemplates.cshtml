@@ -1,0 +1,165 @@
+﻿@page
+@model Exwhyzee.AANI.Web.Areas.Datapage.Pages.Account.BirthdayTemplatesModel
+@{
+    ViewData["Title"] = "Birthday Templates";
+}
+<link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/summernote-lite.min.css" rel="stylesheet" />
+<div class="card">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h3 class="card-title mb-0">Birthday Templates</h3>
+        <button class="btn btn-primary" data-toggle="modal" data-target="#templateModal" id="createTemplateBtn">Create Template</button>
+    </div>
+    <div class="card-body">
+        <table class="table table-sm table-hover">
+            <thead>
+                <tr><th>Name</th><th>Send Time</th><th>Enabled</th><th>Actions</th></tr>
+            </thead>
+            <tbody>
+                @foreach (var t in Model.Templates)
+                {
+                    <tr>
+                        <td>@t.Name</td>
+                        <td>@(t.SendTime.ToString())</td>
+                        <td>
+                            @if (t.IsEnabled)
+                            {
+                                <span class="badge badge-success">Enabled</span>
+                            }
+                            else
+                            {
+                                <span class="badge badge-secondary">Disabled</span>
+                            }
+                        </td>
+                        <td>
+                            <button class="btn btn-sm btn-outline-info previewBtn" data-id="@t.Id">Preview</button>
+                            <button class="btn btn-sm btn-outline-secondary editBtn" data-id="@t.Id" data-name="@t.Name" data-sendtime="@t.SendTime" data-enabled="@t.IsEnabled" data-subject="@Html.Raw(System.Net.WebUtility.HtmlEncode(t.EmailSubject ?? ""))" data-emailbody="@Html.Raw(System.Net.WebUtility.HtmlEncode(t.EmailBody ?? ""))" data-sms="@Html.Raw(System.Net.WebUtility.HtmlEncode(t.SmsBody ?? ""))">Edit</button>
+                            <form method="post" asp-page-handler="Delete" class="d-inline">
+                                <input type="hidden" name="id" value="@t.Id" />
+                                <button class="btn btn-sm btn-outline-danger" onclick="return confirm('Delete template?')">Delete</button>
+                            </form>
+                            <form method="post" asp-page-handler="Toggle" class="d-inline">
+                                <input type="hidden" name="id" value="@t.Id" />
+                                <button class="btn btn-sm btn-outline-warning">@((t.IsEnabled) ? "Disable" : "Enable")</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Create/Edit Modal -->
+<div class="modal fade" id="templateModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <form method="post" id="templateForm">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalTitle">Create Template</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span>&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="TemplateId" name="InputTemplate.Id" />
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input class="form-control" id="TemplateName" name="InputTemplate.Name" required />
+                    </div>
+                    <div class="form-group">
+                        <label>Send Time (HH:mm)</label>
+                        <input type="time" class="form-control" id="TemplateSendTime" name="InputTemplate.SendTime" value="09:00" />
+                    </div>
+                    <div class="form-group">
+                        <label>Email Subject</label>
+                        <input class="form-control" id="EmailSubject" name="InputTemplate.EmailSubject" />
+                    </div>
+                    <div class="form-group">
+                        <label>Email Body (Summernote)</label>
+                        <textarea id="EmailBody" name="InputTemplate.EmailBody"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>SMS Body (plain)</label>
+                        <textarea class="form-control" id="SmsBody" name="InputTemplate.SmsBody"></textarea>
+                    </div>
+                    <div class="form-group form-check">
+                        <input type="checkbox" class="form-check-input" id="IsEnabled" name="InputTemplate.IsEnabled" />
+                        <label class="form-check-label" for="IsEnabled">Enabled</label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" id="saveBtn" class="btn btn-primary">Save</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Preview modal -->
+ 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/summernote-lite.min.js"></script>
+<script>
+    $(function () {
+        $('#EmailBody').summernote({ height: 200 });
+
+        // Create button
+        $('#createTemplateBtn').on('click', function () {
+            $('#modalTitle').text('Create Template');
+            $('#TemplateId').val('');
+            $('#TemplateName').val('');
+            $('#TemplateSendTime').val('09:00');
+            $('#EmailSubject').val('');
+            $('#EmailBody').summernote('code', '');
+            $('#SmsBody').val('');
+            $('#IsEnabled').prop('checked', true);
+            $('#templateForm').attr('action', '?handler=Create');
+        });
+
+        // Edit button: populate modal and switch form action to Edit
+        $('.editBtn').on('click', function () {
+            $('#modalTitle').text('Edit Template');
+            var id = $(this).data('id');
+            $('#TemplateId').val(id);
+            $('#TemplateName').val($(this).data('name'));
+            $('#TemplateSendTime').val($(this).data('sendtime'));
+            $('#EmailSubject').val($(this).data('subject'));
+            $('#EmailBody').summernote('code', $(this).data('emailbody'));
+            $('#SmsBody').val($(this).data('sms'));
+            $('#IsEnabled').prop('checked', $(this).data('enabled') === true || $(this).data('enabled') === 'True');
+            $('#templateForm').attr('action', '?handler=Edit&id=' + id);
+            $('#templateModal').modal('show');
+        });
+
+        // Preview
+        var currentPreviewTemplateId = null;
+        $('.previewBtn').on('click', function () {
+            currentPreviewTemplateId = $(this).data('id');
+            $('#previewParticipant').val('');
+            $('#previewSubject').text('');
+            $('#previewEmail').html('');
+            $('#previewSms').text('');
+            $('#previewModal').modal('show');
+        });
+
+        $('#previewParticipant').on('change', function () {
+            var pid = $(this).val();
+            if (!pid || !currentPreviewTemplateId) return;
+            $.get('?handler=Preview', { participantId: pid, templateId: currentPreviewTemplateId })
+                .done(function (resp) {
+                    if (resp.success) {
+                        $('#previewSubject').text(resp.subject);
+                        $('#previewEmail').html(resp.emailBody);
+                        $('#previewSms').text(resp.sms);
+                    } else {
+                        alert(resp.error || 'Preview failed');
+                    }
+                });
+        });
+
+        // submit logic: if Edit (action contains Edit) post to that; else to Create.
+        $('#templateForm').on('submit', function (e) {
+            // if editing, form action already set; otherwise go to Create
+            if (!$(this).attr('action')) $(this).attr('action', '?handler=Create');
+            // copy summernote html into textarea name InputTemplate.EmailBody (already bound)
+        });
+    });
+</script>

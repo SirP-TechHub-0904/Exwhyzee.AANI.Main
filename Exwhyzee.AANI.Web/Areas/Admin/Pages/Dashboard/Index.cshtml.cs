@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace Exwhyzee.AANI.Web.Areas.Admin.Pages.Dashboard
 {
-    [Microsoft.AspNetCore.Authorization.Authorize(Roles = "Admin")]
+    [Microsoft.AspNetCore.Authorization.Authorize(Roles = "Admin,AANI,Events,Officials,ChapterElection,GeneralElection,Library,Finances,Birthdays,Tools,Slider,Gallery,Users,Content")]
 
     public class IndexModel : PageModel
     {

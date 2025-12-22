@@ -1,0 +1,46 @@
+﻿@page
+@model Exwhyzee.AANI.Web.Areas.Datapage.Pages.Account.BirthdayTemplates.CreateModel
+@{
+    ViewData["Title"] = "Create Birthday Template";
+}
+
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">Create Birthday Template</h3>
+    </div>
+    <div class="card-body">
+        <form method="post">
+            <div class="form-group">
+                <label asp-for="Input.Name">Name</label>
+                <input asp-for="Input.Name" class="form-control" required />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Input.SendTime">Send Time</label>
+                <input asp-for="Input.SendTime" type="time" class="form-control" />
+                <small class="form-text text-muted">Time of day when messages will be scheduled (server local time).</small>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Input.EmailSubject">Email Subject</label>
+                <input asp-for="Input.EmailSubject" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Input.EmailBody">Email Body</label>
+                <textarea asp-for="Input.EmailBody" class="form-control" rows="10" placeholder="Enter HTML or plain text for the email body"></textarea>
+                <small class="form-text text-muted">Placeholders will be applied by the background sender when sending.</small>
+            </div>
+
+            <div class="form-group form-check">
+                <input asp-for="Input.IsEnabled" class="form-check-input" />
+                <label asp-for="Input.IsEnabled" class="form-check-label">Enabled</label>
+            </div>
+
+            <div class="form-group">
+                <button class="btn btn-primary" type="submit">Create</button>
+                <a asp-page="./Index" class="btn btn-secondary">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>

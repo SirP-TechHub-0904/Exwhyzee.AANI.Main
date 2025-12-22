@@ -1,0 +1,71 @@
+﻿@page
+@model Exwhyzee.AANI.Web.Areas.Datapage.Pages.Account.BirthdayTemplates.IndexModel
+@{
+    ViewData["Title"] = "Birthday Templates";
+}
+
+<div class="card">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h3 class="card-title mb-0">Birthday Templates</h3>
+        <div>
+            <a asp-page="./Create" class="btn btn-primary">Create Template</a>
+        </div>
+    </div>
+
+    <div class="card-body">
+        @if (!Model.Templates.Any())
+        {
+            <div class="alert alert-info">No templates created yet.</div>
+        }
+        else
+        {
+            <table class="table table-sm table-hover">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Send Time</th>
+                        <th>Enabled</th>
+                        <th>Updated</th>
+                        <th style="width:300px">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var t in Model.Templates)
+                    {
+                        <tr>
+                            <td>@t.Name</td>
+                            <td>@t.SendTime.ToString()</td>
+                            <td>
+                                @if (t.IsEnabled)
+                                {
+                                    <span class="badge badge-success">Enabled</span>
+                                }
+                                else
+                                {
+                                    <span class="badge badge-secondary">Disabled</span>
+                                }
+                            </td>
+                            <td>@(t.UpdatedAt?.ToString("yyyy-MM-dd HH:mm") ?? t.CreatedAt.ToString("yyyy-MM-dd HH:mm"))</td>
+                            <td>
+                                <a asp-page="./Details" asp-route-id="@t.Id" class="btn btn-sm btn-outline-info">Details</a>
+                                <a asp-page="./Edit" asp-route-id="@t.Id" class="btn btn-sm btn-outline-secondary">Edit</a>
+
+                                <form method="post" asp-page-handler="Toggle" class="d-inline">
+                                    <input type="hidden" name="id" value="@t.Id" />
+                                    <button type="submit" class="btn btn-sm btn-outline-warning">
+                                        @(t.IsEnabled ? "Disable" : "Enable")
+                                    </button>
+                                </form>
+
+                                <form method="post" asp-page-handler="Delete" class="d-inline" onsubmit="return confirm('Delete template?');">
+                                    <input type="hidden" name="id" value="@t.Id" />
+                                    <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+    </div>
+</div>

@@ -17,7 +17,7 @@ namespace Exwhyzee.AANI.Web.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "9.0.0")
+                .HasAnnotation("ProductVersion", "9.0.11")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -44,6 +44,93 @@ namespace Exwhyzee.AANI.Web.Migrations
                     b.HasIndex("ContactSettingsModelId");
 
                     b.ToTable("Addresses");
+                });
+
+            modelBuilder.Entity("Exwhyzee.AANI.Domain.Models.BirthdayMessage", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<int>("AttemptCount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Body")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Channel")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Error")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RecipientParticipantId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("ScheduledAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("ScheduledDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("SentAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Subject")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("BirthdayMessages");
+                });
+
+            modelBuilder.Entity("Exwhyzee.AANI.Domain.Models.BirthdayTemplate", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("EmailBody")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("EmailSubject")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<TimeSpan>("SendTime")
+                        .HasColumnType("time");
+
+                    b.Property<string>("SmsBody")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("BirthdayTemplates");
                 });
 
             modelBuilder.Entity("Exwhyzee.AANI.Domain.Models.Blog", b =>
@@ -445,6 +532,80 @@ namespace Exwhyzee.AANI.Web.Migrations
                     b.HasIndex("ParticipantId");
 
                     b.ToTable("Comments");
+                });
+
+            modelBuilder.Entity("Exwhyzee.AANI.Domain.Models.Committee", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedById")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("EndAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("StartAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Committees");
+                });
+
+            modelBuilder.Entity("Exwhyzee.AANI.Domain.Models.CommitteeMember", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("AddedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("AddedById")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CommitteeId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("Order")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ParticipantId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Role")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CommitteeId");
+
+                    b.HasIndex("ParticipantId");
+
+                    b.ToTable("CommitteeMembers");
                 });
 
             modelBuilder.Entity("Exwhyzee.AANI.Domain.Models.ContactSettingsModel", b =>
@@ -1296,6 +1457,22 @@ namespace Exwhyzee.AANI.Web.Migrations
                     b.HasIndex("MessageTemplateCategoryId");
 
                     b.ToTable("MessageTemplateContents");
+                });
+
+            modelBuilder.Entity("Exwhyzee.AANI.Domain.Models.NameTitle", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("NameTitles");
                 });
 
             modelBuilder.Entity("Exwhyzee.AANI.Domain.Models.Nec", b =>
@@ -2764,6 +2941,25 @@ namespace Exwhyzee.AANI.Web.Migrations
                     b.Navigation("Participant");
                 });
 
+            modelBuilder.Entity("Exwhyzee.AANI.Domain.Models.CommitteeMember", b =>
+                {
+                    b.HasOne("Exwhyzee.AANI.Domain.Models.Committee", "Committee")
+                        .WithMany("Members")
+                        .HasForeignKey("CommitteeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Exwhyzee.AANI.Domain.Models.Participant", "Participant")
+                        .WithMany()
+                        .HasForeignKey("ParticipantId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Committee");
+
+                    b.Navigation("Participant");
+                });
+
             modelBuilder.Entity("Exwhyzee.AANI.Domain.Models.ContactSettingsModel", b =>
                 {
                     b.HasOne("Exwhyzee.AANI.Domain.Models.SocialMediaLinks", "SocialMedia")
@@ -3351,6 +3547,11 @@ namespace Exwhyzee.AANI.Web.Migrations
             modelBuilder.Entity("Exwhyzee.AANI.Domain.Models.ChapterElection", b =>
                 {
                     b.Navigation("Candidates");
+                });
+
+            modelBuilder.Entity("Exwhyzee.AANI.Domain.Models.Committee", b =>
+                {
+                    b.Navigation("Members");
                 });
 
             modelBuilder.Entity("Exwhyzee.AANI.Domain.Models.ContactSettingsModel", b =>

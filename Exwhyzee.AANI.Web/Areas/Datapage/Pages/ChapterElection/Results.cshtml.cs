@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace Exwhyzee.AANI.Web.Areas.Datapage.Pages.ChapterElection
 {
-    [Authorize(Roles = "Admin,MNI")]
+    [Authorize(Roles = "Admin,MNI,ChapterElection")]
 
     public class ResultsModel : PageModel
     {

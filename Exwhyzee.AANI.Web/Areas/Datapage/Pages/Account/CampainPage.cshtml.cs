@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Exwhyzee.AANI.Web.Areas.Datapage.Pages.Account
 {
-    [Authorize(Roles = "Admin,MNI")]
+    [Authorize(Roles = "Admin,MNI,GeneralElection")]
     public class CampainPageModel : PageModel
     {
         private readonly AaniDbContext _context;

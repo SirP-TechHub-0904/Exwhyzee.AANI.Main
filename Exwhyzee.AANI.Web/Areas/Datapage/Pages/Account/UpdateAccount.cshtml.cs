@@ -15,7 +15,7 @@ using System.Text.RegularExpressions;
 
 namespace Exwhyzee.AANI.Web.Areas.Datapage.Pages.Account
 {
-    [Microsoft.AspNetCore.Authorization.Authorize(Roles = "Admin,MNI")]
+    [Microsoft.AspNetCore.Authorization.Authorize(Roles = "Admin,MNI,Users,AANI")]
     public class UpdateAccountModel : PageModel
     {
         private readonly UserManager<Participant> _userManager;
@@ -362,7 +362,7 @@ namespace Exwhyzee.AANI.Web.Areas.Datapage.Pages.Account
             return RedirectToPage("./MemberDetails", new { id = updateparticipant.Id, operationYearId = getOperationalYear?.Id });
         }
 
-
+        public List<SelectListItem> TitleList { get; set; }
 
         public async Task<IActionResult> OnPostEmailAsync()
         {
@@ -464,6 +464,14 @@ namespace Exwhyzee.AANI.Web.Areas.Datapage.Pages.Account
 
             await PopulateDropdowns(SelectedOfficeCategoryId);
             await PopulateLGA();
+            TitleList = _context.NameTitles
+        .OrderBy(x => x.Title)
+        .Select(x => new SelectListItem
+        {
+            Value = x.Title,
+            Text = x.Title
+        })
+        .ToList();
         }
 
         public async Task<JsonResult> OnGetOffices(long categoryId)

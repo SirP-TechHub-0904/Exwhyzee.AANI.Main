@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Exwhyzee.AANI.Web.Areas.Datapage.Pages.ChapterElection
 {
-    [Microsoft.AspNetCore.Authorization.Authorize(Roles = "Admin,MNI")]
+    [Microsoft.AspNetCore.Authorization.Authorize(Roles = "Admin,MNI,ChapterElection")]
 
     public class IndexModel : PageModel
     {

@@ -9,7 +9,7 @@ using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
 
 namespace Exwhyzee.AANI.Web.Areas.Main.Pages.BlogNews
 {
-    [Microsoft.AspNetCore.Authorization.Authorize(Roles = "Admin")]
+    [Microsoft.AspNetCore.Authorization.Authorize(Roles = "Admin,Content")]
 
     public class CreateModel : PageModel
     {

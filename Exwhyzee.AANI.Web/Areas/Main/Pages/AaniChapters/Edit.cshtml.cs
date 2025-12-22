@@ -11,7 +11,7 @@ using Exwhyzee.AANI.Web.Data;
 
 namespace Exwhyzee.AANI.Web.Areas.Main.Pages.AaniChapters
 {
-    [Microsoft.AspNetCore.Authorization.Authorize]
+    [Microsoft.AspNetCore.Authorization.Authorize(Roles = "Admin,Content")]
 
     public class EditModel : PageModel
     {

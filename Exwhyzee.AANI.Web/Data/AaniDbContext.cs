@@ -98,5 +98,16 @@ namespace Exwhyzee.AANI.Web.Data
         public DbSet<MessageTemplate> MessageTemplates { get; set; } = default!;
         public DbSet<Notification> Notifications { get; set; } = default!;
 
+
+        public DbSet<Committee> Committees { get; set; } = default!;
+        public DbSet<CommitteeMember> CommitteeMembers { get; set; } = default!;
+
+
+        public DbSet<BirthdayTemplate> BirthdayTemplates { get; set; }
+        public DbSet<BirthdayMessage> BirthdayMessages { get; set; }
+
+
+        public DbSet<NameTitle> NameTitles { get; set; }
+
     }
 }

@@ -5,8 +5,11 @@
 <div class="card">
     <div class="card-header">
         <h3 class="card-title">@TempData["date"] </h3>
-
-    </div>
+        @if (User.Identity.IsAuthenticated && User.IsInRole("Admin") || User.IsInRole("Birthdays"))
+        {
+            <a asp-page="./BirthdayTemplates" class="btn btn-primary btn-sm" style="float:right;">Update Birthday Message Template</a>
+        }
+        </div>
     <div class="card-body">
         <div class="row">
 

@@ -44,7 +44,7 @@ namespace Exwhyzee.AANI.Web.Areas.Main.Pages.ParticipantPage
 
         [BindProperty]
         public Participant Participant { get; set; }
-
+        public List<SelectListItem> TitleList { get; set; }
         public async Task<IActionResult> OnGetAsync(string id)
         {
             if (id == null)
@@ -69,7 +69,14 @@ namespace Exwhyzee.AANI.Web.Areas.Main.Pages.ParticipantPage
             });
             ViewData["SECId"] = new SelectList(output, "Id", "SecYear");
             ViewData["ChapterId"] = new SelectList(_context.Chapters.OrderBy(x => x.State), "Id", "State");
-
+            TitleList = _context.NameTitles
+        .OrderBy(x => x.Title)
+        .Select(x => new SelectListItem
+        {
+            Value = x.Title,
+            Text = x.Title
+        })
+        .ToList();
             return Page();
         }
         public List<SelectListItem> LgaList { get; set; }

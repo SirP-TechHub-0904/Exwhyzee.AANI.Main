@@ -39,7 +39,7 @@ namespace Exwhyzee.AANI.Web.Areas.Main.Pages.ParticipantPage
 
         [BindProperty]
         public Participant Participant { get; set; }
-
+        public List<SelectListItem> TitleList { get; set; }
         public async Task<IActionResult> OnGetAsync(string id)
         {
             if (id == null)
@@ -62,7 +62,14 @@ namespace Exwhyzee.AANI.Web.Areas.Main.Pages.ParticipantPage
                 SecYear = "SEC " + x.Number + " (" + x.Year + ")"
             });
             ViewData["SECId"] = new SelectList(output, "Id", "SecYear");
-
+            TitleList = _context.NameTitles
+        .OrderBy(x => x.Title)
+        .Select(x => new SelectListItem
+        {
+            Value = x.Title,
+            Text = x.Title
+        })
+        .ToList();
             return Page();
         }
 

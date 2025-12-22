@@ -9,7 +9,7 @@ using Exwhyzee.AANI.Domain.Models;
 using Exwhyzee.AANI.Web.Data;
 
 namespace Exwhyzee.AANI.Web.Areas.Datapage.Pages.Account
-{    [Microsoft.AspNetCore.Authorization.Authorize(Roles = "Admin,MNI")]
+{    [Microsoft.AspNetCore.Authorization.Authorize(Roles = "Admin,MNI,Library")]
 
     public class PapersCategoryModel : PageModel
     {

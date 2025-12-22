@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 
 namespace Exwhyzee.AANI.Web.Areas.Datapage.Pages.Account
-{    [Microsoft.AspNetCore.Authorization.Authorize(Roles = "Admin,MNI")]
+{    [Microsoft.AspNetCore.Authorization.Authorize(Roles = "Admin,MNI,Library")]
 
     public class PaperListModel : PageModel
     {

@@ -38,7 +38,7 @@ namespace Exwhyzee.AANI.Web.Areas.Main.Pages.ParticipantPage
             _signInManager = signInManager;
             _context = context;
         }
-
+        public List<SelectListItem> TitleList { get; set; }
         public IActionResult OnGet()
         {
 
@@ -57,7 +57,14 @@ namespace Exwhyzee.AANI.Web.Areas.Main.Pages.ParticipantPage
                 SecYear = "SEC " + x.Number + " (" + x.Year + ")"
             });
             ViewData["SECId"] = new SelectList(output, "Id", "SecYear");
-
+            TitleList = _context.NameTitles
+        .OrderBy(x => x.Title)
+        .Select(x => new SelectListItem
+        {
+            Value = x.Title,
+            Text = x.Title
+        })
+        .ToList();
             return Page();
         }
 
