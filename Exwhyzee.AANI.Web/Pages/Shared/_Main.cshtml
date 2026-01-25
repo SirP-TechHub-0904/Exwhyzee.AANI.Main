@@ -182,6 +182,25 @@
             margin: 0;
         }
     </style>
+
+<style>
+    .page-item.active .page-link {
+        z-index: 3;
+        color: #fff;
+        background-color: #125c11;
+        border-color: #125c11;
+    }
+    .page-link {
+        position: relative;
+        display: block;
+        padding: .5rem .75rem;
+        margin-left: -1px;
+        line-height: 1.25;
+        color: #237d23;
+        background-color: #fff;
+        border: 1px solid #dee2e6;
+    }
+</style>
 </head>
 <body class="hold-transition sidebar-mini layout-fixed" onload="displayModal()">
     <div class="wrapper" style=" background-color: #f4f6f9;">
@@ -290,7 +309,7 @@
 
             <section class="content">
                 <div class="container-fluid">
-                    @await Component.InvokeAsync("OperationalYear")
+                    @*@await Component.InvokeAsync("OperationalYear")*@
 
 
                     @RenderBody()

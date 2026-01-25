@@ -10,6 +10,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.EntityFrameworkCore;
 using System.Text;
+using static Exwhyzee.AANI.Web.Helper.TokenHelper;
+using static System.Net.WebRequestMethods;
 
 namespace Exwhyzee.AANI.Web.Areas.Main.Pages.ParticipantPage
 {
@@ -98,14 +100,14 @@ namespace Exwhyzee.AANI.Web.Areas.Main.Pages.ParticipantPage
             }).ToListAsync();
             return Page();
         }
-        public async Task EmailContent(Participant participant, string callbackUrl)
+        public async Task EmailContent(Participant participant, string otp)
         {
 
 
             if (!string.IsNullOrWhiteSpace(participant?.Email))
             {
 
-
+                var resetUrl = $"{Request.Scheme}://{Request.Host}/Identity/Account/ResetPassword";
                 var subject = "AANI | New AANI Portal – Kindly Update Your Profile";
 
                 var body = $@" 
@@ -131,9 +133,30 @@ namespace Exwhyzee.AANI.Web.Areas.Main.Pages.ParticipantPage
                         </ul>
 
                         <p style=""line-height:1.6;"">To help us maintain an accurate and dynamic database, you are kindly requested to log in and update your information.</p>
-                        <p style=""margin:20px 0;"">
-                            <a href=""{callbackUrl}"" style=""display:inline-block; padding:12px 25px; background-color:#d32f2f; color:#ffffff; text-decoration:none; border-radius:5px;"">Click here to reset your account and access the portal and complete your profile</a>
-                        </p>
+                       <p>An administrator has initiated a password reset for your AANI Portal account.</p>
+
+<p><strong>Your One-Time Password (OTP) is:</strong></p>
+
+<h1 style='color:#d32f2f;letter-spacing:3px'>{otp}</h1>
+
+<p>This OTP is valid for <strong>24 hr</strong>.</p>
+
+<p>
+<a href='{resetUrl}'
+style='display:inline-block;padding:12px 25px;
+background:#d32f2f;color:#ffffff;
+text-decoration:none;border-radius:5px'>
+Click here to reset your password
+</a>
+</p>
+
+<p>When the page opens, enter:</p>
+<ul>
+<li>Your registered email address</li>
+<li>The OTP above</li>
+<li>Your new password</li>
+</ul>
+
 
                         <p style=""line-height:1.6;"">Please take a few minutes to update your details, including:</p>
                         <ul style=""margin:10px 0 20px 20px;"">
@@ -171,7 +194,7 @@ namespace Exwhyzee.AANI.Web.Areas.Main.Pages.ParticipantPage
 
         }
 
-        public async Task SendNotify(Participant participant, string callbackUrl)
+        public async Task SendNotify(Participant participant, string otp)
         {
             if (!string.IsNullOrWhiteSpace(participant?.PhoneNumber))
             {
@@ -213,21 +236,28 @@ namespace Exwhyzee.AANI.Web.Areas.Main.Pages.ParticipantPage
 
                 var participant = await _userManager.FindByIdAsync(id);
                 if (participant == null) continue;
-                var code = await _userManager.GeneratePasswordResetTokenAsync(participant);
-                code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-                var callbackUrl = Url.Page(
-                    "/Account/ResetPassword",
-                    pageHandler: null,
-                    values: new { area = "Identity", code },
-                    protocol: Request.Scheme);
+                //var code = await _userManager.GeneratePasswordResetTokenAsync(participant);
+                //code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
+                //var callbackUrl = Url.Page(
+                //    "/Account/ResetPassword",
+                //    pageHandler: null,
+                //    values: new { area = "Identity", code },
+                //    protocol: Request.Scheme);
+                var otp = OtpHelper.GenerateOtp();
+
+                participant.PasswordResetOtp = otp;
+                participant.PasswordResetOtpExpiry = DateTime.UtcNow.AddDays(1);
+                participant.IsPasswordResetOtpUsed = false;
+
+                await _userManager.UpdateAsync(participant);
                 try
                 {
-                    try { await EmailContent(participant, callbackUrl); }
+                    try { await EmailContent(participant, otp); }
                     catch (Exception ex) { }
 
                     try
                     {
-                        await SendNotify(participant, callbackUrl);
+                        await SendNotify(participant, otp);
                     }
                     catch (Exception ex) { }
 
@@ -254,19 +284,26 @@ namespace Exwhyzee.AANI.Web.Areas.Main.Pages.ParticipantPage
             var participant = await _userManager.FindByIdAsync(Participant.Id);
             try
             {
-                var code = await _userManager.GeneratePasswordResetTokenAsync(participant);
-                code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-                var callbackUrl = Url.Page(
-                    "/Account/ResetPassword",
-                    pageHandler: null,
-                    values: new { area = "Identity", code },
-                    protocol: Request.Scheme);
-                try { await EmailContent(participant, callbackUrl); }
+                //var code = await _userManager.GeneratePasswordResetTokenAsync(participant);
+                //code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
+                //var callbackUrl = Url.Page(
+                //    "/Account/ResetPassword",
+                //    pageHandler: null,
+                //    values: new { area = "Identity", code },
+                //    protocol: Request.Scheme);
+                var otp = OtpHelper.GenerateOtp();
+
+                participant.PasswordResetOtp = otp;
+                participant.PasswordResetOtpExpiry = DateTime.UtcNow.AddDays(1);
+                participant.IsPasswordResetOtpUsed = false;
+
+                await _userManager.UpdateAsync(participant);
+                try { await EmailContent(participant, otp); }
                 catch (Exception ex) { }
 
                 try
                 {
-                    await SendNotify(participant, callbackUrl);
+                    await SendNotify(participant, otp);
                 }
                 catch (Exception ex) { }
 

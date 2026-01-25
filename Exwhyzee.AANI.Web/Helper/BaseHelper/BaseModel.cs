@@ -164,13 +164,16 @@ namespace Exwhyzee.AANI.Web.Helper.BaseHelper
         }
         public async Task<List<Event>> GetEvents()
         {
+            var currentDateTime = DateTime.UtcNow.AddHours(1);
             var getYear = await _context.OperationYears.FirstOrDefaultAsync(oy => oy.IsActive);
             var Event = await _context.Events
                  .Where(e => e.OperationYearId == getYear.Id)
                  .Where(e => e.EventStatus != Domain.Enums.EventStatus.NONE)
+                  .Where(e => e.EndDate >= currentDateTime)
                  .OrderByDescending(e => e.StartDate)
                  .ToListAsync();
 
+             
             return Event;
         }
 

@@ -1,0 +1,92 @@
+﻿@page "{id:long}"
+@model Exwhyzee.AANI.Web.Areas.Datapage.Pages.Account.UpdateLibraryModel
+@{
+    ViewData["Title"] = "Edit Library Item";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-10 offset-md-1">
+            <div class="card card-outline card-warning">
+                <div class="card-header">
+                    <h3 class="card-title"><i class="fas fa-edit"></i> Edit Document Details</h3>
+                </div>
+                <form method="post" enctype="multipart/form-data">
+                    <input type="hidden" asp-for="Paper.Id" />
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    <label>Document Title</label>
+                                    <input asp-for="Paper.Title" class="form-control" placeholder="Enter title..." required />
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Description</label>
+                                    <textarea asp-for="Paper.Description" class="form-control" rows="4"></textarea>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Category</label>
+                                            <select asp-for="Paper.PaperCategoryId" class="form-control" asp-items="ViewBag.PaperCategoryId"></select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Year of Publication</label>
+                                            <input asp-for="Paper.Year" class="form-control" type="number" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="card card-light border">
+                                    <div class="card-body text-center">
+                                        <label>Cover Image Preview</label>
+                                        <div class="mb-3">
+                                            <img src="@(Model.Paper.CoverUrl ?? "/images/default-cover.png")"
+                                                 class="img-fluid shadow-sm rounded"
+                                                 style="max-height: 180px; object-fit: cover;" />
+                                        </div>
+                                        <div class="form-group text-left">
+                                            <label>Change Cover Image</label>
+                                            <input type="file" asp-for="imagefile" class="form-control-file" accept="image/*" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="card card-light border mt-3">
+                                    <div class="card-body">
+                                        <label>Document Attachment</label>
+                                        @if (!string.IsNullOrEmpty(Model.Paper.FileUrl))
+                                        {
+                                            <div class="p-2 mb-2 bg-info rounded">
+                                                <a href="@Model.Paper.FileUrl" target="_blank" class="text-white small">
+                                                    <i class="fas fa-file-pdf mr-1"></i> Current Document Linked
+                                                </a>
+                                            </div>
+                                        }
+                                        <div class="form-group mb-0">
+                                            <label class="small">Replace File (PDF/Doc)</label>
+                                            <input type="file" asp-for="paperfile" class="form-control-file" accept=".pdf,.doc,.docx" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-footer bg-white border-top">
+                        <button type="submit" class="btn btn-warning px-4">
+                            <i class="fas fa-save"></i> Save Changes
+                        </button>
+                        <a asp-page="./ManageMyLibary" class="btn btn-secondary float-right">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

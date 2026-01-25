@@ -32,6 +32,8 @@ namespace Exwhyzee.AANI.Domain.Models
         public UserStatus UserStatus { get; set; }
         public MniStatus MniStatus { get; set; }
         public AliveStatus AliveStatus { get; set; } 
+
+        public DateTime? TimeOfDeath { get; set; }
         public VerificationStatus VerificationStatus { get; set; }
 
         public DateTime DOB { get; set; }
@@ -78,5 +80,10 @@ namespace Exwhyzee.AANI.Domain.Models
         public bool SendResetAccount { get; set; }
         public DateTime DateAccountResetSent { get; set; }
 
-        }
+
+        public string PasswordResetOtp { get; set; }
+        public DateTime? PasswordResetOtpExpiry { get; set; }
+        public bool IsPasswordResetOtpUsed { get; set; }
+
+    }
 }

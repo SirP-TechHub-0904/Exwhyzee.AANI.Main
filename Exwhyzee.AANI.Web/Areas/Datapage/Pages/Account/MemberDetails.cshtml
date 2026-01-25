@@ -142,6 +142,7 @@
                             <li class="nav-item"><a class="nav-link active" href="#activity" data-toggle="tab">Biography</a></li>
                             @if (isOwner || isAdmin)
                             {
+                                <li class="nav-item"><a class="nav-link" asp-page="./ManageMyLibary">My Library</a></li>
                                 <li class="nav-item"><a class="nav-link" href="#timeline" data-toggle="tab">Financial Record</a></li>
                                 <li class="nav-item"><a class="nav-link" href="#settings" data-toggle="tab">Events Attended</a></li>
 
@@ -166,6 +167,7 @@
                                 </div>
                             </div>
                             <!-- /.tab-pane -->
+                             
 
                             <div class="tab-pane" id="timeline">
                                 @if (isOwner || isAdmin)
@@ -204,7 +206,7 @@
                                         <div class="text-muted">No financial records for the selected operation year.</div>
                                     }
                                 }
-                                </div>
+                            </div>
 
                             <div class="tab-pane" id="settings">
                                 @if (isOwner || isAdmin)
@@ -237,7 +239,7 @@
                                         <div class="text-muted">No events attended for the selected operation year.</div>
                                     }
                                 }
-                                </div>
+                            </div>
                             <!-- /.tab-pane -->
                             <div class="tab-pane" id="idcard">
                                 <!-- Responsive ID preview -->

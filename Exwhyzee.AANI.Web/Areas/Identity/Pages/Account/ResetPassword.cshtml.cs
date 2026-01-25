@@ -67,25 +67,18 @@ namespace Exwhyzee.AANI.Host.Areas.Identity.Pages.Account
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
+            //[Required]
+            //public string Code { get; set; }
             [Required]
-            public string Code { get; set; }
-
+            [Display(Name = "One-Time Password (OTP)")]
+            public string Otp { get; set; }
         }
 
-        public IActionResult OnGet(string code = null)
+        public IActionResult OnGet()
         {
-            if (code == null)
-            {
-                return BadRequest("A code must be supplied for password reset.");
-            }
-            else
-            {
-                Input = new InputModel
-                {
-                    Code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(code))
-                };
+           
                 return Page();
-            }
+             
         }
 
         public async Task<IActionResult> OnPostAsync()
@@ -98,21 +91,43 @@ namespace Exwhyzee.AANI.Host.Areas.Identity.Pages.Account
             var user = await _userManager.FindByEmailAsync(Input.Email);
             if (user == null)
             {
-                // Don't reveal that the user does not exist
-                return RedirectToPage("./ResetPasswordConfirmation");
+                ModelState.AddModelError("", "Invalid OTP or email.");
+                return Page();
+            }
+            // OTP validation
+            if (user.IsPasswordResetOtpUsed ||
+                user.PasswordResetOtp != Input.Otp ||
+                user.PasswordResetOtpExpiry == null ||
+                user.PasswordResetOtpExpiry < DateTime.UtcNow)
+            {
+                ModelState.AddModelError("", "Invalid or expired OTP.");
+                return Page();
+            }
+            // Reset password using Identity internally
+            var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+            var result = await _userManager.ResetPasswordAsync(user, token, Input.Password);
+
+            if (!result.Succeeded)
+            {
+                foreach (var error in result.Errors)
+                    ModelState.AddModelError("", error.Description);
+
+                return Page();
             }
 
-            var result = await _userManager.ResetPasswordAsync(user, Input.Code, Input.Password);
-            if (result.Succeeded)
-            {
-                return RedirectToPage("./ResetPasswordConfirmation");
-            }
+            // Invalidate OTP
+            user.IsPasswordResetOtpUsed = true;
+            user.PasswordResetOtp = null;
+            user.PasswordResetOtpExpiry = null;
 
-            foreach (var error in result.Errors)
-            {
-                ModelState.AddModelError(string.Empty, error.Description);
-            }
-            return Page();
+            await _userManager.UpdateAsync(user);
+
+            return RedirectToPage("./ResetPasswordConfirmation");
+            //foreach (var error in result.Errors)
+            //{
+            //    ModelState.AddModelError(string.Empty, error.Description);
+            //}
+            //return Page();
         }
     }
 }

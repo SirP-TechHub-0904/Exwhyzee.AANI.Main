@@ -3,503 +3,449 @@
 @{
 }
 
-<!-- Search Bar for Papers -->
-<form method="get" asp-page="./PaperList" class="bookshelf-search-bar">
-    <input type="hidden" name="id" value="@Model.PaperCategory.Id" />
-    <div class="input-group bookshelf-search-group">
-        <input type="text" class="form-control bookshelf-search-input" name="searchString"
-               placeholder="Search papers..."
-               value="@Model.CurrentFilter" />
-        <button class="btn btn-primary" style=" background-color: #30614b; border-color: #30614b;" type="submit">
-            <i class="fa fa-search"></i>
-        </button>
-    </div>
-</form>
-@if (!string.IsNullOrWhiteSpace(Model.CurrentFilter))
-{
-    <div class="bookshelf-search-note">
-        @($"{Model.Papers.TotalPages} books found on \"{Model.CurrentFilter}\"")
-    </div>
-}
-<div class="bookshelf-3d-main">
-
-    <!-- Bookshelf Outer -->
-    <div class="bookshelf-3d-outer">
-        <!-- Bookshelf Top -->
-        <div class="bookshelf-3d-top">
-            <h5 class="m-0" style="font-weight: 900; text-align: center; padding: 5px; color: white;">MY PAPERS FOR @Model.PaperCategory.Title</h5>
+<div class="library-search-container">
+    <form method="get" asp-page="./PaperList" class="modern-search-form">
+        <input type="hidden" name="id" value="@Model.PaperCategory.Id" />
+        <div class="search-wrapper">
+            <i class="fa fa-search search-icon"></i>
+            <input type="text" name="searchString" class="search-input"
+                   placeholder="Search academic papers..." value="@Model.CurrentFilter" />
+            <button class="search-btn" type="submit">Search</button>
         </div>
-        <!-- Rows/Shelves -->
-        <div class="bookshelf-3d-shelves">
-            <!-- Shelf Row 1 -->
-            @{
-                var papersPerRow = 3;
-                var totalRows = (int)Math.Ceiling((double)Model.Papers.Count() / papersPerRow);
-                for (int row = 0; row < totalRows; row++)
-                {
-                    <div class="bookshelf-3d-row shelf-bench">
-                        @foreach (var paper in Model.Papers.Skip(row * papersPerRow).Take(papersPerRow))
-                        {
-                            <div class="book-3d-col">
-                                <div class="book-3d">
-                                    <img src="@(string.IsNullOrWhiteSpace(paper.CoverUrl) ? "/Book-cover-AANI.jpg" : paper.CoverUrl)"
-                                         class="book-3d-cover"
-                                         alt="Brochure"
-                                         data-gif="" />
-                                </div>
-                                <div class="book-3d-info">
-                                    <div class="book-3d-title">@paper.Title</div>
-                                    <div class="book-3d-author"><span style="font-weight:600;">Author:</span> @paper.Participant?.Fullname</div>
-                                </div>
-                            </div>
-                        }
+    </form>
+    @if (!string.IsNullOrWhiteSpace(Model.CurrentFilter))
+    {
+        <div class="results-badge">
+            Showing @Model.Papers.Count() results for "@Model.CurrentFilter"
+        </div>
+    }
+</div>
 
+<div class="library-grid-container">
+    <div class="grid-header">
+        <h2>@Model.PaperCategory.Title</h2>
+        <div class="header-line"></div>
+    </div>
+
+    <div class="paper-grid">
+        @foreach (var paper in Model.Papers)
+        {
+            <div class="paper-card view-details"
+                 data-id="@paper.Id"
+                 data-title="@paper.Title"
+                 data-fileurl="@(paper.AdminApproved ? paper.FileUrl : "")">
+
+                <div class="paper-image-wrapper">
+                    <img src="@(string.IsNullOrWhiteSpace(paper.CoverUrl) ? "/Book-cover-AANI.jpg" : paper.CoverUrl)" alt="Cover" />
+                    @if (string.IsNullOrWhiteSpace(paper.FileUrl))
+                    {
+                        <div class="status-badge">Not Uploaded</div>
+                    }
+                    else if (!paper.AdminApproved)
+                    {
+                        <div class="status-badge pending">
+                            <i class="fa fa-clock"></i> Pending Approval
+                        </div>
+                        <div class="card-overlay info">
+                            <span>Uploaded. Awaiting Admin Review</span>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="card-overlay"><i class="fa fa-eye"></i> Read Paper</div>
+                    }
+                </div>
+
+                <div class="paper-content">
+                    <h3 class="paper-title">@paper.Title</h3>
+                    <div class="paper-meta">
+                        <span class="meta-label">Author</span>
+                        <span class="meta-value">@(paper.Participant?.Fullname ?? "N/A") (@paper.Year)</span>
                     </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+<!-- Bookshelf Bottom -->
+<div class="bookshelf-3d-bottom">
+    @if (Model.Papers.TotalPages > 1)
+    {
+        <nav class="bookshelf-pagination mt-4">
+            <ul class="pagination pagination-controls justify-content-center" style="padding-top:1px;">
+                <!-- First page «« -->
+                <li class="page-item @(Model.Papers.PageIndex == 1 ? "disabled" : "")">
+                    <a class="page-link" asp-page="./PaperList"
+                       asp-route-pageIndex="1"
+                       asp-route-currentFilter="@Model.CurrentFilter"
+                       asp-route-id="@Model.PaperCategory.Id">&laquo;&laquo;</a>
+                </li>
+                <!-- Previous page « -->
+                <li class="page-item @(Model.Papers.PageIndex == 1 ? "disabled" : "")">
+                    <a class="page-link" asp-page="./PaperList"
+                       asp-route-pageIndex="@(Model.Papers.PageIndex - 1)"
+                       asp-route-currentFilter="@Model.CurrentFilter"
+                       asp-route-id="@Model.PaperCategory.Id">&laquo;</a>
+                </li>
+                <!-- First 3 pages -->
+                @for (int i = 1; i <= Math.Min(3, Model.Papers.TotalPages); i++)
+                {
+                    <li class="page-item @(i == Model.Papers.PageIndex ? "active" : "")">
+                        <a class="page-link" asp-page="./PaperList"
+                           asp-route-pageIndex="@i"
+                           asp-route-currentFilter="@Model.CurrentFilter"
+                           asp-route-id="@Model.PaperCategory.Id">@i</a>
+                    </li>
                 }
-            }
-
-        </div>
-        <!-- Bookshelf Bottom -->
-        <div class="bookshelf-3d-bottom">
-            @if (Model.Papers.TotalPages > 1)
-            {
-                <nav class="bookshelf-pagination mt-4">
-                    <ul class="pagination pagination-controls justify-content-center" style="padding-top:1px;">
-                        <!-- First page «« -->
-                        <li class="page-item @(Model.Papers.PageIndex == 1 ? "disabled" : "")">
+                <!-- Ellipsis if more than 6 pages -->
+                @if (Model.Papers.TotalPages > 6)
+                {
+                    <li class="page-item disabled"><span class="page-link">...</span></li>
+                }
+                <!-- Last 3 pages -->
+                @for (int i = Model.Papers.TotalPages - 2; i <= Model.Papers.TotalPages; i++)
+                {
+                    if (i > 3)
+                    {
+                        <li class="page-item @(i == Model.Papers.PageIndex ? "active" : "")">
                             <a class="page-link" asp-page="./PaperList"
-                               asp-route-pageIndex="1"
+                               asp-route-pageIndex="@i"
                                asp-route-currentFilter="@Model.CurrentFilter"
-                               asp-route-id="@Model.PaperCategory.Id">&laquo;&laquo;</a>
+                               asp-route-id="@Model.PaperCategory.Id">@i</a>
                         </li>
-                        <!-- Previous page « -->
-                        <li class="page-item @(Model.Papers.PageIndex == 1 ? "disabled" : "")">
-                            <a class="page-link" asp-page="./PaperList"
-                               asp-route-pageIndex="@(Model.Papers.PageIndex - 1)"
-                               asp-route-currentFilter="@Model.CurrentFilter"
-                               asp-route-id="@Model.PaperCategory.Id">&laquo;</a>
-                        </li>
-                        <!-- First 3 pages -->
-                        @for (int i = 1; i <= Math.Min(3, Model.Papers.TotalPages); i++)
-                        {
-                            <li class="page-item @(i == Model.Papers.PageIndex ? "active" : "")">
-                                <a class="page-link" asp-page="./PaperList"
-                                   asp-route-pageIndex="@i"
-                                   asp-route-currentFilter="@Model.CurrentFilter"
-                                   asp-route-id="@Model.PaperCategory.Id">@i</a>
-                            </li>
-                        }
-                        <!-- Ellipsis if more than 6 pages -->
-                        @if (Model.Papers.TotalPages > 6)
-                        {
-                            <li class="page-item disabled"><span class="page-link">...</span></li>
-                        }
-                        <!-- Last 3 pages -->
-                        @for (int i = Model.Papers.TotalPages - 2; i <= Model.Papers.TotalPages; i++)
-                        {
-                            if (i > 3)
-                            {
-                                <li class="page-item @(i == Model.Papers.PageIndex ? "active" : "")">
-                                    <a class="page-link" asp-page="./PaperList"
-                                       asp-route-pageIndex="@i"
-                                       asp-route-currentFilter="@Model.CurrentFilter"
-                                       asp-route-id="@Model.PaperCategory.Id">@i</a>
-                                </li>
-                            }
-                        }
-                        <!-- Next page » -->
-                        <li class="page-item @(Model.Papers.PageIndex == Model.Papers.TotalPages ? "disabled" : "")">
-                            <a class="page-link" asp-page="./PaperList"
-                               asp-route-pageIndex="@(Model.Papers.PageIndex + 1)"
-                               asp-route-currentFilter="@Model.CurrentFilter"
-                               asp-route-id="@Model.PaperCategory.Id">&raquo;</a>
-                        </li>
-                        <!-- Last page »» -->
-                        <li class="page-item @(Model.Papers.PageIndex == Model.Papers.TotalPages ? "disabled" : "")">
-                            <a class="page-link" asp-page="./PaperList"
-                               asp-route-pageIndex="@(Model.Papers.TotalPages)"
-                               asp-route-currentFilter="@Model.CurrentFilter"
-                               asp-route-id="@Model.PaperCategory.Id">&raquo;&raquo;</a>
-                        </li>
-                    </ul>
-                    @*<span style="margin-left:10px;">
-                            <i>Page Number (@Model.Papers.PageIndex of @Model.Papers.TotalPages)</i>
-                        </span>*@
-                </nav>
-            }
+                    }
+                }
+                <!-- Next page » -->
+                <li class="page-item @(Model.Papers.PageIndex == Model.Papers.TotalPages ? "disabled" : "")">
+                    <a class="page-link" asp-page="./PaperList"
+                       asp-route-pageIndex="@(Model.Papers.PageIndex + 1)"
+                       asp-route-currentFilter="@Model.CurrentFilter"
+                       asp-route-id="@Model.PaperCategory.Id">&raquo;</a>
+                </li>
+                <!-- Last page »» -->
+                <li class="page-item @(Model.Papers.PageIndex == Model.Papers.TotalPages ? "disabled" : "")">
+                    <a class="page-link" asp-page="./PaperList"
+                       asp-route-pageIndex="@(Model.Papers.TotalPages)"
+                       asp-route-currentFilter="@Model.CurrentFilter"
+                       asp-route-id="@Model.PaperCategory.Id">&raquo;&raquo;</a>
+                </li>
+            </ul>
+            @*<span style="margin-left:10px;">
+                    <i>Page Number (@Model.Papers.PageIndex of @Model.Papers.TotalPages)</i>
+                </span>*@
+        </nav>
+    }
+</div>
+<div class="modal fade" id="readerModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content" style="border-radius: 15px; overflow: hidden;">
+            <div class="modal-header" style="background: #30614b; color: white;">
+                <h5 class="modal-title" id="readerTitle">Reading Paper</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-0" style="height: 80vh;">
+                <iframe id="pdfFrame" src="" width="100%" height="100%" frameborder="0"></iframe>
+            </div>
         </div>
     </div>
 </div>
 <style>
-    .bookshelf-3d-main {
+    /* Container & Spacing */
+    .library-grid-container {
+        max-width: 1200px;
+        margin: 40px auto;
+        padding: 0 20px;
+    }
+
+    /* Modern Search Bar */
+    .library-search-container {
+        padding: 40px 0;
+        text-align: center;
+    }
+
+    .search-wrapper {
         position: relative;
-        min-height: 600px;
-    }
-
-    .bookshelf-lamp {
-        position: absolute;
-        left: -90px;
-        top: 0;
-        width: 70px;
-        height: 250px;
-        z-index: 10;
-    }
-
-        .bookshelf-lamp img {
-            width: 100%;
-            height: auto;
-        }
-
-    .bookshelf-plant {
-        position: absolute;
-        right: -92px;
-        bottom: 0;
-        width: 86px;
-        height: 160px;
-        z-index: 10;
-    }
-
-        .bookshelf-plant img {
-            width: 100%;
-            height: auto;
-        }
-
-    .bookshelf-3d-outer {
-        background: #ffffff;
-        border-radius: 24px;
-        box-shadow: 0 12px 34px rgba(0,0,0,0.13);
-        overflow: hidden;
-        padding-bottom: 0;
-    }
-
-    .bookshelf-3d-top {
-        height: 38px;
-        background: linear-gradient(180deg, #30614b 80%, #28614c 100%);
-        border-top-left-radius: 26px;
-        border-top-right-radius: 26px;
-        box-shadow: 0 10px 16px rgba(0,0,0,0.10);
-    }
-
-    .bookshelf-3d-bottom {
-        height: 40px;
-        background: linear-gradient(180deg, #30614b 80%, #28614c 100%);
-        border-bottom-left-radius: 26px;
-        border-bottom-right-radius: 26px;
-        box-shadow: 0 -7px 12px rgba(0,0,0,0.09);
-    }
-
-    .bookshelf-3d-shelves {
-        padding: 24px 36px 24px 36px;
-        background: url('../../bg-book-category.png') repeat;
-    }
-
-    .bookshelf-3d-row {
-        display: flex;
-        flex-wrap: nowrap;
-        justify-content: space-between;
-        align-items: flex-end;
-        margin-bottom: 0;
-        position: relative;
-        min-height: 220px;
-    }
-
-    .shelf-bench {
-        border-bottom: 16px solid #30614b;
-        /*box-shadow: 0 4px 20px rgb(71 115 94 / 83%), 0 1.2px 0 #406c57 inset;*/
-        border-radius: 0 0 20px 20px;
-        margin-bottom: 32px;
-        /*background: linear-gradient(180deg, #98afa1 90%, #30614b 100%);*/
-        position: relative;
-    }
-
-        .shelf-bench:after {
-            content: "";
-            display: block;
-            position: absolute;
-            left: 0;
-            bottom: -16px;
-            width: 100%;
-            height: 18px;
-            border-bottom: 10px solid #292d2b00;
-            border-radius: 0 0 14px 14px;
-            opacity: 0.5;
-            box-shadow: 0 4px 16px rgba(146,120,82,0.12);
-        }
-
-    .book-3d-col {
-        width: 32.2%;
-        min-width: 180px;
-        max-width: 260px;
-        box-sizing: border-box;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        margin-bottom: 10px;
-        /*jhhhhhhhh*/
-
-        border: 2px solid #3e7a5f;
-        margin: 10px;
-        border-radius: 10px;
-        background-color: #9fb4a9;
-    }
-
-    .book-3d {
-        width: 70%;
-        height: 170px;
-        /*background: #ece4d9;*/
-        border-radius: 10px;
-        /*box-shadow: 7px 0 18px rgba(0,0,0,0.06),0 2px 19px rgba(0,0,0,0.11);*/
+        max-width: 600px;
+        margin: 0 auto;
         display: flex;
         align-items: center;
-        justify-content: center;
-        perspective: 800px;
-        margin-bottom: 12px;
-        position: relative;
-        transition: box-shadow 0.2s;
-    }
-
-    .book-3d-cover {
-        width: 70%;
-        height: 154px;
-        object-fit: cover;
-        border-radius: 5px;
-        box-shadow: 1px 2px 8px rgba(0,0,0,0.14);
-        transition: transform 0.4s;
         background: #fff;
-        transform: rotateY(-9deg) scale(1.03);
+        padding: 8px;
+        border-radius: 50px;
+        box-shadow: 0 10px 30px rgba(48, 97, 75, 0.1);
+        border: 1px solid #e0e0e0;
     }
 
-    .book-3d:hover .book-3d-cover {
-        transform: rotateY(0deg) scale(1.07);
-    }
-
-    .book-3d-info {
-        text-align: center;
-        /*margin-top: 8px;*/
-    }
-
-    .book-3d-title {
-        font-size: 1.07rem;
-        font-weight: 600;
-        color: #44372d;
-        /*margin-bottom: 3px;*/
-        word-break: break-word;
-    }
-
-    .book-3d-author {
-        font-size: 0.97rem;
-        color: #7b6f5e;
-        font-weight: 400;
-        /*margin-bottom: 3px;*/
-        word-break: break-word;
-    }
-
-    .book-3d-info {
-        text-align: center;
-        margin-top: 8px;
-        min-height: 66px; /* Ensures consistent height for info block */
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-    }
-
-    /* Book Title: 3 lines max, ellipsis, consistent height */
-    .book-3d-title {
-        font-size: 0.92rem;
-        font-weight: 500;
-        color: #000000;
-        line-height: 1.2em;
-        height: 3.6em; /* 3 lines */
-        max-height: 3.6em;
-        min-height: 3.6em;
-        text-align: center;
-        word-break: break-word;
-        overflow: hidden;
-        display: -webkit-box;
-        -webkit-line-clamp: 3;
-        -webkit-box-orient: vertical;
-        white-space: normal;
-        margin-bottom: 2px;
-    }
-
-    /* Book Author: 1 line, italic, bold, ellipsis */
-    .book-3d-author {
-        font-size: 0.78rem;
-        font-style: italic;
-        font-weight: 600;
-        color: #211f1c;
-        height: 1.3em;
-        max-height: 1.3em;
-        min-height: 1.3em;
-        overflow: hidden;
-        text-align: center;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-        display: block;
-    }
-    /* Responsive */
-    @@media (max-width: 1000px) {
-        .bookshelf-3d-main {
-            max-width: 96vw;
-        }
-
-        .bookshelf-3d-shelves {
-            padding: 16px 4vw;
-        }
-
-        .bookshelf-3d-row {
-            min-height: 170px;
-        }
-
-        .book-3d-col {
-            min-width: 120px;
-        }
-
-        .book-3d {
-            width: 74px;
-            height: 130px;
-        }
-
-        .book-3d-cover {
-            width: 58px;
-            height: 104px;
-        }
-    }
-
-    @@media (max-width: 700px) {
-        .bookshelf-lamp {
-            left: -60px;
-            width: 40px;
-            height: 120px;
-        }
-
-        .bookshelf-plant {
-            right: -60px;
-            width: 54px;
-            height: 100px;
-        }
-
-        .bookshelf-3d-main {
-            min-height: 360px;
-        }
-
-        .bookshelf-3d-outer {
-            border-radius: 12px;
-        }
-
-        .bookshelf-3d-top, .bookshelf-3d-bottom {
-            height: 20px;
-            border-radius: 14px;
-        }
-
-        .bookshelf-3d-shelves {
-            padding: 8px 2vw;
-        }
-
-        .bookshelf-3d-row {
-            min-height: 110px;
-        }
-
-        .book-3d-col {
-            min-width: 80px;
-        }
-
-        .book-3d {
-            width: 44px;
-            height: 80px;
-        }
-
-        .book-3d-cover {
-            width: 35px;
-            height: 62px;
-        }
-    }
-
-    .page-item.active .page-link {
-        z-index: 3;
-        color: #fff;
-        background-color: #30614b;
-        border-color: #30614b;
-    }
-
-    .page-link {
+    .search-icon {
+        margin-left: 20px;
         color: #30614b;
-        background-color: #fff;
-        border: 1px solid #30614b;
     }
 
-    .bookshelf-search-bar {
-        max-width: 400px;
-        margin: 0 auto 18px auto;
-        display: flex;
-        justify-content: center;
-    }
-
-    .bookshelf-search-group {
-        width: 100%;
-        display: flex;
-    }
-
-    .bookshelf-search-input {
-        border: 2px solid #32654D;
-        border-right: none;
-        border-radius: 16px 0 0 16px;
+    .search-input {
+        border: none;
+        flex: 1;
+        padding: 10px 15px;
         font-size: 1rem;
-        padding: 7px 14px;
         outline: none;
     }
 
-    .bookshelf-search-btn {
-        border-radius: 0 16px 16px 0;
-        border: 2px solid #32654D;
-        border-left: none;
-        padding: 7px 18px;
-        background: #32654D;
-        color: #fff;
+    .search-btn {
+        background: #30614b;
+        color: white;
+        border: none;
+        padding: 10px 25px;
+        border-radius: 50px;
         font-weight: 600;
-        font-size: 1.07rem;
-        transition: background 0.2s;
+        transition: all 0.3s ease;
     }
 
-        .bookshelf-search-btn:hover, .bookshelf-search-btn:focus {
-            background: #275239;
-            color: #fff;
+        .search-btn:hover {
+            background: #1b3d2f;
+            transform: scale(1.05);
         }
 
-    @@media (max-width: 600px) {
-        .bookshelf-search-bar {
-            max-width: 98vw;
-        }
-
-        .bookshelf-search-input {
-            font-size: 0.94rem;
-            padding: 6px 8px;
-        }
-
-        .bookshelf-search-btn {
-            font-size: 1rem;
-            padding: 6px 10px;
-        }
-    }
-    .bookshelf-search-note {
-        text-align: center;
-        font-size: 1.08rem;
-        font-weight: 500;
-        color: #32654D;
+    /* Section Header */
+    .grid-header h2 {
+        color: #1b3d2f;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 1px;
         margin-bottom: 10px;
-        margin-top: -4px;
+    }
+
+    .header-line {
+        width: 60px;
+        height: 4px;
+        background: #30614b;
+        margin-bottom: 30px;
+    }
+
+    /* The Paper Grid */
+    .paper-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 30px;
+    }
+
+    /* Elegant Paper Card */
+    .paper-card {
+        background: #fff;
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        cursor: pointer;
+        border: 1px solid #f0f0f0;
+    }
+
+        .paper-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.12);
+        }
+
+    /* Image 40% height */
+    .paper-image-wrapper {
+        position: relative;
+        height: 180px;
+        overflow: hidden;
+    }
+
+        .paper-image-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+    .card-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(48, 97, 75, 0.8);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: 600;
+        opacity: 0;
+        transition: opacity 0.3s;
+    }
+
+    .paper-card:hover .card-overlay {
+        opacity: 1;
+    }
+
+    /* Content 60% height */
+    .paper-content {
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        height: 220px;
+    }
+
+    .paper-title {
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: #2c3e50;
+        margin-bottom: auto;
+        line-height: 1.4;
+        display: -webkit-box;
+        -webkit-line-clamp: 4;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    .paper-meta {
+        border-top: 1px solid #eee;
+        padding-top: 15px;
+        margin-top: 15px;
+    }
+
+    .meta-label {
+        display: block;
+        font-size: 0.7rem;
+        text-transform: uppercase;
+        color: #30614b;
+        font-weight: 800;
+    }
+
+    .meta-value {
+        font-size: 0.9rem;
+        color: #666;
+        font-style: italic;
+    }
+
+    /* Tablet/Mobile fixes */
+    @@media (max-width: 600px) {
+        .paper-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    .paper-card.no-document {
+        opacity: 0.8;
+        filter: grayscale(0.5); /* Subtle hint that it's inactive */
+    }
+
+    .status-badge {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: #e74c3c;
+        color: white;
+        font-size: 0.7rem;
+        padding: 3px 8px;
+        border-radius: 4px;
+        font-weight: bold;
+        z-index: 5;
+    }
+
+    /* Styling for cards without a document */
+    .paper-card.is-empty {
+        cursor: default;
+        border: 1px dashed #ccc; /* Dashed border looks "unfinished" */
+    }
+
+        .paper-card.is-empty .paper-image-wrapper img {
+            opacity: 0.5;
+            filter: grayscale(1); /* Makes the cover look inactive */
+        }
+
+    /* The red badge for missing files */
+    .status-badge-missing {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: #dc3545; /* Academic red */
+        color: white;
+        font-size: 0.7rem;
+        padding: 4px 10px;
+        border-radius: 20px;
+        font-weight: bold;
+        z-index: 10;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+
+    /* Ensure the overlay only shows on cards that actually have a file */
+    .paper-card.has-file:hover .card-overlay {
+        opacity: 1;
+    }
+    /* Status Badges */
+    .status-badge {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        font-size: 0.7rem;
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-weight: bold;
+        z-index: 10;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+        .status-badge.missing {
+            background: #6c757d;
+            color: white;
+        }
+        /* Gray for empty */
+        .status-badge.pending {
+            background: #f39c12;
+            color: white;
+        }
+    /* Orange for waiting */
+
+    /* Overlays */
+    .card-overlay.info {
+        background: rgba(44, 62, 80, 0.85); /* Dark blue/gray */
+        opacity: 0;
+        font-size: 0.9rem;
+        text-align: center;
+        padding: 10px;
+    }
+
+    .paper-card.is-pending:hover .card-overlay.info {
+        opacity: 1;
+    }
+
+    .card-overlay.success {
+        background: rgba(48, 97, 75, 0.9); /* Your Brand Green */
     }
 </style>
-<script>
-    // Swap cover to GIF on hover, restore on mouseout
-    document.querySelectorAll('.book-3d-cover').forEach(function (img) {
-        const staticSrc = img.src;
-        const gifSrc = img.getAttribute('data-gif');
-        img.addEventListener('mouseenter', function () { img.src = gifSrc; });
-        img.addEventListener('mouseleave', function () { img.src = staticSrc; });
-    });
-</script>
 
 
 
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+        document.querySelectorAll('.view-details').forEach(card => {
+            card.addEventListener('click', function () {
+                const fileUrl = this.getAttribute('data-fileurl');
+                const title = this.getAttribute('data-title');
+
+                if (!fileUrl || fileUrl === "" || fileUrl === "null") {
+                    alert("This paper has been uploaded but is currently awaiting Admin Approval. Please check back later!");
+                    return;
+                }
+
+                document.getElementById('readerTitle').innerText = title;
+
+                // CHECK: Is it a Word Doc?
+                if (fileUrl.toLowerCase().endsWith('.docx') || fileUrl.toLowerCase().endsWith('.doc')) {
+                    // We wrap the URL in Microsoft's viewer
+                    const encodedUrl = encodeURIComponent(fileUrl);
+                    document.getElementById('pdfFrame').src = `https://view.officeapps.live.com/op/view.aspx?src=${encodedUrl}`;
+                } else {
+                    // If it's a PDF, we show it directly
+                    document.getElementById('pdfFrame').src = fileUrl;
+                }
+
+                var myModal = new bootstrap.Modal(document.getElementById('readerModal'));
+                myModal.show();
+            });
+        });
+    </script>
+}
 

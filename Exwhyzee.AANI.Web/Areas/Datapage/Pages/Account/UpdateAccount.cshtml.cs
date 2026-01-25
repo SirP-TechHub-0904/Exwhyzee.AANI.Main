@@ -348,6 +348,7 @@ namespace Exwhyzee.AANI.Web.Areas.Datapage.Pages.Account
             var getOperationalYear = await _context.OperationYears.FirstOrDefaultAsync(x => x.IsActive);
             updateparticipant.UserStatus = Participant.UserStatus;
             updateparticipant.AliveStatus = Participant.AliveStatus;
+            updateparticipant.TimeOfDeath = Participant.TimeOfDeath;
             // Now update username to match email
             var updatez = await _userManager.UpdateAsync(updateparticipant);
             if (!updatez.Succeeded)

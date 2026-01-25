@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using NuGet.ProjectModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,6 +36,9 @@ namespace Exwhyzee.AANI.Web.Areas.Main.Pages.PaperPage.PaperList
 
         [BindProperty]
         public IFormFile? imagefile { get; set; }
+
+        [BindProperty]
+        public IFormFile? docfile { get; set; }
         public async Task<IActionResult> OnGetAsync(long? id)
         {
             if (id == null)
@@ -110,6 +114,49 @@ namespace Exwhyzee.AANI.Web.Areas.Main.Pages.PaperPage.PaperList
                 }
             }
 
+            if (docfile != null)
+            {
+                try
+                {
+                    // Process file
+                    await using var memoryStream = new MemoryStream();
+                    await docfile.CopyToAsync(memoryStream);
+
+                    var fileExt = Path.GetExtension(docfile.FileName);
+                    var docName = $"{Guid.NewGuid()}{fileExt}";
+                    // call server
+
+                    var s3Obj = new S3Object()
+                    {
+                        BucketName = "aani2023",
+                        InputStream = memoryStream,
+                        Name = docName
+                    };
+
+                    var cred = new AwsCredentials()
+                    {
+                        AccessKey = _config["AwsConfiguration:AWSAccessKey"],
+                        SecretKey = _config["AwsConfiguration:AWSSecretKey"]
+                    };
+
+                    var xresult = await _storageService.UploadFileReturnUrlAsync(s3Obj, cred, "");
+                    // 
+                    if (xresult.Message.Contains("200"))
+                    {
+                        Paper.FileUrl = xresult.Url;
+                        Paper.FileKey = xresult.Key;
+                    }
+                    else
+                    {
+                        TempData["error"] = "unable to upload image";
+                        //return Page();
+                    }
+                }
+                catch (Exception c)
+                {
+
+                }
+            }
 
             _context.Attach(Paper).State = EntityState.Modified;
 

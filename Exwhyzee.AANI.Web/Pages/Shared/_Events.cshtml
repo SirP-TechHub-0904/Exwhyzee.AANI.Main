@@ -9,7 +9,7 @@
 }
 
 
- 
+
 <section class="testimonial-one event-01">
     <div class="testimonial-one__bg float-bob-y" style="background-image: url();"></div>
     <div class="container">
@@ -42,7 +42,7 @@
                     <div class="testimonial-one__carousel owl-carousel owl-theme">
                         @foreach (var ps in GetEvents)
                         {
-                            
+
                             <!-- Item 1 -->
                             <div class="testimonial-one__single">
                                 <div class="testimonial-one__quote"><span class="icon-quote"></span></div>
@@ -52,11 +52,18 @@
                                         <img src="@ps.ImageUrl" alt="@ps.Title">
                                         <h4 class="testimonial-one__client-name"><a asp-page="/EventInfo" asp-route-id="@ps.Id" asp-route-title="@(System.Text.RegularExpressions.Regex.Replace(ps.Title?.Trim() ?? "", @"\s+", "-"))">@ps.Title</a></h4>
                                         <p class="testimonial-one__client-sub-title">@ps.Toipc</p>
+                                        <div class="event-date-badge" style="font-size: 0.9rem; color: #777; margin-top: 5px;">
+                                            <i class="fa fa-calendar"></i> @ps.StartDate.ToString("MMM dd, yyyy")
+                                            @if (ps.StartDate.Date != ps.EndDate.Date)
+                                            {
+                                                <span> - @ps.EndDate.ToString("MMM dd, yyyy")</span>
+                                            }
+                                        </div>
                                     </div>
 
                                 </div>
                                 <p class="testimonial-one__text">
-                                     @Html.Raw(ps.Description)
+                                    @Html.Raw(ps.Description)
                                 </p>
                             </div>
 
@@ -68,4 +75,9 @@
         </div>
     </div>
 </section>
- 
+
+<style>
+    .event-01 .testimonial-one__client-name a {
+        text-decoration: underline !important;
+    }
+</style>

@@ -59,6 +59,10 @@ namespace Exwhyzee.AANI.Web.Areas.Datapage.Pages.Account
         // OnGet - accepts optional participant id and optional operationYearId
 
         public string CurrentUserId { get; set; }
+
+        public IList<Paper> MemberPapers { get; set; }
+        public IList<PaperCategory> PaperCategories { get; set; }
+
         public async Task<IActionResult> OnGetAsync(string? id, long? operationYearId)
         {
             // Determine participant id: if not provided, use current user
@@ -269,6 +273,19 @@ namespace Exwhyzee.AANI.Web.Areas.Datapage.Pages.Account
             IdCardSvg = await BuildIdCardSvgForParticipantAsync(Participant);
 
             UserFullname = BuildTitleFullNameSecYearFilename(Participant);
+
+            // 2. Get the Papers specifically for this user
+            MemberPapers = await _context.Papers
+                .Include(p => p.PaperCategory)
+                .Include(p => p.Event)
+                .Where(p => p.ParticipantId == id)
+                .OrderByDescending(p => p.Year)
+                .ToListAsync();
+
+            // 3. Get all categories (needed for the upload dropdown)
+            PaperCategories = await _context.paperCategories
+                .OrderBy(c => c.Title)
+                .ToListAsync();
             return Page();
         }
         [BindProperty]

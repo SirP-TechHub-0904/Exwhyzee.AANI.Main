@@ -141,7 +141,7 @@
                     <div class="col-md-6">
                         <div class="book-section">
                             <div class="book-image-box">
-                                <img src="~/slider-book.png" alt="Book Cover 1">
+                                <img src="~/Book-cover-AANI.jpg" alt="Book Cover 1">
                             </div>
                             <div class="book-content-box">
                                 <h2 class="text-uppercase">@x.Title</h2>
@@ -165,10 +165,14 @@
                                         }
                                     </div>
                                 </div>
-                                <p>
-                                    @Html.Raw(x.Description)
-                                </p>
-                                <button class="btn btn-read-more">READ NOW</button>
+
+                                @*<button class="btn btn-read-more">READ NOW</button>*@
+                                <button class="btn btn-read-more"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#loginModal">
+                                    READ NOW
+                                </button>
+
                             </div>
                         </div>
                     </div>
@@ -229,29 +233,83 @@
                     </ul>
                 </nav>
             }
-            @*@{
-            var prevDisabled = !Model.Papers.HasPreviousPage ? "disabled" : "";
-            var nextDisabled = !Model.Papers.HasNextPage ? "disabled" : "";
-        }
 
-        <a asp-page="./PaperList"
-           asp-route-pageIndex="@(Model.Papers.PageIndex - 1)"
-           asp-route-currentFilter="@Model.CurrentFilter"
-           asp-route-id="@Model.PaperCategory.Id"
-           class="primary-button button-sm mb-15-xs @prevDisabled">
-            Previous
-        </a>
-        <a asp-page="./PaperList"
-           asp-route-pageIndex="@(Model.Papers.PageIndex + 1)"
-           asp-route-currentFilter="@Model.CurrentFilter"
-           asp-route-id="@Model.PaperCategory.Id"
-           class="primary-button button-sm mb-15-xs @nextDisabled">
-            Next
-        </a>
-        <i>Page Number (@Model.PageIndex of @Model.TotalPage)</i>*@
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="loginModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+        <div class="modal-content text-center">
+
+            <div class="modal-header border-0">
+                <button type="button" class="btn-close ms-auto" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body px-4 pb-4">
+
+                <!-- Security SVG -->
+                <div class="mb-3">
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none"
+                         xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2L4 5V11C4 16.55 7.84 21.74 12 22
+                                 C16.16 21.74 20 16.55 20 11V5L12 2Z"
+                              fill="#d21e2b" />
+                        <path d="M9.5 11.5L11.5 13.5L15 10"
+                              stroke="white"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round" />
+                    </svg>
+                </div>
+
+                <h5 class="mb-2 fw-bold">Secure Access Required</h5>
+
+                <p class="text-muted small mb-4">
+                    Please log in to your dashboard to access this document.
+                </p>
+
+                <a asp-page="/Account/Login" asp-area="Identity"
+                   class="btn btn-dark w-100">
+                    Login to Dashboard
+                </a>
+
+            </div>
+
         </div>
     </div>
 </div>
 
 
- 
+<style>
+    .book-section {
+        height: 420px; /* fixed card height */
+        display: flex;
+        align-items: stretch;
+    }
+
+    .book-content-box {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+    }
+
+        .book-content-box h2 {
+            display: -webkit-box;
+            -webkit-line-clamp: 4; /* title = 4 lines */
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .book-content-box p {
+            display: -webkit-box;
+            -webkit-line-clamp: 4; /* description = 4 lines */
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        /* push button to bottom */
+        .book-content-box .btn-read-more {
+            margin-top: auto;
+        }
+</style>

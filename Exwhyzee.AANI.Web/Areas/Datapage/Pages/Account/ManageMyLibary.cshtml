@@ -1,0 +1,186 @@
+﻿@page
+@model Exwhyzee.AANI.Web.Areas.Datapage.Pages.Account.ManageMyLibaryModel
+@{
+    ViewData["Title"] = "Manage My Library";
+}
+
+<div class="card">
+    <div class="card-header bg-navy">
+        <h3 class="card-title">My Uploaded Documents</h3>
+    </div>
+    <div class="card-body">
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Cover</th>
+                    <th>Title / Category</th>
+                    <th>Year</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.MyPapers)
+                {
+                    <tr>
+                        <td>
+                            <img src="@item.CoverUrl" style="height:50px; width:auto;" class="img-thumbnail" />
+                        </td>
+                        <td>
+                            <a href="#" class="view-details btn btn-info btn-sm"
+                               data-id="@item.Id"
+                               data-title="@item.Title"
+                               data-desc="@item.Description"
+                               data-cat="@item.PaperCategory?.Title"
+                               data-year="@item.Year"
+                               data-img="@item.CoverUrl"
+                               data-fileurl="@item.FileUrl">
+                                <i class="fas fa-folder-open"></i> <strong>@item.Title</strong>
+                                @if (string.IsNullOrWhiteSpace(item.FileUrl))
+                                {
+                                    <span class="badge badge-secondary ml-2">No Document</span>
+                                }
+                                else if (!item.AdminApproved)
+                                {
+                                    <span class="badge badge-warning ml-2" title="Waiting for Admin to review">
+                                        <i class="fas fa-clock"></i> Pending Approval
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span class="badge badge-success ml-2">
+                                        <i class="fas fa-check-circle"></i> Approved
+                                    </span>
+                                }
+                                <br />
+                                <small class="badge badge-info">@item.PaperCategory?.Title</small>
+                            </a>
+
+                        </td>
+                        <td>@item.Year</td>
+
+
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="modal fade" id="detailsModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-navy">
+                <h5 class="modal-title">Document Options</h5>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body text-center">
+                <img id="modalImg" src="" class="img-fluid mb-3 shadow-sm" style="max-height: 250px; border-radius: 5px;" />
+                <h4 id="modalPaperTitle" class="text-bold mb-1"></h4>
+                <p id="modalCatYear" class="text-muted small"></p>
+                <hr />
+                <div class="text-left">
+                    <h6><strong>Description:</strong></h6>
+                    <p id="modalDescription" class="text-justify"></p>
+                </div>
+            </div>
+            <div class="modal-footer d-flex justify-content-between">
+                <div>
+                    <a href="#" id="btnRead" target="_blank" class="btn btn-primary">
+                        <i class="fas fa-book-open"></i> Read
+                    </a>
+                    <a href="#" id="btnEdit" class="btn btn-warning">
+                        <i class="fas fa-edit"></i> Edit
+                    </a>
+                </div>
+
+                <div class="d-flex">
+                    <form method="post" asp-page-handler="Delete" id="deleteForm" onsubmit="return confirm('Are you sure you want to delete this permanently?');">
+                        <input type="hidden" name="id" id="deleteId" />
+                        <button type="submit" class="btn btn-danger mr-2">
+                            <i class="fas fa-trash"></i> Delete
+                        </button>
+                    </form>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="card card-success mt-4">
+    <div class="card-header">
+        <h3 class="card-title">Add New Document</h3>
+    </div>
+    <form method="post" enctype="multipart/form-data">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Document Title</label>
+                        <input asp-for="NewPaper.Title" class="form-control" required />
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label>Category</label>
+                        <select asp-for="NewPaper.PaperCategoryId" class="form-control" asp-items="ViewBag.PaperCategoryId">
+                            <option value="">-- Select --</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label>Year</label>
+                        <input asp-for="NewPaper.Year" class="form-control" type="number" value="@DateTime.Now.Year" />
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Description</label>
+                <textarea asp-for="NewPaper.Description" class="form-control" rows="2"></textarea>
+            </div>
+            <div class="form-group">
+                <label>Document (pdf/doc)</label>
+                <input type="file" asp-for="docfile" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label>Cover Image of the document</label>
+                <input type="file" asp-for="imagefile" class="form-control" />
+            </div>
+        </div>
+        <div class="card-footer">
+            <button type="submit" class="btn btn-success">Upload to My Library</button>
+        </div>
+    </form>
+</div>
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('.view-details').on('click', function (e) {
+                e.preventDefault();
+
+                // Get data from data-attributes
+                var id = $(this).data('id');
+                var title = $(this).data('title');
+                var desc = $(this).data('desc');
+                var cat = $(this).data('cat');
+                var year = $(this).data('year');
+                var img = $(this).data('img');
+                var fileurl = $(this).data('fileurl');
+
+                // Populate Modal Text/Images
+                $('#modalPaperTitle').text(title);
+                $('#modalDescription').text(desc || "No description provided.");
+                $('#modalCatYear').text(cat + " | " + year);
+                $('#modalImg').attr('src', img || '/images/default-cover.png');
+
+                // Populate Action Buttons
+                $('#btnRead').attr('href', fileurl); // Link to the PDF
+                $('#btnEdit').attr('href', './UpdateLibrary/' + id); // Link to Edit Page
+                $('#deleteId').val(id); // Set the ID for the hidden delete input
+
+                // Show Modal
+                $('#detailsModal').modal('show');
+            });
+        });
+    </script>
+}

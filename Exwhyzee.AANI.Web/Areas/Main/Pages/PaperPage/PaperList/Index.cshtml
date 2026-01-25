@@ -1,85 +1,79 @@
 ﻿@page
 @model Exwhyzee.AANI.Web.Areas.Main.Pages.PaperPage.PaperList.IndexModel
-
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Admin Paper Management";
 }
 
 <div class="card">
     <div class="card-header">
         <h3 class="card-title">ALL BOOKS/PROJECTS/REPORT</h3>
-
     </div>
-    <!-- /.card-header -->
     <div class="card-body">
         <div class="table-responsive">
             <table id="example1" class="table table-bordered table-striped">
                 <thead>
                     <tr>
                         <th>S/N</th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.Paper[0].Title)
-                        </th>
-                        <th>
-                            Author
-                        </th>
-                        
-                        <th>
-                            @Html.DisplayNameFor(model => model.Paper[0].Year)
-                        </th>
-                      
-                        <th>
-                           Library
-                        </th>
-                       @if (User.Identity.IsAuthenticated && User.IsInRole("Admin")){<th></th>}
+                        <th>Title</th>
+                        <th>Author</th>
+                        <th>Year</th>
+                        <th>Status</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
-                @{
-                    int sn = 0;
-                }
+                @{ int sn = 0; }
                 <tbody>
                     @foreach (var item in Model.Paper)
                     {
                         <tr>
+                            <td>@(++sn)</td>
                             <td>
-                                @{
-                                    sn++;
+                                <a asp-page="./Details" asp-route-id="@item.Id" class="fw-bold">@item.Title</a>
+                            </td>
+                            <td>@item.Participant.Fullname</td>
+                            <td>@item.Year</td>
+                            <td>
+                                @if (string.IsNullOrEmpty(item.FileUrl))
+                                {
+                                    <span class="badge bg-secondary">No File</span>
                                 }
-                                @sn
+                                else if (!item.AdminApproved)
+                                {
+                                    <span class="badge bg-warning text-dark"><i class="fa fa-clock"></i> Pending Approval</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-success"><i class="fa fa-check"></i> Approved</span>
+                                }
                             </td>
                             <td>
-                                <a asp-page="./Details" asp-route-id="@item.Id">
-                                    @Html.DisplayFor(modelItem => item.Title)
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
+                                        Action
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        @if (!string.IsNullOrEmpty(item.FileUrl))
+                                        {
+                                            <a class="dropdown-item" href="@item.FileUrl" target="_blank">
+                                                <i class="fa fa-eye text-primary"></i> View Document
+                                            </a>
 
-                                </a>
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Participant.Fullname)
-                            </td> 
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Year)
-                            </td> 
-                            <td>
-                                @Html.DisplayFor(modelItem => item.PaperCategory.Title)
-                            </td>
-                            @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
-                            {
-                                <td>
-                                    <div class="btn-group">
-                                        <button type="button" class="btn btn-success btn-xs">Action</button>
+                                            @if (!item.AdminApproved)
+                                            {
+                                                <div class="dropdown-divider"></div>
+                                                <form method="post" asp-page-handler="Approve" asp-route-id="@item.Id" onsubmit="return confirm('Approve this paper for library display?');">
+                                                    <button type="submit" class="dropdown-item text-success">
+                                                        <i class="fa fa-check-circle"></i> Approve Paper
+                                                    </button>
+                                                </form>
+                                            }
+                                        }
 
-                                        <div class="btn-group">
-                                            <button type="button" class="btn btn-success btn-xs dropdown-toggle dropdown-icon" data-toggle="dropdown" aria-expanded="false">
-                                            </button>
-                                            <div class="dropdown-menu" style="">
-
-                                                <a class="dropdown-item" asp-page="./Edit" asp-route-id="@item.Id">Edit</a>
-
-                                            </div>
-                                        </div>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" asp-page="./Edit" asp-route-id="@item.Id">Edit Metadata</a>
                                     </div>
-                                </td>
-                            }
+                                </div>
+                            </td>
                         </tr>
                     }
                 </tbody>

@@ -12,7 +12,8 @@
         public DateTime Date { get; set; }
         public string? Title { get; set; }
         public string? Description { get; set; }
-        public string? File { get; set; }
+        public string? FileUrl { get; set; }
+        public string? FileKey { get; set; }
         public int Year { get; set; }
 
         public long? EventId { get; set; }
@@ -23,5 +24,7 @@
 
         public string? CoverUrl { get; set; }
         public string? CoverKey { get; set; }
+
+        public bool AdminApproved { get; set; }
     }
 }

@@ -30,5 +30,14 @@ namespace Exwhyzee.AANI.Web.Helper
             var hash = hmac.ComputeHash(tokenBytes);
             return Convert.ToBase64String(hash);
         }
+
+        public static class OtpHelper
+        {
+            public static string GenerateOtp()
+            {
+                return new Random().Next(100000, 999999).ToString();
+            }
+        }
+
     }
 }

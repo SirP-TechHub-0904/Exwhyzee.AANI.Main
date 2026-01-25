@@ -54,7 +54,7 @@ namespace Exwhyzee.AANI.Web.Pages
 
             IQueryable<Paper> paperList = from s in _context.Papers.Include(x => x.PaperCategory)
                                           .Include(x => x.Participant).ThenInclude(c => c.SEC)
-                                                      .OrderByDescending(x => x.Year).Where(x => x.PaperCategoryId == id)
+                                                      .OrderBy(x => x.Title).Where(x => x.PaperCategoryId == id)
                                           select s;
 
             if (!String.IsNullOrEmpty(searchString))
@@ -72,7 +72,7 @@ namespace Exwhyzee.AANI.Web.Pages
 
             var pageSize = 30; TotalPage = AllCount / pageSize;
             Papers = await PaginatedList<Paper>.CreateAsync(
-                paperList.AsNoTracking().OrderByDescending(x => x.Year), pageIndex ?? 1, pageSize);
+                paperList.AsNoTracking().OrderBy(x => x.Title), pageIndex ?? 1, pageSize);
 
             PageIndex = pageIndex ?? 1;
             ContactSettings = await _context.ContactSettings

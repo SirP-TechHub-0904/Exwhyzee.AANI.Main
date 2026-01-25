@@ -225,7 +225,11 @@
                             @Html.DropDownListFor(model => model.Participant.AliveStatus, new SelectList(Enum.GetValues(typeof(Exwhyzee.AANI.Domain.Enums.AliveStatus))), new { @class = "form-control" })
                             <span asp-validation-for="Participant.AliveStatus" class="text-danger"></span>
                         </div>
-
+                        <div class="form-group">
+                            <label asp-for="Participant.TimeOfDeath">Time Of Death</label>
+                            <input asp-for="Participant.TimeOfDeath" class="form-control" type="date" />
+                            <span asp-validation-for="Participant.TimeOfDeath" class="text-danger"></span>
+                        </div>
                         <div class="form-group">
                             <input type="submit" value="Update Status" class="btn btn-primary" />
 
