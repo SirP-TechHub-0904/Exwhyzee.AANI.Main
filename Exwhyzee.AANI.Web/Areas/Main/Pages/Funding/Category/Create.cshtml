@@ -2,44 +2,119 @@
 @model Exwhyzee.AANI.Web.Areas.Main.Pages.Funding.Category.CreateModel
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Create Fund Category";
 }
-
 
 <div class="card card-default">
     <div class="card-header">
         <h3 class="card-title">FUND CATEGORY</h3>
-
-
     </div>
-    <!-- /.card-header -->
     <div class="card-body">
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
             <div class="form-group">
                 <label asp-for="FundCategory.Title" class="control-label"></label>
                 <input asp-for="FundCategory.Title" class="form-control" />
                 <span asp-validation-for="FundCategory.Title" class="text-danger"></span>
             </div>
-         
+
+            @* National admin only — toggle national vs chapter level *@
+            @if (Model.IsNationalAdmin)
+            {
+                <div class="form-group">
+                    <div class="custom-control custom-switch">
+                        <input asp-for="FundCategory.IsNationalLevel" type="checkbox"
+                               class="custom-control-input" id="isNationalSwitch" />
+                        <label class="custom-control-label" for="isNationalSwitch">
+                            National Level (visible to all chapters)
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group" id="chapterDiv" style="display:none;">
+                    <label class="control-label">Assign to Chapter</label>
+                    <select asp-for="FundCategory.ChapterId" class="form-control select2"
+                            asp-items="ViewBag.ChapterId">
+                        <option value="">-- Select Chapter --</option>
+                    </select>
+                </div>
+            }
+
             <div class="form-group">
-                <label asp-for="FundCategory.EventId" class="control-label"></label>
-                <select asp-for="FundCategory.EventId" class="form-control select2 select2-primary js-example-basic-single" data-dropdown-css-class="select2-primary" asp-items="ViewBag.EventId">
-                    <option value="">Choose if any</option>
+                <div class="custom-control custom-switch">
+                    <input asp-for="FundCategory.IsFlexible" type="checkbox"
+                           class="custom-control-input" id="isFlexibleSwitch" />
+                    <label class="custom-control-label" for="isFlexibleSwitch">
+                        Flexible Amount (member enters amount)
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-group" id="amountDiv">
+                <label asp-for="FundCategory.Amount" class="control-label">Fixed Amount (₦)</label>
+                <input asp-for="FundCategory.Amount" class="form-control" type="number" step="0.01" />
+                <span asp-validation-for="FundCategory.Amount" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="FundCategory.EventId" class="control-label">Linked Event (optional)</label>
+                <select asp-for="FundCategory.EventId" class="form-control select2"
+                        asp-items="ViewBag.EventId">
+                    <option value="">None</option>
                 </select>
             </div>
-             <div class="form-group">
+
+            <hr />
+            <h6>Split Configuration</h6>
+
+            <div class="form-group">
+                <label asp-for="FundCategory.SplitType" class="control-label">Split Type</label>
+                <select asp-for="FundCategory.SplitType" class="form-control"
+                        asp-items="ViewBag.SplitType"></select>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="FundCategory.NationalShare" class="control-label">
+                            National Share (% or ₦) — set 0 if chapter keeps all
+                        </label>
+                        <input asp-for="FundCategory.NationalShare" class="form-control"
+                               type="number" step="0.01" />
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="FundCategory.ChapterShare" class="control-label">
+                            Chapter Share (% or ₦)
+                        </label>
+                        <input asp-for="FundCategory.ChapterShare" class="form-control"
+                               type="number" step="0.01" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
                 <input type="submit" value="Submit" class="btn btn-primary" />
                 <a asp-page="./Index" class="btn bg-gradient-warning btn-sm" style="float:right;">Back</a>
-
             </div>
         </form>
     </div>
-
-<div class="card-footer">
-</div>
+    <div class="card-footer"></div>
 </div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        // Toggle amount field based on flexible switch
+        $('#isFlexibleSwitch').on('change', function () {
+            $('#amountDiv').toggle(!this.checked);
+        });
+
+        // Toggle chapter dropdown based on national level switch
+        $('#isNationalSwitch').on('change', function () {
+            $('#chapterDiv').toggle(!this.checked);
+        });
+    </script>
 }

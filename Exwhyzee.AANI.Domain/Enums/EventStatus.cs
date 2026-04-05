@@ -15,4 +15,10 @@ namespace Exwhyzee.AANI.Domain.Enums
         Awaiting = 4
 
     }
+
+    public enum SplitType
+    {
+        Percentage = 1,
+        FixedAmount = 2
+    }
 }

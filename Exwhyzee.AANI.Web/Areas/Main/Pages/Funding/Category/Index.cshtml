@@ -9,9 +9,11 @@
 <div class="card">
     <div class="card-header">
         <h3 class="card-title">FUND CATEGORY</h3>
-        @if (User.Identity.IsAuthenticated && User.IsInRole("Admin")){
-        <a asp-page="./Create" class="btn bg-gradient-warning btn-sm" style="float:right;">Create New</a>
-        } </div>
+        @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+        {
+            <a asp-page="./Create" class="btn bg-gradient-warning btn-sm" style="float:right;">Create New</a>
+        }
+    </div>
     <!-- /.card-header -->
     <div class="card-body">
         <div class="table-responsive">
@@ -19,39 +21,62 @@
                 <thead>
                     <tr>
                         <th>S/N</th>
-            <th>
-                @Html.DisplayNameFor(model => model.FundCategory[0].Title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FundCategory[0].Date)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FundCategory[0].Event)
-            </th>
-           @if (User.Identity.IsAuthenticated && User.IsInRole("Admin")){<th></th>}
-        </tr>
-    </thead>
+                        <th>
+                            @Html.DisplayNameFor(model => model.FundCategory[0].Title)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.FundCategory[0].Date)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.FundCategory[0].Event)
+                        </th>
+                        <th>Level</th>
+                        <th>Amount</th>
+                        <th>Split</th>
+                        @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                        {
+                            <th></th>
+                        }
+                    </tr>
+                </thead>
                 @{
                     int sn = 0;
                 }
-    <tbody>
-@foreach (var item in Model.FundCategory) {
-        <tr>
+                <tbody>
+                    @foreach (var item in Model.FundCategory)
+                    {
+                        <tr>
                             <td>
                                 @{
                                     sn++;
                                 }
                                 @sn
                             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Date)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Event.Title)
-            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Title)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Date)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Event.Title)
+                            </td>
+                            <td>
+                                @(item.IsNationalLevel ? "National" : item.Chapter?.State ?? "Chapter")
+                            </td>
+                            <td>
+                                @(item.IsFlexible ? "Flexible" : "₦" + item.Amount?.ToString("N2"))
+                            </td>
+                            <td>
+                                @if (item.NationalShare == 0)
+                                {
+                                    <span>Chapter 100%</span>
+                                }
+                                else
+                                {
+                                    <span>Nat: @item.NationalShare / Chap: @item.ChapterShare</span>
+                                }
+                            </td>
                             @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
                             {
                                 <td>

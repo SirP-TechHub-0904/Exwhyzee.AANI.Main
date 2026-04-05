@@ -166,7 +166,8 @@ namespace Exwhyzee.AANI.Web.Helper
                     return $"SMS gateway returned error: {kudiResp.ErrorCode} - {kudiResp.Msg}";
                 }
 
-               return $"SMS sent successfully. Data={kudiResp.Data}";
+                // return $"SMS sent successfully. Data={kudiResp.Data}";
+                return $"SMS sent successfully. Status={kudiResp.Status}, Code={kudiResp.ErrorCode}, Msg={kudiResp.Msg}, Cost={kudiResp.Cost}, Balance={kudiResp.Balance}";
             }
             catch (Exception ex)
             {
@@ -243,7 +244,7 @@ namespace Exwhyzee.AANI.Web.Helper
             public int Page { get; set; }
 
             [JsonPropertyName("balance")]
-            public string Balance { get; set; }
+            public decimal Balance { get; set; }
         }
 
         public class EmailResponseDto
