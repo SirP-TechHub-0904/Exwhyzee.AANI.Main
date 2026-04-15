@@ -85,5 +85,7 @@ namespace Exwhyzee.AANI.Domain.Models
         public DateTime? PasswordResetOtpExpiry { get; set; }
         public bool IsPasswordResetOtpUsed { get; set; }
 
+        public bool IDCardDownloaded { get;set;}
+        public DateTime? IdCardDownloadedAt { get; set; }
     }
 }

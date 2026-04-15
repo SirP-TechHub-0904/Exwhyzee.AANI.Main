@@ -9,9 +9,16 @@
         <h3 class="card-title">Update @Model.Participant.Title @Model.Participant.Surname @Model.Participant.FirstName @Model.Participant.OtherName</h3>
     </div>
     @await Html.PartialAsync("_MessageNotice")
+    @if (ViewData["Phase1Errors"] != null)
+    {
+        <div class="alert alert-danger">
+            Errors in fields: @ViewData["Phase1Errors"]
+        </div>
+    }
     <div class="card-body">
         <form method="post" enctype="multipart/form-data">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            @*<div asp-validation-summary="ModelOnly" class="text-danger"></div>*@
+            @*<div asp-validation-summary="All" class="text-danger"></div>*@
             <input type="hidden" asp-for="Participant.Id" />
             <input type="hidden" asp-for="Participant.PictureUrl" />
             <input type="hidden" asp-for="Participant.PictureKey" />
@@ -61,8 +68,8 @@
                     </div>
                     <div class="form-group row">
                         <div class="col-md-4">
-                            <label asp-for="DOB">Date of Birth</label>
-                            <input asp-for="DOB" class="form-control" type="date" />
+                            <label asp-for="DOB">Date of Birth @Model.Participant.DOB.ToString("yyyy-MM-dd") </label>
+                            <input asp-for="DOB" class="form-control" type="date" value="@(Model.DOB.HasValue? Model.DOB.Value.ToString("yyyy-MM-dd") : "")" />
                             <span asp-validation-for="DOB" class="text-danger"></span>
                         </div>
                         <div class="col-md-4">
@@ -100,23 +107,15 @@
                     <div class="form-group row">
                         <div class="col-md-4">
                             <label asp-for="State">State</label>
-                            <select asp-for="State" class="form-control" id="stateSelect">
+                            <select asp-for="State" asp-items="Model.StateList" class="form-control" id="stateSelect">
                                 <option value="">-- Select State --</option>
-                                @foreach (var state in Model.StateList)
-                                {
-                                    <option value="@state.Value" @@(Model.State= =state.Value ? "selected" : "" )>@state.Text</option>
-                                }
                             </select>
                             <span asp-validation-for="State" class="text-danger"></span>
                         </div>
                         <div class="col-md-4">
                             <label asp-for="LGA">LGA</label>
-                            <select asp-for="LGA" class="form-control" id="lgaSelect">
+                            <select asp-for="LGA" asp-items="Model.LGAList" class="form-control" id="lgaSelect">
                                 <option value="">-- Select LGA --</option>
-                                @foreach (var lga in Model.LGAList)
-                                {
-                                    <option value="@lga.Value" @@(Model.LGA= =lga.Value ? "selected" : "" )>@lga.Text</option>
-                                }
                             </select>
                             <span asp-validation-for="LGA" class="text-danger"></span>
                         </div>
@@ -162,7 +161,7 @@
                             </div>
                         </div>
                     </div>
-                   
+
                     <button type="submit" class="btn btn-primary">Save & Next</button>
 
                 </div>
@@ -231,6 +230,10 @@
                             <span asp-validation-for="Participant.TimeOfDeath" class="text-danger"></span>
                         </div>
                         <div class="form-group">
+                            <label asp-for="Participant.IDCardDownloaded">ID Card Downloaded</label>
+                            <input asp-for="Participant.IDCardDownloaded" />
+                        </div>
+                        <div class="form-group">
                             <input type="submit" value="Update Status" class="btn btn-primary" />
 
                         </div>
@@ -267,7 +270,7 @@
                     </form>
                 </div>
             </div>
-          
+
             <!-- /.row -->
         </div>
     }

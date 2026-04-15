@@ -57,16 +57,16 @@
                         </div>
 
                         @*<ul class="list-group list-group-unbordered mb-3">
-                            <li class="list-group-item">
-                                <b>Total Attendance in Events/Meetings</b> <a class="float-right">@Model.TotalAttendance</a>
-                            </li>
-                            <li class="list-group-item">
-                                <b>Total Funds Contributed/Payment</b> <a class="float-right">@($"₦{Model.TotalFundsContributed:N0}")</a>
-                            </li>
-                            <li class="list-group-item">
-                                <b>Total Login</b> <a class="float-right">@Model.TotalLogins</a>
-                            </li>
-                        </ul>*@
+                                <li class="list-group-item">
+                                    <b>Total Attendance in Events/Meetings</b> <a class="float-right">@Model.TotalAttendance</a>
+                                </li>
+                                <li class="list-group-item">
+                                    <b>Total Funds Contributed/Payment</b> <a class="float-right">@($"₦{Model.TotalFundsContributed:N0}")</a>
+                                </li>
+                                <li class="list-group-item">
+                                    <b>Total Login</b> <a class="float-right">@Model.TotalLogins</a>
+                                </li>
+                            </ul>*@
                         @{
                             bool isOwner = Model.CurrentUserId == Model.Participant.Id;
                             bool isAdmin = User.IsInRole("Admin");
@@ -167,7 +167,7 @@
                                 </div>
                             </div>
                             <!-- /.tab-pane -->
-                             
+
 
                             <div class="tab-pane" id="timeline">
                                 @if (isOwner || isAdmin)
@@ -283,6 +283,11 @@
     </div><!-- /.container-fluid -->
 </section>
 
+<form id="markIdCardDownloadedForm" method="post" asp-page-handler="MarkIdCardDownloaded">
+    <input type="hidden" name="id" value="@Model.Participant.Id" />
+    @Html.AntiForgeryToken()
+</form>
+
 @section Scripts {
     <script>
         (function () {
@@ -303,30 +308,46 @@
     </script>
 
 
-
-
-
     <script>
-        // Replace your conversion click handler with this improved version
-        document.getElementById('downloadPngBtn').addEventListener('click', function () {
-            const svgEl = document.querySelector('.idcard-frame svg');
-            if (!svgEl) { alert('SVG preview not found'); return; }
+        async function markIdCardDownloaded() {
+            const form = document.getElementById('markIdCardDownloadedForm');
+            const formData = new FormData(form);
 
-            // Clone the SVG so we don't modify the page
+            const response = await fetch(form.action, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to update ID card status.');
+            }
+
+            const result = await response.json();
+            if (!result.success) {
+                throw new Error(result.message || 'Failed to update ID card status.');
+            }
+
+            return result;
+        }
+
+        function downloadIdCardPng() {
+            const svgEl = document.querySelector('.idcard-frame svg');
+            if (!svgEl) {
+                alert('SVG preview not found');
+                return;
+            }
+
             const clone = svgEl.cloneNode(true);
 
-            // Get viewBox if present
             const vb = svgEl.viewBox && svgEl.viewBox.baseVal && svgEl.viewBox.baseVal.width
                 ? svgEl.viewBox.baseVal
                 : null;
 
-            // Desired pixel scale for output (2 = double resolution)
             const scale = 2;
 
-            // Compute intrinsic pixel width/height:
-            // - If the SVG has explicit width/height attributes, use them.
-            // - Else if it has viewBox, use viewBox width/height.
-            // - Else fall back to computed client size.
             let vbWidth = 0, vbHeight = 0;
             const explicitW = svgEl.getAttribute('width');
             const explicitH = svgEl.getAttribute('height');
@@ -338,27 +359,22 @@
                 vbWidth = vb.width;
                 vbHeight = vb.height;
             } else {
-                // fallback to computed size (CSS)
                 vbWidth = svgEl.clientWidth || svgEl.getBoundingClientRect().width || 900;
                 vbHeight = svgEl.clientHeight || svgEl.getBoundingClientRect().height || 1400;
             }
 
-            // Make sure we have sensible numeric values
             if (!vbWidth || !vbHeight) {
-                // sensible defaults if everything else fails
                 vbWidth = 900;
                 vbHeight = 1400;
             }
 
-            // Set explicit width/height on cloned SVG in pixels so the browser will rasterize it at that size
             clone.setAttribute('width', vbWidth);
             clone.setAttribute('height', vbHeight);
-            // Optional: ensure viewBox remains for correct scaling
+
             if (!clone.getAttribute('viewBox') && vb) {
                 clone.setAttribute('viewBox', `0 0 ${vbWidth} ${vbHeight}`);
             }
 
-            // Inline styles if you used external CSS (optional step — only if needed)
             try {
                 let cssText = '';
                 Array.from(document.styleSheets).forEach(ss => {
@@ -366,59 +382,192 @@
                         Array.from(ss.cssRules || []).forEach(rule => {
                             if (rule.cssText) cssText += rule.cssText + '\n';
                         });
-                    } catch (e) {
-                        // ignore cross-origin stylesheets
-                    }
+                    } catch (e) { }
                 });
+
                 if (cssText) {
                     const styleEl = document.createElement('style');
                     styleEl.textContent = cssText;
                     clone.insertBefore(styleEl, clone.firstChild);
                 }
-            } catch (e) { /* ignore */ }
+            } catch (e) { }
 
-            // Serialize
             const svgString = new XMLSerializer().serializeToString(clone);
             const blob = new Blob([svgString], { type: 'image/svg+xml;charset=utf-8' });
             const url = URL.createObjectURL(blob);
 
             const img = new Image();
             img.crossOrigin = 'anonymous';
+
             img.onload = () => {
-                // Use natural size of the image (which now honors the width/height we set)
                 const w = Math.max(1, Math.round((img.naturalWidth || vbWidth) * scale));
                 const h = Math.max(1, Math.round((img.naturalHeight || vbHeight) * scale));
+
                 const canvas = document.createElement('canvas');
                 canvas.width = w;
                 canvas.height = h;
-                const ctx = canvas.getContext('2d');
 
-                // Scale canvas drawing so we get high-res output
+                const ctx = canvas.getContext('2d');
                 ctx.setTransform(scale, 0, 0, scale, 0, 0);
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
                 ctx.drawImage(img, 0, 0);
 
                 canvas.toBlob(function (pngBlob) {
-                    if (!pngBlob) { alert('PNG conversion failed'); URL.revokeObjectURL(url); return; }
+                    if (!pngBlob) {
+                        alert('PNG conversion failed');
+                        URL.revokeObjectURL(url);
+                        return;
+                    }
+
                     const a = document.createElement('a');
                     a.href = URL.createObjectURL(pngBlob);
+
                     const wrapper = document.querySelector('.idcard-frame');
                     const userFullname = wrapper?.dataset?.filename || 'aani-id-card';
+
                     a.download = userFullname + '.png';
-                    //a.download = UserFullname+'.png';
                     document.body.appendChild(a);
                     a.click();
                     a.remove();
+
                     URL.revokeObjectURL(url);
                 }, 'image/png', 1.0);
             };
+
             img.onerror = () => {
                 URL.revokeObjectURL(url);
-                alert('Error loading SVG as image (CORS or invalid SVG).');
+                alert('Error loading SVG as image.');
             };
+
             img.src = url;
+        }
+
+        document.getElementById('downloadPngBtn').addEventListener('click', async function () {
+            try {
+                await markIdCardDownloaded();
+                downloadIdCardPng();
+            } catch (error) {
+                alert(error.message || 'Unable to mark ID card as downloaded.');
+            }
         });
     </script>
+
+
+    @*<script>
+            // Replace your conversion click handler with this improved version
+            document.getElementById('downloadPngBtn').addEventListener('click', function () {
+                const svgEl = document.querySelector('.idcard-frame svg');
+                if (!svgEl) { alert('SVG preview not found'); return; }
+
+                // Clone the SVG so we don't modify the page
+                const clone = svgEl.cloneNode(true);
+
+                // Get viewBox if present
+                const vb = svgEl.viewBox && svgEl.viewBox.baseVal && svgEl.viewBox.baseVal.width
+                    ? svgEl.viewBox.baseVal
+                    : null;
+
+                // Desired pixel scale for output (2 = double resolution)
+                const scale = 2;
+
+                // Compute intrinsic pixel width/height:
+                // - If the SVG has explicit width/height attributes, use them.
+                // - Else if it has viewBox, use viewBox width/height.
+                // - Else fall back to computed client size.
+                let vbWidth = 0, vbHeight = 0;
+                const explicitW = svgEl.getAttribute('width');
+                const explicitH = svgEl.getAttribute('height');
+
+                if (explicitW && explicitH) {
+                    vbWidth = parseFloat(explicitW);
+                    vbHeight = parseFloat(explicitH);
+                } else if (vb) {
+                    vbWidth = vb.width;
+                    vbHeight = vb.height;
+                } else {
+                    // fallback to computed size (CSS)
+                    vbWidth = svgEl.clientWidth || svgEl.getBoundingClientRect().width || 900;
+                    vbHeight = svgEl.clientHeight || svgEl.getBoundingClientRect().height || 1400;
+                }
+
+                // Make sure we have sensible numeric values
+                if (!vbWidth || !vbHeight) {
+                    // sensible defaults if everything else fails
+                    vbWidth = 900;
+                    vbHeight = 1400;
+                }
+
+                // Set explicit width/height on cloned SVG in pixels so the browser will rasterize it at that size
+                clone.setAttribute('width', vbWidth);
+                clone.setAttribute('height', vbHeight);
+                // Optional: ensure viewBox remains for correct scaling
+                if (!clone.getAttribute('viewBox') && vb) {
+                    clone.setAttribute('viewBox', `0 0 ${vbWidth} ${vbHeight}`);
+                }
+
+                // Inline styles if you used external CSS (optional step — only if needed)
+                try {
+                    let cssText = '';
+                    Array.from(document.styleSheets).forEach(ss => {
+                        try {
+                            Array.from(ss.cssRules || []).forEach(rule => {
+                                if (rule.cssText) cssText += rule.cssText + '\n';
+                            });
+                        } catch (e) {
+                            // ignore cross-origin stylesheets
+                        }
+                    });
+                    if (cssText) {
+                        const styleEl = document.createElement('style');
+                        styleEl.textContent = cssText;
+                        clone.insertBefore(styleEl, clone.firstChild);
+                    }
+                } catch (e) { /* ignore */ }
+
+                // Serialize
+                const svgString = new XMLSerializer().serializeToString(clone);
+                const blob = new Blob([svgString], { type: 'image/svg+xml;charset=utf-8' });
+                const url = URL.createObjectURL(blob);
+
+                const img = new Image();
+                img.crossOrigin = 'anonymous';
+                img.onload = () => {
+                    // Use natural size of the image (which now honors the width/height we set)
+                    const w = Math.max(1, Math.round((img.naturalWidth || vbWidth) * scale));
+                    const h = Math.max(1, Math.round((img.naturalHeight || vbHeight) * scale));
+                    const canvas = document.createElement('canvas');
+                    canvas.width = w;
+                    canvas.height = h;
+                    const ctx = canvas.getContext('2d');
+
+                    // Scale canvas drawing so we get high-res output
+                    ctx.setTransform(scale, 0, 0, scale, 0, 0);
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    ctx.drawImage(img, 0, 0);
+
+                    canvas.toBlob(function (pngBlob) {
+                        if (!pngBlob) { alert('PNG conversion failed'); URL.revokeObjectURL(url); return; }
+                        const a = document.createElement('a');
+                        a.href = URL.createObjectURL(pngBlob);
+                        const wrapper = document.querySelector('.idcard-frame');
+                        const userFullname = wrapper?.dataset?.filename || 'aani-id-card';
+                        a.download = userFullname + '.png';
+                        //a.download = UserFullname+'.png';
+                        document.body.appendChild(a);
+                        a.click();
+                        a.remove();
+                        URL.revokeObjectURL(url);
+                    }, 'image/png', 1.0);
+                };
+                img.onerror = () => {
+                    URL.revokeObjectURL(url);
+                    alert('Error loading SVG as image (CORS or invalid SVG).');
+                };
+                img.src = url;
+            });
+        </script>*@
+
+
 }
 
 <style>

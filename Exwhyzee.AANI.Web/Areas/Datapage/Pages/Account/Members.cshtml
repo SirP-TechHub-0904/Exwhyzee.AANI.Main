@@ -87,6 +87,7 @@
                             <th>Fullname</th>
                             <th>Position</th>
                             <th>Work Place</th>
+                            <th>ID Card Print</th>
                             <th>Position</th>
                             <th>SEC</th>
                             <th>Last Login</th>
@@ -115,6 +116,16 @@
                                 </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => list.Participant.CurrentWorkPlace)
+                                </td>
+                                <td>
+                                    @if(list.Participant.IDCardDownloaded == true)
+                                {
+                                    <span class="text-success">yes</span>
+                                }
+                                else
+                                {
+                                    <span class="text-danger">no</span>
+                                }
                                 </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => list.Participant.CurrentPosition)
@@ -156,6 +167,7 @@
                             EMAIL
                         </th>
                         <th>SEC YEAR</th>
+                         <th>ID CARD PRINT</th>
                         <th>WORK PLACE</th>
                         <th>
                             POSITION
@@ -208,6 +220,16 @@
                             <td>
                                 SEC @Html.DisplayFor(modelItem => item.SEC.Number) (@Html.DisplayFor(modelItem => item.SEC.Year))
                             </td>
+                             <td>
+                                    @if(item.IDCardDownloaded == true)
+                                {
+                                    <span class="text-success">yes</span>
+                                }
+                                else
+                                {
+                                    <span class="text-danger">no</span>
+                                }
+                                </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.CurrentWorkPlace)
                             </td>

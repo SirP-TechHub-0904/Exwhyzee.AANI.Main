@@ -708,7 +708,21 @@ namespace Exwhyzee.AANI.Web.Areas.Datapage.Pages.Account
         // using SkiaSharp;
         // using SkiaSharp.Svg;
         // using System.Text;
+        private async Task MarkIdCardDownloadedOnceAsync(Participant participant)
+        {
+            if (participant == null) return;
 
+            if (!participant.IDCardDownloaded)
+            {
+                participant.IDCardDownloaded = true;
+                participant.IdCardDownloadedAt = DateTime.UtcNow;
+
+                // Optional
+                // participant.IdCardDownloadCount = 1;
+
+                await _userManager.UpdateAsync(participant);
+            }
+        }
         public async Task<IActionResult> OnGetDownloadSvg(string id)
         {
             if (string.IsNullOrEmpty(id)) return BadRequest();
@@ -723,7 +737,7 @@ namespace Exwhyzee.AANI.Web.Areas.Datapage.Pages.Account
                 .FirstOrDefaultAsync(p => p.Id == id);
 
             if (participant == null) return NotFound();
-
+            await MarkIdCardDownloadedOnceAsync(participant);
             var svg = await BuildIdCardSvgForParticipantAsync(participant);
             if (string.IsNullOrEmpty(svg)) return NotFound("SVG generation failed.");
 
@@ -733,7 +747,30 @@ namespace Exwhyzee.AANI.Web.Areas.Datapage.Pages.Account
             var fileName = $"{userFullname}.svg";
             return File(bytes, "image/svg+xml", fileName);
         }
+        public async Task<IActionResult> OnPostMarkIdCardDownloadedAsync(string id)
+        {
+            if (string.IsNullOrWhiteSpace(id))
+            {
+                return new JsonResult(new { success = false, message = "Invalid id." });
+            }
 
+            var participant = await _userManager.Users
+                .FirstOrDefaultAsync(p => p.Id == id);
+
+            if (participant == null)
+            {
+                return new JsonResult(new { success = false, message = "Participant not found." });
+            }
+
+            await MarkIdCardDownloadedOnceAsync(participant);
+
+            return new JsonResult(new
+            {
+                success = true,
+                alreadyDownloaded = participant.IDCardDownloaded,
+                downloadedAt = participant.IdCardDownloadedAt
+            });
+        }
         public async Task<IActionResult> OnGetDownloadPng(string id)
         {
             // If you don't want server-side rasterization, you can remove this handler and use client-side conversion instead.
@@ -750,7 +787,7 @@ namespace Exwhyzee.AANI.Web.Areas.Datapage.Pages.Account
 
             if (participant == null) return NotFound();
 
-
+            await MarkIdCardDownloadedOnceAsync(participant);
             // Try server-side rasterization using SkiaSharp + SkiaSharp.Svg
             try
             {

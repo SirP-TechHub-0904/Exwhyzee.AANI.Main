@@ -46,7 +46,7 @@ namespace Exwhyzee.AANI.Web.Areas.Datapage.Pages.Account
         [BindProperty] public string HomeAddress { get; set; }
         [BindProperty] public string PhoneNumber { get; set; }
         [BindProperty] public string? AltPhoneNumber { get; set; }
-        [BindProperty, DataType(DataType.Date)] public DateTime DOB { get; set; }
+        [BindProperty, DataType(DataType.Date)] public DateTime? DOB { get; set; }
         [BindProperty] public IFormFile PictureFile { get; set; }
 
         //public List<SelectListItem> OfficeCategoryList { get; set; } = new();
@@ -169,7 +169,7 @@ namespace Exwhyzee.AANI.Web.Areas.Datapage.Pages.Account
 
                         // Optional: Add to TempData for display
                         string erx = string.Join(", ", phase1ErrorFields);
-
+                        ViewData["Phase1Errors"] = erx;
                         await PreparePageAsync(updateparticipant);
                         return Page();
                     }
@@ -186,7 +186,7 @@ namespace Exwhyzee.AANI.Web.Areas.Datapage.Pages.Account
                     updateparticipant.FirstName = Participant.FirstName;
                     updateparticipant.OtherName = Participant.OtherName;
                     updateparticipant.Title = Participant.Title;
-                    updateparticipant.DOB = DOB;
+                    updateparticipant.DOB = DOB.Value;
                     updateparticipant.GenderStatus = Participant.GenderStatus;
                     updateparticipant.MaritalStatus = Participant.MaritalStatus;
                     updateparticipant.ReligionStatus = Participant.ReligionStatus;
@@ -349,6 +349,12 @@ namespace Exwhyzee.AANI.Web.Areas.Datapage.Pages.Account
             updateparticipant.UserStatus = Participant.UserStatus;
             updateparticipant.AliveStatus = Participant.AliveStatus;
             updateparticipant.TimeOfDeath = Participant.TimeOfDeath;
+            updateparticipant.IDCardDownloaded = Participant.IDCardDownloaded;
+            if (Participant.IDCardDownloaded)
+            {
+                updateparticipant.IdCardDownloadedAt = DateTime.UtcNow.AddHours(1);
+
+            }
             // Now update username to match email
             var updatez = await _userManager.UpdateAsync(updateparticipant);
             if (!updatez.Succeeded)

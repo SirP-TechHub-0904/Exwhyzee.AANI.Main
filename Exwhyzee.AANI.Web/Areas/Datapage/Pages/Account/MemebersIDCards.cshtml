@@ -1,0 +1,101 @@
+﻿@page
+@model Exwhyzee.AANI.Web.Areas.Datapage.Pages.Account.MemebersIDCardsModel
+@{
+    ViewData["Title"] = "Members ID Cards";
+}
+
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">MEMBERS ID CARDS</h3>
+    </div>
+
+    <div class="card-body">
+        <div class="row">
+
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-success">
+                    <div class="inner">
+                        <h3>@Model.TotalIdCardGiven</h3>
+                        <p>Total ID Card Given</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-id-card"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-danger">
+                    <div class="inner">
+                        <h3>@Model.TotalPendingIdCard</h3>
+                        <p>Total Pending ID</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="card-body">
+        <div class="table-responsive">
+            <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>S/N</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>ID Status</th>
+                        <th>Date Issued</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        int sn = 0;
+                    }
+                    @foreach (var item in Model.Participants)
+                    {
+                        <tr>
+                            <td>
+                                @{
+                                    sn++;
+                                }
+                                @sn
+                            </td>
+                            <td>
+                                <a asp-page="./MemberDetails" asp-route-id="@item.Id" class="uppercase-text">
+                                    @item.Fullname
+                                </a>
+                            </td>
+                            <td>@item.Email</td>
+                            <td>@item.PhoneNumber</td>
+                            <td>
+                                @if (item.IDCardDownloaded)
+                                {
+                                    <span class="badge badge-success">Issued</span>
+                                }
+                                else
+                                {
+                                    <span class="badge badge-danger">Pending</span>
+                                }
+                            </td>
+                            <td>
+                                @if (item.IDCardDownloaded && item.IdCardDownloadedAt.HasValue)
+                                {
+                                    @item.IdCardDownloadedAt.Value.ToString("dd MMM yyyy")
+                                }
+                                else
+                                {
+                                    <span class="text-muted">Not issued</span>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

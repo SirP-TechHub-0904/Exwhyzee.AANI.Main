@@ -46,7 +46,8 @@
                          <th>STATUS</th>
                          <th>ROLE</th>
 
-                         <th>SEC</th>
+                        <th>SEC</th>
+                        <th>ID Card</th>
                          <th></th>
 
                      </tr>
@@ -76,6 +77,16 @@
                             <td>@Html.DisplayFor(modelItem => item.Role)</td>
                             <td>
                                 SEC @Html.DisplayFor(modelItem => item.SEC.Number) (@Html.DisplayFor(modelItem => item.SEC.Year))
+                            </td>
+                            <td>@if(item.IDCardDownloaded == true)
+                                {
+                                    <span class="text-success">yes</span>
+                                }
+                                else
+                                {
+                                    <span class="text-danger">no</span>
+                                }
+
                             </td>
                             @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
                             {
