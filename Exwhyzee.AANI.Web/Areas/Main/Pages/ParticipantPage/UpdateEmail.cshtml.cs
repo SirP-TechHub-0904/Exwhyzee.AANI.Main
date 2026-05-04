@@ -59,30 +59,81 @@ namespace Exwhyzee.AANI.Web.Areas.Main.Pages.ParticipantPage
         // For more details, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
-            var updateparticipant = await _userManager.FindByIdAsync(Participant.Id);
-
-            var email = await _userManager.GetEmailAsync(updateparticipant);
-            if (NewEmail != email)
+            if (Participant == null || string.IsNullOrWhiteSpace(Participant.Id))
             {
-                var userId = await _userManager.GetUserIdAsync(updateparticipant);
-                var code = await _userManager.GenerateChangeEmailTokenAsync(updateparticipant, NewEmail);
-                //code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
+                TempData["aaerror"] = "Invalid participant.";
+                return RedirectToPage("./Index");
+            }
 
-                //var xcode = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(code));
-                var result = await _userManager.ChangeEmailAsync(updateparticipant, NewEmail, code);
-                if (!result.Succeeded)
-                {
-                    TempData["aaerror"] = "Error changing email.";
-                    return Page();
-                }
-                TempData["aasuccess"] = "Email Updated successfully";
+            var user = await _userManager.FindByIdAsync(Participant.Id);
+            if (user == null)
+            {
+                TempData["aaerror"] = "User not found.";
+                return RedirectToPage("./Index");
+            }
+
+            var currentEmail = await _userManager.GetEmailAsync(user);
+            var currentUserName = await _userManager.GetUserNameAsync(user);
+
+            var newValue = NewEmail?.Trim();
+            if (string.IsNullOrWhiteSpace(newValue))
+            {
+                TempData["aaerror"] = "Email is required.";
                 return RedirectToPage("./Details", new { id = Participant.Id });
             }
-            TempData["aaerror"] = "Error changing email or Email is already used.";
 
+            // No change
+            if (string.Equals(newValue, currentEmail, StringComparison.OrdinalIgnoreCase) &&
+                string.Equals(newValue, currentUserName, StringComparison.OrdinalIgnoreCase))
+            {
+                TempData["aaerror"] = "No changes detected.";
+                return RedirectToPage("./Details", new { id = Participant.Id });
+            }
 
+            // Check email uniqueness
+            var emailOwner = await _userManager.FindByEmailAsync(newValue);
+            if (emailOwner != null && emailOwner.Id != user.Id)
+            {
+                TempData["aaerror"] = "Email is already used.";
+                return RedirectToPage("./Details", new { id = Participant.Id });
+            }
+
+            // Check username uniqueness
+            var userNameOwner = await _userManager.FindByNameAsync(newValue);
+            if (userNameOwner != null && userNameOwner.Id != user.Id)
+            {
+                TempData["aaerror"] = "Username is already used.";
+                return RedirectToPage("./Details", new { id = Participant.Id });
+            }
+
+            // Since email and username must always be the same, update both
+            // Option 1: direct set methods
+            var setEmailResult = await _userManager.SetEmailAsync(user, newValue);
+            if (!setEmailResult.Succeeded)
+            {
+                TempData["aaerror"] = string.Join(" | ", setEmailResult.Errors.Select(e => e.Description));
+                return RedirectToPage("./Details", new { id = Participant.Id });
+            }
+
+            var setUserNameResult = await _userManager.SetUserNameAsync(user, newValue);
+            if (!setUserNameResult.Succeeded)
+            {
+                TempData["aaerror"] = string.Join(" | ", setUserNameResult.Errors.Select(e => e.Description));
+                return RedirectToPage("./Details", new { id = Participant.Id });
+            }
+
+            // Optional: if your app requires email confirmed after change, reset it
+            user.EmailConfirmed = true; // or false, depending on your flow
+
+            var updateResult = await _userManager.UpdateAsync(user);
+            if (!updateResult.Succeeded)
+            {
+                TempData["aaerror"] = string.Join(" | ", updateResult.Errors.Select(e => e.Description));
+                return RedirectToPage("./Details", new { id = Participant.Id });
+            }
+
+            TempData["aasuccess"] = "Email and username updated successfully.";
             return RedirectToPage("./Details", new { id = Participant.Id });
         }
-
     }
 }

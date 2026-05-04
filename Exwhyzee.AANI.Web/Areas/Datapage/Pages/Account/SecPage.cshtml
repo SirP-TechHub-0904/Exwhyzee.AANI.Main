@@ -36,7 +36,7 @@
 
                     <div class="row">
 
-                        @foreach (var item in Model.SEC.OrderByDescending(x => x.Year))
+                        @* @foreach (var item in Model.SEC.OrderByDescending(x => x.Year))
                         {
                             <div class="col-md-3 col-sm-6 col-xs-6">
                                 <a asp-page="./Members" asp-route-secid="@item.Id" class="small-box-footer">
@@ -51,8 +51,37 @@
                                     </div>
                                 </a>
                             </div>
-                        }
+                        } *@
+                        @foreach (var item in Model.SEC.OrderByDescending(x => x.Year))
+                        {
+                            Model.MonitorGenerals.TryGetValue(item.Id, out var monitorGeneral);
 
+                            var fullname = monitorGeneral?.Fullname?.Trim();
+                            var state = monitorGeneral?.State;
+                            var office = monitorGeneral?.CurrentWorkPlace;
+
+                            <div class="col-md-4 col-sm-6 col-xs-6">
+                                <a asp-page="./Members" asp-route-secid="@item.Id" class="small-box-footer">
+                                    <div class="small-box @colors[random.Next(colors.Length)]" style="margin-bottom: 7.5px;margin-top: 7.5px;">
+                                        <div class="inner">
+                                            <h3 style="white-space: normal; text-align: center; font-size: 1.2rem; margin: auto;">
+                                                @item.Number (@item.Year)
+                                            </h3>
+
+                                            <div style="text-align:center; font-size:.85rem; margin-top:8px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
+                                                <strong>SEC MG:</strong> @(string.IsNullOrWhiteSpace(fullname) ? ".............." : fullname)
+                                            </div>
+
+                                            <div style="text-align:center; font-size:.8rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
+                                                <strong>State:</strong> @(string.IsNullOrWhiteSpace(state) ? "......." : state)
+                                                /
+                                                <strong>Office:</strong> @(string.IsNullOrWhiteSpace(office) ? "..............." : office)
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        }
                     </div>
                 </div>
 

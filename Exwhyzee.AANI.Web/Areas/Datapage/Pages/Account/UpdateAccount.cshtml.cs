@@ -350,6 +350,9 @@ namespace Exwhyzee.AANI.Web.Areas.Datapage.Pages.Account
             updateparticipant.AliveStatus = Participant.AliveStatus;
             updateparticipant.TimeOfDeath = Participant.TimeOfDeath;
             updateparticipant.IDCardDownloaded = Participant.IDCardDownloaded;
+            updateparticipant.IsMonotorGeneral = Participant.IsMonotorGeneral;
+            updateparticipant.FontSizeInIdName = Participant.FontSizeInIdName;
+            updateparticipant.DisableTitleInIDName = Participant.DisableTitleInIDName;
             if (Participant.IDCardDownloaded)
             {
                 updateparticipant.IdCardDownloadedAt = DateTime.UtcNow.AddHours(1);

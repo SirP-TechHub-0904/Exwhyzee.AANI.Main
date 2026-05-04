@@ -58,7 +58,7 @@ namespace Exwhyzee.AANI.Host.Areas.Identity.Pages.Account
             if (ModelState.IsValid)
             {
                 var user = await _userManager.FindByEmailAsync(Input.Email);
-                if (user == null || !(await _userManager.IsEmailConfirmedAsync(user)))
+                if (user == null)
                 {
                     // Don't reveal that the user does not exist or is not confirmed
                     return RedirectToPage("./ForgotPasswordConfirmation");
@@ -98,7 +98,7 @@ namespace Exwhyzee.AANI.Host.Areas.Identity.Pages.Account
                 await _userManager.UpdateAsync(user);
 
                 // OTP Reset Page URL
-                var resetUrl = $"{Request.Scheme}://{Request.Host}/Identity/Account/ResetPasswordOtp";
+                var resetUrl = $"{Request.Scheme}://{Request.Host}/Identity/Account/ResetPassword";
 
                 var emailBody = $@"
 <p>Dear {user.Fullname},</p>
@@ -137,7 +137,7 @@ Click here to reset your password
                     // log if needed
                 }
 
-                return RedirectToPage("./ForgotPasswordConfirmation");
+                return RedirectToPage("./ResetPassword");
             }
 
             return Page();

@@ -28,6 +28,7 @@ namespace Exwhyzee.AANI.Web.Pages
                 .OrderByDescending(d => d.Date).Take(5).ToList();
 
         }
+         
     }
 }
 

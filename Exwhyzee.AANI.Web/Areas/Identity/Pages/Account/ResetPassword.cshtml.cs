@@ -120,6 +120,9 @@ namespace Exwhyzee.AANI.Host.Areas.Identity.Pages.Account
             user.PasswordResetOtp = null;
             user.PasswordResetOtpExpiry = null;
 
+
+
+
             await _userManager.UpdateAsync(user);
 
             return RedirectToPage("./ResetPasswordConfirmation");

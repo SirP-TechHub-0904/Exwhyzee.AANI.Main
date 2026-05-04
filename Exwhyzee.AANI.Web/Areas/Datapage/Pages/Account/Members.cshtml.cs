@@ -22,6 +22,7 @@ namespace Exwhyzee.AANI.Web.Areas.Datapage.Pages.Account
         }
 
         public IQueryable<Participant>? Participants { get; set; }
+        public Participant? SecMonitorGeneral { get; set; }
         public int AllAlumni { get; set; }
         public int Male { get; set; }
         public int Female { get; set; }
@@ -75,6 +76,10 @@ namespace Exwhyzee.AANI.Web.Areas.Datapage.Pages.Account
                 }
                 TempData["datax"] = secs.Number.ToUpper() + " (" + secs.Year + ") " + Participants.Count() + " MEMBERS";
 
+                SecMonitorGeneral = await _userManager.Users
+    .Include(x => x.Office)
+    .Where(x => x.SECId == secid && x.IsMonotorGeneral)
+    .FirstOrDefaultAsync();
                 // return Page();
             }
             else

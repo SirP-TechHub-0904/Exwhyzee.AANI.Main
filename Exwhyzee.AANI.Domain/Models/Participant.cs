@@ -87,5 +87,12 @@ namespace Exwhyzee.AANI.Domain.Models
 
         public bool IDCardDownloaded { get;set;}
         public DateTime? IdCardDownloadedAt { get; set; }
+
+        public bool IsMonotorGeneral { get;set;}
+        
+
+        public bool DisableTitleInIDName { get;set;}
+        public int FontSizeInIdName { get;set;} = 0;
+        
     }
 }

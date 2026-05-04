@@ -2,10 +2,15 @@
 using Exwhyzee.AANI.Domain.Models;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using MimeKit;
+using MailKit.Net.Smtp;
+using MailKit.Security;
+using System.Security.Authentication;
 using PostmarkEmailService;
 using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Net.Mail;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
@@ -38,7 +43,7 @@ namespace Exwhyzee.AANI.Web.Helper
         {
 
             EmailResponseDto response = new EmailResponseDto();
-            PostmarkResponse responsex = null;
+            //PostmarkResponse responsex = null;
             try
             {
 
@@ -91,18 +96,43 @@ namespace Exwhyzee.AANI.Web.Helper
 </html>";
 
                 string newBody = template.Replace("{{2}}", htmlMessage);
-                var message = new PostmarkMessage
+                //var message = new PostmarkMessage
+                //{
+                //    From = "AANI <admin@aani.ng>",
+
+                //    To = toEmail,
+                //    Subject = subject,
+                //    HtmlBody = newBody
+                //};
+
+
+                var message = new MimeMessage();
+                message.From.Add(new MailboxAddress("noreply", "noreply@aani.ng"));
+                message.To.Add(new MailboxAddress("", toEmail));
+                message.Subject = subject;
+                message.Body = new TextPart("html")
                 {
-                    From = "AANI <admin@aani.ng>",
-
-                    To = toEmail,
-                    Subject = subject,
-                    HtmlBody = newBody
+                    Text = newBody
                 };
+                using var client = new MailKit.Net.Smtp.SmtpClient();
+                try
+                {
+                    client.SslProtocols = System.Security.Authentication.SslProtocols.Tls12;
+                    client.Connect("smtp.zeptomail.com", 587, false);
+                    client.Authenticate("emailapikey", "wSsVR60i/ReiX6gonjGrcrs4mFVSAA+lQ0x63lOh6CL5GvCU9Mc8lkbIBgKuSfMYQ2c8FWBB8e0okUsFgzANi9Qtw1tUWyiF9mqRe1U4J3x17qnvhDzKVmtalxqALIwKxQhsk2NhEMFu");
+                    client.Send(message);
+                    client.Disconnect(true);
+                    return "Email sent successfully to " + toEmail;
+                }
+                catch (Exception e)
+                {
+                    Console.Write(e.Message);
+                    return "Failed to send email to " + toEmail + ". Error: " + e.Message;
+                }
 
 
-                responsex = await _postmarkService.SendMessageAsync(message);
-                return responsex.MessageID + " - " + responsex.Message;
+                //responsex = await _postmarkService.SendMessageAsync(message);
+                //return responsex.MessageID + " - " + responsex.Message;
                  
             }
             catch (Exception ex)

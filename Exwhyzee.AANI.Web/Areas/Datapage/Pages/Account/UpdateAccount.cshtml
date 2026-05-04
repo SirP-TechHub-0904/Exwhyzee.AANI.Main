@@ -233,6 +233,20 @@
                             <label asp-for="Participant.IDCardDownloaded">ID Card Downloaded</label>
                             <input asp-for="Participant.IDCardDownloaded" />
                         </div>
+
+                        <div class="form-group">
+                            <label asp-for="Participant.IsMonotorGeneral">Is Monotor General</label>
+                            <input asp-for="Participant.IsMonotorGeneral" />
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Participant.DisableTitleInIDName">Disable Title In ID Name</label>
+                            <input asp-for="Participant.DisableTitleInIDName" />
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Participant.FontSizeInIdName">Font Size In Id Name (default is zero)</label>
+                            <input asp-for="Participant.FontSizeInIdName" class="form-control" type="number" />
+                            <span asp-validation-for="Participant.FontSizeInIdName" class="text-danger"></span>
+                        </div>
                         <div class="form-group">
                             <input type="submit" value="Update Status" class="btn btn-primary" />
 

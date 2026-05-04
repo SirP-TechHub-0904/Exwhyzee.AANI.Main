@@ -445,7 +445,10 @@ namespace Exwhyzee.AANI.Web.Areas.Datapage.Pages.Account
             // Compose a minimal, no-color SVG: background image, passport, QR, name + position (neutral)
             // Safe build of full name with null checks, uppercase for name parts, and an optional suffix.
             // This avoids NullReferenceException if Participant or any name property is null.
-            var title = participant?.Title?.Trim() ?? string.Empty;
+            var title = participant.DisableTitleInIDName
+    ? string.Empty
+    : participant?.Title?.Trim() ?? string.Empty;
+
             var surname = (participant?.Surname ?? string.Empty).Trim().ToUpperInvariant();
             var firstName = (participant?.FirstName ?? string.Empty).Trim().ToUpperInvariant();
             var otherName = (participant?.OtherName ?? string.Empty).Trim().ToUpperInvariant();
@@ -462,6 +465,12 @@ namespace Exwhyzee.AANI.Web.Areas.Datapage.Pages.Account
 
             // HTML-encode for safe embedding in SVG/HTML
             var fullName = WebUtility.HtmlEncode(finalName);
+
+            int defaultNameFontSize = 30;
+            int idNameFontSize = participant.FontSizeInIdName > 0
+                ? participant.FontSizeInIdName
+                : defaultNameFontSize;
+
 
             var positionText = WebUtility.HtmlEncode((participant.CurrentPosition ?? "").ToUpperInvariant());
             var secText = participant.SEC != null ? WebUtility.HtmlEncode($"SEC {participant.SEC.Number} ({participant.SEC.Year})") : "";
@@ -599,7 +608,7 @@ namespace Exwhyzee.AANI.Web.Areas.Datapage.Pages.Account
             var svg = $@"<?xml version=""1.0"" encoding=""utf-8""?>
 <svg xmlns=""http://www.w3.org/2000/svg"" viewBox=""0 0 {canvasW} {canvasH}"" preserveAspectRatio=""xMidYMid meet"">
   <style>
-    .id-name {{ font-family: 'Montserrat', Arial, sans-serif; font-weight:800; font-size:30px; fill:#ffffff; text-anchor:middle;text-transform: none;}}
+    .id-name {{ font-family: 'Montserrat', Arial, sans-serif; font-weight:800; font-size:{idNameFontSize}px; fill:#ffffff; text-anchor:middle;text-transform: none;}}
     .id-position {{ font-family: 'Montserrat', Arial, sans-serif; font-weight:700; font-size:30px; fill:#ffffff; text-anchor:middle;text-transform: none; }}
     .id-sec {{ font-family: 'Montserrat', Arial, sans-serif; font-weight:800; font-size:30px; fill:#ffffff; text-anchor:middle;text-transform: none; }}
     .frame-outer {{ fill:none; stroke:#ffffff; stroke-width:2; opacity:0.65; }}

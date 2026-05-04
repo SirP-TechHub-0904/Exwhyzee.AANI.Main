@@ -65,6 +65,38 @@
 
 
     </div>
+    @if (Model.SecId > 0)
+{
+    var mg = Model.SecMonitorGeneral;
+
+    var fullname = mg?.Fullname;
+    var state = mg?.State;
+    var office = mg?.CurrentWorkPlace;
+
+    <div class="card card-primary mt-3" style="margin-bottom:10px;">
+        <div class="card-header">
+            <h3 class="card-title">SEC MONITOR GENERAL</h3>
+        </div>
+
+        <div class="card-body">
+
+            <h5 style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis;font-weight:900;">
+                @(string.IsNullOrWhiteSpace(fullname) ? ".............." : fullname)
+            </h5>
+
+            <p style="margin-bottom:0;">
+                <strong>State:</strong>
+                @(string.IsNullOrWhiteSpace(state) ? "......." : state)
+            </p>
+
+            <p>
+                <strong>Office:</strong>
+                @(string.IsNullOrWhiteSpace(office) ? "..............." : office)
+            </p>
+
+        </div>
+    </div>
+}
     <!-- /.card-header -->
     @if (Model.IsChapter)
     {
