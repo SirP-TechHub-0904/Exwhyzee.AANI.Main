@@ -280,7 +280,7 @@
                             {
                                 <partial name="_MajorMenu" />
                             }*@
-                        @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                        @if (User.Identity.IsAuthenticated && User.IsInRole("Admin") || User.IsInRole("AANI"))
                         {
                             <partial name="_AdminMenu" />
                         }

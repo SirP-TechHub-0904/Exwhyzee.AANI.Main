@@ -98,7 +98,7 @@ namespace Exwhyzee.AANI.Web.Areas.Main.Pages.ParticipantPage
             }
 
 
-            return RedirectToPage("./Permission", new { uid = user.Id, fullname = user.Fullname });
+            return RedirectToPage("./Permission", new { id = user.Id });
         }
            
     }

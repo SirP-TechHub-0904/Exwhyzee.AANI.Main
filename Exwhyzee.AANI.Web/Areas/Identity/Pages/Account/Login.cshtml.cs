@@ -127,13 +127,14 @@ namespace Exwhyzee.AANI.Host.Areas.Identity.Pages.Account
                         var xAdmin = await _userManager.IsInRoleAsync(user, "Admin");
                         var mni = await _userManager.IsInRoleAsync(user, "MNI");
                         var xSuper = await _userManager.IsInRoleAsync(user, "mSuperAdmin");
+                        var aani = await _userManager.IsInRoleAsync(user, "AANI");
 
                         if (returnUrl != null)
                         {
                             return Redirect(returnUrl);
                         }
                         //asp-page="/Dashboard/Index" asp-area="Admin" 
-                        else if (xSuper.Equals(true))
+                        else if (xSuper.Equals(true) || aani.Equals(true))
                         {
                             return RedirectToPage("/Dashboard/Index", new { area = "Admin" });
 

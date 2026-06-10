@@ -38,6 +38,10 @@ namespace Exwhyzee.AANI.Web.Areas.Datapage.Pages.Account
         public string D5 { get; set; }
         public string V5 { get; set; }
 
+
+
+
+
         public async Task<IActionResult> OnGetAsync(string searchdate = null, string alldate = null, string month = null)
         {
             var allParticipants = _userManager.Users

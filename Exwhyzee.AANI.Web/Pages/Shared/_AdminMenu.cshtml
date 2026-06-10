@@ -48,12 +48,15 @@
                     <p>Data Sheet</p>
                 </a>
             </li>
-            <li class="nav-item">
-                <a asp-page="/ParticipantPage/SendResetAccount" asp-area="Main" class="nav-link">
-                    <i class="fa fa-circle nav-icon"></i>
-                    <p>Send Reset Account</p>
-                </a>
-            </li>
+            @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+            {
+                <li class="nav-item">
+                    <a asp-page="/ParticipantPage/SendResetAccount" asp-area="Main" class="nav-link">
+                        <i class="fa fa-circle nav-icon"></i>
+                        <p>Send Reset Account</p>
+                    </a>
+                </li>
+            }
         </ul>
     </li>
 }
@@ -213,48 +216,51 @@
             </p>
         </a>
         <ul class="nav nav-treeview">
-            <li class="nav-item">
-                <a asp-page="/MessagePage/Quote/Index" asp-area="Admin" class="nav-link">
-                    <i class="fa fa-quote-left nav-icon"></i>
-                    <p>Daily Quote</p>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a asp-page="/NewsletterPage/NotificationPage/Email" asp-area="Datapage" class="nav-link">
-                    <i class="fa fa-newspaper-o nav-icon"></i>
-                    <p>Newsletter</p>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a asp-page="/NewsletterPage/NotificationPage/sms" asp-area="Datapage" class="nav-link">
-                    <i class="fa fa-newspaper-o nav-icon"></i>
-                    <p>Bulk SMS</p>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a asp-page="/NewsletterPage/NotificationPage/Whatsapp" asp-area="Datapage" class="nav-link">
-                    <i class="fa fa-newspaper-o nav-icon"></i>
-                    <p>Whatsapp Message</p>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a asp-page="/NewsletterPage/NotificationPage/History" asp-area="Datapage" class="nav-link">
-                    <i class="fa fa-newspaper-o nav-icon"></i>
-                    <p>Message History</p>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a asp-page="/NewsletterPage/Templates/Index" asp-area="Datapage" class="nav-link">
-                    <i class="fa fa-file-text-o nav-icon"></i>
-                    <p>Message Template</p>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a asp-page="/BlogNews/Index" asp-area="Main" class="nav-link">
-                    <i class="fa fa-rss nav-icon"></i>
-                    <p>News</p>
-                </a>
-            </li>
+            @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+            {
+                <li class="nav-item">
+                    <a asp-page="/MessagePage/Quote/Index" asp-area="Admin" class="nav-link">
+                        <i class="fa fa-quote-left nav-icon"></i>
+                        <p>Daily Quote</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a asp-page="/NewsletterPage/NotificationPage/Email" asp-area="Datapage" class="nav-link">
+                        <i class="fa fa-newspaper-o nav-icon"></i>
+                        <p>Newsletter</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a asp-page="/NewsletterPage/NotificationPage/sms" asp-area="Datapage" class="nav-link">
+                        <i class="fa fa-newspaper-o nav-icon"></i>
+                        <p>Bulk SMS</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a asp-page="/NewsletterPage/NotificationPage/Whatsapp" asp-area="Datapage" class="nav-link">
+                        <i class="fa fa-newspaper-o nav-icon"></i>
+                        <p>Whatsapp Message</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a asp-page="/NewsletterPage/NotificationPage/History" asp-area="Datapage" class="nav-link">
+                        <i class="fa fa-newspaper-o nav-icon"></i>
+                        <p>Message History</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a asp-page="/NewsletterPage/Templates/Index" asp-area="Datapage" class="nav-link">
+                        <i class="fa fa-file-text-o nav-icon"></i>
+                        <p>Message Template</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a asp-page="/BlogNews/Index" asp-area="Main" class="nav-link">
+                        <i class="fa fa-rss nav-icon"></i>
+                        <p>News</p>
+                    </a>
+                </li>
+            }
             <li class="nav-item">
                 <a asp-page="/NameTitles/Index" asp-area="Main" class="nav-link">
                     <i class="fa fa-rss nav-icon"></i>
@@ -312,18 +318,22 @@
             </p>
         </a>
         <ul class="nav nav-treeview">
-            <li class="nav-item">
-                <a asp-page="/IPages/Main/Index" asp-area="Main" class="nav-link">
-                    <i class="fa fa-circle nav-icon"></i>
-                    <p>Website Manager</p>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a asp-page="/SettingsPage/Index" asp-area="Main" class="nav-link">
-                    <i class="fa fa-circle nav-icon"></i>
-                    <p>Contact Settings</p>
-                </a>
-            </li>
+            @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+            {
+                <li class="nav-item">
+                    <a asp-page="/IPages/Main/Index" asp-area="Main" class="nav-link">
+                        <i class="fa fa-circle nav-icon"></i>
+                        <p>Website Manager</p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a asp-page="/SettingsPage/Index" asp-area="Main" class="nav-link">
+                        <i class="fa fa-circle nav-icon"></i>
+                        <p>Contact Settings</p>
+                    </a>
+                </li>
+            }
             <li class="nav-item">
                 <a asp-page="/AaniChapters/Index" asp-area="Main" class="nav-link">
                     <i class="fa fa-circle nav-icon"></i>
@@ -336,26 +346,28 @@
                     <p>Blog Manager</p>
                 </a>
             </li>
-            
-            <li class="nav-item">
-                <a asp-page="/SettingsPage/OtherSettings" asp-area="Main" class="nav-link">
-                    <i class="fa fa-circle nav-icon"></i>
-                    <p>Other Settings</p>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a asp-page="/SettingsPage/DirectUrl" asp-area="Main" class="nav-link">
-                    <i class="fa fa-circle nav-icon"></i>
-                    <p>Direct Url</p>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a asp-page="/ConfigPage/Index" asp-area="Main" class="nav-link">
-                    <i class="fa fa-circle nav-icon"></i>
-                    <p>Config Page</p>
-                </a>
-            </li>
+            @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+            {
+                <li class="nav-item">
+                    <a asp-page="/SettingsPage/OtherSettings" asp-area="Main" class="nav-link">
+                        <i class="fa fa-circle nav-icon"></i>
+                        <p>Other Settings</p>
+                    </a>
+                </li>
 
+                <li class="nav-item">
+                    <a asp-page="/SettingsPage/DirectUrl" asp-area="Main" class="nav-link">
+                        <i class="fa fa-circle nav-icon"></i>
+                        <p>Direct Url</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a asp-page="/ConfigPage/Index" asp-area="Main" class="nav-link">
+                        <i class="fa fa-circle nav-icon"></i>
+                        <p>Config Page</p>
+                    </a>
+                </li>
+            }
 
         </ul>
     </li>
