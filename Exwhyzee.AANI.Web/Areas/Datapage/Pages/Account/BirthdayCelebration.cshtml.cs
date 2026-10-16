@@ -48,7 +48,9 @@ namespace Exwhyzee.AANI.Web.Areas.Datapage.Pages.Account
         .Include(x => x.SEC)
         .Where(x => x.AliveStatus == AliveStatus.Alive)
         .Where(x => x.MniStatus == Domain.Enums.MniStatus.MNI);
-            DateTime querydate = DateTime.Today;
+            
+            DateTime today = DateTime.UtcNow.AddHours(1).Date;
+            DateTime querydate = today;
 
             if (searchdate == null && alldate == null && month == null)
             {
@@ -57,7 +59,7 @@ namespace Exwhyzee.AANI.Web.Areas.Datapage.Pages.Account
            .OrderByDescending(x => x.DOB.Month)
            .ThenBy(x => x.DOB.Day);
 
-                searchdate = DateTime.UtcNow.Date.ToString("ddd dd MMM, yyyy") + " (" + Participants.Count() + " BIRTHDAY" + (Participants.Count() > 1 ? "S)" : ")");
+                searchdate = today.ToString("ddd dd MMM, yyyy") + " (" + Participants.Count() + " BIRTHDAY" + (Participants.Count() > 1 ? "S)" : ")");
             }
             else if (alldate == "loadall")
             {
@@ -92,7 +94,6 @@ namespace Exwhyzee.AANI.Web.Areas.Datapage.Pages.Account
 
             TempData["date"] = searchdate;
 
-            DateTime today = DateTime.UtcNow.Date;
             DateTime nextDay = today.AddDays(1);
             DateTime nextTwoDays = today.AddDays(2);
             DateTime nextThreeDays = today.AddDays(3);

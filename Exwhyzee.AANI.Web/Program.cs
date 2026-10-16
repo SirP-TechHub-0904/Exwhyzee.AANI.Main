@@ -13,8 +13,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PostmarkEmailService;
 using System.Configuration;
+// Load secrets and settings from .env file (if present)
+Exwhyzee.AANI.Web.DotEnv.Load();
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Configuration.AddEnvironmentVariables();
 
 // Add services to the container.//
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
